@@ -1,0 +1,126 @@
+* {
+    margin: 0; /* Aplica um reset de margem em todos os elementos */
+    padding: 0; /* Aplica um reset de padding em todos os elementos */
+    box-sizing: border-box; /* Inclui bordas e preenchimento no cálculo de largura/altura */
+    font-family: Arial, sans-serif; /* Define a fonte padrão */
+}
+
+body {
+    background-color: #f4f4f4; /* Cor de fundo da página */
+    text-align: center; /* Alinha o texto ao centro */
+}
+
+header {
+    background-color: #004d66; /* Fundo do cabeçalho */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Preenchimento interno */
+}
+
+nav {
+    display: flex; /* Layout flexível para navegação */
+    justify-content: space-between; /* Espaça os itens ao longo do eixo horizontal */
+    align-items: center; /* Alinha os itens verticalmente */
+    padding: 10px; /* Preenchimento */
+}
+
+.menu {
+    display: flex; /* Exibe os links do menu como uma linha flexível */
+    justify-content: center; /* Centraliza os links */
+    gap: 15px; /* Espaçamento entre os links */
+    background-color: #003d52; /* Fundo do menu */
+    padding: 10px; /* Preenchimento */
+}
+
+.menu a {
+    color: white; /* Cor dos links */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.menu-toggle {
+    display: none; /* Oculta o botão de toggle */
+    background: none; /* Remove fundo */
+    border: none; /* Remove borda */
+    color: white; /* Cor do texto */
+    font-size: 20px; /* Tamanho da fonte */
+    cursor: pointer; /* Altera o cursor para ponteiro */
+}
+
+.compras {
+    display: flex; /* Layout flexível para a seção de compras */
+    align-items: center; /* Alinha verticalmente os itens */
+    padding: 20px; /* Preenchimento */
+    background: white; /* Fundo branco */
+    margin: 20px; /* Margem externa */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+.logo-img {
+    width: 50px; /* Largura da imagem do logo */
+    height: 50px; /* Altura da imagem do logo */
+    border-radius: 50%; /* Imagem em forma de círculo */
+    margin-right: 15px; /* Margem à direita */
+}
+
+.avaliacao {
+    background: #007b99; /* Fundo da avaliação */
+    color: white; /* Cor do texto */
+    padding: 15px; /* Preenchimento */
+    text-align: center; /* Alinha o texto ao centro */
+    margin: 20px; /* Margem externa */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+.produtos {
+    display: flex; /* Layout flexível para os produtos */
+    flex-wrap: wrap; /* Permite quebra de linha dos produtos */
+    justify-content: center; /* Centraliza os produtos */
+    gap: 20px; /* Espaçamento entre os produtos */
+    padding: 20px; /* Preenchimento */
+}
+
+.produto {
+    background: white; /* Fundo dos produtos */
+    padding: 10px; /* Preenchimento */
+    text-align: center; /* Alinha o texto ao centro */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    width: 150px; /* Largura dos produtos */
+}
+
+.produto img {
+    width: 100px; /* Largura das imagens dos produtos */
+    height: auto; /* Ajuste automático da altura */
+}
+
+footer {
+    background: #003d52; /* Fundo do rodapé */
+    color: white; /* Cor do texto */
+    text-align: center; /* Alinha o texto ao centro */
+    padding: 10px; /* Preenchimento */
+    margin-top: 20px; /* Margem superior */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; } /* Início da animação com opacidade 0 */
+    to { opacity: 1; } /* Fim da animação com opacidade 1 */
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; } /* Início da animação com posição acima da tela e opacidade 0 */
+    to { transform: translateY(0); opacity: 1; } /* Fim da animação com posição normal e opacidade 1 */
+}
+
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column; /* Organiza os itens do menu em uma coluna */
+        display: none; /* Oculta o menu por padrão em telas pequenas */
+    }
+    .menu a {
+        display: block; /* Exibe os links como blocos */
+        padding: 10px; /* Preenchimento interno */
+        text-align: center; /* Alinha os links ao centro */
+    }
+    .menu-toggle {
+        display: block; /* Exibe o botão de toggle */
+    }
+}

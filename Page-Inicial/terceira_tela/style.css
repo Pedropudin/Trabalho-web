@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0; /* Remove preenchimento padrão */
+    box-sizing: border-box; /* Inclui bordas e preenchimento no cálculo de largura/altura */
+    font-family: Arial, sans-serif; /* Define a fonte padrão */
+}
+
+body {
+    background-color: #f4f4f4; /* Cor de fundo da página */
+}
+
+header {
+    background-color: #004d66; /* Fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+    padding: 10px; /* Preenchimento do cabeçalho */
+    text-align: center; /* Alinha o texto ao centro */
+}
+
+nav {
+    display: flex; /* Layout flexível para navegação */
+    justify-content: space-between; /* Espaçamento entre os itens */
+    align-items: center; /* Alinha os itens verticalmente */
+    padding: 10px; /* Preenchimento interno */
+}
+
+.menu {
+    display: flex; /* Flexbox para o menu */
+    justify-content: center; /* Centraliza os itens */
+    gap: 15px; /* Espaçamento entre os links */
+    background-color: #003d52; /* Fundo do menu */
+    padding: 10px; /* Preenchimento do menu */
+}
+
+.menu a {
+    color: white; /* Cor dos links */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.menu-toggle {
+    display: none; /* Oculta o botão de toggle */
+    background: none; /* Remove fundo */
+    border: none; /* Remove borda */
+    color: white; /* Cor do texto */
+    font-size: 20px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor de ponteiro */
+}
+
+.compras {
+    display: flex; /* Flexbox para a seção de compras */
+    align-items: center; /* Alinha verticalmente os itens */
+    padding: 20px; /* Preenchimento */
+    background: white; /* Fundo branco */
+    margin: 20px; /* Margem externa */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+.logo-img {
+    width: 50px; /* Largura da imagem do logo */
+    height: 50px; /* Altura da imagem do logo */
+    border-radius: 50%; /* Imagem em forma de círculo */
+    margin-right: 15px; /* Margem à direita */
+}
+
+.avaliacao {
+    background: #007b99; /* Fundo da avaliação */
+    color: white; /* Cor do texto */
+    padding: 15px; /* Preenchimento */
+    text-align: center; /* Alinha o texto ao centro */
+    margin: 20px; /* Margem externa */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+.produtos {
+    display: flex; /* Flexbox para os produtos */
+    flex-wrap: wrap; /* Permite quebra de linha */
+    justify-content: center; /* Centraliza os produtos */
+    gap: 20px; /* Espaçamento entre os produtos */
+    padding: 20px; /* Preenchimento */
+}
+
+.produto {
+    background: white; /* Fundo do produto */
+    padding: 10px; /* Preenchimento */
+    text-align: center; /* Alinha o texto ao centro */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    width: 150px; /* Largura do produto */
+}
+
+.produto img {
+    width: 100px; /* Largura da imagem do produto */
+    height: auto; /* Ajuste automático da altura */
+}
+
+footer {
+    background: #003d52; /* Fundo do rodapé */
+    color: white; /* Cor do texto */
+    text-align: center; /* Alinha o texto ao centro */
+    padding: 10px; /* Preenchimento */
+    margin-top: 20px; /* Margem superior */
+}
+
+@media (max-width: 768px) { /* Media querie para ambientes mobile */
+    .menu {
+        flex-direction: column; /* Organiza os itens do menu em uma coluna */
+        display: none; /* Oculta o menu por padrão */
+    }
+    .menu a {
+        display: block; /* Exibe os links como blocos */
+        padding: 10px;
+        text-align: center;
+    }
+    .menu-toggle {
+        display: block; /* Exibe o botão de toggle */
+    }
+}

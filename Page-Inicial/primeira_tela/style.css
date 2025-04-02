@@ -1,0 +1,167 @@
+* { /* seletor universal: serve para toda a página */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilização Geral */
+body {
+    background-color: #eaf6f6;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Container Central */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+/* Efeito ao passar o mouse no container */
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Logo */
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efeito ao passar o mouse na logo */
+.logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Títulos */
+h2 {
+    color: #003b5c;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.descricao {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Botão de Cadastro */
+.cadastro {
+    background-color: #003b5c;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Efeito no Botão */
+.cadastro:hover {
+    background-color: #005d8f;
+    transform: scale(1.05);
+}
+
+/* Seção de Fornecedores */
+h3 {
+    color: #003b5c;
+    margin: 20px 0 10px;
+}
+
+/* Ajuste de Imagens de Fornecedores */
+.fornecedores {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.fornecedores img {
+    width: 120px;
+    height: auto;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    border-radius: 8px;
+}
+
+/* Efeito ao Passar o Mouse nas Imagens */
+.fornecedores img:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Rodapé */
+.dados {
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* Botão de Voltar ao Topo */
+.seta {
+    display: block;
+    margin: 30px auto 10px;
+    width: 60px;
+}
+
+.seta img {
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efeito na Seta */
+.seta img:hover {
+    transform: scale(1.2) translateY(-5px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .fornecedores img {
+        width: 90px;
+    }
+
+    .cadastro {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 20px;
+    }
+
+    .descricao {
+        font-size: 14px;
+    }
+
+    .fornecedores {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .fornecedores img {
+        width: 80px;
+    }
+
+    .cadastro {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}

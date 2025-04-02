@@ -1,0 +1,120 @@
+* {
+    margin: 0; /* Reset de margem */
+    padding: 0; /* Reset de padding */
+    box-sizing: border-box; /* Inclui bordas e preenchimento no cálculo da largura/altura */
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+body {
+    background-color: #f4f4f4; /* Cor de fundo */
+}
+
+header {
+    background-color: #004d66; /* Fundo do cabeçalho */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Preenchimento */
+    text-align: center; /* Alinha o texto no centro */
+}
+
+nav {
+    display: flex; /* Layout flexível */
+    justify-content: space-between; /* Espaça os itens */
+    align-items: center; /* Alinha verticalmente */
+    padding: 10px; /* Preenchimento */
+}
+
+.menu {
+    display: flex; /* Linha flexível */
+    justify-content: center; /* Centraliza os links */
+    gap: 15px; /* Espaçamento entre os links */
+    background-color: #003d52; /* Fundo do menu */
+    padding: 10px; /* Preenchimento */
+}
+
+.menu a {
+    color: white; /* Cor dos links */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.menu-toggle {
+    display: none; /* Oculta o botão de toggle */
+    background: none; /* Remove fundo */
+    border: none; /* Remove borda */
+    color: white; /* Cor do texto */
+    font-size: 20px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor tipo ponteiro */
+}
+
+.compras {
+    display: flex; /* Layout flexível */
+    align-items: center; /* Alinha verticalmente */
+    padding: 20px; /* Preenchimento */
+    background: white; /* Fundo branco */
+    margin: 20px; /* Margem externa */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+.user-icon {
+    width: 50px; /* Largura do ícone */
+    height: 50px; /* Altura do ícone */
+    background: #007b99; /* Fundo do ícone */
+    color: white; /* Cor do texto */
+    font-size: 24px; /* Tamanho da fonte */
+    text-align: center; /* Alinha texto no centro */
+    line-height: 50px; /* Centraliza verticalmente */
+    border-radius: 50%; /* Torna o ícone circular */
+    margin-right: 15px; /* Margem à direita */
+}
+
+.produtos {
+    display: flex; /* Layout flexível */
+    flex-wrap: wrap; /* Permite quebra de linha */
+    justify-content: center; /* Centraliza os produtos */
+    gap: 20px; /* Espaçamento entre os produtos */
+    padding: 20px; /* Preenchimento */
+}
+
+.produto {
+    background: white; /* Fundo do produto */
+    padding: 10px; /* Preenchimento */
+    text-align: center; /* Alinha texto no centro */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    width: 180px; /* Largura do produto */
+}
+
+.produto img {
+    width: 120px; /* Largura da imagem */
+    height: auto; /* Ajuste automático da altura */
+}
+
+.preco {
+    font-size: 14px; /* Tamanho da fonte do preço */
+    color: #333; /* Cor do preço */
+    margin-top: 5px; /* Margem superior */
+}
+
+footer {
+    background: #003d52; /* Fundo do rodapé */
+    color: white; /* Cor do texto */
+    text-align: center; /* Alinha texto no centro */
+    padding: 10px; /* Preenchimento */
+    margin-top: 20px; /* Margem superior */
+}
+
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column; /* Organiza os itens em coluna */
+        display: none; /* Oculta o menu por padrão */
+    }
+
+    .menu a {
+        display: block; /* Exibe links como blocos */
+        padding: 10px; /* Preenchimento */
+        text-align: center; /* Alinha os links no centro */
+    }
+
+    .menu-toggle {
+        display: block; /* Exibe o botão de toggle */
+    }
+}

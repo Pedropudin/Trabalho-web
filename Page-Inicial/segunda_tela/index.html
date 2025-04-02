@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header></header>
+
+<div class="container">
+    <div class="user-options">
+        <button class="user-btn" onclick="mostrarFormulario('cliente')">Cliente</button>
+        <button class="user-btn" onclick="mostrarFormulario('admin')">Administrador</button>
+    </div>
+
+    <div id="form-cliente" class="login-box">
+        <p><strong>Nome</strong></p>
+        <p><strong>E-mail</strong></p>
+        <p>Login automático (gmail, rede social, outros)</p>
+    </div>
+
+    <div id="form-admin" class="login-box hidden">
+        <p><strong>Nome</strong></p>
+        <p><strong>Senha</strong></p>
+        <p>Token (código de segurança)</p>
+    </div>
+</div>
+
+<footer>
+    <p>Dados da “empresa” do site (fictícios): CEP, CNPJ, E-MAIL...</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
