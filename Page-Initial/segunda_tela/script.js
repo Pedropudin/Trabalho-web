@@ -1,19 +1,51 @@
 function mostrarFormulario(tipo) {
-    let formCliente = document.getElementById("form-cliente");
-    let formAdmin = document.getElementById("form-admin");
+  const formCliente = document.getElementById("form-cliente");
+  const formAdmin = document.getElementById("form-admin");
 
-    if (tipo === "cliente") {
-        formCliente.classList.add("show");
-        formCliente.classList.remove("hidden");
-        formAdmin.classList.remove("show");
-        setTimeout(() => formAdmin.classList.add("hidden"), 500); // Tempo da animação
-    } else if (tipo === "admin") {
-        formAdmin.classList.add("show");
-        formAdmin.classList.remove("hidden");
-        formCliente.classList.remove("show");
-        setTimeout(() => formCliente.classList.add("hidden"), 500);
-    }
+  if (tipo === "cliente") {
+    formCliente.classList.add("show");
+    formCliente.classList.remove("hidden");
+    formAdmin.classList.remove("show");
+    setTimeout(() => formAdmin.classList.add("hidden"), 400);
+  }
+
+  else {
+    formAdmin.classList.add("show");
+    formAdmin.classList.remove("hidden");
+    formCliente.classList.remove("show");
+    setTimeout(() => formCliente.classList.add("hidden"), 400);
+  }
 }
+
+function validarCliente() {
+  const nome = document.getElementById("nome-cliente").value;
+  const email = document.getElementById("email-cliente").value;
+
+  if (!nome || !email) {
+    alert("Preencha todos os campos do cliente.");
+    return false;
+  }
+
+  alert("Login do cliente enviado com sucesso!");
+  return true;
+}
+
+function validarAdmin() {
+  const nome = document.getElementById("nome-admin").value;
+  const senha = document.getElementById("senha-admin").value;
+  const token = document.getElementById("token").value;
+
+  if (!nome || !senha || !token) {
+    alert("Preencha todos os campos do administrador.");
+    return false;
+  }
+
+  alert("Login do administrador enviado com sucesso!");
+  return true;
+}
+
+lucide.createIcons(); // Ativa os ícones
+
 /*
 Inicialmente, o formulário de cliente aparece e o de administrador está oculto.
 

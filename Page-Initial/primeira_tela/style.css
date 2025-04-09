@@ -1,93 +1,91 @@
-* { /* seletor universal: serve para toda a página */
+/* Seletor universal: remove margens e preenchimentos padrão,
+   define a box-sizing para incluir bordas e paddings nas dimensões dos elementos */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* Fonte padrão da página */
 }
 
-/* Estilização Geral */
+/* Estilização geral da página */
 body {
-    background-color: #eaf6f6;
-    color: #333;
-    text-align: center;
-    padding: 20px;
+    background-color: #eaf6f6; /* Cor de fundo clara */
+    color: #333; /* Cor de texto padrão */
+    text-align: center; /* Centraliza textos por padrão */
+    padding: 20px; /* Espaçamento interno da página */
 }
 
-/* Container Central */
+/* Container principal do conteúdo */
 .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 30px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
+    max-width: 900px; /* Largura máxima */
+    margin: auto; /* Centraliza horizontalmente */
+    padding: 30px; /* Espaçamento interno */
+    background-color: white; /* Fundo branco */
+    border-radius: 12px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra ao redor */
 }
 
-/* Efeito ao passar o mouse no container */
-.container:hover {
-    transform: scale(1.02);
-}
-
-/* Logo */
+/* Estilo da logo */
 .logo {
     width: 120px;
     height: auto;
     margin-bottom: 15px;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out; /* Transição suave */
 }
 
 /* Efeito ao passar o mouse na logo */
 .logo:hover {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.1) rotate(5deg); /* Aumenta e gira levemente */
 }
 
-/* Títulos */
+/* Título principal (h2) */
 h2 {
-    color: #003b5c;
+    color: #003b5c; /* Azul escuro */
     font-size: 24px;
     margin-bottom: 10px;
 }
 
+/* Parágrafo descritivo */
 .descricao {
     font-size: 16px;
-    color: #666;
+    color: #666; /* Cinza escuro */
     margin-bottom: 20px;
 }
 
-/* Botão de Cadastro */
+/* Botão de cadastro */
 .cadastro {
-    background-color: #003b5c;
+    background-color: #003b5c; /* Azul escuro */
     color: white;
     border: none;
     padding: 12px 25px;
     font-size: 18px;
-    cursor: pointer;
+    cursor: pointer; /* Cursor de mãozinha */
     border-radius: 8px;
-    transition: background 0.3s, transform 0.2s;
+    transition: background 0.3s, transform 0.2s; /* Efeitos visuais */
 }
 
-/* Efeito no Botão */
+/* Efeito ao passar o mouse no botão */
 .cadastro:hover {
-    background-color: #005d8f;
-    transform: scale(1.05);
+    background-color: #005d8f; /* Azul mais claro */
+    transform: scale(1.05); /* Leve aumento */
 }
 
-/* Seção de Fornecedores */
+/* Título da seção de fornecedores */
 h3 {
     color: #003b5c;
     margin: 20px 0 10px;
 }
 
-/* Ajuste de Imagens de Fornecedores */
+/* Contêiner das imagens de fornecedores */
 .fornecedores {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: flex; /* Layout flexível em linha */
+    justify-content: center; /* Centraliza os itens */
+    flex-wrap: wrap; /* Permite quebra de linha */
+    gap: 20px; /* Espaço entre as imagens */
     margin-bottom: 20px;
 }
 
+/* Estilo das imagens dos fornecedores */
 .fornecedores img {
     width: 120px;
     height: auto;
@@ -95,41 +93,62 @@ h3 {
     border-radius: 8px;
 }
 
-/* Efeito ao Passar o Mouse nas Imagens */
+/* Efeito ao passar o mouse nas imagens */
 .fornecedores img:hover {
-    transform: scale(1.1);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1); /* Aumenta um pouco */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra */
 }
 
-/* Rodapé */
+/* Texto de rodapé fictício */
 .dados {
     font-size: 14px;
     color: #666;
     margin-top: 20px;
 }
 
-/* Botão de Voltar ao Topo */
-.seta {
-    display: block;
-    margin: 30px auto 10px;
-    width: 60px;
+/* Seta de retorno ao topo */
+.seta-retorno {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    z-index: 9999; /* Garante que fique acima de tudo, incluindo rodapé */
+    opacity: 0.9;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.seta img {
+.seta-retorno img {
     width: 100%;
-    transition: transform 0.3s ease-in-out;
+    height: auto;
+    object-fit: contain;
 }
 
-/* Efeito na Seta */
-.seta img:hover {
-    transform: scale(1.2) translateY(-5px);
+.seta-retorno:hover {
+    transform: scale(1.15) rotate(-3deg);
+    opacity: 1;
+    cursor: pointer;
 }
 
-/* Responsividade */
+/* Responsivo para celulares */
+@media (max-width: 480px) {
+    .seta-retorno {
+        width: 40px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+/* ---------------- RESPONSIVIDADE ---------------- */
+
+/* Para telas até 768px (tablet e celulares maiores) */
 @media (max-width: 768px) {
     .container {
         width: 90%;
         padding: 20px;
+    }
+
+    .logo {
+        width: 100px;
     }
 
     .fornecedores img {
@@ -142,6 +161,50 @@ h3 {
     }
 }
 
+/* ---------------- RODAPÉ ---------------- */
+
+/* Rodapé escuro */
+.rodape {
+    background-color: #1d1d1d;
+    color: #ccc;
+    padding: 25px 0 15px;
+    text-align: center;
+    margin-top: 40px;
+    position: relative; /* Garante que conteúdo fixo flutue acima */
+    z-index: 1; /* Mantém o rodapé abaixo da seta */
+}
+
+/* Informações do rodapé em linha */
+.rodape-conteudo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    font-size: 14px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.rodape-conteudo p,
+.rodape-conteudo a {
+    margin: 0;
+    color: #ccc;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.rodape-conteudo a:hover {
+    text-decoration: underline;
+}
+
+/* Copyright com cor visível */
+.copyright {
+    color: #aaa; /* cor mais clara para melhor contraste */
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+/* Para telas até 480px (celulares pequenos) */
 @media (max-width: 480px) {
     h2 {
         font-size: 20px;
@@ -149,6 +212,10 @@ h3 {
 
     .descricao {
         font-size: 14px;
+    }
+
+    .logo {
+        width: 80px;
     }
 
     .fornecedores {
@@ -163,5 +230,19 @@ h3 {
     .cadastro {
         font-size: 14px;
         padding: 8px 15px;
+    }
+
+    .rodape {
+        font-size: 12px;
+        padding: 10px 0;
+    }
+
+    .rodape-conteudo {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .copyright {
+        font-size: 10px;
     }
 }

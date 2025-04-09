@@ -2,38 +2,60 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Página de Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/lucide@latest"></script> <!-- Ícones -->
 </head>
+
 <body>
 
 <header></header>
 
 <div class="container">
     <div class="user-options">
-        <button class="user-btn" onclick="mostrarFormulario('cliente')">Cliente</button>
-        <button class="user-btn" onclick="mostrarFormulario('admin')">Administrador</button>
+        <button class="user-btn" onclick="mostrarFormulario('cliente')">
+            <i data-lucide="user"></i><br>Cliente
+        </button>
+        <button class="user-btn" onclick="mostrarFormulario('admin')">
+            <i data-lucide="shield"></i><br>Administrador
+        </button>
     </div>
 
-    <div id="form-cliente" class="login-box">
-        <p><strong>Nome</strong></p>
-        <p><strong>E-mail</strong></p>
-        <p>Login automático (gmail, rede social, outros)</p>
-    </div>
+    <!-- Formulário Cliente -->
+    <form id="form-cliente" class="login-box show" onsubmit="return validarCliente()">
+        <label for="nome-cliente">Nome</label>
+        <input type="text" id="nome-cliente" required>
+        <label for="email-cliente">E-mail</label>
+        <input type="email" id="email-cliente" required>
+        <button type="submit" class="btn-enviar">Entrar</button>
+    </form>
 
-    <div id="form-admin" class="login-box hidden">
-        <p><strong>Nome</strong></p>
-        <p><strong>Senha</strong></p>
-        <p>Token (código de segurança)</p>
-    </div>
+    <!-- Formulário Admin -->
+    <form id="form-admin" class="login-box hidden" onsubmit="return validarAdmin()">
+        <label for="nome-admin">Nome</label>
+        <input type="text" id="nome-admin" required>
+        <label for="senha-admin">Senha</label>
+        <input type="password" id="senha-admin" required>
+        <label for="token">Token de segurança</label>
+        <input type="text" id="token" required>
+        <button type="submit" class="btn-enviar">Entrar</button>
+    </form>
 </div>
 
 <footer>
-    <p>Dados da “empresa” do site (fictícios): CEP, CNPJ, E-MAIL...</p>
+    <div class="rodape-conteudo">
+        <p>000.000.000-00</p>
+        <p>email@gmail.com</p>
+        <p>Tel: (00) 00000-0000</p>
+        <p>Termos e condições</p>
+        <p>Endereço</p>
+    </div>
+    <p class="copyright">Copyright ©2025</p>
 </footer>
 
 <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,126 +1,122 @@
+/* RESET E CONFIGURAÇÃO GLOBAL */
 * {
-    margin: 0; /* Aplica um reset de margem em todos os elementos */
-    padding: 0; /* Aplica um reset de padding em todos os elementos */
-    box-sizing: border-box; /* Inclui bordas e preenchimento no cálculo de largura/altura */
-    font-family: Arial, sans-serif; /* Define a fonte padrão */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; /* Fonte padrão da página */
 }
 
 body {
-    background-color: #f4f4f4; /* Cor de fundo da página */
-    text-align: center; /* Alinha o texto ao centro */
+  background-color: #f4f4f4; /* Cinza claro de fundo */
+  text-align: center; /* Centraliza textos por padrão */
 }
 
+/* --- HEADER COM LOGO ESTILIZADA --- */
 header {
-    background-color: #004d66; /* Fundo do cabeçalho */
-    color: white; /* Cor do texto */
-    padding: 10px; /* Preenchimento interno */
-}
-
-nav {
-    display: flex; /* Layout flexível para navegação */
-    justify-content: space-between; /* Espaça os itens ao longo do eixo horizontal */
-    align-items: center; /* Alinha os itens verticalmente */
-    padding: 10px; /* Preenchimento */
-}
-
-.menu {
-    display: flex; /* Exibe os links do menu como uma linha flexível */
-    justify-content: center; /* Centraliza os links */
-    gap: 15px; /* Espaçamento entre os links */
-    background-color: #003d52; /* Fundo do menu */
-    padding: 10px; /* Preenchimento */
-}
-
-.menu a {
-    color: white; /* Cor dos links */
-    text-decoration: none; /* Remove sublinhado */
-}
-
-.menu-toggle {
-    display: none; /* Oculta o botão de toggle */
-    background: none; /* Remove fundo */
-    border: none; /* Remove borda */
-    color: white; /* Cor do texto */
-    font-size: 20px; /* Tamanho da fonte */
-    cursor: pointer; /* Altera o cursor para ponteiro */
-}
-
-.compras {
-    display: flex; /* Layout flexível para a seção de compras */
-    align-items: center; /* Alinha verticalmente os itens */
-    padding: 20px; /* Preenchimento */
-    background: white; /* Fundo branco */
-    margin: 20px; /* Margem externa */
-    border-radius: 10px; /* Bordas arredondadas */
+  background-color: #004d66; /* Azul escuro */
+  padding: 20px; /* Espaçamento interno */
 }
 
 .logo-img {
-    width: 50px; /* Largura da imagem do logo */
-    height: 50px; /* Altura da imagem do logo */
-    border-radius: 50%; /* Imagem em forma de círculo */
-    margin-right: 15px; /* Margem à direita */
+  width: 80px;
+  height: 80px;
+  border-radius: 50%; /* Deixa a imagem redonda */
+  object-fit: cover; /* Garante que a imagem não distorça */
+  transform: scale(1.1) rotate(-5deg); /* Aumenta e inclina a logo */
+  transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
 }
 
-.avaliacao {
-    background: #007b99; /* Fundo da avaliação */
-    color: white; /* Cor do texto */
-    padding: 15px; /* Preenchimento */
-    text-align: center; /* Alinha o texto ao centro */
-    margin: 20px; /* Margem externa */
-    border-radius: 10px; /* Bordas arredondadas */
+.logo-img:hover {
+  transform: scale(1.2) rotate(0deg); /* Foco em hover */
 }
 
-.produtos {
-    display: flex; /* Layout flexível para os produtos */
-    flex-wrap: wrap; /* Permite quebra de linha dos produtos */
-    justify-content: center; /* Centraliza os produtos */
-    gap: 20px; /* Espaçamento entre os produtos */
-    padding: 20px; /* Preenchimento */
+/* --- CONTAINER DE LOGOUT --- */
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 60vh; /* Garante altura mínima na tela */
 }
 
-.produto {
-    background: white; /* Fundo dos produtos */
-    padding: 10px; /* Preenchimento */
-    text-align: center; /* Alinha o texto ao centro */
-    border-radius: 10px; /* Bordas arredondadas */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
-    width: 150px; /* Largura dos produtos */
+.logout-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra sutil */
+  max-width: 400px;
+  width: 90%;
+  animation: fadeIn 1s ease-in; /* Animação ao entrar */
 }
 
-.produto img {
-    width: 100px; /* Largura das imagens dos produtos */
-    height: auto; /* Ajuste automático da altura */
+.logout-box h2 {
+  margin-bottom: 20px;
 }
 
+.logout-box p {
+  margin-bottom: 10px;
+}
+
+.home-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #004d66;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.home-button:hover {
+  background-color: #007b99; /* Azul mais claro ao passar o mouse */
+}
+
+/* --- RODAPÉ DIVIDIDO --- */
 footer {
-    background: #003d52; /* Fundo do rodapé */
-    color: white; /* Cor do texto */
-    text-align: center; /* Alinha o texto ao centro */
-    padding: 10px; /* Preenchimento */
-    margin-top: 20px; /* Margem superior */
+  background-color: #003d52; /* Azul ainda mais escuro */
+  color: white;
+  padding: 20px 10px;
 }
 
+.footer-top {
+  margin-bottom: 10px; /* Espaço entre topo e parte de baixo */
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.footer-bottom div {
+  margin: 5px;
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: #ccc; /* Texto do rodapé com menor contraste */
+}
+
+/* --- ANIMAÇÕES --- */
 @keyframes fadeIn {
-    from { opacity: 0; } /* Início da animação com opacidade 0 */
-    to { opacity: 1; } /* Fim da animação com opacidade 1 */
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; } /* Início da animação com posição acima da tela e opacidade 0 */
-    to { transform: translateY(0); opacity: 1; } /* Fim da animação com posição normal e opacidade 1 */
-}
-
+/* --- RESPONSIVIDADE --- */
 @media (max-width: 768px) {
-    .menu {
-        flex-direction: column; /* Organiza os itens do menu em uma coluna */
-        display: none; /* Oculta o menu por padrão em telas pequenas */
-    }
-    .menu a {
-        display: block; /* Exibe os links como blocos */
-        padding: 10px; /* Preenchimento interno */
-        text-align: center; /* Alinha os links ao centro */
-    }
-    .menu-toggle {
-        display: block; /* Exibe o botão de toggle */
-    }
+  .logout-box {
+    width: 95%; /* Adapta o tamanho do box */
+    padding: 20px;
+  }
+
+  .footer-bottom {
+    flex-direction: column; /* Empilha os itens */
+    align-items: center;
+    text-align: center;
+  }
 }
