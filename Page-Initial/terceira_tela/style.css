@@ -1,0 +1,282 @@
+/* RESET e estilo base para todos os elementos */
+* {
+    margin: 0; /* Remove margens padrão */
+    padding: 0; /* Remove espaçamentos internos padrão */
+    box-sizing: border-box; /* Faz com que largura/altura incluam padding e borda */
+    font-family: Arial, sans-serif; /* Define fonte padrão */
+}
+
+body {
+    background-color: #f4f4f4; /* Cor de fundo suave */
+}
+
+/* CABEÇALHO */
+header {
+    background-color: #004d66; /* Fundo azul escuro */
+    color: white; /* Texto branco */
+    padding: 10px; /* Espaçamento interno */
+}
+
+/* BARRA DE NAVEGAÇÃO */
+nav {
+    display: flex; /* Usa Flexbox */
+    justify-content: space-between; /* Espaço entre logo, busca e botões */
+    align-items: center; /* Alinha verticalmente */
+    padding: 10px;
+}
+
+/* CAMPO DE BUSCA */
+.search-bar {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+/* LOGO PRINCIPAL */
+.logo-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Formato circular */
+    margin-right: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
+    cursor: pointer;
+}
+
+/* EFEITO HOVER DA LOGO */
+.logo-img:hover {
+    transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
+}
+
+/* BOTÕES DO TOPO */
+.buttons button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #007b99; /* Cor de fundo azul */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* MENU PRINCIPAL (links do topo) */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    background-color: #003d52;
+    padding: 10px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none; /* Remove sublinhado */
+}
+
+/* BOTÃO PARA ABRIR MENU EM TELAS PEQUENAS */
+.menu-toggle {
+    display: none; /* Escondido por padrão, só aparece no mobile */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
+.compras {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    margin: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* CARTÃO DE AVALIAÇÃO (clientes, estrelas, etc) */
+.avaliacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #007b99;
+    color: white;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+/* IMAGEM DENTRO DA AVALIAÇÃO */
+.avaliacao img {
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    border-radius: 5px;
+    background: white;
+    padding: 3px;
+}
+
+/* TEXTO DA AVALIAÇÃO */
+.avaliacao p {
+    flex: 1;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* BOTÃO NA AVALIAÇÃO */
+.avaliacao button {
+    padding: 8px 15px;
+    background: #005d73;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ÁREA DE PRODUTOS (galeria) */
+.produtos {
+    display: flex;
+    flex-wrap: wrap; /* Quebra linha quando necessário */
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* CARTÃO DE PRODUTO INDIVIDUAL */
+.produto {
+    background: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 150px;
+}
+
+.produto img {
+    width: 100px;
+    height: auto;
+}
+
+/* RODAPÉ */
+footer {
+    background: #003d52;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 0.9rem;
+    gap: 10px;
+}
+
+footer div {
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+}
+
+footer p {
+    margin: 5px 10px;
+}
+
+/* CONTEÚDO DO RODAPÉ EM LINHA */
+.rodape-conteudo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        display: none; /* Menu escondido inicialmente */
+    }
+
+    .menu a {
+        display: block;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: block; /* Mostra botão no mobile */
+    }
+
+    .avaliacao {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .avaliacao p {
+        margin: 10px 0;
+    }
+
+    .avaliacao img {
+        margin-bottom: 10px;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .rodape-conteudo {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .rodape-conteudo p {
+        font-size: 13px;
+    }
+
+    .copyright {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    .compras {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .produtos {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .produto {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .buttons button {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-bar {
+        width: 100%;
+        max-width: 300px;
+    }
+}

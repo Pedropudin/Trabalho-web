@@ -1,0 +1,163 @@
+/* Reset básico e fonte padrão para todos os elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Cor de fundo geral do corpo da página */
+body {
+  background-color: #f4f4f4;
+}
+
+/* Cabeçalho superior com fundo azul petróleo */
+header {
+  height: 80px;
+  background-color: #006d84;
+}
+
+/* Container central da página */
+.container {
+  max-width: 600px;              /* Limita largura do conteúdo */
+  margin: 30px auto;             /* Centraliza na horizontal com margem vertical */
+  text-align: center;
+  padding: 20px;
+}
+
+/* Área dos botões (Cliente/Admin) */
+.user-options {
+  display: flex;                 /* Alinha botões lado a lado */
+  justify-content: center;
+  gap: 20px;                     /* Espaço entre botões */
+  margin-bottom: 20px;
+}
+
+/* Botões circulares para selecionar perfil */
+.user-btn {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;           /* Deixa o botão redondo */
+  border: 2px solid black;
+  background-color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.3s;             /* Suaviza mudanças */
+  display: flex;
+  flex-direction: column;       /* Ícone em cima do texto */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efeito visual ao passar o mouse no botão */
+.user-btn:hover {
+  background-color: #ddd;
+}
+
+/* Estilo do ícone SVG dentro dos botões */
+.user-btn svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 5px;
+}
+
+/* Estilo base do formulário (invisível por padrão) */
+.login-box {
+  background-color: #e2e2e2;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: left;
+  opacity: 0;                           /* Transparente */
+  transform: translateY(-10px);        /* Move levemente para cima */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  display: none;                       /* Escondido */
+}
+
+/* Quando ativo, o formulário aparece com transição */
+.login-box.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);            /* Volta à posição original */
+}
+
+/* Estilo das labels dos inputs */
+.login-box label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Campos de entrada */
+.login-box input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+
+/* Botão de envio */
+.btn-enviar {
+  background-color: #006d84;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+/* Efeito ao passar o mouse no botão de envio */
+.btn-enviar:hover {
+  background-color: #004f63;
+}
+
+/* Rodapé */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px 10px;
+  margin-top: 40px;
+}
+
+/* Bloco de informações do rodapé */
+.rodape-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Texto padrão do rodapé */
+footer p {
+  margin: 0;
+}
+
+/* Direitos autorais em fonte menor e cinza */
+footer .copyright {
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* ----------- Responsividade ----------- */
+/* Ajustes para telas pequenas (celulares) */
+@media (max-width: 500px) {
+  .user-options {
+    flex-direction: column;     /* Botões um embaixo do outro */
+  }
+
+  .user-btn {
+    width: 80px;
+    height: 80px;
+    font-size: 11px;
+  }
+
+  .container {
+    width: 90%;
+    padding: 10px;
+  }
+}

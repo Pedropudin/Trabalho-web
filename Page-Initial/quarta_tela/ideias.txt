@@ -1,0 +1,65 @@
+<header>
+    <h1><img src="logo.png" alt="Logo" class="logo-img"></h1>
+
+    <!-- Botão menu responsivo -->
+    <button class="menu-toggle">☰</button>
+
+    <!-- Navegação -->
+    <nav class="menu">
+        <a href="index.html">Início</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="contato.html">Contato</a>
+    </nav>
+</header>
+
+/* Logo no topo com tamanho proporcional */
+.logo-img {
+    width: 80px;
+    height: auto;
+    transform: scale(1.1); /* aumenta levemente a logo */
+    transition: transform 0.3s ease;
+}
+
+/* Menu padrão */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #003d52;
+    padding: 10px;
+}
+
+/* Links do menu */
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Botão toggle do menu (visível apenas em telas menores) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Menu responsivo para dispositivos móveis */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu.show {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}

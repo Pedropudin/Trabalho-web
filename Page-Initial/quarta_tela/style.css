@@ -1,0 +1,209 @@
+/* Reset e estilo base para todos os elementos */
+* {
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove espaçamentos internos padrão */
+  box-sizing: border-box; /* Inclui padding e borda na largura total */
+  font-family: Arial, sans-serif; /* Define fonte padrão */
+}
+
+/* Fundo da página */
+body {
+  background-color: #f4f4f4; /* Cor clara de fundo */
+}
+
+/* Cabeçalho superior (sem padding nesse trecho) */
+header {
+  background-color: #004d66; /* Azul escuro */
+  color: white; /* Texto branco */
+}
+
+/* Barra de navegação principal */
+nav {
+  display: flex; /* Layout em linha */
+  justify-content: space-between; /* Itens espaçados */
+  align-items: center; /* Centraliza verticalmente */
+  padding: 10px;
+  flex-wrap: wrap; /* Permite quebra de linha */
+  gap: 10px;
+}
+
+/* Logo principal com responsividade e efeito de aumento */
+.logo-img {
+  width: 80px;
+  height: auto; /* Proporcional à largura */
+  transform: scale(1.1); /* Levemente maior */
+  transition: transform 0.3s ease; /* Suavidade no efeito */
+}
+
+/* Campo de busca no nav */
+.search-bar {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  width: 250px;
+}
+
+/* Botões à direita (login, cadastro, etc) */
+.buttons button {
+  margin-left: 10px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #007b99;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Ícone de menu que aparece apenas em telas pequenas */
+.menu-toggle {
+  display: none; /* Oculto por padrão */
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Menu horizontal com links */
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #003d52;
+  padding: 10px;
+}
+
+/* Estilo dos links do menu */
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Seção de compras, tipo uma chamada ou destaque */
+.compras {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  margin: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  justify-content: center;
+}
+
+/* Texto dentro da seção de compras */
+.compras p {
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Galeria de produtos */
+.produtos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Cada cartão de produto */
+.produto {
+  background: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra leve */
+  width: 180px;
+}
+
+/* Imagem dentro do produto */
+.produto img {
+  width: 120px;
+  height: auto;
+}
+
+/* Preço do produto */
+.preco {
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+}
+
+/* Rodapé da página */
+footer {
+  background: #003d52;
+  color: white;
+  text-align: center;
+  padding: 20px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-size: 0.9rem;
+  gap: 10px;
+}
+
+/* Cada bloco dentro do rodapé */
+footer div {
+  min-width: 120px;
+  margin: 5px;
+}
+
+/* MEDIA QUERY para telas pequenas (mobile) */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu {
+    flex-direction: column;
+    text-align: center;
+    display: none; /* Menu escondido inicialmente */
+  }
+
+  .menu.show {
+    display: flex; /* Mostra quando o botão de menu é ativado */
+  }
+
+  .menu-toggle {
+    display: block; /* Mostra o ícone de menu no mobile */
+  }
+
+  .menu a {
+    padding: 10px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .buttons button {
+    max-width: 200px;
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .compras p {
+    font-size: 1.3rem;
+  }
+
+  .produtos {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .produto {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}

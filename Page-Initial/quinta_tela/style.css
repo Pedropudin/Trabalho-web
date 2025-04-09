@@ -1,0 +1,122 @@
+/* RESET E CONFIGURAÇÃO GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; /* Fonte padrão da página */
+}
+
+body {
+  background-color: #f4f4f4; /* Cinza claro de fundo */
+  text-align: center; /* Centraliza textos por padrão */
+}
+
+/* --- HEADER COM LOGO ESTILIZADA --- */
+header {
+  background-color: #004d66; /* Azul escuro */
+  padding: 20px; /* Espaçamento interno */
+}
+
+.logo-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%; /* Deixa a imagem redonda */
+  object-fit: cover; /* Garante que a imagem não distorça */
+  transform: scale(1.1) rotate(-5deg); /* Aumenta e inclina a logo */
+  transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
+}
+
+.logo-img:hover {
+  transform: scale(1.2) rotate(0deg); /* Foco em hover */
+}
+
+/* --- CONTAINER DE LOGOUT --- */
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 60vh; /* Garante altura mínima na tela */
+}
+
+.logout-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra sutil */
+  max-width: 400px;
+  width: 90%;
+  animation: fadeIn 1s ease-in; /* Animação ao entrar */
+}
+
+.logout-box h2 {
+  margin-bottom: 20px;
+}
+
+.logout-box p {
+  margin-bottom: 10px;
+}
+
+.home-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #004d66;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.home-button:hover {
+  background-color: #007b99; /* Azul mais claro ao passar o mouse */
+}
+
+/* --- RODAPÉ DIVIDIDO --- */
+footer {
+  background-color: #003d52; /* Azul ainda mais escuro */
+  color: white;
+  padding: 20px 10px;
+}
+
+.footer-top {
+  margin-bottom: 10px; /* Espaço entre topo e parte de baixo */
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.footer-bottom div {
+  margin: 5px;
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: #ccc; /* Texto do rodapé com menor contraste */
+}
+
+/* --- ANIMAÇÕES --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+  .logout-box {
+    width: 95%; /* Adapta o tamanho do box */
+    padding: 20px;
+  }
+
+  .footer-bottom {
+    flex-direction: column; /* Empilha os itens */
+    align-items: center;
+    text-align: center;
+  }
+}
