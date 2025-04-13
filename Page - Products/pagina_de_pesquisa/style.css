@@ -1,0 +1,188 @@
+/*Definições gerais*/
+body, *{
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: Arial, sans-serif;
+}
+
+/*Definições para a primeira barra do site - botões, imagens, input de pesquisa,*/
+.header{
+    background-color: #0B7890;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size: medium;
+}
+#site-title{/*Título do site*/
+    padding: 10px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.search-bar {/*Input de pesquisa e botão*/
+    background-color: white; 
+    border: 0.5px solid white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 530px;
+    margin: 0 auto; 
+    box-sizing: border-box;
+}
+
+.search-bar input {/*Input de pesquisa*/
+    border: none;
+    color: white;
+    font-size: 16px;
+    flex: 1;
+    outline: none;
+}
+
+#header-buttons{/*Botões de login e cadastro*/
+    display: flex;
+    justify-content: end;
+    margin-left: auto;    
+}
+#header-buttons button{
+    background-color: #46A0B4;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/*Definições para segunda barra - botões com nomes de produtos da loja*/
+#barra-de-produtos{/*Barra de maneira geral*/
+    background-color: #46A0B4;
+    color: white;
+}
+#barra-de-produtos ul{ /*Lista de maneira conjunta*/
+    list-style: none;
+    justify-content: center;
+    display: flex; 
+    flex-direction: row;
+    margin-top: 0;
+    margin-left: 50px;
+    padding: 12px;
+    gap: 30px;
+}
+#barra-de-produtos li{
+    cursor: pointer;
+}
+
+/*Parte principal da loja - produtos, barra lateral de produtos*/
+#conteudo-principal{
+    display: flex;
+    flex-direction: row;
+    margin: 40px 100px 40px 150px;
+    gap: 30px;
+    padding: 10px;
+}
+
+/*Barra lateral de produtos*/
+#barra-lateral-de-produtos{
+    width: 15%; 
+    border-right: 2px solid #ccc;
+    display: flex;
+    flex-direction: column;
+}
+#barra-lateral-de-produtos ul{/*Definição apenas para a lista*/
+    list-style: none;
+    margin: 8px 30px 12px 8px;
+    padding: 8px;
+}
+#barra-lateral-de-produtos ul li{/*Definição para cada tópico da lista*/
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+/*Seção da página que reune os produtos que foram achados no resultado*/
+#display-de-produtos{
+    display: grid;
+    grid-template: 2fr / repeat(3, 1fr); 
+    gap: 80px; 
+    align-items: flex-start; 
+    margin: 20px auto auto 70px; 
+    padding: 10px;
+}
+#display-de-produtos img{/*Imagens dos produtos*/
+    margin: 20px; 
+    width: 150px;
+    height: 150px;
+}
+
+/*Imagens, legendas e botões dos itens*/
+.items{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: grey solid 2px;
+    padding: 10px;
+    cursor: pointer;
+}
+.items:hover{/*Responsividade ao passar pelo produto*/
+    transform: scale(1.02);
+}
+.items p{/*"Legenda" dos itens*/
+    padding: 10px;
+}
+/*Botão "comprar"*/
+.botao-de-compra-display-produtos{
+    border: #333;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.botao-de-compra-display-produtos:hover{/*Responsividade para o botão de compra*/
+    background-color:lightslategray;
+}
+
+/*Page changer*/
+#page-changer ul{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    list-style: none;
+}
+#page-changer button{
+    margin: 10px;
+    border: 10px solid #333;
+    border-radius: 8px;
+    padding: 5px 10px;
+    background-color: #333;
+    color:white;
+    cursor:pointer;
+}
+
+/*Rodápe*/
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 30px 40px;
+  margin-top: 40px;
+}
+
+.rodape-conteudo {/* Bloco de informações do rodapé */
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+footer p {/* Texto padrão do rodapé */
+  margin: 0;
+}
+
+footer .copyright {/* Direitos autorais em fonte menor e cinza */
+  font-size: 12px;
+  color: #ccc;
+}
