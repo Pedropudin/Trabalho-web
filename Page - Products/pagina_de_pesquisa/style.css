@@ -1,13 +1,20 @@
 /*Definições gerais*/
-body, *{
-    margin: 0; 
+body, * {
+    margin: 0;
     padding: 0;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 /*Definições para a primeira barra do site - botões, imagens, input de pesquisa,*/
-.header{
+.header {
     background-color: #0B7890;
     color: white;
     display: flex;
@@ -15,24 +22,30 @@ body, *{
     padding: 20px;
     font-size: medium;
 }
-#site-title{/*Título do site*/
+
+#logo {
+    cursor: pointer;
+}
+
+#site-title {/*Título do site*/
     padding: 10px;
     margin-left: 20px;
     cursor: pointer;
 }
+
 .search-bar {/*Input de pesquisa e botão*/
-    background-color: white; 
+    background-color: white;
     border: 0.5px solid white;
     border-radius: 8px;
     display: flex;
     align-items: center;
     padding: 10px;
     width: 530px;
-    margin: 0 auto; 
+    margin: 0 auto;
     box-sizing: border-box;
 }
 
-.search-bar input {/*Input de pesquisa*/
+.search-bar input {
     border: none;
     color: white;
     font-size: 16px;
@@ -40,12 +53,13 @@ body, *{
     outline: none;
 }
 
-#header-buttons{/*Botões de login e cadastro*/
+#header-buttons {/*Botões de login e cadastro*/
     display: flex;
     justify-content: end;
-    margin-left: auto;    
+    margin-left: auto;
 }
-#header-buttons button{
+
+#header-buttons button {
     background-color: #46A0B4;
     border-radius: 8px;
     padding: 10px;
@@ -55,134 +69,224 @@ body, *{
     cursor: pointer;
 }
 
-/*Definições para segunda barra - botões com nomes de produtos da loja*/
-#barra-de-produtos{/*Barra de maneira geral*/
+#barra-de-produtos {
     background-color: #46A0B4;
     color: white;
+    font-size: large;
 }
-#barra-de-produtos ul{ /*Lista de maneira conjunta*/
+
+#barra-de-produtos ul {
     list-style: none;
     justify-content: center;
-    display: flex; 
+    display: flex;
     flex-direction: row;
     margin-top: 0;
     margin-left: 50px;
     padding: 12px;
     gap: 30px;
 }
-#barra-de-produtos li{
+
+#barra-de-produtos li {
     cursor: pointer;
 }
 
-/*Parte principal da loja - produtos, barra lateral de produtos*/
-#conteudo-principal{
+#conteudo-principal {
     display: flex;
     flex-direction: row;
-    margin: 40px 100px 40px 150px;
-    gap: 30px;
-    padding: 10px;
+    flex-wrap: nowrap;
+    gap: 50px;
+    margin: 40px auto;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
 }
 
-/*Barra lateral de produtos*/
-#barra-lateral-de-produtos{
-    width: 15%; 
+#barra-lateral-de-produtos {
+    width: 20%;
+    max-width: 300px;
     border-right: 2px solid #ccc;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
+    padding: 12px;
+    box-sizing: border-box;
+    height: 100%;
 }
-#barra-lateral-de-produtos ul{/*Definição apenas para a lista*/
+
+#barra-lateral-de-produtos ul {
     list-style: none;
     margin: 8px 30px 12px 8px;
     padding: 8px;
 }
-#barra-lateral-de-produtos ul li{/*Definição para cada tópico da lista*/
+
+#barra-lateral-de-produtos ul li {
     margin-bottom: 8px;
     cursor: pointer;
 }
 
-/*Seção da página que reune os produtos que foram achados no resultado*/
-#display-de-produtos{
-    display: grid;
-    grid-template: 2fr / repeat(3, 1fr); 
-    gap: 80px; 
-    align-items: flex-start; 
-    margin: 20px auto auto 70px; 
-    padding: 10px;
-}
-#display-de-produtos img{/*Imagens dos produtos*/
-    margin: 20px; 
-    width: 150px;
-    height: 150px;
+#barra-lateral-de-produtos h4, #resultados h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    text-align: left;
 }
 
-/*Imagens, legendas e botões dos itens*/
-.items{
+#barra-lateral-de-produtos, #resultados {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#display-de-produtos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 20px auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#display-de-produtos .items img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.items {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
     text-align: center;
-    border: grey solid 2px;
-    padding: 10px;
-    cursor: pointer;
+    width: 180px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.items:hover{/*Responsividade ao passar pelo produto*/
-    transform: scale(1.02);
+
+.items:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.items p{/*"Legenda" dos itens*/
-    padding: 10px;
+
+#nome-produto {
+    margin: 10px 0;
+    font-weight: bold;
 }
-/*Botão "comprar"*/
-.botao-de-compra-display-produtos{
+
+.botao-de-compra-display-produtos {
     border: #333;
     background-color: #333;
     color: white;
-    padding: 5px 10px;
+    padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
-}
-.botao-de-compra-display-produtos:hover{/*Responsividade para o botão de compra*/
-    background-color:lightslategray;
+    margin-top: 10px;
+    align-self: center;
+    width: 120px;
+    text-align: center;
+    font-size: 14px;
 }
 
-/*Page changer*/
-#page-changer ul{
+.botao-de-compra-display-produtos:hover {
+    background-color: #0056b3;
+}
+
+#page-changer ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#page-changer ul {
     display: flex;
     justify-content: center;
     flex-direction: row;
     list-style: none;
+    margin-bottom: 40px;
 }
-#page-changer button{
+
+#page-changer button {
     margin: 10px;
     border: 10px solid #333;
     border-radius: 8px;
     padding: 5px 10px;
     background-color: #333;
-    color:white;
-    cursor:pointer;
+    color: white;
+    cursor: pointer;
 }
 
-/*Rodápe*/
 footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 30px 40px;
-  margin-top: 40px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
 }
 
-.rodape-conteudo {/* Bloco de informações do rodapé */
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-bottom: 10px;
-  font-size: 14px;
+.rodape-conteudo {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
-footer p {/* Texto padrão do rodapé */
-  margin: 0;
+footer p {
+    margin: 0;
 }
 
-footer .copyright {/* Direitos autorais em fonte menor e cinza */
-  font-size: 12px;
-  color: #ccc;
+footer .copyright {
+    font-size: 12px;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .rodape-conteudo {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 15px;
+    }
+
+    footer {
+        padding: 15px;
+    }
+
+    .items {
+        width: 90%;
+    }
+
+    #display-de-produtos {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        justify-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .rodape-conteudo {
+        gap: 10px;
+    }
+
+    .items {
+        width: 100%;
+    }
+
+    #display-de-produtos {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        justify-items: center;
+    }
 }
