@@ -4,13 +4,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pagina Produto</title>
+        <title>Pagina Pesquisa</title>
         <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
     </head>
     <body>
+        <!-- Header -->
         <nav class="header">
-            <img src="https://t3.ftcdn.net/jpg/03/65/42/00/360_F_365420014_xjsSDkKzrhq4gr9GFzP6S97H7MJyNI5B.jpg" width="50px" height="50px">
-            <a><h2 id="site-title">Eletrocute-se</h2></a>
+            <a><img id="logo" src="https://t3.ftcdn.net/jpg/03/65/42/00/360_F_365420014_xjsSDkKzrhq4gr9GFzP6S97H7MJyNI5B.jpg" width="50px" height="50px"></a>
+            <a><h2 id="site-title">Eletrocurte-se</h2></a>
            
             <div class="search-bar">
                 <input type="text" placeholder="Search..">
@@ -20,6 +21,8 @@
                 <button><a>Carrinho</a></button>
             </div>
         </nav>
+
+        <!-- Product Categories Bar -->
         <nav id="barra-de-produtos">
             <ul>
                 <li><a>Hardware</a></li>
@@ -28,7 +31,10 @@
                 <li><a>Notebooks</a></li>
             </ul>
         </nav>
+
+        <!-- Main Content -->
         <div id="conteudo-principal">
+            <!-- Sidebar -->
             <nav id="barra-lateral-de-produtos">
                 <h4>Categorias Relacionadas</h4>
                 <ul>
@@ -38,52 +44,37 @@
                     <li><a>Notebooks</a></li>
                 </ul>         
             </nav>
+
+            <!-- Search Results -->
             <div id="resultados">
                 <h4>Resultados para: "Headset Preto P2"</h4>
                 <nav id="display-de-produtos">
+                    <!-- Items -->
                     <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
+                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
                         <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
                         <button class="botao-de-compra-display-produtos">COMPRAR</button>
                     </div>
                     <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
+                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
                         <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
                         <button class="botao-de-compra-display-produtos">COMPRAR</button>
                     </div>
                     <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                    </div>                        
-                    <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                    </div>
-                                        <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
+                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
                         <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
                         <button class="botao-de-compra-display-produtos">COMPRAR</button>
                     </div>
                     <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                    </div>
-                    <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                    </div>                        
-                    <div class="items">
-                        <img  src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg"><a></a></img> 
+                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
                         <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
                         <button class="botao-de-compra-display-produtos">COMPRAR</button>
                     </div>
                 </nav>
             </div>
         </div>
+
+        <!-- Page Changer -->
         <div id="page-changer">
             <ul>
                 <li><button>1</button></li>
@@ -92,6 +83,8 @@
                 <li><button>4</button></li>
             </ul>
         </div>
+
+        <!-- Footer -->
         <footer>
             <div class="rodape-conteudo">
                 <p>000.000.000-00</p>
