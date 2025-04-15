@@ -19,17 +19,17 @@ header {
 
 /* Container central da página */
 .container {
-  max-width: 600px;              /* Limita largura do conteúdo */
-  margin: 30px auto;             /* Centraliza na horizontal com margem vertical */
+  max-width: 600px; /* Limita largura do conteúdo */
+  margin: 30px auto; /* Centraliza na horizontal com margem vertical */
   text-align: center;
   padding: 20px;
 }
 
 /* Área dos botões (Cliente/Admin) */
 .user-options {
-  display: flex;                 /* Alinha botões lado a lado */
+  display: flex; /* Alinha botões lado a lado */
   justify-content: center;
-  gap: 20px;                     /* Espaço entre botões */
+  gap: 20px; /* Espaço entre botões */
   margin-bottom: 20px;
 }
 
@@ -37,14 +37,14 @@ header {
 .user-btn {
   width: 100px;
   height: 100px;
-  border-radius: 50%;           /* Deixa o botão redondo */
+  border-radius: 50%; /* Deixa o botão redondo */
   border: 2px solid black;
   background-color: white;
   font-size: 12px;
   cursor: pointer;
-  transition: 0.3s;             /* Suaviza mudanças */
+  transition: 0.3s; /* Suaviza mudanças */
   display: flex;
-  flex-direction: column;       /* Ícone em cima do texto */
+  flex-direction: column; /* Ícone em cima do texto */
   align-items: center;
   justify-content: center;
 }
@@ -67,17 +67,17 @@ header {
   padding: 20px;
   border-radius: 12px;
   text-align: left;
-  opacity: 0;                           /* Transparente */
-  transform: translateY(-10px);        /* Move levemente para cima */
+  opacity: 0; /* Transparente */
+  transform: translateY(-10px); /* Move levemente para cima */
   transition: opacity 0.4s ease, transform 0.4s ease;
-  display: none;                       /* Escondido */
+  display: none; /* Escondido */
 }
 
 /* Quando ativo, o formulário aparece com transição */
 .login-box.show {
   display: block;
   opacity: 1;
-  transform: translateY(0);            /* Volta à posição original */
+  transform: translateY(0); /* Volta à posição original */
 }
 
 /* Estilo das labels dos inputs */
@@ -113,41 +113,59 @@ header {
   background-color: #004f63;
 }
 
-/* Rodapé */
+/* Rodapé principal */
 footer {
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 20px 10px;
+  padding: 30px 40px;
   margin-top: 40px;
 }
 
-/* Bloco de informações do rodapé */
+/* Informações rápidas no topo */
+.footer-top {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* Conteúdo principal em grade */
 .rodape-conteudo {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
   margin-bottom: 10px;
   font-size: 14px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Texto padrão do rodapé */
-footer p {
+/* Texto e links */
+.rodape-conteudo p,
+.rodape-conteudo a {
   margin: 0;
+  color: #ccc;
+  text-decoration: none;
 }
 
-/* Direitos autorais em fonte menor e cinza */
+.rodape-conteudo a:hover {
+  text-decoration: underline;
+}
+
+/* Rodapé inferior */
 footer .copyright {
   font-size: 12px;
   color: #ccc;
+  margin-top: 15px;
 }
 
 /* ----------- Responsividade ----------- */
-/* Ajustes para telas pequenas (celulares) */
-@media (max-width: 500px) {
+/* Ajustes para telas médias e pequenas (tablets e celulares) */
+@media (max-width: 768px) {
+
   .user-options {
-    flex-direction: column;     /* Botões um embaixo do outro */
+    flex-direction: column; /* Botões um embaixo do outro */
   }
 
   .user-btn {
@@ -159,5 +177,22 @@ footer .copyright {
   .container {
     width: 90%;
     padding: 10px;
+  }
+
+  .rodape-conteudo {
+    grid-template-columns: 1fr; /* Coluna única no rodapé */
+    text-align: center;
+    gap: 15px;
+  }
+
+  footer {
+    padding: 20px;
+  }
+
+  .footer-top,
+  .rodape-conteudo p,
+  .rodape-conteudo a,
+  footer .copyright {
+    font-size: 12px; /* Texto levemente reduzido */
   }
 }

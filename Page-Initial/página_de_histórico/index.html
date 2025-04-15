@@ -1,3 +1,5 @@
+<!-- Esta é a página HTML do histórico de produtos visualizados pelo cliente no website. Envolve tanto produtos, de fato,
+comprados pelo usuário, quanto aqueles que ele somente conferiu como possibilidade de compra. -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -6,23 +8,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Página de Compras</title>
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Link para o Font Awesome, utilizado para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
 <body>
+
+<!-- Cabeçalho da página -->
 <header>
+    <!-- Navegação superior -->
     <nav>
+        <!-- Logo da empresa -->
         <h1><img src="imagens/logo.png" alt="Logo" class="logo-img" /></h1>
+
+        <!-- Barra de pesquisa -->
         <label>
             <input type="text" placeholder="Pesquisar..." class="search-bar" />
         </label>
+
+        <!-- Botão para abrir o menu lateral (caso tenha algum tipo de navegação adicional) -->
         <button class="menu-toggle">☰</button>
+
+        <!-- Botões de perfil, carrinho de compras e logout -->
         <div class="buttons">
             <button>Perfil</button>
             <button><i class="fa fa-shopping-cart"></i> Carrinho</button>
             <button>Sair</button>
         </div>
     </nav>
+
+    <!-- Menu de navegação de categorias de produtos -->
     <div class="menu">
         <a href="#">Hardware</a>
         <a href="#">Periféricos</a>
@@ -31,25 +47,59 @@
     </div>
 </header>
 
+<!-- Seção que exibe o título e data do histórico de compras -->
 <section class="compras">
     <p>O seu histórico<br />(Mês da compra)</p>
 </section>
 
+<!-- Seção de exibição de produtos do histórico -->
 <section class="produtos">
-    <div class="produto"><img src="imagens/controle_remoto.jpeg" alt="Produto" /><p>Descrição</p><p class="preco">R$ 299,00<br /><small>ou 12x R$ 24,90</small></p></div>
-    <div class="produto"><img src="imagens/liquidificador.jpeg" alt="Produto" /><p>Descrição</p><p class="preco">R$ 499,00<br /><small>ou 12x R$ 41,58</small></p></div>
-    <div class="produto"><img src="imagens/hardware.jpeg" alt="Produto" /><p>Descrição</p><p class="preco">R$ 1.199,00<br /><small>ou 12x R$ 99,90</small></p></div>
-    <div class="produto"><img src="imagens/televisão.jpeg" alt="Produto" /><p>Descrição</p><p class="preco">R$ 79,90<br /><small>ou 12x R$ 6,65</small></p></div>
-    <div class="produto"><img src="imagens/microondas.jpeg" alt="Produto" /><p>Descrição</p><p class="preco">R$ 2.999,00<br /><small>ou 12x R$ 249,90</small></p></div>
+    <!-- Cada produto é apresentado dentro de uma div com a classe 'produto' -->
+    <div class="produto">
+        <img src="imagens/controle_remoto.jpeg" alt="Produto" />
+        <p>Descrição</p>
+        <!-- Exibição do preço do produto -->
+        <p class="preco">R$ 299,00<br /><small>ou 12x R$ 24,90</small></p>
+    </div>
+    <div class="produto">
+        <img src="imagens/liquidificador.jpeg" alt="Produto" />
+        <p>Descrição</p>
+        <p class="preco">R$ 499,00<br /><small>ou 12x R$ 41,58</small></p>
+    </div>
+    <div class="produto">
+        <img src="imagens/hardware.jpeg" alt="Produto" />
+        <p>Descrição</p>
+        <p class="preco">R$ 1.199,00<br /><small>ou 12x R$ 99,90</small></p>
+    </div>
+    <div class="produto">
+        <img src="imagens/televisão.jpeg" alt="Produto" />
+        <p>Descrição</p>
+        <p class="preco">R$ 79,90<br /><small>ou 12x R$ 6,65</small></p>
+    </div>
+    <div class="produto">
+        <img src="imagens/microondas.jpeg" alt="Produto" />
+        <p>Descrição</p>
+        <p class="preco">R$ 2.999,00<br /><small>ou 12x R$ 249,90</small></p>
+    </div>
 </section>
 
+<!-- Rodapé -->
 <footer>
-    <div>000.000.000-00</div>
-    <div>email@gmail.com</div>
-    <div>Tel: (17) 98186-8574</div>
-    <div>Termos e Condições</div>
-    <div>Endereço</div>
-    <div>Copyright ©2025</div>
+    <!-- Informações e atendimento -->
+    <div class="footer-top">
+        Atendimento: (17) 98186-8574 — Seg. a Sex. das 08h às 18h
+    </div>
+
+    <!-- Informações de contato-->
+    <div class="rodape-conteudo">
+        <p>000.000.000-00</p>
+        <p>email@gmail.com</p>
+        <p>Tel: (17) 98186-8574</p>
+        <p><a href="#">Termos e Condições</a></p>
+        <p>Endereço</p>
+        <p><a href="#">Mídias Sociais</a></p>
+    </div>
+
 </footer>
 
 <script src="script.js"></script>

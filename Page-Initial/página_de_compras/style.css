@@ -157,37 +157,50 @@ nav {
     height: auto;
 }
 
-/* RODAPÉ */
 footer {
-    background: #003d52;
+    background-color: #003d52;
     color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-    font-size: 0.9rem;
-    gap: 10px;
-}
-
-footer div {
-    flex: 1;
-    min-width: 150px;
     text-align: center;
+    padding: 30px 40px;
+    margin-top: 40px;
 }
 
-footer p {
-    margin: 5px 10px;
+/* Informação de topo do rodapé */
+.footer-top {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 20px;
 }
 
-/* CONTEÚDO DO RODAPÉ EM LINHA */
+/* Bloco de informações em grade */
 .rodape-conteudo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     margin-bottom: 10px;
     font-size: 14px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Estilo para texto e links */
+.rodape-conteudo p,
+.rodape-conteudo a {
+    margin: 0;
+    color: #ccc;
+    text-decoration: none;
+}
+
+.rodape-conteudo a:hover {
+    text-decoration: underline;
+}
+
+/* Direitos autorais */
+footer .copyright {
+    font-size: 12px;
+    color: #ccc;
+    margin-top: 15px;
 }
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */

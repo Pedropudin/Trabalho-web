@@ -1,3 +1,4 @@
+<!-- Esta é a página HMTL de login, tanto para o cliente/usuário do site, quanto para o administrador do mesmo. -->
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,24 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Página de Login</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://unpkg.com/lucide@latest"></script> <!-- Ícones -->
+    <!-- Link para o Font Awesome, utilizado para ícones -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
 
 <header></header>
 
+<!-- Container Principal -->
 <div class="container">
+
+    <!-- Opções de Usuário (Cliente ou Administrador) -->
     <div class="user-options">
+        <!-- Botão para Cliente -->
         <button class="user-btn" onclick="mostrarFormulario('cliente')">
             <i data-lucide="user"></i><br>Cliente
         </button>
+
+        <!-- Botão para Administrador -->
         <button class="user-btn" onclick="mostrarFormulario('admin')">
             <i data-lucide="shield"></i><br>Administrador
         </button>
     </div>
 
     <!-- Formulário Cliente -->
+    <!-- Exibido quando o botão "Cliente" for clicado -->
     <form id="form-cliente" class="login-box show" onsubmit="return validarCliente()">
         <label for="nome-cliente">Nome</label>
         <input type="text" id="nome-cliente" required>
@@ -32,7 +41,8 @@
         <button type="submit" class="btn-enviar">Entrar</button>
     </form>
 
-    <!-- Formulário Admin -->
+    <!-- Formulário Administrador -->
+    <!-- Exibido quando o botão "Administrador" for clicado -->
     <form id="form-admin" class="login-box hidden" onsubmit="return validarAdmin()">
         <label for="nome-admin">Nome</label>
         <input type="text" id="nome-admin" required>
@@ -42,20 +52,32 @@
         <input type="text" id="token" required>
         <button type="submit" class="btn-enviar">Entrar</button>
     </form>
+
 </div>
 
+<!-- Rodapé -->
 <footer>
+    <!-- Informações de Atendimento -->
+    <div class="footer-top">
+        Atendimento: (00) 00000-0000 — Seg. a Sex. das 08h às 18h
+    </div>
+
+    <!-- Bloco de Informações de contato -->
     <div class="rodape-conteudo">
         <p>000.000.000-00</p>
         <p>email@gmail.com</p>
         <p>Tel: (00) 00000-0000</p>
-        <p>Termos e condições</p>
+        <p><a href="#">Termos e Condições</a></p>
         <p>Endereço</p>
+        <p><a href="#">Mídias Sociais</a></p>
     </div>
-    <p class="copyright">Copyright ©2025</p>
+
+    <!-- Direitos Autorais -->
+    <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 
 </html>

@@ -132,23 +132,50 @@ nav {
   margin-top: 5px;
 }
 
-/* Rodapé da página */
 footer {
-  background: #003d52;
+  background-color: #003d52;
   color: white;
   text-align: center;
-  padding: 20px 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  font-size: 0.9rem;
-  gap: 10px;
+  padding: 30px 40px;
+  margin-top: 40px;
 }
 
-/* Cada bloco dentro do rodapé */
-footer div {
-  min-width: 120px;
-  margin: 5px;
+/* Linha superior com informações rápidas */
+.footer-top {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* Conteúdo principal em grade */
+.rodape-conteudo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* três colunas */
+  gap: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Texto e links dentro do rodapé */
+.rodape-conteudo p,
+.rodape-conteudo a {
+  margin: 0;
+  color: #ccc;
+  text-decoration: none;
+}
+
+.rodape-conteudo a:hover {
+  text-decoration: underline;
+}
+
+/* Rodapé inferior */
+footer .copyright {
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 15px;
 }
 
 /* MEDIA QUERY para telas pequenas (mobile) */

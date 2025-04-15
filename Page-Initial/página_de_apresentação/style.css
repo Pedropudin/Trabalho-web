@@ -99,42 +99,103 @@ h3 {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra */
 }
 
-/* Texto de rodapé fictício */
-.dados {
-    font-size: 14px;
-    color: #666;
-    margin-top: 20px;
-}
+/* ---------------- BOTÃO DE RETORNO AO TOPO ---------------- */
 
-/* Seta de retorno ao topo */
+/* Estilo para o botão de "Voltar ao topo" */
 .seta-retorno {
     position: fixed;
     bottom: 25px;
     right: 25px;
-    width: 50px;
-    z-index: 9999; /* Garante que fique acima de tudo, incluindo rodapé */
+    z-index: 9999;
     opacity: 0.9;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.seta-retorno img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-.seta-retorno:hover {
-    transform: scale(1.15) rotate(-3deg);
-    opacity: 1;
+.seta-retorno .btn-retorno,
+.btn-retorno { /* Unificado para casos com ou sem hierarquia */
+    background-color: #003b5c; /* Azul escuro */
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
 }
 
-/* Responsivo para celulares */
-@media (max-width: 480px) {
-    .seta-retorno {
-        width: 40px;
-        bottom: 15px;
-        right: 15px;
+.seta-retorno .btn-retorno:hover,
+.btn-retorno:hover {
+    background-color: #005d8f; /* Azul mais claro */
+    transform: scale(1.05); /* Aumento suave */
+}
+
+/* ---------------- RODAPÉ ---------------- */
+/*Rodápe*/
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 30px 40px;
+    margin-top: 40px;
+}
+
+.rodape-conteudo { /* Bloco de informações do rodapé */
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+footer p { /* Texto padrão do rodapé */
+    margin: 0;
+}
+
+footer .copyright { /* Direitos autorais em fonte menor e cinza */
+    font-size: 12px;
+    color: #ccc;
+}
+
+/* Estilo para os links de "Termos e Condições" e "Mídias Sociais" */
+footer a {
+    color: #66b3ff; /* Azul claro */
+    text-decoration: none; /* Remove o sublinhado */
+    transition: color 0.3s ease; /* Transição suave para cor */
+}
+
+footer a:hover {
+    color: #3399ff; /* Azul mais escuro no hover */
+}
+
+footer a:visited {
+    color: #99ccff; /* Azul claro para links visitados */
+}
+
+/* ---------------- EFEITO DE ELETRICIDADE ---------------- */
+
+/* Estilo para as partículas de eletricidade */
+.efeito-eletrico {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #00bfff; /* Azul claro para a eletricidade */
+    border-radius: 50%;
+    animation: eletricidade 0.5s ease-out;
+    transform: scale(0.5);
+    pointer-events: none;
+    z-index: 99999;
+}
+
+/* Animação das partículas elétricas */
+@keyframes eletricidade {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
     }
 }
 
@@ -159,49 +220,17 @@ h3 {
         font-size: 16px;
         padding: 10px 20px;
     }
-}
 
-/* ---------------- RODAPÉ ---------------- */
+    .rodape-conteudo {
+        grid-template-columns: 1fr; /* Empilha colunas no celular/tablet */
+        grid-template-rows: auto;
+        gap: 15px;
+    }
 
-/* Rodapé escuro */
-.rodape {
-    background-color: #1d1d1d;
-    color: #ccc;
-    padding: 25px 0 15px;
-    text-align: center;
-    margin-top: 40px;
-    position: relative; /* Garante que conteúdo fixo flutue acima */
-    z-index: 1; /* Mantém o rodapé abaixo da seta */
-}
-
-/* Informações do rodapé em linha */
-.rodape-conteudo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    font-size: 14px;
-    max-width: 900px;
-    margin: auto;
-}
-
-.rodape-conteudo p,
-.rodape-conteudo a {
-    margin: 0;
-    color: #ccc;
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.rodape-conteudo a:hover {
-    text-decoration: underline;
-}
-
-/* Copyright com cor visível */
-.copyright {
-    color: #aaa; /* cor mais clara para melhor contraste */
-    font-size: 13px;
-    margin-top: 15px;
+    .seta-retorno .btn-retorno {
+        padding: 12px 22px;
+        font-size: 15px;
+    }
 }
 
 /* Para telas até 480px (celulares pequenos) */
@@ -232,17 +261,17 @@ h3 {
         padding: 8px 15px;
     }
 
-    .rodape {
+    footer {
         font-size: 12px;
-        padding: 10px 0;
-    }
-
-    .rodape-conteudo {
-        flex-direction: column;
-        gap: 10px;
+        padding: 15px;
     }
 
     .copyright {
         font-size: 10px;
+    }
+
+    .seta-retorno .btn-retorno {
+        padding: 10px 20px;
+        font-size: 14px;
     }
 }
