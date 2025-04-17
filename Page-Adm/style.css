@@ -2,6 +2,8 @@
     margin: 0px;
     padding: 0px;
     list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
 }
 
 a {
@@ -9,34 +11,119 @@ a {
     color: black;
 }
 
+header {
+    height: 135px;
+}
+
 .header {
     background-color: #0B7890; /*Cor de fundo*/
     padding-top: 15px; /*Define distância das bordas*/
     padding-bottom: 10px;
-    display: flex; /*Tipo de organização utilizada*/
+    display: flex;
     align-items: center; /*Alinha verticalmente*/
     justify-content: center; /*Coloca no meio da página*/
     gap: 10%; /*Distância entre os elementos*/
+    width: 100%;
 }
 
 #searchbar {
-    background-color: #D9D9D9; /*Cor de fundo*/
+    background-color: #D9D9D9; 
+    font-size: 16px;
     width: 25%;
     height: 0.8em;
     padding: 12px 24px;
     border-radius: 50px; /*Borda arredondada*/
     border: 1px solid #575756; /*Borda*/
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+    background-image: url(search-icon.png);
     background-repeat: no-repeat;
     background-size: 18px 18px;
-    background-position: 95% center;
+    background-position: 97% center;
     &::placeholder {
         color: #5a5a5a;
     }
+    /* Não consegui colocar a barra antes do ícone,
+    mas no geral tá legalzinho */
 }
 
 .header-navigator {
     background-color: #46A0B4;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%; 
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.header-navigator>nav {
+    height: 100%;
+    margin-left: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: center;
+}
+
+.header-navigator>nav>a {
+    height: 100%;
+    text-align: center;
+    width: 200px;
+    color: white;
+    border-right: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-navigator>nav>a.selected {
+    color: black;
+    text-decoration: underline;
+}
+
+.sidebar {
+    width: 210px;
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    background-color: #ECFCFF;
+}
+
+.sidebar>nav {
+    margin: 20px 10px 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.sidebar-separator {
+    border: 1px solid #46A0B4;
+    margin: -10px 0;
+    padding: 0;
+    width: 210px;
+}
+
+.sidebar>nav>a {
+    font-size: 18px;
+}
+
+.content {
+    height: 100%;
+    padding: 20px 20px 0 20px;
+    position: absolute;
+    top: 135px;
+    left: 210px;
+    background-color: #ededed;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 20px 20px 30px 30px;
+    border: 2px solid #ebebeb;
+    box-shadow: 2px 4px 4px rgba(0,0,0,0.25);
+    padding: 10px 20px ;
+    width: 100%;
+}
+
+.card-name {
+    font-size: 2em;
+    margin: 10px 0 15px 0;
 }
