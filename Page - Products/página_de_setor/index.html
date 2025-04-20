@@ -1,35 +1,38 @@
-<!-- HTML da página de setor -->
-
+<!--Aqui temos o HTML da página que aparecerá pro usuário mediante escolha de setor.-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pagina Setor</title>
+        <title>Pagina Pesquisa</title>
         <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
     </head>
     <body>
-        <nav class="header">
-            <img id="logo"  src="https://t3.ftcdn.net/jpg/03/65/42/00/360_F_365420014_xjsSDkKzrhq4gr9GFzP6S97H7MJyNI5B.jpg" width="50px" height="50px">
-            <a><h2 id="site-title">Eletrocurte-se</h2></a>
-           
-            <div class="search-bar">
-                <input type="text" placeholder="Search..">
-            </div>     
-            <div id="header-buttons">
-                <button><a>Login</a></button>
-                <button><a>Carrinho</a></button>
+        <header>
+            <nav class="header">
+                <a><img id="logo" src="https://t3.ftcdn.net/jpg/03/65/42/00/360_F_365420014_xjsSDkKzrhq4gr9GFzP6S97H7MJyNI5B.jpg" width="50px" height="50px"></a>
+                <a><h2 id="site-title">Eletrocurte-se</h2></a>
+            
+                <div class="search-bar">
+                    <input type="text" placeholder="Search..">
+                </div>     
+                <div id="header-buttons">
+                    <button><a>Login</a></button>
+                    <button><a>Carrinho</a></button>
+                </div>
+            </nav>
+
+            <!-- Product Categories Bar -->
+            <div class="menu">
+                <a href="#">Hardware</a>
+                <a href="#">Periféricos</a>
+                <a href="#">Computadores</a>
+                <a href="#">Celulares</a>
             </div>
-        </nav>
-        <nav id="barra-de-produtos">
-            <ul>
-                <li><a>Hardware</a></li>
-                <li><a>Periféricos</a></li>
-                <li><a>Celulares</a></li>
-                <li><a>Notebooks</a></li>
-            </ul>
-        </nav>
+        </header>
+        <!-- Main Content -->
         <div id="conteudo-principal">
+            <!-- Sidebar -->
             <nav id="barra-lateral-de-produtos">
                 <h4>Categorias Relacionadas</h4>
                 <ul>
@@ -39,6 +42,7 @@
                     <li><a>Notebooks</a></li>
                 </ul>         
             </nav>
+
             <div id="resultados">
                 <h4>Resultados para: "Hardware"</h4>
                 <nav id="display-de-produtos">
