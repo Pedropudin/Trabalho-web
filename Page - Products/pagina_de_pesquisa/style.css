@@ -1,4 +1,3 @@
-/*Definições gerais*/
 body, * {
     margin: 0;
     padding: 0;
@@ -7,33 +6,46 @@ body, * {
 }
 
 html, body {
+    background-color: white;
     height: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
 }
 
-/*Definições para a primeira barra do site - botões, imagens, input de pesquisa,*/
-.header {
-    background-color: #0B7890;
+header {
+    background-color: #004d66;
     color: white;
+    padding: 10px 15px;
+}
+
+.header {
     display: flex;
     align-items: center;
-    padding: 20px;
     font-size: medium;
 }
 
 #logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
-#site-title {/*Título do site*/
+#logo:hover {
+    transform: rotate(10deg) scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+#site-title {
     padding: 10px;
-    margin-left: 20px;
+    margin-left: 10px;
     cursor: pointer;
 }
 
-.search-bar {/*Input de pesquisa e botão*/
+.search-bar {
     background-color: white;
     border: 0.5px solid white;
     border-radius: 8px;
@@ -47,50 +59,61 @@ html, body {
 
 .search-bar input {
     border: none;
-    color: white;
     font-size: 16px;
     flex: 1;
     outline: none;
 }
 
-#header-buttons {/*Botões de login e cadastro*/
+#header-buttons {
     display: flex;
     justify-content: end;
     margin-left: auto;
 }
 
 #header-buttons button {
-    background-color: #46A0B4;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 10px;
+    margin-left: 10px;
+    padding: 8px 12px;
     border: none;
+    background-color: #007b99;
     color: white;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-#barra-de-produtos {
-    background-color: #46A0B4;
-    color: white;
-    font-size: large;
-}
-
-#barra-de-produtos ul {
-    list-style: none;
-    justify-content: center;
+.menu {
     display: flex;
     flex-direction: row;
-    margin-top: 0;
-    margin-left: 50px;
-    padding: 12px;
-    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    background-color: #003d52;
+    padding: 8px;
+    gap: 10px;
 }
 
-#barra-de-produtos li {
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #007b99;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
     cursor: pointer;
 }
 
 #conteudo-principal {
+    flex: 1;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -100,10 +123,11 @@ html, body {
     box-sizing: border-box;
     width: 100%;
     max-width: 1200px;
+    height: auto;
 }
 
 #barra-lateral-de-produtos {
-    width: 20%;
+    width: 30%;
     max-width: 300px;
     border-right: 2px solid #ccc;
     display: flex;
@@ -111,17 +135,16 @@ html, body {
     flex-shrink: 0;
     padding: 12px;
     box-sizing: border-box;
-    height: 100%;
 }
 
 #barra-lateral-de-produtos ul {
     list-style: none;
-    margin: 8px 30px 12px 8px;
-    padding: 8px;
+    margin: 0;
+    padding: 0;
 }
 
 #barra-lateral-de-produtos ul li {
-    margin-bottom: 8px;
+    margin: 10px 0;
     cursor: pointer;
 }
 
@@ -147,6 +170,7 @@ html, body {
     margin: 20px auto;
     padding: 10px;
     box-sizing: border-box;
+    width: 100%;
 }
 
 #display-de-produtos .items img {
@@ -164,6 +188,12 @@ html, body {
     text-align: center;
     width: 180px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.items img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
 .items:hover {
@@ -202,14 +232,6 @@ html, body {
     gap: 10px;
 }
 
-#page-changer ul {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    list-style: none;
-    margin-bottom: 40px;
-}
-
 #page-changer button {
     margin: 10px;
     border: 10px solid #333;
@@ -220,12 +242,19 @@ html, body {
     cursor: pointer;
 }
 
+#page-changer {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
 footer {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 20px;
-    margin-top: auto;
+    margin-top: 20px;
+    clear: both;
 }
 
 .rodape-conteudo {
@@ -262,10 +291,9 @@ footer .copyright {
     }
 
     #display-de-produtos {
-        display: grid;
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: center;
         gap: 25px;
-        justify-items: center;
     }
 }
 
@@ -284,9 +312,8 @@ footer .copyright {
     }
 
     #display-de-produtos {
-        display: grid;
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: center;
         gap: 20px;
-        justify-items: center;
     }
 }
