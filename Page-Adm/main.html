@@ -6,28 +6,35 @@
     <title>Eletrocurte-se: Admin</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
 <header>
+    <nav>
+        <div class="logo">
+            <img src="logo-ph.png" alt="Logo" class="logo-img">
+        </div>
 
-    <div class="header">
-        <img src="logo-ph.png" alt="Logo" width="80px">
+        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
 
-        <input type="text" placeholder="Pesquise" id="searchbar">
+        <label>
+            <input type="text" placeholder="Pesquisar..." class="search-bar">
+        </label>
 
-        <img src="avatar-ph.png" alt="Imagem de Perfil" width="80px">
+        <div class="buttons">
+            <button><i class="fas fa-user"></i> Perfil</button>
+            <button><i class="fas fa-shopping-cart"></i> Carrinho</button>
+            <button><i class="fas fa-sign-out-alt"></i> Sair</button>
+        </div>
+    </nav>
+
+    <div class="menu">
+        <a href="#">Desempenho</a>
+        <a href="#">Produtos</a>
+        <a href="#">Pendências</a>
     </div>
-
-    <div class="header-navigator">
-        <nav>
-            <a href="" class="selected">Desempenho</a>
-            <a href="">Produtos</a>
-            <a href="">Pendêcias</a>
-        </nav>
-    </div>
-    
 </header>
 
 <div class="page">
@@ -76,14 +83,22 @@
 </div>
 
 <footer>
+    <!-- Informações de Atendimento -->
+    <div class="footer-top">
+        Atendimento: (00) 00000-0000 — Seg. a Sex. das 08h às 18h
+    </div>
+
+    <!-- Bloco de Informações de contato -->
     <div class="rodape-conteudo">
         <p>000.000.000-00</p>
         <p>email@gmail.com</p>
         <p>Tel: (00) 00000-0000</p>
-        <p>Termos e condições</p>
+        <p><a href="#">Termos e Condições</a></p>
         <p>Endereço</p>
-        <p>Mídias Sociais</p>
+        <p><a href="#">Mídias Sociais</a></p>
     </div>
+
+    <!-- Direitos Autorais -->
     <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
