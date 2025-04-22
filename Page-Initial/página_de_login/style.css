@@ -23,14 +23,17 @@ header {
   margin: 30px auto; /* Centraliza na horizontal com margem vertical */
   text-align: center;
   padding: 20px;
+  position: relative;
 }
 
 /* Área dos botões (Cliente/Admin) */
 .user-options {
   display: flex; /* Alinha botões lado a lado */
-  justify-content: center;
-  gap: 20px; /* Espaço entre botões */
-  margin-bottom: 20px;
+  gap: 20px; /* Espaço entre os botões */
+  margin-top: 20px; /* Espaço do topo */
+  padding-top: 10px; /* Distância adicional do topo */
+  margin-bottom: 30px;
+  margin-top: -20px;
 }
 
 /* Botões circulares para selecionar perfil */
@@ -63,21 +66,21 @@ header {
 
 /* Estilo base do formulário (invisível por padrão) */
 .login-box {
-  background-color: #e2e2e2;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: left;
-  opacity: 0; /* Transparente */
-  transform: translateY(-10px); /* Move levemente para cima */
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  display: none; /* Escondido */
+  background-color: #e2e2e2; /* Cor de fundo da caixa de login */
+  padding: 20px; /* Espaçamento interno de 20px */
+  border-radius: 12px; /* Cantos arredondados */
+  text-align: left; /* Alinha o texto à esquerda */
+  display: none; /* Formulário oculto inicialmente */
+  opacity: 0; /* Torna o formulário transparente */
+  transform: translateY(-10px); /* Move a caixa levemente para cima */
+  transition: opacity 0.6s ease, transform 0.6s ease; /* Transições suaves para opacidade e movimento */
 }
 
-/* Quando ativo, o formulário aparece com transição */
+/* Quando o formulário é ativado, ele aparece com transição */
 .login-box.show {
-  display: block;
-  opacity: 1;
-  transform: translateY(0); /* Volta à posição original */
+  display: block; /* Torna o formulário visível e ocupa espaço */
+  opacity: 1; /* Torna o formulário completamente visível */
+  transform: translateY(0); /* Reseta a posição para o seu lugar original */
 }
 
 /* Estilo das labels dos inputs */
@@ -113,8 +116,9 @@ header {
   background-color: #004f63;
 }
 
-/* Rodapé principal */
+/* Rodapé */
 footer {
+  width: 100%;
   background-color: #333;
   color: white;
   text-align: center;
@@ -122,56 +126,54 @@ footer {
   margin-top: 40px;
 }
 
-/* Informações rápidas no topo */
-.footer-top {
-  font-size: 14px;
-  color: #ccc;
-  margin-bottom: 20px;
-}
-
-/* Conteúdo principal em grade */
+/* Bloco de informações do rodapé */
 .rodape-conteudo {
   display: grid;
+  grid-template-rows: 1fr 1fr;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-bottom: 10px;
   font-size: 14px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-/* Texto e links */
-.rodape-conteudo p,
-.rodape-conteudo a {
+/* Texto do rodapé */
+footer p {
   margin: 0;
-  color: #ccc;
-  text-decoration: none;
 }
 
-.rodape-conteudo a:hover {
-  text-decoration: underline;
-}
-
-/* Rodapé inferior */
+/* Texto de direitos autorais */
 footer .copyright {
   font-size: 12px;
   color: #ccc;
-  margin-top: 15px;
+}
+
+/* Links no rodapé */
+footer a {
+  color: #66b3ff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #3399ff;
+}
+
+footer a:visited {
+  color: #99ccff;
+}
+
+.footer-top {
+  font-size: 12px;
+  margin-bottom: 15px;
 }
 
 /* ----------- Responsividade ----------- */
-/* Ajustes para telas médias e pequenas (tablets e celulares) */
+/* Ajustes para telas médias (tablets e celulares) - 768px */
 @media (max-width: 768px) {
-
   .user-options {
     flex-direction: column; /* Botões um embaixo do outro */
-  }
-
-  .user-btn {
-    width: 80px;
-    height: 80px;
-    font-size: 11px;
+    gap: 10px; /* Espaço reduzido entre botões */
+    align-items: center; /* Centraliza os botões */
   }
 
   .container {
@@ -190,9 +192,45 @@ footer .copyright {
   }
 
   .footer-top,
-  .rodape-conteudo p,
-  .rodape-conteudo a,
+  .rodape-conteúdo p,
+  .rodape-conteúdo a,
   footer .copyright {
     font-size: 12px; /* Texto levemente reduzido */
+  }
+}
+
+/* Ajustes para telas pequenas (celulares) - 480px */
+@media (max-width: 480px) {
+  /* Ajustes de largura e fonte para uma tela ainda menor */
+  .user-options {
+    gap: 5px; /* Reduz o espaço entre os botões */
+  }
+
+  .user-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 10px;
+  }
+
+  .container {
+    width: 95%;
+    padding: 8px;
+  }
+
+  .rodape-conteudo {
+    grid-template-columns: 1fr; /* Coluna única no rodapé */
+    text-align: center;
+    gap: 10px;
+  }
+
+  footer {
+    padding: 15px;
+  }
+
+  .footer-top,
+  .rodape-conteúdo p,
+  .rodape-conteúdo a,
+  footer .copyright {
+    font-size: 11px; /* Texto ainda mais reduzido */
   }
 }

@@ -1,4 +1,5 @@
-<!-- Esta é a página HMTL de login, tanto para o cliente/usuário do site, quanto para o administrador do mesmo. -->
+<!-- Esta é a página HMTL de login, a qual alterna entre os caminhos das páginas das funcionalidades do cliente e do
+administrador. -->
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -21,48 +22,43 @@
     <!-- Opções de Usuário (Cliente ou Administrador) -->
     <div class="user-options">
         <!-- Botão para Cliente -->
-        <button class="user-btn" onclick="mostrarFormulario('cliente')">
+        <button class="user-btn" id="btn-cliente">
             <i data-lucide="user"></i><br>Cliente
         </button>
 
         <!-- Botão para Administrador -->
-        <button class="user-btn" onclick="mostrarFormulario('admin')">
+        <button class="user-btn" id="btn-admin">
             <i data-lucide="shield"></i><br>Administrador
         </button>
     </div>
 
     <!-- Formulário Cliente -->
-    <!-- Exibido quando o botão "Cliente" for clicado -->
-    <form id="form-cliente" class="login-box show" onsubmit="return validarCliente()">
+    <form id="form-cliente" class="login-box show">
         <label for="nome-cliente">Nome</label>
         <input type="text" id="nome-cliente" required>
         <label for="email-cliente">E-mail</label>
         <input type="email" id="email-cliente" required>
-        <button type="submit" class="btn-enviar">Entrar</button>
+        <button type="submit" class="btn-enviar" id="submit-cliente">Entrar</button>
     </form>
 
     <!-- Formulário Administrador -->
-    <!-- Exibido quando o botão "Administrador" for clicado -->
-    <form id="form-admin" class="login-box hidden" onsubmit="return validarAdmin()">
+    <form id="form-admin" class="login-box hidden">
         <label for="nome-admin">Nome</label>
         <input type="text" id="nome-admin" required>
         <label for="senha-admin">Senha</label>
         <input type="password" id="senha-admin" required>
         <label for="token">Token de segurança</label>
         <input type="text" id="token" required>
-        <button type="submit" class="btn-enviar">Entrar</button>
+        <button type="submit" class="btn-enviar" id="submit-admin">Entrar</button>
     </form>
 
 </div>
 
 <!-- Rodapé -->
 <footer>
-    <!-- Informações de Atendimento -->
     <div class="footer-top">
         Atendimento: (00) 00000-0000 — Seg. a Sex. das 08h às 18h
     </div>
-
-    <!-- Bloco de Informações de contato -->
     <div class="rodape-conteudo">
         <p>000.000.000-00</p>
         <p>email@gmail.com</p>
@@ -71,11 +67,10 @@
         <p>Endereço</p>
         <p><a href="#">Mídias Sociais</a></p>
     </div>
-
-    <!-- Direitos Autorais -->
     <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
+<!-- Inclusão do script.js -->
 <script src="script.js"></script>
 
 </body>

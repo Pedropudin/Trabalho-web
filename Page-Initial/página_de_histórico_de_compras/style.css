@@ -27,9 +27,11 @@ nav {
 
 /* CAMPO DE BUSCA */
 .search-bar {
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  width: 700px;
+  margin-left: 150px;
 }
 
 /* LOGO PRINCIPAL */
@@ -59,18 +61,36 @@ nav {
     cursor: pointer;
 }
 
-/* MENU PRINCIPAL (links do topo) */
-.menu {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    background-color: #003d52;
-    padding: 10px;
+/* Estilos de foco e clique */
+.buttons button:focus, .buttons button:active {
+    outline: 3px solid #005d73; /* Realce do foco */
 }
 
+/* MENU PRINCIPAL (links do topo) */
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #003d52;
+  padding: 10px;
+}
+
+/* Estilo dos links do menu */
 .menu a {
-    color: white;
-    text-decoration: none; /* Remove sublinhado */
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.menu a:hover {
+  background-color: #005f73;
+  border-radius: 5px;
+  padding: 5px 8px;
+}
+
+.menu a:focus, .menu a:active {
+  outline: 3px solid #005f73; /* Realce do foco */
 }
 
 /* BOTÃO PARA ABRIR MENU EM TELAS PEQUENAS */
@@ -81,6 +101,12 @@ nav {
     color: white;
     font-size: 20px;
     cursor: pointer;
+}
+
+/* Ícone de menu no mobile */
+.menu-toggle:before {
+    content: "\2630"; /* Ícone de menu (hamburger) */
+    font-size: 24px;
 }
 
 /* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
@@ -131,6 +157,14 @@ nav {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: flex; /* Flexbox para alinhar o ícone e o texto */
+    align-items: center;
+    gap: 10px; /* Espaçamento entre ícone e texto */
+}
+
+/* Estilo do ícone dentro do botão */
+.avaliacao button i {
+    font-size: 1.2rem; /* Tamanho do ícone */
 }
 
 /* ÁREA DE PRODUTOS (galeria) */
@@ -144,12 +178,17 @@ nav {
 
 /* CARTÃO DE PRODUTO INDIVIDUAL */
 .produto {
-    background: white;
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    width: 150px;
+  background: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra leve */
+  width: 180px;
+  transition: transform 0.3s ease;
+}
+
+.produto:hover {
+  transform: scale(1.05);
 }
 
 .produto img {
@@ -157,50 +196,56 @@ nav {
     height: auto;
 }
 
+.preco {
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+}
+
+/* Rodapé */
 footer {
-    background-color: #003d52;
-    color: white;
-    text-align: center;
-    padding: 30px 40px;
-    margin-top: 40px;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 30px 40px;
+  margin-top: 40px;
 }
 
-/* Informação de topo do rodapé */
-.footer-top {
-    font-size: 14px;
-    color: #ccc;
-    margin-bottom: 20px;
-}
-
-/* Bloco de informações em grade */
+/* Bloco de informações do rodapé */
 .rodape-conteudo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
-/* Estilo para texto e links */
-.rodape-conteudo p,
-.rodape-conteudo a {
-    margin: 0;
-    color: #ccc;
-    text-decoration: none;
+/* Texto do rodapé */
+footer p {
+  margin: 0;
 }
 
-.rodape-conteudo a:hover {
-    text-decoration: underline;
-}
-
-/* Direitos autorais */
+/* Texto de direitos autorais */
 footer .copyright {
-    font-size: 12px;
-    color: #ccc;
-    margin-top: 15px;
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* Links no rodapé */
+footer a {
+  color: #66b3ff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #3399ff;
+}
+
+footer a:visited {
+  color: #99ccff;
 }
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
@@ -289,7 +334,96 @@ footer .copyright {
     }
 
     .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
+    }
+
+    .avaliacao button {
+        width: 90%; /* Aumenta a largura do botão */
+        max-width: 250px; /* Limita o tamanho máximo */
+    }
+
+    .rodape-conteudo {
+        font-size: 12px;
+        gap: 15px;
+    }
+}
+
+/* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
+@media (max-width: 480px) {
+    .menu {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block; /* Mostra botão no mobile */
+    }
+
+    .search-bar {
+        width: 85%; /* Menor largura no mobile */
+        max-width: 300px; /* Limita a largura máxima */
+        margin: 0 auto;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .buttons button {
         width: 100%;
-        max-width: 300px;
+        max-width: 180px; /* Ajusta para telas muito pequenas */
+    }
+
+    .produto {
+        width: 100%;
+        max-width: 200px; /* Ajusta o tamanho do produto */
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .rodape-conteudo {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .rodape-conteudo p {
+        font-size: 12px; /* Diminui o tamanho da fonte */
+    }
+
+    .copyright {
+        font-size: 10px; /* Diminui ainda mais no rodapé */
+        margin-top: 10px;
+    }
+
+    .compras {
+        text-align: center;
+        gap: 8px;
+    }
+
+    .produtos {
+        padding: 5px;
+        gap: 8px;
+    }
+
+    .produto img {
+        max-width: 100px; /* Ajusta o tamanho da imagem do produto */
+    }
+
+    .avaliacao {
+        padding: 15px;
+    }
+
+    .avaliacao button {
+        width: 80%; /* Ajusta o tamanho do botão */
+        max-width: 200px;
     }
 }

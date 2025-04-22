@@ -12,7 +12,7 @@ body {
     background-color: #eaf6f6; /* Cor de fundo clara */
     color: #333; /* Cor de texto padrão */
     text-align: center; /* Centraliza textos por padrão */
-    padding: 20px; /* Espaçamento interno da página */
+    padding: 0; /* Espaçamento interno da página */
 }
 
 /* Container principal do conteúdo */
@@ -99,39 +99,45 @@ h3 {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra */
 }
 
-/* ---------------- BOTÃO DE RETORNO AO TOPO ---------------- */
-
-/* Estilo para o botão de "Voltar ao topo" */
-.seta-retorno {
+/* Botão de retorno ao topo */
+.btn-retorno {
     position: fixed;
     bottom: 25px;
     right: 25px;
     z-index: 9999;
-    opacity: 0.9;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.seta-retorno .btn-retorno,
-.btn-retorno { /* Unificado para casos com ou sem hierarquia */
-    background-color: #003b5c; /* Azul escuro */
+    background-color: #003b5c;
     color: white;
     border: none;
+    border-radius: 50%;
     padding: 15px 25px;
     font-size: 16px;
-    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+    opacity: 0.9;
+    transition: background 0.3s, transform 0.2s, opacity 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.seta-retorno .btn-retorno:hover,
 .btn-retorno:hover {
-    background-color: #005d8f; /* Azul mais claro */
-    transform: scale(1.05); /* Aumento suave */
+    background-color: #005d8f;
+    transform: scale(1.05);
 }
 
-/* ---------------- RODAPÉ ---------------- */
-/*Rodápe*/
+/* Efeito de clique apenas no botão voltar ao topo */
+.btn-retorno:active {
+    transform: scale(0.9);
+}
+
+/* Corrigido: faísca para faiska */
+.faiska {
+    transform: rotate(45deg);
+    background-color: yellow;
+    width: 6px;
+    height: 12px;
+}
+
+/* Rodapé */
 footer {
+    width: 100%;
     background-color: #333;
     color: white;
     text-align: center;
@@ -139,7 +145,8 @@ footer {
     margin-top: 40px;
 }
 
-.rodape-conteudo { /* Bloco de informações do rodapé */
+/* Bloco de informações do rodapé */
+.rodape-conteudo {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: repeat(3, 1fr);
@@ -148,46 +155,63 @@ footer {
     font-size: 14px;
 }
 
-footer p { /* Texto padrão do rodapé */
+/* Texto do rodapé */
+footer p {
     margin: 0;
 }
 
-footer .copyright { /* Direitos autorais em fonte menor e cinza */
+/* Texto de direitos autorais */
+footer .copyright {
     font-size: 12px;
     color: #ccc;
 }
 
-/* Estilo para os links de "Termos e Condições" e "Mídias Sociais" */
+/* Links no rodapé */
 footer a {
-    color: #66b3ff; /* Azul claro */
-    text-decoration: none; /* Remove o sublinhado */
-    transition: color 0.3s ease; /* Transição suave para cor */
+    color: #66b3ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 footer a:hover {
-    color: #3399ff; /* Azul mais escuro no hover */
+    color: #3399ff;
 }
 
 footer a:visited {
-    color: #99ccff; /* Azul claro para links visitados */
+    color: #99ccff;
 }
 
-/* ---------------- EFEITO DE ELETRICIDADE ---------------- */
-
-/* Estilo para as partículas de eletricidade */
+/* Estilo base para as partículas de eletricidade */
 .efeito-eletrico {
     position: absolute;
     width: 10px;
     height: 10px;
-    background-color: #00bfff; /* Azul claro para a eletricidade */
-    border-radius: 50%;
-    animation: eletricidade 0.5s ease-out;
-    transform: scale(0.5);
     pointer-events: none;
     z-index: 99999;
+    animation: eletricidade 0.5s ease-out;
+    transform: scale(0.5);
 }
 
-/* Animação das partículas elétricas */
+/* Formato circular */
+.circulo {
+    border-radius: 50%;
+    background-color: cyan;
+}
+
+/* Formato quadrado */
+.quadrado {
+    background-color: magenta;
+}
+
+/* Formato de faíska */
+.faíska {
+    transform: rotate(45deg);
+    background-color: yellow;
+    width: 6px;
+    height: 12px;
+}
+
+/* Animação da partícula de eletricidade */
 @keyframes eletricidade {
     0% {
         transform: scale(0.5);
@@ -199,12 +223,10 @@ footer a:visited {
     }
 }
 
-/* ---------------- RESPONSIVIDADE ---------------- */
-
-/* Para telas até 768px (tablet e celulares maiores) */
+/* Responsividade para telas menores que 768px */
 @media (max-width: 768px) {
     .container {
-        width: 90%;
+        width: 95%;
         padding: 20px;
     }
 
@@ -212,8 +234,12 @@ footer a:visited {
         width: 100px;
     }
 
+    .fornecedores {
+        gap: 15px;
+    }
+
     .fornecedores img {
-        width: 90px;
+        width: 80px;
     }
 
     .cadastro {
@@ -222,19 +248,32 @@ footer a:visited {
     }
 
     .rodape-conteudo {
-        grid-template-columns: 1fr; /* Empilha colunas no celular/tablet */
+        grid-template-columns: 1fr;
         grid-template-rows: auto;
-        gap: 15px;
+        gap: 20px;
+        text-align: center;
     }
 
-    .seta-retorno .btn-retorno {
+    .btn-retorno {
         padding: 12px 22px;
+        font-size: 15px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .descricao {
         font-size: 15px;
     }
 }
 
-/* Para telas até 480px (celulares pequenos) */
+/* Responsividade para telas menores que 480px */
 @media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
     h2 {
         font-size: 20px;
     }
@@ -250,10 +289,11 @@ footer a:visited {
     .fornecedores {
         flex-direction: column;
         gap: 10px;
+        align-items: center;
     }
 
     .fornecedores img {
-        width: 80px;
+        width: 70px;
     }
 
     .cadastro {
@@ -263,15 +303,17 @@ footer a:visited {
 
     footer {
         font-size: 12px;
-        padding: 15px;
+        padding: 20px 15px;
     }
 
     .copyright {
         font-size: 10px;
     }
 
-    .seta-retorno .btn-retorno {
+    .btn-retorno {
         padding: 10px 20px;
         font-size: 14px;
+        right: 15px;
+        bottom: 15px;
     }
 }

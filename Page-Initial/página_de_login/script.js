@@ -1,3 +1,4 @@
+// Função para alternar entre os formulários (Cliente e Administrador)
 function mostrarFormulario(tipo) {
   const formCliente = document.getElementById("form-cliente");
   const formAdmin = document.getElementById("form-admin");
@@ -6,17 +7,16 @@ function mostrarFormulario(tipo) {
     formCliente.classList.add("show");
     formCliente.classList.remove("hidden");
     formAdmin.classList.remove("show");
-    setTimeout(() => formAdmin.classList.add("hidden"), 400);
-  }
-
-  else {
+    setTimeout(() => formAdmin.classList.add("hidden"), 600); // Tempo de transição mais suave
+  } else {
     formAdmin.classList.add("show");
     formAdmin.classList.remove("hidden");
     formCliente.classList.remove("show");
-    setTimeout(() => formCliente.classList.add("hidden"), 400);
+    setTimeout(() => formCliente.classList.add("hidden"), 600); // Tempo de transição mais suave
   }
 }
 
+// Função de validação para o login do cliente
 function validarCliente() {
   const nome = document.getElementById("nome-cliente").value;
   const email = document.getElementById("email-cliente").value;
@@ -30,6 +30,7 @@ function validarCliente() {
   return true;
 }
 
+// Função de validação para o login do administrador
 function validarAdmin() {
   const nome = document.getElementById("nome-admin").value;
   const senha = document.getElementById("senha-admin").value;
@@ -44,7 +45,24 @@ function validarAdmin() {
   return true;
 }
 
-lucide.createIcons(); // Ativa os ícones
+// Ativa os ícones do Lucide após o carregamento da página
+window.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons(); // Ativa os ícones
+
+  // Adicionando os event listeners para os botões de cliente e administrador
+  document.getElementById('btn-cliente').addEventListener('click', () => mostrarFormulario('cliente'));
+  document.getElementById('btn-admin').addEventListener('click', () => mostrarFormulario('admin'));
+
+  // Adicionando os event listeners para os formulários
+  document.getElementById('form-cliente').addEventListener('submit', (e) => {
+    e.preventDefault();
+    validarCliente();
+  });
+  document.getElementById('form-admin').addEventListener('submit', (e) => {
+    e.preventDefault();
+    validarAdmin();
+  });
+});
 
 /*
 Inicialmente, o formulário de cliente aparece e o de administrador está oculto.

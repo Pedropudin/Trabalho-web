@@ -1,12 +1,12 @@
-<!-- Esta é a página HTML do histórico de produtos visualizados pelo cliente no website. Envolve tanto produtos, de fato,
-comprados pelo usuário, quanto aqueles que ele somente conferiu como possibilidade de compra. -->
+<!-- Esta é a página HMTL de visualização do histórico geral de produtos de interesse do cliente/usuário, a qual
+reune tanto os produtos visualizados, como, também, os efetivamente comprados em outras interações. -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Página de Compras</title>
+    <title>Página de Hisórico</title>
     <link rel="stylesheet" href="style.css" />
 
     <!-- Link para o Font Awesome, utilizado para ícones -->
@@ -27,14 +27,14 @@ comprados pelo usuário, quanto aqueles que ele somente conferiu como possibilid
             <input type="text" placeholder="Pesquisar..." class="search-bar" />
         </label>
 
-        <!-- Botão para abrir o menu lateral (caso tenha algum tipo de navegação adicional) -->
+        <!-- Botão para abrir o menu lateral -->
         <button class="menu-toggle">☰</button>
 
-        <!-- Botões de perfil, carrinho de compras e logout -->
+        <!-- Botões com ícones do Font Awesome -->
         <div class="buttons">
-            <button>Perfil</button>
+            <button><i class="fa fa-user"></i> Perfil</button>
             <button><i class="fa fa-shopping-cart"></i> Carrinho</button>
-            <button>Sair</button>
+            <button><i class="fa fa-sign-out-alt"></i> Sair</button>
         </div>
     </nav>
 
@@ -54,43 +54,39 @@ comprados pelo usuário, quanto aqueles que ele somente conferiu como possibilid
 
 <!-- Seção de exibição de produtos do histórico -->
 <section class="produtos">
-    <!-- Cada produto é apresentado dentro de uma div com a classe 'produto' -->
     <div class="produto">
         <img src="imagens/controle_remoto.jpeg" alt="Produto" />
-        <p>Descrição</p>
-        <!-- Exibição do preço do produto -->
+        <p>Controle NET/CLARO TV +</p>
         <p class="preco">R$ 299,00<br /><small>ou 12x R$ 24,90</small></p>
     </div>
     <div class="produto">
         <img src="imagens/liquidificador.jpeg" alt="Produto" />
-        <p>Descrição</p>
+        <p>Liquidificador Mondial</p>
         <p class="preco">R$ 499,00<br /><small>ou 12x R$ 41,58</small></p>
     </div>
     <div class="produto">
         <img src="imagens/hardware.jpeg" alt="Produto" />
-        <p>Descrição</p>
+        <p>Protoboard</p>
         <p class="preco">R$ 1.199,00<br /><small>ou 12x R$ 99,90</small></p>
     </div>
     <div class="produto">
         <img src="imagens/televisão.jpeg" alt="Produto" />
-        <p>Descrição</p>
+        <p>Televisão Samsung QLED/4K</p>
         <p class="preco">R$ 79,90<br /><small>ou 12x R$ 6,65</small></p>
     </div>
     <div class="produto">
         <img src="imagens/microondas.jpeg" alt="Produto" />
-        <p>Descrição</p>
+        <p>Microondas</p>
         <p class="preco">R$ 2.999,00<br /><small>ou 12x R$ 249,90</small></p>
     </div>
 </section>
 
 <!-- Rodapé -->
 <footer>
-    <!-- Informações e atendimento -->
     <div class="footer-top">
         Atendimento: (17) 98186-8574 — Seg. a Sex. das 08h às 18h
     </div>
 
-    <!-- Informações de contato-->
     <div class="rodape-conteudo">
         <p>000.000.000-00</p>
         <p>email@gmail.com</p>
@@ -99,11 +95,9 @@ comprados pelo usuário, quanto aqueles que ele somente conferiu como possibilid
         <p>Endereço</p>
         <p><a href="#">Mídias Sociais</a></p>
     </div>
-
 </footer>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
