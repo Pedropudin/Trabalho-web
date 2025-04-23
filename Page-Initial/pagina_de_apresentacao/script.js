@@ -63,9 +63,7 @@ function criarParticulas(e) {
     }, 500);
 }
 
-/**
- * Rola suavemente a página de volta ao topo quando chamado.
- */
+/* Rola suavemente a página de volta ao topo quando chamado. */
 function scrollToTop() {
     window.scrollTo({
         top: 0,
@@ -84,3 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btnTopo.addEventListener('click', scrollToTop);
     }
 });
+
+const entrada = document.querySelector(".cadastro");
+
+// Redirecionamento simples entre diferentes páginas da aplicação web
+if (entrada) {
+    entrada.addEventListener('click', function () {
+        window.location.href = "../../Page-Products/pagina_de_pesquisa/index.html";
+    });
+}

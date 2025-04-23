@@ -30,10 +30,9 @@ header {
 .user-options {
   display: flex; /* Alinha botões lado a lado */
   gap: 20px; /* Espaço entre os botões */
-  margin-top: 20px; /* Espaço do topo */
   padding-top: 10px; /* Distância adicional do topo */
-  margin-bottom: 30px;
-  margin-top: -20px;
+  margin-bottom: 30px; /* Espaço da parte inferior */
+  margin-top: -20px; /* Espaço do topo */
 }
 
 /* Botões circulares para selecionar perfil */
@@ -165,6 +164,48 @@ footer a:visited {
 .footer-top {
   font-size: 12px;
   margin-bottom: 15px;
+}
+
+/* Estilo para mensagens no topo */
+.mensagem {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* Visível */
+.mensagem.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Oculto */
+.mensagem.hidden {
+  opacity: 0;
+}
+
+/* Tipos de mensagem */
+.mensagem.sucesso {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.mensagem.erro {
+  background-color: #F44336;
+  color: white;
+}
+
+.mensagem.info {
+  background-color: #2196F3;
+  color: white;
 }
 
 /* ----------- Responsividade ----------- */

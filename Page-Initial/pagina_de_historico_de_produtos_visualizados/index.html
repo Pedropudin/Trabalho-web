@@ -20,21 +20,25 @@ reune tanto os produtos visualizados, como, também, os efetivamente comprados e
     <!-- Navegação superior -->
     <nav>
         <!-- Logo da empresa -->
-        <h1><img src="imagens/logo.png" alt="Logo" class="logo-img" /></h1>
+        <a href="../../Page-Products/pagina_de_pesquisa/index.html">
+            <img src="imagens/logo.png" alt="Logo" class="logo-img" />
+        </a>
 
         <!-- Barra de pesquisa -->
-        <label>
-            <input type="text" placeholder="Pesquisar..." class="search-bar" />
-        </label>
+        <div class="search-bar">
+            <label>
+                <input type="text" placeholder="Pesquisar..">
+            </label>
+        </div>
 
         <!-- Botão para abrir o menu lateral -->
         <button class="menu-toggle">☰</button>
 
         <!-- Botões com ícones do Font Awesome -->
         <div class="buttons">
-            <button><i class="fa fa-user"></i> Perfil</button>
-            <button><i class="fa fa-shopping-cart"></i> Carrinho</button>
-            <button><i class="fa fa-sign-out-alt"></i> Sair</button>
+            <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
+            <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
+            <button id="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
         </div>
     </nav>
 
@@ -95,6 +99,8 @@ reune tanto os produtos visualizados, como, também, os efetivamente comprados e
         <p>Endereço</p>
         <p><a href="#">Mídias Sociais</a></p>
     </div>
+
+    <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
 <script src="script.js"></script>

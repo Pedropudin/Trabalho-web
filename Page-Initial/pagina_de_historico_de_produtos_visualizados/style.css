@@ -43,13 +43,42 @@ nav {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
 
+#site-title {
+    padding: 10px;
+    margin-left: 10px;
+    color: white; /* Mantém a cor do texto padrão */
+    cursor: pointer; /* Mostra o cursor de mão ao passar sobre o texto */
+}
+
+#site-title a {
+    color: white;
+    text-decoration: none; /* Remove o sublinhado do link */
+}
+
+#site-title h2 {
+    margin: 0; /* Remove a margem padrão do h2 */
+    font-size: 1.5rem; /* Define o tamanho da fonte */
+    font-weight: normal; /* Deixa o peso da fonte normal */
+}
+
 /* Campo de busca no nav */
 .search-bar {
-  padding: 5px;
-  border-radius: 5px;
-  border: none;
-  width: 700px;
-  margin-left: 150px;
+    background-color: white;
+    border: 0.5px solid white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 530px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.search-bar input {
+    border: none;
+    font-size: 16px;
+    flex: 1;
+    outline: none;
 }
 
 /* Botões à direita (login, cadastro, etc) */
@@ -91,27 +120,33 @@ nav {
   cursor: pointer;
 }
 
-/* Menu horizontal com links */
+/* MENU PRINCIPAL (links do topo) */
 .menu {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  background-color: #003d52;
-  padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #003d52;
+    padding: 8px;
+    gap: 10px;
 }
 
-/* Estilo dos links do menu */
+/* Estilos de links para o menu */
 .menu a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .menu a:hover {
-  background-color: #005f73;
-  border-radius: 5px;
-  padding: 5px 8px;
+    background-color: #007b99;
+}
+
+.menu a:focus, .menu a:active {
+  outline: 3px solid #005f73; /* Realce do foco */
 }
 
 /* Seção de compras, tipo uma chamada ou destaque */
@@ -191,6 +226,11 @@ footer {
   font-size: 14px;
 }
 
+.rodape-conteudo a {
+  color: white;
+  text-decoration: none;
+}
+
 /* Texto do rodapé */
 footer p {
   margin: 0;
@@ -220,37 +260,6 @@ footer a:hover {
 
 footer a:visited {
   color: #99ccff;
-}
-
-/* Conteúdo principal em grade */
-.rodape-conteudo {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* três colunas */
-  gap: 30px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Texto e links dentro do rodapé */
-.rodape-conteudo p,
-.rodape-conteudo a {
-  margin: 0;
-  color: #ccc;
-  text-decoration: none;
-}
-
-.rodape-conteudo a:hover {
-  text-decoration: underline;
-}
-
-/* Rodapé inferior */
-footer .copyright {
-  font-size: 12px;
-  color: #ccc;
-  margin-top: 15px;
 }
 
 /* MEDIA QUERY para telas pequenas (mobile) */

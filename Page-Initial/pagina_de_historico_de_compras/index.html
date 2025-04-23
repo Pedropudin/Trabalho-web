@@ -1,33 +1,33 @@
 <!-- Esta é a página HMTL de visualização dos produtos comprados pelo cliente/usuário. -->
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Compras</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
 
 <header>
-    <nav>
-        <div class="logo">
-            <img src="imagens/logo.png" alt="Logo" class="logo-img">
-        </div>
+    <nav class="header">
 
+        <a href="../../Page-Products/pagina_de_pesquisa/index.html">
+            <img id="logo" src="imagens/logo.png" alt="Logo" class="logo-img">
+        </a>
         <button class="menu-toggle"><i class="fas fa-bars"></i></button>
 
-        <label>
-            <input type="text" placeholder="Pesquisar..." class="search-bar">
-        </label>
+        <div class="search-bar">
+            <label>
+                <input type="text" placeholder="Pesquisar..">
+            </label>
+        </div>
 
         <div class="buttons">
-            <button><i class="fas fa-user"></i> Perfil</button>
-            <button><i class="fas fa-shopping-cart"></i> Carrinho</button>
-            <button><i class="fas fa-sign-out-alt"></i> Sair</button>
+            <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
+            <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
+            <button id="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
         </div>
     </nav>
 
@@ -46,32 +46,32 @@
 <section class="avaliacao">
     <img src="imagens/raquete_elétrica2.jpeg" alt="Produto aguardando avaliação" class="img-miniatura">
     <p>X produtos esperam sua opinião/avaliação</p>
-    <button><i class="fas fa-star"></i> Opinar</button>
+    <button><i class="fas fa-star"></i> Avaliar</button>
 </section>
 
 <section class="produtos">
     <div class="produto">
-        <img src="imagens/raquete_elétrica2.jpeg" alt="Produto" />
+        <img src="imagens/raquete_elétrica2.jpeg" alt="Produto">
         <p>Raquete Elétrica</p>
         <p class="preco">R$ 89,90<br /><small>ou 12x R$ 7,49</small></p>
     </div>
     <div class="produto">
-        <img src="imagens/escova_elétrica.jpeg" alt="Produto" />
+        <img src="imagens/escova_elétrica.jpeg" alt="Produto">
         <p>Escova Elétrica</p>
         <p class="preco">R$ 159,99<br /><small>ou 12x R$ 13,33</small></p>
     </div>
     <div class="produto">
-        <img src="imagens/aspirador_de_pó.jpeg" alt="Produto" />
+        <img src="imagens/aspirador_de_pó.jpeg" alt="Produto">
         <p>Aspirador de Pó</p>
         <p class="preco">R$ 349,90<br /><small>ou 12x R$ 29,15</small></p>
     </div>
     <div class="produto">
-        <img src="imagens/máquina_de_lavar.jpeg" alt="Produto" />
+        <img src="imagens/máquina_de_lavar.jpeg" alt="Produto">
         <p>Máquina de Lavar</p>
         <p class="preco">R$ 2.799,00<br /><small>ou 12x R$ 233,25</small></p>
     </div>
     <div class="produto">
-        <img src="imagens/airfryer.jpeg" alt="Produto" />
+        <img src="imagens/airfryer.jpeg" alt="Produto">
         <p>Air Fryer</p>
         <p class="preco">R$ 479,00<br /><small>ou 12x R$ 39,91</small></p>
     </div>
@@ -92,5 +92,4 @@
 <script src="script.js"></script>
 
 </body>
-
 </html>
