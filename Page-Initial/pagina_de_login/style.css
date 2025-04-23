@@ -166,6 +166,23 @@ footer a:visited {
   margin-bottom: 15px;
 }
 
+.social-icons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: -5px;
+}
+
+.social-icons a {
+  color: #555;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #0077ff;
+}
+
 /* Estilo para mensagens no topo */
 .mensagem {
   position: fixed;
