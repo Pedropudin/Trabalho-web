@@ -1,4 +1,4 @@
-<!--Aqui temos o HTML da página que aparecerá pro usuário mediante pesquisa na barra de pesquisa.-->
+<!--Aqui temos o HTML da página que aparecerá pro usuário mediante escolha de setor.-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,6 +22,7 @@
                 </div>
             </nav>
 
+
             <!-- Product Categories Bar -->
             <div class="menu">
                 <a href="#">Hardware</a>
@@ -33,84 +34,74 @@
         <!-- Main Content -->
         <div id="conteudo-principal">
             <!-- Sidebar -->
-            <div id="barra-lateral-de-produtos">
-                <h4 id="categorias">Categorias Relacionadas</h4>
+            <nav id="barra-lateral-de-produtos">
+                <h4>Categorias Relacionadas</h4>
                 <ul>
-                  <li><a href="#">Hardware</a></li>
-                  <li><a href="#">Periféricos</a></li>
-                  <li><a href="#">Celulares</a></li>
-                  <li><a href="#">Notebooks</a></li>
-                </ul>  
-              
-                <h4 id="filtros">Filtros</h4>
-              
-                <!-- Filtro de Preço -->
-                <div>
-                  <legend>Preço</legend>
-                  <div class="price-inputs">
-                    <div>
-                      <label for="min-price">Mínimo</label>
-                      <input type="number" id="min-price" value="8.0" min="8.00" max="299.00">
-                    </div>
-                    <div>
-                      <label for="max-price">Máximo</label>
-                      <input type="number" id="max-price" value="299.00" min="8.00" max="299.00">
-                    </div>
-                  </div>
-                </div> 
-              
-                <!-- Filtro por Marca -->
-                <div>
-                  <legend>Marca</legend>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="hyperx" value="hyperx" name="marca"> 
-                    <span>HyperX</span>
-                  </label>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="razer" value="razer" name="marca"> 
-                    <span>Razer</span>
-                  </label>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="corsair" value="corsair" name="marca"> 
-                    <span>Corsair</span>
-                  </label>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="steelseries" value="steelseries" name="marca"> 
-                    <span>Steelseries</span>
-                  </label>
-                </div>
-              </div>              
+                    <li><a>Hardware</a></li>
+                    <li><a>Periféricos</a></li>
+                    <li><a>Celulares</a></li>
+                    <li><a>Notebooks</a></li>
+                </ul>         
+            </nav>
 
-            <!-- Search Results -->
             <div id="resultados">
-                <h4>Resultados para: "Headset Preto P2"</h4>
+                <h4>Resultados para: "Hardware"</h4>
                 <nav id="display-de-produtos">
-                    <!-- Items -->
-                    <div class="items">
-                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                    </div>
-                    <div class="items">
-                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                    </div>
-                    <div class="items">
-                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                    </div>
-                    <div class="items">
-                        <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                        <h2>Placa de Vídeo</h2>
+                        <div id="placa-de-video">
+                            <div class="items">
+                                <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" alt="GTX 2080 TI">
+                                <p id="nome-produto">GTX 2080 TI <br />R$ 2999,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                            <div class="items">
+                                <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" alt="GTX 2080 TI">
+                                <p id="nome-produto">GTX 2080 TI <br />R$ 2999,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                        </div>
+                    
+                        <h2>Placa Mãe</h2>
+                        <div id="placa-mae">
+                            <div class="items">
+                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                            <div class="items">
+                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                            <div class="items">
+                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                            <div class="items">
+                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                        </div>
+
+                        <h2>Memória</h2>
+                        <div id="memoria">
+                            <div class="items">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXz1hdxuvwuSiuV8On5VGZ7DmFdbmWM-NF4A&s" alt="Memória RAM">
+                                <p id="nome-produto">Memória RAM HyperX 8gb 2400Mhz DDR4 <br />R$ 299,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                            <div class="items">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXz1hdxuvwuSiuV8On5VGZ7DmFdbmWM-NF4A&s" alt="Memória RAM">
+                                <p id="nome-produto">Memória RAM HyperX 8gb 2400Mhz DDR4 <br />R$ 299,00</p>
+                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                            </div>
+                        </div>
                     </div>
                 </nav>
             </div>
         </div>
-
-        <!-- Page Changer -->
         <div id="page-changer">
             <ul>
                 <li><button>1</button></li>
@@ -119,8 +110,6 @@
                 <li><button>4</button></li>
             </ul>
         </div>
-
-        <!-- Footer -->
         <footer>
             <div class="rodape-conteudo">
                 <p>000.000.000-00</p>
