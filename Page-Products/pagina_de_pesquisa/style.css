@@ -31,7 +31,7 @@ header {
     width: 100px;
     height: 90px;
     margin-right: 5px;
-    border-radius: 60%;
+    border-radius: 50%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
@@ -288,7 +288,7 @@ header {
     background-color: #333;
     color: white;
     padding: 8px 12px;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
     width: 120px;
