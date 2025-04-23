@@ -6,6 +6,7 @@
     <title>Eletrocurte-se: Admin</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="cards.css"
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -51,15 +52,62 @@
 
     <div class="content">
 
-        <div class="card">
-            <h1 class="card-name">Dashboard</h1>
+        <div class="content-horizontal">
 
-            <div class="card-content1">
-                <img src="placeholder-grafico.png" width="1000px">
-                <div class="card-content2">
-                    <img src="placeholder-metrica.png" width="400px">
-                    <img src="placeholder-pontuacao.png" width="400px">
+            <div class="card">
+                <h1>Reputação</h1>
+
+                <div class="card-horizontal">
+                    <div class="element sales">
+                        <span class="number sales-number">+23%</span>
+                        <span class="text sales-text">Vendas com relação aos últimos 30 dias</span>
+                    </div>
+                    <div class="element complainings">
+                        <span class="number complainings-number">56</span>
+                        <span class="text complainings-text">Reclamações nos últimos 30 dias</span>
+                    </div>
+                    <div class="element delay">
+                        <span class="number delay-number">4</span>
+                        <span class="text delay-text">Despachos com atraso</span>
+                    </div>
+
+                    <div class="element">
+                        <span class="number">121</span>
+                        <span class="text">Usuários novos nos últimos 30 dias</span>
+                    </div>
                 </div>
+            </div>
+
+            <div class="card">
+                <h1>Perguntas</h1>
+
+                <div class="card-horizontal">
+
+                    <div class="element questions-quantity">
+                        <span class="number">0</span>
+                        <span class="text">Questões pendentes</span>
+                    </div>
+
+                    <div class="element questions-responseTime">
+                        <span class="number">20 min</span>
+                        <span class="text">Tempo médio de resposta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-popularity">
+            <h1>Popularidade</h1>
+
+            <span class="text">Produto mais vendido nos últimos 30 dias</span>
+            <div class="sub-card">
+                <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" width="100px">
+                <div>
+                    <h1>Placa Mãe</h1>
+                    <span class="price">R$ 99,99</span>
+                    <span class="data">23/09/2025</span>
+                </div>
+                <span></span>
             </div>
         </div>
 
