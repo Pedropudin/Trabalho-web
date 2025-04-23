@@ -143,7 +143,7 @@ header {
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 100%; /* Ensure the list spans the full width */
+    width: 100%;
 }
 
 #barra-lateral-de-produtos ul li {
@@ -152,7 +152,7 @@ header {
 }
 
 #barra-lateral-de-produtos h4 {
-    margin: 0 0 10px 0; /* Add spacing below headings */
+    margin: 0 0 10px 0; 
     font-size: 18px;
     font-weight: bold;
 }
@@ -181,9 +181,9 @@ header {
     width: 18px;
     height: 18px;
     border: 1px solid #007b99;
-    border-radius: 4px; /* Optional: Rounded corners */
-    appearance: none; /* Remove default checkbox styling */
-    -webkit-appearance: none; /* For better browser compatibility */
+    border-radius: 4px; 
+    appearance: none; 
+    -webkit-appearance: none;
     background-color: white;
     cursor: pointer;
     display: inline-block;
@@ -214,15 +214,15 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Space between "Mínimo", "-", and "Máximo" */
-    width: 100%; /* Ensure inputs span the full width */
+    gap: 10px;
+    width: 100%;
 }
 
 .price-inputs div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    flex: 1; /* Allow inputs to grow evenly */
+    flex: 1;
 }
 
 .price-inputs label {
@@ -232,7 +232,7 @@ header {
 }
 
 .price-inputs input[type="number"] {
-    width: 100%; /* Make inputs responsive */
+    width: 100%; 
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 5px;
