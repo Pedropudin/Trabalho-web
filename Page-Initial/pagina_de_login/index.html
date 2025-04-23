@@ -39,20 +39,20 @@ administrador. -->
     <!-- Formulário Cliente -->
     <form id="form-cliente" class="login-box show">
         <label for="nome-cliente">Nome</label>
-        <input type="text" id="nome-cliente" required>
+        <input type="text" id="nome-cliente" required placeholder="(mínimo de 6 caracteres e 1 especial)">
         <label for="email-cliente">E-mail</label>
-        <input type="email" id="email-cliente" required>
+        <input type="email" id="email-cliente" required placeholder="(coloque algum domínio válido)">
         <button type="submit" class="btn-enviar" id="submit-cliente">Entrar</button>
     </form>
 
     <!-- Formulário Administrador -->
     <form id="form-admin" class="login-box hidden">
         <label for="nome-admin">Nome</label>
-        <input type="text" id="nome-admin" required>
+        <input type="text" id="nome-admin" required placeholder="(mínimo de 6 caracteres e 1 especial)">
         <label for="senha-admin">Senha</label>
-        <input type="password" id="senha-admin" required>
+        <input type="password" id="senha-admin" required placeholder="(mínimo 8 caracteres: letra maiúscula, minúscula, número e caractere especial)">
         <label for="token">Token de segurança</label>
-        <input type="text" id="token" required>
+        <input type="text" id="token" required placeholder="(deve ter exatamente 6 dígitos numéricos)">
         <button type="submit" class="btn-enviar" id="submit-admin">Entrar</button>
     </form>
 
