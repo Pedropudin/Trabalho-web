@@ -5,14 +5,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pagina Pesquisa</title>
-        <link rel="stylesheet" type="text/css" href="EstiloPaginaPesquisa.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
     </head>
     <body>
         <header>
             <nav class="header">
-                <a><img id="logo" src="https://t3.ftcdn.net/jpg/03/65/42/00/360_F_365420014_xjsSDkKzrhq4gr9GFzP6S97H7MJyNI5B.jpg" width="50px" height="50px"></a>
-                <a><h2 id="site-title">Eletrocurte-se</h2></a>
-            
+                <a><img id="logo" src="/Novo Projeto.png" style="filter: grayscale(100%);"></a>
                 <div class="search-bar">
                     <input type="text" placeholder="Search..">
                 </div>     
@@ -33,15 +31,53 @@
         <!-- Main Content -->
         <div id="conteudo-principal">
             <!-- Sidebar -->
-            <nav id="barra-lateral-de-produtos">
-                <h4>Categorias Relacionadas</h4>
+            <div id="barra-lateral-de-produtos">
+                <h4 id="categorias">Categorias Relacionadas</h4>
                 <ul>
-                    <li><a>Hardware</a></li>
-                    <li><a>Periféricos</a></li>
-                    <li><a>Celulares</a></li>
-                    <li><a>Notebooks</a></li>
-                </ul>         
-            </nav>
+                  <li><a href="#">Hardware</a></li>
+                  <li><a href="#">Periféricos</a></li>
+                  <li><a href="#">Celulares</a></li>
+                  <li><a href="#">Notebooks</a></li>
+                </ul>  
+              
+                <h4 id="filtros">Filtros</h4>
+              
+                <!-- Filtro de Preço -->
+                <div>
+                  <legend>Preço</legend>
+                  <div class="price-inputs">
+                    <div>
+                      <label for="min-price">Mínimo</label>
+                      <input type="number" id="min-price" value="8.0" min="8.00" max="299.00">
+                    </div>
+                    <div>
+                      <label for="max-price">Máximo</label>
+                      <input type="number" id="max-price" value="299.00" min="8.00" max="299.00">
+                    </div>
+                  </div>
+                </div> 
+              
+                <!-- Filtro por Marca -->
+                <div>
+                  <legend>Marca</legend>
+                  <label class="filtro-marca">
+                    <input type="checkbox" id="hyperx" value="hyperx" name="marca"> 
+                    <span>HyperX</span>
+                  </label>
+                  <label class="filtro-marca">
+                    <input type="checkbox" id="razer" value="razer" name="marca"> 
+                    <span>Razer</span>
+                  </label>
+                  <label class="filtro-marca">
+                    <input type="checkbox" id="corsair" value="corsair" name="marca"> 
+                    <span>Corsair</span>
+                  </label>
+                  <label class="filtro-marca">
+                    <input type="checkbox" id="steelseries" value="steelseries" name="marca"> 
+                    <span>Steelseries</span>
+                  </label>
+                </div>
+              </div>              
 
             <!-- Search Results -->
             <div id="resultados">
