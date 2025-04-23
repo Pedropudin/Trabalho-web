@@ -293,6 +293,23 @@ footer a:visited {
   color: #99ccff;
 }
 
+.social-icons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: -5px;
+}
+
+.social-icons a {
+  color: #555;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #0077ff;
+}
+
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
     .menu {

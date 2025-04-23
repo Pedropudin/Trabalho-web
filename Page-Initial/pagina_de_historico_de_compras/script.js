@@ -29,7 +29,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (botao) {
             botao.addEventListener("click", function () {
-                window.location.href = url;
+                if (id === 'logout') {
+                    // Redirecionamento sem chance de voltar
+                    location.replace(url);
+                }
+
+                else {
+                    // Redirecionamento normal
+                    window.location.href = url;
+                }
             });
         }
     }
