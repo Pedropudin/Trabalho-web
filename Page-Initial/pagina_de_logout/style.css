@@ -17,17 +17,15 @@ header {
   padding: 20px; /* Espaçamento interno */
 }
 
-.logo-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%; /* Deixa a imagem redonda */
-  object-fit: cover; /* Garante que a imagem não distorça */
-  transform: scale(1.1) rotate(-5deg); /* Aumenta e inclina a logo */
+#logo {
+  width: 350px;
+  height: 100px;
+  transform: scale(1.1); /* Aumenta e inclina a logo */
   transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
 }
 
-.logo-img:hover {
-  transform: scale(1.2) rotate(0deg); /* Foco em hover */
+#logo:hover {
+  transform: scale(1.2); /* Foco em hover */
 }
 
 /* --- CONTAINER DE LOGOUT --- */
@@ -129,7 +127,7 @@ footer a:visited {
   display: flex;
   gap: 30px;
   justify-content: center;
-  margin-top: -5px;
+  margin-top: -2px;
 }
 
 .social-icons a {
@@ -158,7 +156,7 @@ footer a:visited {
     padding: 10px 20px; /* Reduz o padding do cabeçalho */
   }
 
-  .logo-img {
+  #logo {
     width: 60px;
     height: 60px;
   }

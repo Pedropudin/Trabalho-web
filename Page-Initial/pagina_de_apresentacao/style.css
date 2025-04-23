@@ -25,6 +25,11 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra ao redor */
 }
 
+.container img {
+    height: 200px;
+    width: 550px;
+}
+
 /* Estilo da logo */
 .logo {
     width: 120px;
@@ -99,7 +104,7 @@ h3 {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra */
 }
 
-/* Botão de retorno ao topo */
+/* Botão de retorno ao logo */
 .btn-retorno {
     position: fixed;
     bottom: 25px;
@@ -227,7 +232,7 @@ footer a:visited {
   display: flex;
   gap: 30px;
   justify-content: center;
-  margin-top: -5px;
+  margin-top: -2px;
 }
 
 .social-icons a {

@@ -47,8 +47,8 @@ nav {
 
 /* LOGO PRINCIPAL */
 #logo {
-    width: 50px;
-    height: 50px;
+    width: 85px;
+    height: 85px;
     border-radius: 50%; /* Formato circular */
     margin-right: 5px;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
@@ -297,7 +297,7 @@ footer a:visited {
   display: flex;
   gap: 30px;
   justify-content: center;
-  margin-top: -5px;
+  margin-top: -2px;
 }
 
 .social-icons a {

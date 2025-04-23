@@ -9,12 +9,24 @@
 /* Cor de fundo geral do corpo da página */
 body {
   background-color: #f4f4f4;
+  text-align: center;
 }
 
 /* Cabeçalho superior com fundo azul petróleo */
 header {
-  height: 80px;
-  background-color: #006d84;
+  padding: 20px;;
+  background-color: #004d66; /* Azul escuro */
+}
+
+#logo {
+  width: 350px;
+  height: 100px;
+  transform: scale(1.1); /* Aumenta e inclina a logo */
+  transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
+}
+
+#logo:hover {
+  transform: scale(1.2); /* Foco em hover */
 }
 
 /* Container central da página */
@@ -170,7 +182,7 @@ footer a:visited {
   display: flex;
   gap: 30px;
   justify-content: center;
-  margin-top: -5px;
+  margin-top: -2px;
 }
 
 .social-icons a {
@@ -200,13 +212,14 @@ footer a:visited {
 
 /* Visível */
 .mensagem.show {
+  display: block;
   opacity: 1;
   pointer-events: auto;
 }
 
 /* Oculto */
 .mensagem.hidden {
-  opacity: 0;
+  display: none;
 }
 
 /* Tipos de mensagem */

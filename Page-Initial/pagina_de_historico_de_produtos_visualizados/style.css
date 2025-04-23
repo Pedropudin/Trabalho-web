@@ -28,9 +28,9 @@ nav {
 }
 
 /* Logo principal com responsividade e efeito de aumento */
-.logo-img {
-    width: 50px;
-    height: 50px;
+#logo {
+    width: 85px;
+    height: 85px;
     border-radius: 50%; /* Formato circular */
     margin-right: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
@@ -38,7 +38,7 @@ nav {
 }
 
 /* EFEITO HOVER DA LOGO */
-.logo-img:hover {
+#logo:hover {
     transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
@@ -266,7 +266,7 @@ footer a:visited {
   display: flex;
   gap: 30px;
   justify-content: center;
-  margin-top: -5px;
+  margin-top: -2px;
 }
 
 .social-icons a {
