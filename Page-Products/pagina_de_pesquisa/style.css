@@ -22,29 +22,29 @@ header {
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    font-size: medium;
-}
-
-#logo {
-    width: 100px;
-    height: 90px;
-    margin-right: 5px;
-    border-radius: 50%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-#logo:hover {
-    transform: rotate(10deg) scale(1.05);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-
-#site-title {
+    display: flex; /* Layout em linha */
+    justify-content: space-between; /* Itens espaçados */
+    align-items: center; /* Centraliza verticalmente */
     padding: 10px;
-    margin-left: 10px;
+    flex-wrap: wrap; /* Permite quebra de linha */
+    gap: 10px;
+}
+  
+
+/* Logo principal com responsividade e efeito de aumento */
+#logo {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%; /* Formato circular */
+    margin-right: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
     cursor: pointer;
+}
+
+/* EFEITO HOVER DA LOGO */
+#logo:hover {
+    transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
 
 .search-bar {
@@ -65,12 +65,6 @@ header {
     outline: none;
 }
 
-/* Header Buttons */
-#header-buttons {
-    display: flex;
-    justify-content: end;
-    margin-left: auto;
-}
 
 #header-buttons button {
     margin-left: 10px;
@@ -348,6 +342,23 @@ footer .copyright {
     font-size: 14px;
 }
 
+.social-icons {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: -2px;
+}
+
+.social-icons a {
+color: #555;
+font-size: 20px;
+transition: color 0.3s;
+}
+
+.social-icons a:hover {
+color: #0077ff;
+}
+
 @media (max-width: 768px) {
     .rodape-conteudo {
         grid-template-columns: 1fr;
@@ -355,7 +366,23 @@ footer .copyright {
     }
 
     .items {
-        width: 90%;
+        width: 100%;
+    }
+
+    .search-bar{
+        width: 70%;
+    }
+
+    .header{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #header-buttons{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
     }
 
     #display-de-produtos {
@@ -363,23 +390,20 @@ footer .copyright {
         align-items: center;
         gap: 25px;
     }
-}
 
-@media (max-width: 480px) {
-    footer {
-        font-size: 12px;
-        padding: 10px;
-    }
+    .menu {
+        flex-direction: column;
+        text-align: center;
+        display: none; /* Menu escondido inicialmente */
+      }
+    
 
-    .rodape-conteudo {
-        gap: 10px;
+    .menu.show {
+        display: flex; /* Mostra quando o botão de menu é ativado */
     }
-
-    .items {
-        width: 100%;
+    
+      .menu-toggle {
+        display: block; /* Mostra o ícone de menu no mobile */
     }
-
-    #display-de-produtos {
-        gap: 20px;
-    }
+    
 }

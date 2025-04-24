@@ -1,52 +1,50 @@
+/* General Reset */
 body, * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    text-decoration: none;
 }
 
 html, body {
     background-color: white;
     height: 100%;
-    margin: 0;
     display: flex;
     flex-direction: column;
 }
 
+/* Header */
 header {
     background-color: #004d66;
     color: white;
-    padding: 10px;
-    padding-bottom: 15px;
+    padding: 10px 15px;
 }
 
 .header {
-    background-color: #004d66;
-    color: white;
-    display: flex;
-    align-items: center;
+    display: flex; /* Layout em linha */
+    justify-content: space-between; /* Itens espaçados */
+    align-items: center; /* Centraliza verticalmente */
     padding: 10px;
-    font-size: medium;
+    flex-wrap: wrap; /* Permite quebra de linha */
+    gap: 10px;
 }
+  
 
+/* Logo principal com responsividade e efeito de aumento */
 #logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 5px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 85px;
+    height: 85px;
+    border-radius: 50%; /* Formato circular */
+    margin-right: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
     cursor: pointer;
 }
 
+/* EFEITO HOVER DA LOGO */
 #logo:hover {
-    transform: rotate(10deg) scale(1.05);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-
-#site-title {
-    padding: 10px;
-    margin-left: 10px;
-    cursor: pointer;
+    transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
 
 .search-bar {
@@ -58,21 +56,13 @@ header {
     padding: 10px;
     width: 530px;
     margin: 0 auto;
-    box-sizing: border-box;
 }
 
 .search-bar input {
     border: none;
-    color: white;
     font-size: 16px;
     flex: 1;
     outline: none;
-}
-
-#header-buttons {
-    display: flex;
-    justify-content: end;
-    margin-left: auto;
 }
 
 #header-buttons button {
@@ -360,19 +350,46 @@ footer .copyright {
     color: #ccc;
 }
 
+.social-icons {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: -2px;
+}
+
+.social-icons a {
+color: #555;
+font-size: 20px;
+transition: color 0.3s;
+}
+
+.social-icons a:hover {
+color: #0077ff;
+}
+
 @media (max-width: 768px) {
     .rodape-conteudo {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
         gap: 15px;
     }
-
+    .header{
+        flex-direction: column;
+        align-items: center;
+    }
+    #header-buttons{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+    .search-bar{
+        width: 70%;
+    }
     footer {
         padding: 15px;
     }
-
     .items {
-        width: 300px;
+        width: 100%;
     }
 
     #display-de-produtos {
@@ -381,40 +398,26 @@ footer .copyright {
         gap: 25px;
     }
 
-    .items {
-        width: 90%;
-    }
-
     .category h2 {
         font-size: 18px;
         text-align: center;
     }
-}
 
-@media (max-width: 480px) {
-    footer {
-        font-size: 12px;
-        padding: 10px;
-    }
-
-    .rodape-conteudo {
-        gap: 10px;
-    }
-
-    .items {
-        width: 100%;
-    }
-
-    #display-de-produtos {
+    .menu {
         flex-direction: column;
-        align-items: center;
-        gap: 20px;
+        text-align: center;
+        display: none; /* Menu escondido inicialmente */
     }
 
-    .category h2 {
-        text-align: left;
-        margin-left: 10px;
-        font-size: 16px;
+    .menu.show {
+        display: flex; /* Mostra quando o botão de menu é ativado */
     }
+    
+    .menu-toggle {
+        display: block; /* Mostra o ícone de menu no mobile */
+    }
+    
 }
+
+
 
