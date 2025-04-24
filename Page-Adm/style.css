@@ -141,6 +141,21 @@ nav {
     align-items: stretch;
 }
 
+.generic-button {
+    background-color: #00D1FF;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid black;
+    font-size: 18px;
+}
+
+.sells-report {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
 /*=========== Barra Lateral ===========*/
 
 .sidebar {
