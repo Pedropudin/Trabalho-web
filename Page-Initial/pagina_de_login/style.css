@@ -159,18 +159,19 @@ footer .copyright {
 }
 
 /* Links no rodapé */
+footer a,
+footer a:hover,
+footer a:visited {
+    color: inherit; /* Usa a cor herdada de 'footer', que é white */
+    text-decoration: none; /* Remove o sublinhado */
+}
+
 footer a {
-  color: #66b3ff;
-  text-decoration: none;
-  transition: color 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 footer a:hover {
-  color: #3399ff;
-}
-
-footer a:visited {
-  color: #99ccff;
+    color: #99ccff;
 }
 
 .footer-top {
@@ -242,9 +243,10 @@ footer a:visited {
 /* Ajustes para telas médias (tablets e celulares) - 768px */
 @media (max-width: 768px) {
   .user-options {
-    flex-direction: column; /* Botões um embaixo do outro */
-    gap: 10px; /* Espaço reduzido entre botões */
-    align-items: center; /* Centraliza os botões */
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
   }
 
   .container {
@@ -253,7 +255,7 @@ footer a:visited {
   }
 
   .rodape-conteudo {
-    grid-template-columns: 1fr; /* Coluna única no rodapé */
+    grid-template-columns: repeat(2, 1fr);
     text-align: center;
     gap: 15px;
   }
@@ -263,10 +265,10 @@ footer a:visited {
   }
 
   .footer-top,
-  .rodape-conteúdo p,
-  .rodape-conteúdo a,
+  .rodape-conteudo p,
+  .rodape-conteudo a,
   footer .copyright {
-    font-size: 12px; /* Texto levemente reduzido */
+    font-size: 14px;
   }
 }
 
@@ -274,6 +276,9 @@ footer a:visited {
 @media (max-width: 480px) {
   /* Ajustes de largura e fonte para uma tela ainda menor */
   .user-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 5px; /* Reduz o espaço entre os botões */
   }
 
@@ -289,7 +294,7 @@ footer a:visited {
   }
 
   .rodape-conteudo {
-    grid-template-columns: 1fr; /* Coluna única no rodapé */
+    grid-template-columns: repeat(2, 1fr);
     text-align: center;
     gap: 10px;
   }
@@ -299,9 +304,9 @@ footer a:visited {
   }
 
   .footer-top,
-  .rodape-conteúdo p,
-  .rodape-conteúdo a,
+  .rodape-conteudo p,
+  .rodape-conteudo a,
   footer .copyright {
-    font-size: 11px; /* Texto ainda mais reduzido */
+    font-size: 11px;
   }
 }

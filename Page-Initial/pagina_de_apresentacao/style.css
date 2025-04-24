@@ -172,17 +172,18 @@ footer .copyright {
 }
 
 /* Links no rodapé */
+footer a,
+footer a:hover,
+footer a:visited {
+    color: inherit; /* Usa a cor herdada de 'footer', que é white */
+    text-decoration: none; /* Remove o sublinhado */
+}
+
 footer a {
-    color: #66b3ff;
-    text-decoration: none;
     transition: color 0.3s ease;
 }
 
 footer a:hover {
-    color: #3399ff;
-}
-
-footer a:visited {
     color: #99ccff;
 }
 
