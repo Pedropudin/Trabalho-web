@@ -32,15 +32,6 @@ nav {
     padding: 10px;
 }
 
-/* CAMPO DE BUSCA */
-.search-bar {
-  padding: 5px;
-  border-radius: 5px;
-  border: none;
-  width: 700px;
-  margin-left: 150px;
-}
-
 .search-bar {
     background-color: #D9D9D9; 
     font-size: 16px;
