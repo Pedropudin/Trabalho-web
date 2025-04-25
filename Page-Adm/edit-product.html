@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Eletrocurte-se: Admin</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="Styles/style.css">
+    <link rel="stylesheet" type="text/css" href="Styles/header.css">
+    <link rel="stylesheet" type="text/css" href="Styles/cards.css">
+    <link rel="stylesheet" type="text/css" href="Styles/edit-product-form.css">
+    <link rel="stylesheet" type="text/css" href="Styles/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <nav class="header">
+        <a href="../../Page-Products/pagina_de_pesquisa/index.html">
+            <img id="logo" src="../../Page-Products/logo-com-borda.png" alt="Logo">
+        </a>
+        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+
+        <div class="search-bar">
+            <label>
+                <input type="text" placeholder="Pesquisar..">
+            </label>
+        </div>
+
+        <div class="buttons">
+            <button id="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        </div>
+    </nav>
+
+    <div class="menu">
+        <a href="#">Desempenho</a>
+        <a href="#">Produtos</a>
+        <a href="#">Pendências</a>
+    </div>
+</header>
+
+<div class="page">
+
+    <div class="content">
+
+        <div class="card edit-product">
+            <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" width="500px">
+            <form class="edit-product-form">
+                <div>
+                    <label>Nome: </label>
+                    <input type="text" required>
+                </div>
+                <div>
+                    <label>Descrição: </label>
+                    <textarea required></textarea>
+                </div>
+                <div>
+                    <label>Preço: R$</label>
+                    <input type="number" step="0.01" required>
+                </div>
+                <div>
+                    <label>Marca: </label>
+                    <select>
+                        <option value="" disabled selected>--Selecione uma opção--</option>
+                        <option value="nvidia">Nvidia</option>
+                        <option value="intel">Intel</option>
+                        <option value="amd">AMD</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Código Universal: </label>
+                    <input type="text" placeholder="012345678905">
+                </div>
+                <div>
+                    <label>Ficha técnica: </label>
+                    <textarea></textarea>
+                </div>
+                <div>
+                    <label>Unidades em estoque: </label>
+                    <input type="number" required>
+                </div>
+                <div class="edit-product-buttons">
+                    <button class="send">Enviar</button>
+                    <button class="exit">Salvar edições sem enviar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    <div class="rodape-conteudo">
+        <p>000.000.000-00</p>
+        <p>email@gmail.com</p>
+        <p>Tel: (00) 00000-0000</p>
+        <p><a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">Termos e Condições</a></p>
+        <p>Endereço</p>
+        <!-- Container de ícones -->
+        <div class="social-icons">
+            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+    </div>
+    <p class="copyright">Copyright &copy;2025</p>
+</footer>
+
+
+</body>
+
+</html>
