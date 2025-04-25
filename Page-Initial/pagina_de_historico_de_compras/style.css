@@ -19,10 +19,12 @@ header {
 
 /* BARRA DE NAVEGAÇÃO */
 nav {
-    display: flex; /* Usa Flexbox */
-    justify-content: space-between; /* Espaço entre logo, busca e botões */
-    align-items: center; /* Alinha verticalmente */
+    display: flex; /* Layout em linha */
+    justify-content: space-between; /* Itens espaçados */
+    align-items: center; /* Centraliza verticalmente */
     padding: 10px;
+    flex-wrap: wrap; /* Permite quebra de linha */
+    gap: 10px;
 }
 
 /* CAMPO DE BUSCA */
@@ -33,8 +35,8 @@ nav {
     display: flex;
     align-items: center;
     padding: 10px;
-    width: 530px;
-    margin: 0 auto;
+    width: 260px;
+    margin-left: 70px;
     box-sizing: border-box;
 }
 
@@ -70,6 +72,14 @@ nav {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espaçamento entre os botões */
 }
 
 /* Estilos de foco e clique */
@@ -311,6 +321,47 @@ footer a:hover {
         display: block; /* Mostra botão no mobile */
     }
 
+    /* Esconde apenas os botões até que o toggle seja acionado */
+    .buttons {
+        display: none;
+    }
+
+    /* Quando ganhar .show, vira flexbox em coluna */
+    .buttons.show {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    /* Estilo específico para os botões com classe show */
+    .buttons.show button {
+        width: 90%;
+        max-width: 200px;
+        margin: 5px 0;
+    }
+
+    /* Alinhamento padrão dos demais botões em telas pequenas */
+    .buttons button {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    /* Mantém a busca responsiva e o layout geral */
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
+    }
+
     .avaliacao {
         flex-direction: column;
         align-items: center;
@@ -323,27 +374,6 @@ footer a:hover {
 
     .avaliacao img {
         margin-bottom: 10px;
-    }
-
-    footer {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-    }
-
-    .rodape-conteudo {
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .rodape-conteudo p {
-        font-size: 13px;
-    }
-
-    .copyright {
-        font-size: 12px;
-        margin-top: 10px;
     }
 
     .compras {
@@ -362,29 +392,6 @@ footer a:hover {
         max-width: 250px;
     }
 
-    .buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .buttons button {
-        width: 100%;
-        max-width: 200px;
-    }
-
-    nav {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .search-bar {
-        width: 90%; /* Aumenta a largura no mobile */
-        max-width: 350px; /* Limita a largura máxima */
-        margin: 0 auto; /* Mantém centralizado */
-    }
-
     .avaliacao button {
         width: 90%; /* Aumenta a largura do botão */
         max-width: 250px; /* Limita o tamanho máximo */
@@ -397,11 +404,8 @@ footer a:hover {
 }
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
+/* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
 @media (max-width: 480px) {
-    .menu {
-        display: none;
-    }
-
     .menu-toggle {
         display: block; /* Mostra botão no mobile */
     }
@@ -413,7 +417,7 @@ footer a:hover {
     }
 
     .buttons {
-        display: flex;
+        display: none;
         flex-direction: column;
         gap: 8px;
         align-items: center;

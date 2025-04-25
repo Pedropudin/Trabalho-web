@@ -15,6 +15,7 @@ body {
 header {
   background-color: #004d66; /* Azul escuro */
   color: white; /* Texto branco */
+  padding: 10px; /* Espaçamento interno */
 }
 
 /* Barra de navegação principal */
@@ -32,7 +33,7 @@ nav {
     width: 85px;
     height: 85px;
     border-radius: 50%; /* Formato circular */
-    margin-right: 15px;
+    margin-right: 5px;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
     cursor: pointer;
 }
@@ -43,24 +44,6 @@ nav {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
 
-#site-title {
-    padding: 10px;
-    margin-left: 10px;
-    color: white; /* Mantém a cor do texto padrão */
-    cursor: pointer; /* Mostra o cursor de mão ao passar sobre o texto */
-}
-
-#site-title a {
-    color: white;
-    text-decoration: none; /* Remove o sublinhado do link */
-}
-
-#site-title h2 {
-    margin: 0; /* Remove a margem padrão do h2 */
-    font-size: 1.5rem; /* Define o tamanho da fonte */
-    font-weight: normal; /* Deixa o peso da fonte normal */
-}
-
 /* Campo de busca no nav */
 .search-bar {
     background-color: white;
@@ -69,8 +52,8 @@ nav {
     display: flex;
     align-items: center;
     padding: 10px;
-    width: 530px;
-    margin: 0 auto;
+    width: 260px;
+    margin-left: 70px;
     box-sizing: border-box;
 }
 
@@ -90,7 +73,6 @@ nav {
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  display: flex;
   align-items: center;
   transition: background-color 0.3s ease;
 }
@@ -101,13 +83,10 @@ nav {
   gap: 10px; /* espaçamento entre os botões */
 }
 
-
-.buttons button i {
-  margin-right: 6px;
-}
-
-.buttons button:hover {
-  background-color: #005f73;
+/* Estilos de foco e clique */
+.buttons button:focus,
+.buttons button:active {
+    outline: 3px solid #005d73; /* Realce do foco */
 }
 
 /* Ícone de menu que aparece apenas em telas pequenas */
@@ -128,7 +107,7 @@ nav {
     align-items: center;
     background-color: #003d52;
     padding: 8px;
-    gap: 10px;
+    gap: 40px;
 }
 
 /* Estilos de links para o menu */
@@ -280,64 +259,175 @@ footer a:hover {
   color: #0077ff;
 }
 
-/* MEDIA QUERY para telas pequenas (mobile) */
+/* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
+    .menu {
+        flex-direction: column;
+    }
 
-  .menu {
-    flex-direction: column;
-    text-align: center;
-    display: none; /* Menu escondido inicialmente */
-  }
+    .menu a {
+        display: block;
+        padding: 10px;
+        text-align: center;
+    }
 
-  .menu.show {
-    display: flex; /* Mostra quando o botão de menu é ativado */
-  }
+    .menu-toggle {
+        display: block; /* Mostra botão no mobile */
+    }
 
-  .menu-toggle {
-    display: block; /* Mostra o ícone de menu no mobile */
-  }
+    /* Esconde apenas os botões até que o toggle seja acionado */
+    .buttons {
+        display: none;
+    }
 
-  .menu a {
-    padding: 10px;
-  }
+    /* Quando ganhar .show, vira flexbox em coluna */
+    .buttons.show {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
 
-  .buttons {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
+    /* Estilo específico para os botões com classe show */
+    .buttons.show button {
+        width: 90%;
+        max-width: 200px;
+        margin: 5px 0;
+    }
 
-  .buttons button {
-    max-width: 200px;
-    width: 100%;
-    margin: 5px 0;
-  }
+    /* Alinhamento padrão dos demais botões em telas pequenas */
+    .buttons button {
+        width: 100%;
+        max-width: 200px;
+    }
 
-  /* Estilo para ícones dentro dos botões */
-  .buttons button i {
-    margin-right: 6px;
-  }
+    /* Mantém a busca responsiva e o layout geral */
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-  .compras p {
-    font-size: 1.3rem;
-  }
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
+    }
 
-  .produtos {
-    padding: 10px;
-    gap: 10px;
-  }
+    .avaliacao {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
-  .produto {
-    width: 100%;
-    max-width: 300px;
-  }
+    .avaliacao p {
+        margin: 10px 0;
+    }
 
-  footer {
-    flex-direction: column;
-    text-align: center;
-  }
+    .avaliacao img {
+        margin-bottom: 10px;
+    }
+
+    .compras {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .produtos {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .produto {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .avaliacao button {
+        width: 90%; /* Aumenta a largura do botão */
+        max-width: 250px; /* Limita o tamanho máximo */
+    }
+
+    .rodape-conteudo {
+        font-size: 12px;
+        gap: 15px;
+    }
+}
+
+/* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
+/* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
+@media (max-width: 480px) {
+    .menu-toggle {
+        display: block; /* Mostra botão no mobile */
+    }
+
+    .search-bar {
+        width: 85%; /* Menor largura no mobile */
+        max-width: 300px; /* Limita a largura máxima */
+        margin: 0 auto;
+    }
+
+    .buttons {
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .buttons button {
+        width: 100%;
+        max-width: 180px; /* Ajusta para telas muito pequenas */
+    }
+
+    .produto {
+        width: 100%;
+        max-width: 200px; /* Ajusta o tamanho do produto */
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .rodape-conteudo {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .rodape-conteudo p {
+        font-size: 12px; /* Diminui o tamanho da fonte */
+    }
+
+    .copyright {
+        font-size: 10px; /* Diminui ainda mais no rodapé */
+        margin-top: 10px;
+    }
+
+    .compras {
+        text-align: center;
+        gap: 8px;
+    }
+
+    .produtos {
+        padding: 5px;
+        gap: 8px;
+    }
+
+    .produto img {
+        max-width: 100px; /* Ajusta o tamanho da imagem do produto */
+    }
+
+    .avaliacao {
+        padding: 15px;
+    }
+
+    .avaliacao button {
+        width: 80%; /* Ajusta o tamanho do botão */
+        max-width: 200px;
+    }
 }
