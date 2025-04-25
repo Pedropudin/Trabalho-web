@@ -147,83 +147,74 @@ footer a:hover {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- RESPONSIVIDADE --- */
+/* ----------- Responsividade ----------- */
+/* Ajustes para telas médias (tablets e celulares) - 768px */
 @media (max-width: 768px) {
-  body {
-    text-align: left; /* Ajusta a centralização para a esquerda em telas pequenas */
+  .user-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
   }
 
-  header {
-    padding: 10px 20px; /* Reduz o padding do cabeçalho */
-  }
-
-  #logo {
-    width: 60px;
-    height: 60px;
-  }
-
-  /* Ajuste no container de logout */
-  .logout-container {
-    padding: 20px 10px; /* Menos espaçamento */
-  }
-
-  .logout-box {
-    width: 100%; /* O box ocupa 100% da largura disponível */
-    padding: 20px;
-  }
-
-  .home-button {
-    width: 100%; /* Botão ocupa toda a largura no mobile */
-    margin-top: 15px;
-  }
-
-  footer {
-    padding: 20px 10px;
-    font-size: 12px; /* Reduz a fonte para telas pequenas */
-  }
-
-  .rodape-conteudo {
-    grid-template-columns: 1fr 1fr; /* Duas colunas no rodapé */
-    gap: 20px; /* Menos espaçamento entre os itens */
-  }
-
-  /* Ajuste no link de rodapé */
-  .rodape-conteudo p,
-  .rodape-conteudo a {
-    font-size: 12px; /* Reduz o tamanho da fonte */
-  }
-
-  /* Ajuste no hover dos links */
-  .rodape-conteudo a:hover {
-    font-size: 13px;
-  }
-
-  .footer-top {
-    margin-bottom: 10px; /* Menos espaçamento */
-  }
-
-  .logout-container,
-  .logout-box {
-    min-height: auto; /* Garante que o layout ajuste melhor em telas menores */
-  }
-}
-
-@media (max-width: 480px) {
-  /* Para telas ainda menores, como smartphones em modo retrato */
-  .logout-box {
-    padding: 15px; /* Menos padding */
-  }
-
-  .home-button {
-    padding: 10px; /* Ajusta o botão */
-  }
-
-  footer {
+  .container {
+    width: 90%;
     padding: 10px;
   }
 
   .rodape-conteudo {
-    grid-template-columns: 1fr; /* Uma única coluna no rodapé */
-    gap: 15px; /* Reduz o gap */
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    gap: 15px;
+  }
+
+  footer {
+    padding: 20px;
+  }
+
+  .footer-top,
+  .rodape-conteudo p,
+  .rodape-conteudo a,
+  footer .copyright {
+    font-size: 14px;
+  }
+}
+
+/* Ajustes para telas pequenas (celulares) - 480px */
+@media (max-width: 480px) {
+  /* Ajustes de largura e fonte para uma tela ainda menor */
+  .user-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px; /* Reduz o espaço entre os botões */
+  }
+
+  .user-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 10px;
+  }
+
+  .container {
+    width: 95%;
+    padding: 8px;
+  }
+
+  .rodape-conteudo {
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    gap: 10px;
+  }
+
+  footer {
+    padding: 15px;
+  }
+
+  .footer-top,
+  .rodape-conteudo p,
+  .rodape-conteudo a,
+  footer .copyright {
+    font-size: 11px;
   }
 }

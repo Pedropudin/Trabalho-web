@@ -1,5 +1,3 @@
-<!-- Esta é a página HMTL de apresentação do site, a qual conta com a descrição do aplicativo web, o grupo responsável
-e um esquema simples de informação. -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -11,15 +9,41 @@ e um esquema simples de informação. -->
 </head>
 <body>
 
-<!-- Conteúdo principal -->
 <div class="container">
     <img src="../../Page-Products/logo-com-escrita.png" alt="Logo do website" class="logo">
-    <p class="descricao">Encontre os melhores produtos e fornecedores em um só lugar.</p>
-    <br><br>
+    <h2>Encontre os melhores produtos e fornecedores em um só lugar!</h2>
+    <section class="descricao">
+        <br>
+        <p><strong>Projeto Integrador:</strong> Este portal de e-commerce de dispositivos eletrônicos foi desenvolvido
+            como trabalho final da disciplina <em>Introdução ao Desenvolvimento Web</em>, adotando uma arquitetura front-end modular.</p>
+        <br><br>
+
+        <p><strong>Estrutura Semântica:</strong> Utilizamos HTML5 semântico para melhorar a acessibilidade (ARIA) e otimização
+            de SEO, estruturando conteúdo em cabeçalhos (<code>&lt;h2&gt;, &lt;h3&gt;</code>), seções e listas.</p>
+        <br><br>
+
+        <p><strong>Layout Responsivo:</strong> Aplicamos CSS3 com Flexbox e Grid para garantir fluidez em diversas
+            resoluções (desktop, tablet e mobile), com media queries para ajustes finos de tipografia e espaçamento.</p>
+        <br><br>
+
+        <p><strong>Interatividade:</strong> A lógica de front-end foi implementada em JavaScript puro, manipulando o DOM
+            para validação de formulários, navegação suave (smooth scroll) e animações via <code>@keyframes</code> e transições
+            CSS.</p>
+        <br><br>
+
+        <p><strong>Boas Práticas:</strong> Adotamos Git/GitHub para controle de versão e revisão de código. Otimizamos
+            performance com minificação de arquivos, carregamento assíncrono de scripts e lazy-loading de imagens.</p>
+        <br><br>
+
+        <p>Para dúvidas ou contribuições, abra uma issue ou pull request em nosso repositório no GitHub. Bom proveito e
+            <em>&ldquo;eletrocurte-se&rdquo;</em>!</p>
+    </section>
+    <br>
 
     <button class="cadastro"><i class="fas fa-user-plus"></i> Entre no site!</button>
     <br><br>
-    <h3>Alguns fornecedores Associados ao Site:</h3>
+
+    <h3>Alguns fornecedores associados ao site:</h3>
     <br>
     <div class="fornecedores">
         <img src="imagens/electrolux.png" alt="Electrolux">
@@ -28,10 +52,8 @@ e um esquema simples de informação. -->
     </div>
 </div>
 
-<!-- Botão de retorno ao topo com efeito -->
 <button class="btn-retorno" id="btn-topo"><i class="fas fa-arrow-up"></i></button>
 
-<!-- Rodapé -->
 <footer class="rodape">
     <div class="rodape-conteudo">
         <p>00.000.000/0000-00</p>
@@ -39,19 +61,15 @@ e um esquema simples de informação. -->
         <p>Tel: (00) 00000-0000</p>
         <p><a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">Termos e Condições</a></p>
         <p>Endereço</p>
-        <!-- Container de ícones -->
         <div class="social-icons">
             <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
             <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
         </div>
     </div>
-    <br>
     <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
-<!-- Script JS -->
 <script src="script.js"></script>
-
 </body>
 </html>

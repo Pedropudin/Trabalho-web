@@ -44,7 +44,8 @@ body {
 }
 
 /* Título principal (h2) */
-h2 {
+h2,
+h3 {
     color: #003b5c; /* Azul escuro */
     font-size: 24px;
     margin-bottom: 10px;
@@ -75,6 +76,15 @@ h2 {
     word-spacing: 0.1em; /* Espaçamento extra entre palavras */
     letter-spacing: 0.02em; /* Espaçamento suave entre caracteres */
     hyphens: auto; /* Hifenização automática em navegadores que suportem */
+}
+
+/* Espaçamento aprimorado para itens de lista na seção de descrição */
+.descricao ul, .descricao ol {
+    margin: 1em 0 1em 1.5em; /* Espaço acima e abaixo, indentação confortável */
+    padding: 0;
+}
+.descricao li {
+    margin-bottom: 0.75em; /* Espaçamento entre itens */
 }
 
 /* Botão de cadastro */

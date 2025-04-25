@@ -61,24 +61,6 @@ nav {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
 
-#site-title {
-    padding: 10px;
-    margin-left: 10px;
-    color: white; /* Mantém a cor do texto padrão */
-    cursor: pointer; /* Mostra o cursor de mão ao passar sobre o texto */
-}
-
-#site-title a {
-    color: white;
-    text-decoration: none; /* Remove o sublinhado do link */
-}
-
-#site-title h2 {
-    margin: 0; /* Remove a margem padrão do h2 */
-    font-size: 1.5rem; /* Define o tamanho da fonte */
-    font-weight: normal; /* Deixa o peso da fonte normal */
-}
-
 /* BOTÕES DO TOPO */
 .buttons button {
     margin-left: 10px;
@@ -91,7 +73,8 @@ nav {
 }
 
 /* Estilos de foco e clique */
-.buttons button:focus, .buttons button:active {
+.buttons button:focus,
+.buttons button:active {
     outline: 3px solid #005d73; /* Realce do foco */
 }
 
@@ -120,7 +103,8 @@ nav {
     background-color: #007b99;
 }
 
-.menu a:focus, .menu a:active {
+.menu a:focus,
+.menu a:active {
   outline: 3px solid #005f73; /* Realce do foco */
 }
 
@@ -132,12 +116,6 @@ nav {
     color: white;
     font-size: 20px;
     cursor: pointer;
-}
-
-/* Ícone de menu no mobile */
-.menu-toggle:before {
-    content: "\2630"; /* Ícone de menu (hamburger) */
-    font-size: 24px;
 }
 
 /* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
@@ -197,9 +175,14 @@ nav {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background 0.3s ease;
     display: flex; /* Flexbox para alinhar o ícone e o texto */
     align-items: center;
     gap: 10px; /* Espaçamento entre ícone e texto */
+}
+
+.avaliacao button:hover {
+    background: #003d52;
 }
 
 /* Estilo do ícone dentro do botão */
@@ -237,19 +220,19 @@ nav {
 }
 
 .preco {
-  font-size: 14px;
-  color: #333;
-  margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
 }
 
 /* Rodapé */
 footer {
-  width: 100%;
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 30px 40px;
-  margin-top: 40px;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 30px 40px;
+    margin-top: 40px;
 }
 
 /* Bloco de informações do rodapé */
@@ -313,9 +296,9 @@ footer a:hover {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
+
     .menu {
         flex-direction: column;
-        display: none; /* Menu escondido inicialmente */
     }
 
     .menu a {
