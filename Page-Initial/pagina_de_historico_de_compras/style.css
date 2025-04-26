@@ -79,7 +79,7 @@ nav {
 .buttons {
   display: flex;
   align-items: center;
-  gap: 10px; /* espaçamento entre os botões */
+  gap: 6px; /* espaçamento entre os botões */
 }
 
 /* Estilos de foco e clique */

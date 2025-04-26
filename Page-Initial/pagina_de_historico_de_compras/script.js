@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Mapeamento de IDs para URLs de destino
     const rotas = {
-        perfil: "../pagina_de_perfil/index.html",
+        //perfil: "../pagina_de_perfil/index.html", --> em desenvolvimento
         //carrinho: "../../Page-Products/pagina_do_carrinho/index.html", --> em desenvolvimento
         logout: "../pagina_de_logout/index.html"
     };
