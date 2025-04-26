@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Alterna a visibilidade do menu (responsivo)
+    // Alterna a visibilidade dos botões (responsivo)
     document.querySelector('.menu-toggle').addEventListener('click', function () {
-        document.querySelector('.menu').classList.toggle('show');
+        document.querySelector('.buttons').classList.toggle('show');
+        /* Quando o botão é clicado, ele alterna (toggle) a classe 'show' no elemento com a classe 'buttons'
+        Isso é útil para exibir ou esconder os botões de perfil em dispositivos móveis */
     });
 
     // Atualizando a data de compra dinâmica
@@ -19,52 +21,40 @@ document.addEventListener("DOMContentLoaded", function () {
     // Mapeamento de IDs para URLs de destino
     const rotas = {
         perfil: "../pagina_de_perfil/index.html",
-        carrinho: "../../Page-Products/pagina_do_produto/index.html",
+        //carrinho: "../../Page-Products/pagina_do_carrinho/index.html", --> em desenvolvimento
         logout: "../pagina_de_logout/index.html"
     };
 
-    // Percorre cada par id -> url, a fim de redirecionar a página para outra
-    for (const [id, url] of Object.entries(rotas)) {
-        const botao = document.getElementById(id);
-
-        if (botao) {
-            botao.addEventListener("click", function () {
-                if (id === 'logout') {
-                    // Redirecionamento sem chance de voltar
-                    location.replace(url);
-                }
-
-                else {
-                    // Redirecionamento normal
-                    window.location.href = url;
-                }
-            });
-        }
-    }
-
-    // Fechar menu ao clicar fora
-    document.addEventListener('click', function (event) {
-        const menu = document.querySelector('.menu');
-        const toggle = document.querySelector('.menu-toggle');
-        if (!menu.contains(event.target) && !toggle.contains(event.target)) {
-            menu.classList.remove('show');
-        }
-    });
-
-    // Adicionar feedback visual nos botões
+    // Adiciona feedback visual e redirecionamento
     function animarClique(botao) {
         botao.classList.add('clicado');
         setTimeout(() => botao.classList.remove('clicado'), 150);
     }
 
-    const botoes = document.querySelectorAll('.buttons button');
-    botoes.forEach(botao => {
-        botao.addEventListener('click', function () {
+    for (const [id, url] of Object.entries(rotas)) {
+        const botao = document.getElementById(id);
+        if (!botao) continue;
+
+        botao.addEventListener("click", function () {
             animarClique(botao);
-            if (botao.id === 'perfil') {
-                setTimeout(() => window.location.href = 'perfil.html', 150);
+
+            if (id === 'logout') {
+                location.replace(url);
+            }
+
+            else {
+                window.location.href = url;
             }
         });
+    }
+
+    // Fecha o toggle ao clicar fora
+    document.addEventListener('click', function (event) {
+        const buttons = document.querySelector('.buttons');
+        const toggle = document.querySelector('.menu-toggle');
+        if (!buttons.contains(event.target) && !toggle.contains(event.target)) {
+            buttons.classList.remove('show');
+        }
     });
 
     // Exibe o modal
@@ -77,7 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('modal').style.display = 'none';
     }
 
-    // Funcionalidade de abrir/fechar modal
-    document.querySelector('.open-modal').addEventListener('click', abrirModal);
-    document.querySelector('.close-modal').addEventListener('click', fecharModal);
+    const openBtn = document.querySelector('.open-modal');
+    const closeBtn = document.querySelector('.close-modal');
+    if (openBtn) openBtn.addEventListener('click', abrirModal);
+    if (closeBtn) closeBtn.addEventListener('click', fecharModal);
 });
