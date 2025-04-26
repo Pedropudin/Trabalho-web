@@ -1,3 +1,15 @@
+/*
+Inicialmente, o formulário de cliente aparece e o de administrador está oculto.
+
+Ao clicar em "Cliente", o formulário de cliente aparece e o de administrador some.
+
+Ao clicar em "Administrador", o formulário de administrador aparece e o de cliente some
+
+Garantia de que a exibição do formulário é mais dinâmica
+
+Ao final da inserção de dados escolhida, há o redirecionamento para o ambiente escolhido pelo usário do site.
+*/
+
 // Alterna entre os formulários (Cliente ou Administrador)
 function mostrarFormulario(tipo) {
   const formCliente = document.getElementById("form-cliente");
@@ -33,8 +45,10 @@ const nomeRegex = /^(?=.*[\W_]).{6,}$/;
 function validarCliente() {
   const nome = document.getElementById("nome-cliente").value.trim();
   const email = document.getElementById("email-cliente").value.trim();
+  const senha = document.getElementById("senha-cliente").value.trim();
 
   const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  const senhaSegura = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
   if (!nomeRegex.test(nome)) {
     exibirMensagemDOM("O nome do cliente deve ter ao menos 6 caracteres e conter ao menos 1 caractere especial.", "erro");
@@ -46,16 +60,31 @@ function validarCliente() {
     return false;
   }
 
+  if (!senhaSegura.test(senha)) {
+      exibirMensagemDOM(
+        "A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.",
+        "erro"
+      );
+      return false;
+  }
+
   return true;
 }
 
 // Validação do formulário do administrador
 function validarAdmin() {
   const nome = document.getElementById("nome-admin").value.trim();
-  const senha = document.getElementById("senha-admin").value;
-  const token = document.getElementById("token").value;
+  const senha = document.getElementById("senha-admin").value.trim();
+  const token = document.getElementById("token").value.trim();
+  const email = document.getElementById("email-admin").value.trim();
 
   const senhaSegura = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+   if (!regexEmail.test(email)) {
+       exibirMensagemDOM("Por favor, insira um e-mail válido.", "erro");
+       return false;
+   }
 
   if (!nome || !senha || !token) {
     exibirMensagemDOM("Preencha todos os campos do administrador.", "erro");
@@ -148,15 +177,3 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-/*
-Inicialmente, o formulário de cliente aparece e o de administrador está oculto.
-
-Ao clicar em "Cliente", o formulário de cliente aparece e o de administrador some.
-
-Ao clicar em "Administrador", o formulário de administrador aparece e o de cliente some
-
-Garantia de que a exibição do formulário é mais dinâmica
-
-Ao final da inserção de dados escolhida, há o redirecionamento para o ambiente escolhido pelo usário do site.
-*/
