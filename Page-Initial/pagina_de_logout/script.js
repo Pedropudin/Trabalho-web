@@ -26,7 +26,6 @@ if (timerElement) {
     homeButton.addEventListener("pointerdown", () => {
       clearInterval(interval);
       limparStorageERedirecionar();
-      window.location.href = "../pagina_de_apresentacao/index.html";
     });
   }
 }
@@ -35,4 +34,5 @@ if (timerElement) {
 function limparStorageERedirecionar() {
   localStorage.clear();
   sessionStorage.clear();
+  window.location.href = "../pagina_de_apresentacao/index.html";
 }
