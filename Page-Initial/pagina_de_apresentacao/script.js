@@ -1,3 +1,11 @@
+// BLOQUEIO DO BOTÃO “VOLTAR”
+// Empurra duas entradas idênticas no histórico e “trava” o back
+history.pushState(null, null, location.href);
+history.pushState(null, null, location.href);
+window.addEventListener('popstate', () => {
+  history.go(1);
+});
+
 /**
  * Cria um efeito de partículas elétricas no ponto clicado e reproduz som.
  * O efeito só aparece quando o botão de scroll ou o botão de entrar no site é clicado.
@@ -91,13 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Toca o som e aguarda o fim antes de redirecionar
             som.play().then(() => {
                 som.addEventListener('ended', () => {
+                     // Substitui a entrada de histórico atual
+                     history.replaceState(null, null, location.href);
                     // Redirecionamento sem possibilidade de voltar (replace)
-                    window.location.replace("../../Page-Products/pagina_de_pesquisa/index.html");
+                    window.location.replace("../pagina_de_login/index.html");
                 });
             }).catch(() => {
+                 // Substitui a entrada de histórico atual
+                 history.replaceState(null, null, location.href);
                 // Se não conseguir tocar o som, espera um pouco antes de redirecionar
                 setTimeout(() => {
-                    window.location.replace("../../Page-Products/pagina_de_pesquisa/index.html");
+                    window.location.replace("../pagina_de_login/index.html");
                 }, 500);
             });
         });

@@ -89,16 +89,6 @@ nav {
     outline: 3px solid #005d73; /* Realce do foco */
 }
 
-/* Ícone de menu que aparece apenas em telas pequenas */
-.menu-toggle {
-  display: none; /* Oculto por padrão */
-  background: none;
-  border: none;
-  color: white;
-  font-size: 28px;
-  cursor: pointer;
-}
-
 /* MENU PRINCIPAL (links do topo) */
 .menu {
     display: flex;
@@ -107,7 +97,7 @@ nav {
     align-items: center;
     background-color: #003d52;
     padding: 8px;
-    gap: 40px;
+    gap: 10px;
 }
 
 /* Estilos de links para o menu */
@@ -124,8 +114,19 @@ nav {
     background-color: #007b99;
 }
 
-.menu a:focus, .menu a:active {
+.menu a:focus,
+.menu a:active {
   outline: 3px solid #005f73; /* Realce do foco */
+}
+
+/* Ícone de menu que aparece apenas em telas pequenas */
+.menu-toggle {
+  display: none; /* Oculto por padrão */
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
 }
 
 /* Seção de compras, tipo uma chamada ou destaque */

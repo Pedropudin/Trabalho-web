@@ -128,7 +128,10 @@ window.addEventListener('DOMContentLoaded', () => {
     if (validarCliente()) {
       exibirMensagemDOM("Login do cliente enviado com sucesso!", "sucesso");
       setTimeout(() => {
-        window.location.href = rotas.pesquisa;
+        // Substitui a entrada da página de login no histórico
+        history.replaceState(null, null, location.href);
+        // Redireciona sem empurrar nova entrada
+        window.location.replace(rotas.pesquisa);
       }, 1500);
     }
   });
@@ -139,7 +142,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (validarAdmin()) {
       exibirMensagemDOM("Login do administrador enviado com sucesso!", "sucesso");
       setTimeout(() => {
-        window.location.href = rotas.administrador;
+        history.replaceState(null, null, location.href);
+        window.location.replace(rotas.administrador);
       }, 1500);
     }
   });

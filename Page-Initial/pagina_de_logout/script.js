@@ -7,24 +7,32 @@ window.onpopstate = function () {
 // Contagem regressiva para redirecionar
 let countdown = 45;
 const timerElement = document.getElementById("timer");
-timerElement.textContent = countdown;
-
-const interval = setInterval(() => {
-  countdown--;
+if (timerElement) {
   timerElement.textContent = countdown;
 
-  if (countdown === 0) {
-    clearInterval(interval);
-    localStorage.clear(); // Limpa localStorage, garante que os dados do usuário que "deslogou" não fiquem armazenados
-    sessionStorage.clear(); // Limpa sessionStorage
-    window.location.href = "../../Page-Products/pagina_de_pesquisa/index.html";
-  }
-}, 1000);
+  const interval = setInterval(() => {
+    countdown--;
+    timerElement.textContent = countdown;
 
-// Redireciona ao clicar no botão
-function redirectHome() {
-  clearInterval(interval);
+    if (countdown === 0) {
+      clearInterval(interval);
+      limparStorageERedirecionar();
+    }
+  }, 1000);
+
+  // Redireciona ao clicar no botão
+  const homeButton = document.getElementById("homeRedirect");
+  if (homeButton) {
+    homeButton.addEventListener("pointerdown", () => {
+      clearInterval(interval);
+      limparStorageERedirecionar();
+      window.location.href = "../pagina_de_apresentacao/index.html";
+    });
+  }
+}
+
+// Função para limpar storage e redirecionar
+function limparStorageERedirecionar() {
   localStorage.clear();
   sessionStorage.clear();
-  window.location.href = "../../Page-Products/pagina_de_pesquisa/index.html";
 }

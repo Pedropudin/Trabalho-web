@@ -16,16 +16,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Mapeamento de IDs para URLs de destino
     const rotas = {
         perfil: "../pagina_de_perfil/index.html",
-        carrinho: "../../Page-Products/pagina_do_produto/index.html",
+        //carrinho: "../../Page-Products/pagina_do_carrinho/index.html", --> em desenvolvimento
         logout: "../pagina_de_logout/index.html"
     };
 
-    // Percorre cada par id -> url, a fim de redirecionar a página para outra
     function animarClique(botao) {
         botao.classList.add('clicado');
         setTimeout(() => botao.classList.remove('clicado'), 150);
     }
 
+    // Percorre cada par id -> url, a fim de redirecionar a página para outra
     for (const [id, url] of Object.entries(rotas)) {
         const botao = document.getElementById(id);
         if (!botao) continue;
