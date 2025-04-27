@@ -140,6 +140,8 @@ footer {
   text-align: center;
   padding: 30px 40px;
   margin-top: 40px;
+  position:fixed ;
+  bottom: 0px;
 }
 
 /* Bloco de informações do rodapé */
@@ -297,7 +299,7 @@ footer a:hover {
   }
 
   .rodape-conteudo {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     text-align: center;
     gap: 10px;
   }
