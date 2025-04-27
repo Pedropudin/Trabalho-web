@@ -16,7 +16,7 @@ function criarParticulas(e) {
         const efeito = document.createElement('div');
         efeito.classList.add('efeito-eletrico');
 
-        const formatos = ['circulo', 'quadrado', 'faisca'];
+        const formatos = ['circulo', 'quadrado', 'faísca'];
         const classeForma = formatos[Math.floor(Math.random() * formatos.length)];
         efeito.classList.add(classeForma);
 
