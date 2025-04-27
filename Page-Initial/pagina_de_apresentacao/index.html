@@ -1,49 +1,87 @@
+<!-- Esta é a página HTML inicial do site, que apresenta uma visão geral do portal de e-commerce, incluindo logo,
+descrição, fornecedores e botão de acesso. -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- Definições de codificação e responsividade -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inical do site</title>
+
+    <!-- Título exibido na aba do navegador -->
+    <title>Página Inicial do site</title>
+
+    <!-- Estilos principais da página -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Biblioteca de ícones Font Awesome para elementos visuais -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
+<!-- Container principal alinhando itens ao centro -->
 <div class="container">
-    <img src="../../Page-Products/logo-com-escrita.png" alt="Logo do website" class="logo">
+    <!-- Logo do website (link relativo para a imagem) -->
+    <img src="../../Page-Products/logo-com-escrita.png"
+         alt="Logo do website"
+         class="logo">
+
+    <!-- Título de destaque explicando proposta do portal -->
     <h2>Encontre os melhores produtos e fornecedores em um só lugar!</h2>
-    <section class="descricao">
-        <br>
-        <p><strong>Projeto Integrador:</strong> Este portal de e-commerce de dispositivos eletrônicos foi desenvolvido
-            como um trabalho da disciplina <em>Introdução ao Desenvolvimento Web</em>.</p>
-        <br>
-
-        <p><strong>Estrutura Semântica:</strong> Utilizamos HTML5 semântico, estruturando conteúdo em cabeçalhos
-            (<code>&lt;h2&gt;, &lt;h3&gt;</code>) e seções, correspondendo o conteúdos em cada ao contexto de interação
-            do usuário com o site.</p>
-        <br>
-
-        <p><strong>Layout Responsivo:</strong> Aplicamos CSS3 com Flexbox e Grid para garantir fluidez em diversas
-            resoluções (desktop, tablet e mobile), com media queries para ajustes finos de tipografia e espaçamento.</p>
-        <br>
-
-        <p><strong>Interatividade:</strong> A lógica de front-end foi implementada em JavaScript, manipulando o DOM
-            para validação de formulários, navegação suave (smooth scroll) e animações via <code>@keyframes</code> e transições
-            CSS. Além disso, foi feito o uso de framework e banco de dados não relacional (NoSQL - MongoDB)</p>
-        <br>
-
-        <p><strong>Fluxo de trabalho:</strong> Adotamos Git/GitHub para controle de versão e revisão de código.</p>
-        <br>
-
-        <p>Para dúvidas ou contribuições, abra uma issue ou pull request em nosso repositório no GitHub. Bom proveito e
-            <em>&ldquo;eletrocurte-se&rdquo;</em>!</p>
-    </section>
     <br>
 
-    <button class="cadastro"><i class="fas fa-user-plus"></i> Entre no site!</button>
-    <br><br>
+    <!-- Seção de descrição com explicação técnica e direta sobre o trabalho -->
+    <section class="descricao">
+        <p>
+            <strong>Projeto Integrador:</strong>
+            Este portal de e-commerce de dispositivos eletrônicos foi desenvolvido
+            como um trabalho da disciplina <em>Introdução ao Desenvolvimento Web</em>.
+        </p>
+        <br>
 
-    <!-- Caráter figurativo para mostrar legitimidade ao site, em um contexto de mercado -->
+        <p>
+            <strong>Estrutura Semântica:</strong>
+            Utilizamos HTML5 semântico, estruturando conteúdo em cabeçalhos
+            (<code>&lt;h2&gt;, &lt;h3&gt;</code>) e seções, correspondendo o conteúdos ao contexto de interação
+            do usuário com o site.
+        </p>
+        <br>
+
+        <p>
+            <strong>Layout Responsivo:</strong>
+            Aplicamos CSS3 com Flexbox e Grid para garantir fluidez em diversas
+            resoluções (desktop, tablet e mobile), com media queries para ajustes finos de tipografia e espaçamento.
+        </p>
+        <br>
+
+        <p>
+            <strong>Interatividade:</strong>
+            A lógica de front-end foi implementada em JavaScript, manipulando o DOM
+            para validação de formulários, navegação suave (smooth scroll) e animações via
+            <code>@keyframes</code> e transições CSS. Além disso, foi feito o uso de framework
+            e banco de dados não relacional (NoSQL - MongoDB).
+        </p>
+        <br>
+
+        <p>
+            <strong>Fluxo de trabalho:</strong>
+            Adotamos Git/GitHub para controle de versão e revisão de código.
+        </p>
+        <br>
+
+        <p>
+            Para dúvidas ou contribuições, abra uma issue ou pull request em nosso
+            repositório no GitHub. Bom proveito e <em>&ldquo;eletrocurte-se&rdquo;</em>!
+        </p>
+        <br>
+    </section>
+
+    <!-- Botão principal para acessar o site, redirecionando para a página de login -->
+    <button type="button" class="cadastro">
+        <i class="fas fa-user-plus"></i> Entre no site!
+    </button>
+
+    <!-- Título e exibição de fornecedores associados ao portal (caráter figurativo, apenas) -->
     <h3>Alguns fornecedores associados ao site:</h3>
     <br>
     <div class="fornecedores">
@@ -53,24 +91,45 @@
     </div>
 </div>
 
-<button class="btn-retorno" id="btn-topo"><i class="fas fa-arrow-up"></i></button>
+<!-- Botão de retorno ao topo da página, posicionamento fixo, conforme as proporções do dispositivo -->
+<button type="button" class="btn-retorno" id="btn-topo">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
-<footer class="rodape">
+<!-- Rodapé com informações de contato e redes sociais -->
+<footer>
     <div class="rodape-conteudo">
         <p>00.000.000/0000-00</p>
         <p>email@gmail.com</p>
         <p>Tel: (00) 00000-0000</p>
-        <p><a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">Termos e Condições</a></p>
+
+        <!-- Link para termos e condições em nova aba -->
+        <p>
+            <a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">
+                Termos e Condições
+            </a>
+        </p>
         <p>Endereço</p>
+
+        <!-- Ícones de redes sociais com links externos -->
         <div class="social-icons">
-            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.twitter.com/" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
         </div>
     </div>
+
+    <!-- Copyright padrão -->
     <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
+<!-- Inclusão do script principal para interatividade e navegação -->
 <script src="script.js"></script>
 </body>
 </html>

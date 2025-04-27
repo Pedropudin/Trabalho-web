@@ -110,6 +110,11 @@ header {
   border: 1px solid #aaa;
 }
 
+.login-box input:focus {
+  border-color: #006d84;
+  outline: none;
+}
+
 /* Botão de envio */
 .btn-enviar {
   background-color: #006d84;

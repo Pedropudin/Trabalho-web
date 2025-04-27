@@ -69,6 +69,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const openBtn = document.querySelector('.open-modal');
     const closeBtn = document.querySelector('.close-modal');
-    if (openBtn) openBtn.addEventListener('click', abrirModal);
-    if (closeBtn) closeBtn.addEventListener('click', fecharModal);
+
+    if (openBtn)
+        openBtn.addEventListener('click', abrirModal);
+
+    if (closeBtn)
+        closeBtn.addEventListener('click', fecharModal);
 });

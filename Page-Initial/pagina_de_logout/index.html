@@ -3,71 +3,85 @@
 <html lang="pt-BR">
 
 <head>
+    <!-- Metadados essenciais para codificação e responsividade -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título exibido na aba do navegador -->
     <title>Logout</title>
+
+    <!-- Importação do CSS principal para estilo da página -->
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome para ícones das redes sociais -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-y3uH1iYqu64y3...X" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 
 <body>
 
-<!-- Cabeçalho -->
+<!-- Cabeçalho com logo do aplicativo para reforço de marca -->
 <header>
-    <!-- Logo do aplicativo -->
-    <img src="../../Page-Products/logo-com-escrita.png" alt="Logo" id="logo" />
+    <img src="../../Page-Products/logo-com-escrita.png"
+         alt="Logo do aplicativo"
+         id="logo" />
 </header>
 
-<!-- Container principal do logout -->
+<!-- Container principal do logout, centralizando conteúdo -->
 <div class="logout-container">
     <div class="logout-box">
-        <!-- Título -->
+        <!-- Título principal da seção de logout -->
         <h2>Logout</h2>
 
-        <!-- Mensagem informando que a operação foi concluída -->
+        <!-- Mensagem informando que o usuário deslogou com sucesso -->
         <p>Operação de saída efetuada com sucesso</p>
+        <br>
+
         <p>Obrigado por nos visitar, volte sempre ;)</p>
+        <br>
 
-        <!-- Mensagem com o tempo restante antes de redirecionar para a página inicial -->
-        <p class="redirect-message">
-            Você será redirecionado em <span id="timer"></span> segundos...
-        </p>
+        <!-- Exibe contagem regressiva antes de redirecionamento automático -->
+        <p>Você será redirecionado em <span id="timer"></span> segundos...</p>
 
-        <!-- Botão para redirecionar o usuário para a página inicial -->
-        <button class="home-button" id="homeRedirect">Voltar para a Home</button>
+        <!-- Botão para redirecionar manualmente o usuário para a Home -->
+        <button class="home-button" id="homeRedirect" type="button">Voltar para a Home</button>
 
     </div>
 </div>
 
-<!-- Rodapé -->
+<!-- Rodapé contendo informações de contato e redes sociais -->
 <footer>
-    <!-- Informações e atendimento -->
+    <!-- Sessão superior com horário de atendimento -->
     <div class="footer-top">
-        Atendimento: (00) 0000-0000 — Seg. a Sex. das 08h às 18h
+        Atendimento: (00) 00000-0000 — Seg. a Sex. das 08h às 18h
     </div>
 
-    <!-- Informações de contato-->
+    <!-- Conteúdo principal do rodapé: contatos e links úteis -->
     <div class="rodape-conteudo">
-        <p>00.000.000/0000-00</p>
+        <p>000.000.000-00</p>
         <p>email@gmail.com</p>
         <p>Tel: (00) 00000-0000</p>
         <p><a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">Termos e Condições</a></p>
         <p>Endereço</p>
-        <!-- Container de ícones -->
+
+        <!-- Ícones sociais para Instagram, Twitter e Facebook -->
         <div class="social-icons">
-            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.twitter.com/" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
         </div>
     </div>
 
-    <!-- Copyright -->
+    <!-- Direitos autorais e ano -->
     <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
+<!-- Script JavaScript que controla contagem e redirecionamento -->
 <script src="script.js"></script>
 
 </body>
-
 </html>

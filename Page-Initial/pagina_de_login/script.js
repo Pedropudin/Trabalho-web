@@ -19,6 +19,7 @@ function mostrarFormulario(tipo) {
     formCliente.classList.add("show");
     formCliente.classList.remove("hidden");
     formAdmin.classList.remove("show");
+
     limparCampos(formAdmin);
     setTimeout(() => formAdmin.classList.add("hidden"), 600);
   }
@@ -27,6 +28,7 @@ function mostrarFormulario(tipo) {
     formAdmin.classList.add("show");
     formAdmin.classList.remove("hidden");
     formCliente.classList.remove("show");
+
     limparCampos(formCliente);
     setTimeout(() => formCliente.classList.add("hidden"), 600);
   }
@@ -117,6 +119,7 @@ function exibirMensagemDOM(mensagem, tipo = "info") {
   const msgBox = document.getElementById("mensagem");
   msgBox.textContent = mensagem;
   msgBox.className = `mensagem show ${tipo}`;
+
   setTimeout(() => {
     msgBox.classList.remove("show");
     msgBox.classList.add("hidden");
@@ -132,6 +135,7 @@ function limparCampos(formulario) {
 // Impede copiar, colar e cortar nos campos de input
 function bloquearCopiarColar(formulario) {
   const inputs = formulario.querySelectorAll("input");
+
   inputs.forEach(input => {
     input.addEventListener("copy", e => e.preventDefault());
     input.addEventListener("cut", e => e.preventDefault());
@@ -156,6 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     if (validarCliente()) {
       exibirMensagemDOM("Login do cliente enviado com sucesso!", "sucesso");
+
       setTimeout(() => {
         // Substitui a entrada da página de login no histórico
         history.replaceState(null, null, location.href);
@@ -168,6 +173,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Submissão do formulário do administrador
   document.getElementById('form-admin').addEventListener('submit', (e) => {
     e.preventDefault();
+
     if (validarAdmin()) {
       exibirMensagemDOM("Login do administrador enviado com sucesso!", "sucesso");
       setTimeout(() => {

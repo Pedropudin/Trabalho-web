@@ -26,8 +26,8 @@ body {
 }
 
 .container img {
-    height: 200px;
-    width: 550px;
+    height: 200px; /* Altura fixa para consistência */
+    width: 550px; /* Largura fixa para manter proporção */
 }
 
 /* Estilo da logo */
@@ -48,9 +48,10 @@ h2 {
     color: #003b5c; /* Azul escuro */
     font-size: 24px;
     margin-bottom: 10px;
-    animation: aparecer 1s ease-out forwards;
+    animation: aparecer 1s ease-out forwards; /* Animação de aparição */
 }
 
+/* Keyframes para animação fade-in e slide-down */
 @keyframes aparecer {
     0% {
         opacity: 0;
@@ -92,12 +93,12 @@ h2 {
 /* Efeito ao passar o mouse no botão */
 .cadastro:hover {
     background-color: #005d8f; /* Azul mais claro */
-    transform: scale(1.05); /* Leve aumento */
+    transform: scale(1.05); /* Leve aumento do tamanho*/
 }
 
 /* Título da seção de fornecedores */
 h3 {
-    color: #003b5c;
+    color: #003b5c; /* Azul escuro consistente com o tema */
     margin: 20px 0 10px;
 }
 
@@ -126,10 +127,10 @@ h3 {
 
 /* Botão de retorno ao logo */
 .btn-retorno {
-    position: fixed;
+    position: fixed; /* Fixa posição na viewport */
     bottom: 25px;
     right: 25px;
-    z-index: 9999;
+    z-index: 9999; /* Garante estar acima de outros elementos */
     background-color: #003b5c;
     color: white;
     border: none;
@@ -150,14 +151,6 @@ h3 {
 /* Efeito de clique apenas no botão voltar ao topo */
 .btn-retorno:active {
     transform: scale(0.9);
-}
-
-/* Corrigido: faísca para faiska */
-.faiska {
-    transform: rotate(45deg);
-    background-color: yellow;
-    width: 6px;
-    height: 12px;
 }
 
 /* Rodapé */
@@ -249,6 +242,7 @@ footer a:hover {
     }
 }
 
+/* Ícones sociais no rodapé com estilo e hover */
 .social-icons {
   display: flex;
   gap: 30px;
@@ -301,6 +295,7 @@ footer a:hover {
 
     footer {
         padding: 20px;
+        padding-bottom: 60px;  /* Reserva espaço interno para o botão */
       }
 
     .footer-top,
@@ -308,10 +303,6 @@ footer a:hover {
     .rodape-conteudo a,
     footer .copyright {
        font-size: 14px;
-    }
-
-    .rodape {
-        padding-bottom: 60px;  /* reserva espaço interno para o botão */
     }
 
     .btn-retorno {
@@ -370,6 +361,7 @@ footer a:hover {
 
     footer {
         padding: 15px;
+        padding-bottom: 60px;  /* reserva espaço interno para o botão */
     }
 
     .footer-top,
@@ -381,10 +373,6 @@ footer a:hover {
 
     .copyright {
         font-size: 10px;
-    }
-
-    .rodape {
-        padding-bottom: 60px;  /* reserva espaço interno para o botão */
     }
 
     .btn-retorno {

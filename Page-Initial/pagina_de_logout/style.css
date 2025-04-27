@@ -150,14 +150,7 @@ footer a:hover {
 /* ----------- Responsividade ----------- */
 /* Ajustes para telas médias (tablets e celulares) - 768px */
 @media (max-width: 768px) {
-  .user-options {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
-
-  .container {
+  .logout-container {
     width: 90%;
     padding: 10px;
   }
@@ -183,20 +176,7 @@ footer a:hover {
 /* Ajustes para telas pequenas (celulares) - 480px */
 @media (max-width: 480px) {
   /* Ajustes de largura e fonte para uma tela ainda menor */
-  .user-options {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px; /* Reduz o espaço entre os botões */
-  }
-
-  .user-btn {
-    width: 70px;
-    height: 70px;
-    font-size: 10px;
-  }
-
-  .container {
+  .logout-container {
     width: 95%;
     padding: 8px;
   }
