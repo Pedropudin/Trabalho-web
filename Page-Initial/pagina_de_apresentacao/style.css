@@ -298,11 +298,9 @@ footer a:hover {
         padding-bottom: 60px;  /* Reserva espaço interno para o botão */
       }
 
-    .footer-top,
     .rodape-conteudo p,
-    .rodape-conteudo a,
     footer .copyright {
-       font-size: 14px;
+       font-size: 12px;
     }
 
     .btn-retorno {

@@ -278,6 +278,7 @@ footer a:hover {
   text-decoration: none;
 }
 
+/* Ícones sociais no rodapé com estilo e hover */
 .social-icons {
   display: flex;
   gap: 30px;

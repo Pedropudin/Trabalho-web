@@ -152,6 +152,7 @@ footer a:hover {
 @media (max-width: 768px) {
   .logout-container {
     width: 90%;
+    margin: 0 auto;   /* faz o bloco de 90% ficar centrado */
     padding: 10px;
   }
 
@@ -167,9 +168,8 @@ footer a:hover {
 
   .footer-top,
   .rodape-conteudo p,
-  .rodape-conteudo a,
   footer .copyright {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
@@ -178,6 +178,7 @@ footer a:hover {
   /* Ajustes de largura e fonte para uma tela ainda menor */
   .logout-container {
     width: 95%;
+    margin: 0 auto;   /* faz o bloco de 95% ficar centrado */
     padding: 8px;
   }
 
@@ -193,7 +194,6 @@ footer a:hover {
 
   .footer-top,
   .rodape-conteudo p,
-  .rodape-conteudo a,
   footer .copyright {
     font-size: 11px;
   }
