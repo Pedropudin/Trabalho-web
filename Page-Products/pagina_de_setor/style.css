@@ -451,16 +451,16 @@ footer a:hover {
 
     .menu {
         flex-direction: column;
-        text-align: center;
-        display: none; /* Menu escondido inicialmente */
     }
 
-    .menu.show {
-        display: flex; /* Mostra quando o botão de menu é ativado */
+    .menu a {
+        display: block;
+        padding: 10px;
+        text-align: center;
     }
-    
+
     .menu-toggle {
-        display: block; /* Mostra o ícone de menu no mobile */
+        display: block; /* Mostra botão no mobile */
     }
 
     .rodape-conteudo {
