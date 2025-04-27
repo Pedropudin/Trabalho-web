@@ -332,27 +332,48 @@ social-icons a:hover {
         align-items: center;
     }
     #header-buttons{
+        display: none;
+    }
+    #header-buttons.show{
         display: flex;
         flex-direction: column;
-        gap: 15px;
         align-items: center;
-    }
-    .search-bar{
         width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
     }
-    .menu {
-        width: 100%;
+    #header-buttons.show button{
+        display: flex;
         flex-direction: column;
-        text-align: center;
-        display: none; /* Menu escondido inicialmente */
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+    #header-buttons button{
+        width: 100%;
+        max-width: 200px;
     }
 
-    .menu.show {
-        display: flex; /* Mostra quando o botão de menu é ativado */
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
     }
-    
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu a {
+        display: block;
+        padding: 10px;
+        text-align: center;
+    }
+
     .menu-toggle {
-        display: block; /* Mostra o ícone de menu no mobile */
+        display: block; /* Mostra botão no mobile */
     }
     
     #display-de-produtos {
@@ -374,14 +395,8 @@ social-icons a:hover {
     }
 
     .rodape-conteudo {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
+        font-size: 12px;
         gap: 15px;
     }
-
-    footer {
-        padding: 15px;
-    }
-
 }
 

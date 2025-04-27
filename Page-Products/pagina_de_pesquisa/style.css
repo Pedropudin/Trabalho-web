@@ -386,29 +386,59 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
-    .rodape-conteudo {
-        grid-template-columns: 1fr;
-        gap: 15px;
+    *{
+        max-width: 100%;
     }
-
-    .items {
-        width: 100%;
-    }
-
-    .search-bar{
-        width: 70%;
-    }
-
+    
     .header{
         flex-direction: column;
         align-items: center;
     }
 
+    .menu {
+        flex-direction: column;
+        text-align: center;
+        display: none; /* Menu escondido inicialmente */
+    }
+
+    .menu.show {
+        display: flex; /* Mostra quando o botão de menu é ativado */
+    }
+    
+    .menu-toggle {
+        display: block; /* Mostra o ícone de menu no mobile */
+    }
+
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
+    }
+
     #header-buttons{
+        display: none;
+    }
+    #header-buttons.show{
         display: flex;
         flex-direction: column;
-        gap: 15px;
         align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+    #header-buttons.show button{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+    #header-buttons button{
+        width: 100%;
+        max-width: 200px;
     }
 
     #display-de-produtos {
@@ -417,19 +447,9 @@ footer a:hover {
         gap: 25px;
     }
 
-    .menu {
-        flex-direction: column;
-        text-align: center;
-        display: none; /* Menu escondido inicialmente */
-      }
-    
-
-    .menu.show {
-        display: flex; /* Mostra quando o botão de menu é ativado */
-    }
-    
-      .menu-toggle {
-        display: block; /* Mostra o ícone de menu no mobile */
+    .rodape-conteudo {
+        font-size: 12px;
+        gap: 15px;
     }
     
 }
