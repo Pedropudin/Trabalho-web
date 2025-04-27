@@ -223,7 +223,7 @@ footer a:hover {
 }
 
 /* Formato de faísca */
-.faísca {
+.faisca {
     transform: rotate(45deg);
     background-color: yellow;
     width: 6px;
