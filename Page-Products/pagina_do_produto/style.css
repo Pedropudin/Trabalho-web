@@ -25,12 +25,11 @@ header {
     justify-content: space-between; /* Itens espaçados */
     align-items: center; /* Centraliza verticalmente */
     padding: 10px;
-    flex-wrap: wrap; /* Permite quebra de linha */
+    flex-wrap: nowrap; /* Permite quebra de linha */
     gap: 10px;
 }
-  
 
-/* Logo principal com responsividade e efeito de aumento */
+/* Logo */
 #logo {
     width: 85px;
     height: 85px;
@@ -40,12 +39,11 @@ header {
     cursor: pointer;
 }
 
-/* EFEITO HOVER DA LOGO */
-#logo:hover {
+#logo:hover {/*Efeito aplicado a logo quando o mouse passa por cima*/
     transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
-
+/* Barra de pesquisa */
 .search-bar {
     background-color: white;
     border: 0.5px solid white;
@@ -53,8 +51,9 @@ header {
     display: flex;
     align-items: center;
     padding: 10px;
-    width: 530px;
-    margin: 0 auto;
+    max-width: 530px;
+    margin-left: 50px;
+    box-sizing: border-box;
 }
 
 .search-bar input {
@@ -64,6 +63,7 @@ header {
     outline: none;
 }
 
+/* Botões do cabeçalho (perfil, sair, carrinho)*/
 #header-buttons button {
     margin-left: 10px;
     padding: 8px 12px;
@@ -72,8 +72,17 @@ header {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
 
+#header-buttons{
+    display: flex;
+    align-items: center;
+    gap: 6px; /* espaçamento entre os botões */
+}
+
+/* Botões do produto (hardware, celulares,...) */
 .menu {
     display: flex;
     flex-direction: row;
@@ -93,25 +102,24 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.menu a:hover {
+.menu a:hover {/* Efeito aplicado aos botões do menu quando o mouse passa por cima */
     background-color: #007b99;
 }
 
-.menu-toggle {
+.menu-toggle {/* Botão que aparece em telas pequenas*/
     display: none;
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 28px;
     cursor: pointer;
 }
-
+/* Controle do conteúdo da página, tudo entre o footer e a header */
 #conteudo-principal {
     flex: 1;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-wrap: nowrap;
     gap: 50px;
     margin: 40px auto;
     padding: 12px;
@@ -120,55 +128,7 @@ header {
     max-width: 1200px;
     height: auto;
 }
-
-#item-information {
-    justify-content: space-between;
-    border-right: 2px solid #007b99; /* Add vertical line */
-    padding-right: 20px; /* Add spacing between content and the line */
-}
-
-#imagem-do-produto {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    object-fit: contain; 
-}
-
-.item-images{
-    margin: 20px 50px 20px 0; 
-    gap: 10px;
-    border-right: 1px solid grey; 
-    padding-right: 40px; 
-}
-
-.IconArrowCarousel{
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    margin: 0 10px;
-    rotate: 90deg;
-    cursor: pointer
-}
-
-.thumbs{
-    display: flex;
-    flex-direction: row nowrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.thumbs img{
-    object-fit: contain;
-    margin-right: 8px;
-    width: 80px;
-    height: 80px;
-    border: 0.5px solid lightgray;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 10px;
-
-}
-
+/*Produto apresentado na página*/
 .items {
     display: flex;
     flex-flow: row nowrap;
@@ -180,22 +140,6 @@ header {
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
     align-items: center;
 }
-
-#nome-produto {
-    margin: 10px 0;
-    font-weight: bold;
-}
-#preco-produto {
-    margin-top: 40px;
-    font-size: 30px;
-    color: #333;
-}
-
-#botoes{
-    display: flex;
-    flex-flow: row wrap;
-}
-
 .items button{
     align-items: center;
     border: #004d66;
@@ -215,80 +159,78 @@ header {
     background-color: #007b99;
 }
 
-/* Rodapé */
-footer {
+/*Conteúdo do produto*/
+#item-information {
+    justify-content: space-between;
+    border-right: 2px solid #007b99; 
+    padding-right: 20px;
+}
+
+#imagem-do-produto {
     width: 100%;
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 30px 40px;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain; 
+}
+
+.item-images{
+    margin: 20px 50px 20px 0; 
+    gap: 10px;
+    border-right: 1px solid grey; 
+    padding-right: 40px; 
+}
+
+
+/*Flecha para passar imagens para direita, carrossel abaixo da foto principal do produto*/
+.IconArrowCarousel{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0 10px;
+    rotate: 90deg;
+    cursor: pointer
+}
+/*Carrossel*/
+.thumbs{
+    display: flex;
+    flex-direction: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+/*Fotos do produto no carrossel*/
+.thumbs img{
+    object-fit: contain;
+    margin-right: 8px;
+    width: 80px;
+    height: 80px;
+    border: 0.5px solid lightgray;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+
+}
+
+/*Partes que aparecem junto ao produto, botão, nome, preço, etc*/
+#nome-produto {
+    margin: 10px 0;
+    font-weight: bold;
+}
+#preco-produto {
     margin-top: 40px;
+    font-size: 30px;
+    color: #333;
 }
 
-/* Bloco de informações do rodapé */
-.rodape-conteudo {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-bottom: 10px;
-  font-size: 14px;
+#botoes-do-produto {
+    display: flex;
+    flex-flow: row wrap;
 }
-
-.rodape-conteudo a {
-  color: white;
-  text-decoration: none;
-}
-
-/* Texto do rodapé */
-footer p {
-  margin: 0;
-}
-
-/* Texto de direitos autorais */
-footer .copyright {
-  font-size: 12px;
-  color: #ccc;
-}
-
-/* Links no rodapé */
-footer a,
-footer a:hover,
-footer a:visited {
-    color: inherit; /* Usa a cor herdada de 'footer', que é white */
-    text-decoration: none; /* Remove o sublinhado */
-}
-
-footer a {
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #99ccff;
-}
-
-.social-icons {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  margin-top: -2px;
-}
-
-.social-icons a {
-  color: #555;
-  font-size: 20px;
-  transition: color 0.3s;
-}
-
-social-icons a:hover {
-  color: #0077ff;
-}
-
+/*Descrição e especificação mais detalhada do produto*/
 #text-specifications, #text-description {
-    background-color: #f9f9f9; /* Light background for contrast */
+    background-color: #f9f9f9; 
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
     margin-top: 50px;
     font-size: 16px;
     line-height: 1.6;
@@ -297,7 +239,7 @@ social-icons a:hover {
 #text-specifications h2, #text-description h2 {
     font-size: 24px;
     margin-bottom: 15px;
-    border-bottom: 2px solid #007b99; /* Underline for emphasis */
+    border-bottom: 2px solid #007b99;
     padding-bottom: 5px;
 }
 
@@ -313,7 +255,7 @@ social-icons a:hover {
 }
 
 #text-specifications ul ul, #text-description ul ul {
-    margin-left: 20px; /* Indent nested lists */
+    margin-left: 20px;
     padding-left: 0;
 }
 
@@ -323,44 +265,84 @@ social-icons a:hover {
     margin-bottom: 5px;
 }
 
+
+/* Rodapé */
+footer {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 30px 40px;
+    margin-top: 40px;
+}
+
+.rodape-conteudo {/* Bloco de informações do rodapé */
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.rodape-conteudo a {
+  color: white;
+  text-decoration: none;
+}
+
+
+footer p {/* Texto do rodapé */
+  margin: 0;
+}
+
+footer .copyright {/* Texto de direitos autorais */
+  font-size: 12px;
+  color: #ccc;
+}
+
+
+footer a,
+footer a:hover,
+footer a:visited {/* Links no rodapé */
+    color: inherit; /* Usa a cor herdada de 'footer', que é white */
+    text-decoration: none; /* Remove o sublinhado */
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #99ccff;
+}
+
+.social-icons {/* Redes sociais no rodapé */
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: -2px;
+}
+
+.social-icons a {
+  color: #555;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #0077ff;
+}
+
 @media (max-width: 768px) {
     *{
         max-width: 100%;
     }
-    .header{
+    
+    #display-de-produtos {
         flex-direction: column;
         align-items: center;
-    }
-    #header-buttons{
-        display: none;
-    }
-    #header-buttons.show{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
-        gap: 10px;
-    }
-    #header-buttons.show button{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
-        gap: 10px;
-    }
-    #header-buttons button{
-        width: 100%;
-        max-width: 200px;
-    }
-
-    .search-bar {
-        width: 90%; /* Aumenta a largura no mobile */
-        max-width: 350px; /* Limita a largura máxima */
-        margin: 0 auto; /* Mantém centralizado */
+        
+        gap: 25px;
     }
     .menu {
         flex-direction: column;
@@ -375,16 +357,50 @@ social-icons a:hover {
     .menu-toggle {
         display: block; /* Mostra botão no mobile */
     }
-    
-    #display-de-produtos {
+
+    #header-buttons{
+        display: none;
+    }
+
+    /* Botão que aparece em telas pequenas*/    
+    #header-buttons.show{
+        display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 25px;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+    /* Botão que aparece em telas pequenas*/    
+    #header-buttons.show button{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    #header-buttons button{
+        width: 100%;
+        max-width: 200px;
     }
 
     .item-images{
         border: none;
         text-align: center;
+    }
+
+    .header{
+        flex-direction: column;
+        align-items: center;
+    }
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
     }
 
     .items {
@@ -399,4 +415,3 @@ social-icons a:hover {
         gap: 15px;
     }
 }
-

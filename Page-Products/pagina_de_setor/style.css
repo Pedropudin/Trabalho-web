@@ -25,12 +25,11 @@ header {
     justify-content: space-between; /* Itens espaçados */
     align-items: center; /* Centraliza verticalmente */
     padding: 10px;
-    flex-wrap: wrap; /* Permite quebra de linha */
+    flex-wrap: nowrap; /* Permite quebra de linha */
     gap: 10px;
 }
-  
 
-/* Logo principal com responsividade e efeito de aumento */
+/* Logo */
 #logo {
     width: 85px;
     height: 85px;
@@ -40,12 +39,11 @@ header {
     cursor: pointer;
 }
 
-/* EFEITO HOVER DA LOGO */
-#logo:hover {
+#logo:hover {/*Efeito aplicado a logo quando o mouse passa por cima*/
     transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
-
+/* Barra de pesquisa */
 .search-bar {
     background-color: white;
     border: 0.5px solid white;
@@ -53,8 +51,9 @@ header {
     display: flex;
     align-items: center;
     padding: 10px;
-    width: 530px;
-    margin: 0 auto;
+    max-width: 530px;
+    margin-left: 50px;
+    box-sizing: border-box;
 }
 
 .search-bar input {
@@ -64,6 +63,7 @@ header {
     outline: none;
 }
 
+/* Botões do cabeçalho (perfil, sair, carrinho)*/
 #header-buttons button {
     margin-left: 10px;
     padding: 8px 12px;
@@ -72,8 +72,17 @@ header {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
 
+#header-buttons{
+    display: flex;
+    align-items: center;
+    gap: 6px; /* espaçamento entre os botões */
+}
+
+/* Botões do produto (hardware, celulares,...) */
 .menu {
     display: flex;
     flex-direction: row;
@@ -93,19 +102,19 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.menu a:hover {
+.menu a:hover {/* Efeito aplicado aos botões do menu quando o mouse passa por cima */
     background-color: #007b99;
 }
 
-.menu-toggle {
+.menu-toggle {/* Botão que aparece em telas pequenas*/
     display: none;
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 28px;
     cursor: pointer;
 }
-
+/* Controle do conteúdo da página, tudo entre o footer e a header */
 #conteudo-principal {
     flex: 1;
     display: flex;
@@ -119,7 +128,7 @@ header {
     max-width: 1200px;
     height: auto;
 }
-
+/* Barra que tem as opções de filtros e categorias relacionadas*/
 #barra-lateral-de-produtos {
     display: flex;
     flex-direction: column; 
@@ -161,7 +170,9 @@ header {
     box-sizing: border-box;
 }
 
-/* Style the checkbox container */
+/* Parte de filtros da barra lateral */
+
+/* Filtros de marca */
 .filtro-marca {
     display: flex;
     align-items: center;
@@ -172,8 +183,7 @@ header {
     cursor: pointer;
 }
 
-/* Style the native checkbox */
-.filtro-marca input[type="checkbox"] {
+.filtro-marca input[type="checkbox"] {/* Alterações aplicadas somente a inputs do tipo checkbox*/
     width: 18px;
     height: 18px;
     border: 1px solid #007b99;
@@ -186,16 +196,15 @@ header {
     vertical-align: middle;
 }
 
-/* Style the checked state */
-.filtro-marca input[type="checkbox"]:checked {
+.filtro-marca input[type="checkbox"]:checked {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
     background-color: #007b99;
     border-color: #007b99;
     color: white;
     position: relative;
 }
 
-.filtro-marca input[type="checkbox"]:checked::after {
-    content: "✔";
+.filtro-marca input[type="checkbox"]:checked::after {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
+    content: "";
     color: white;
     font-size: 12px;
     position: absolute;
@@ -204,9 +213,8 @@ header {
     transform: translate(-50%, -50%);
     text-align: center;
 }
-
-/* Price Inputs */
-.price-inputs {
+/* Filtros de preço */
+.price-inputs { /*Parte dos filtros de preço */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,12 +235,20 @@ header {
     color: #333;
 }
 
-.price-inputs input[type="number"] {
+.price-inputs input[type="number"] {/* Alterações aplicadas somente a inputs do tipo number*/
     width: 100%; 
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
+}
+
+/* Parte que os produtos aparecem */
+
+/* Produtos em geral */
+#display-de-produtos {
+    display: flex;
+    flex-direction: column;
 }
 
 #display-de-produtos > h2 {
@@ -241,12 +257,7 @@ header {
     margin-bottom: 10px;
     color: #444;
 }
-
-#display-de-produtos {
-    display: flex;
-    flex-direction: column;
-}
-
+/* Categoria específica de produtos */
 #placa-de-video, #placa-mae, #memoria {
     display: flex;
     flex-wrap: wrap;
@@ -287,6 +298,7 @@ header {
     font-weight: bold;
 }
 
+/* Botões que ficam dentro dos produtos*/
 .botao-de-compra-display-produtos {
     border: #333;
     background-color: #333;
@@ -305,6 +317,7 @@ header {
     background-color: #0056b3;
 }
 
+/* Troca página */
 #page-changer ul {
     display: flex;
     justify-content: center;
@@ -333,8 +346,7 @@ footer {
     margin-top: 40px;
 }
 
-/* Bloco de informações do rodapé */
-.rodape-conteudo {
+.rodape-conteudo {/* Bloco de informações do rodapé */
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: repeat(3, 1fr);
@@ -348,21 +360,20 @@ footer {
   text-decoration: none;
 }
 
-/* Texto do rodapé */
-footer p {
+
+footer p {/* Texto do rodapé */
   margin: 0;
 }
 
-/* Texto de direitos autorais */
-footer .copyright {
+footer .copyright {/* Texto de direitos autorais */
   font-size: 12px;
   color: #ccc;
 }
 
-/* Links no rodapé */
+
 footer a,
 footer a:hover,
-footer a:visited {
+footer a:visited {/* Links no rodapé */
     color: inherit; /* Usa a cor herdada de 'footer', que é white */
     text-decoration: none; /* Remove o sublinhado */
 }
@@ -375,7 +386,7 @@ footer a:hover {
     color: #99ccff;
 }
 
-.social-icons {
+.social-icons {/* Redes sociais no rodapé */
   display: flex;
   gap: 30px;
   justify-content: center;
@@ -392,63 +403,18 @@ footer a:hover {
   color: #0077ff;
 }
 
+
 @media (max-width: 768px) {
     *{
         max-width: 100%;
     }
-
-    .header{
-        flex-direction: column;
-        align-items: center;
-    }
-    #header-buttons{
-        display: none;
-    }
-    #header-buttons.show{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
-        gap: 10px;
-    }
-    #header-buttons.show button{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
-        gap: 10px;
-    }
-    #header-buttons button{
-        width: 100%;
-        max-width: 200px;
-    }
-    .search-bar {
-        width: 90%; /* Aumenta a largura no mobile */
-        max-width: 350px; /* Limita a largura máxima */
-        margin: 0 auto; /* Mantém centralizado */
-    }
-    footer {
-        padding: 15px;
-    }
-    .items {
-        width: 100%;
-    }
-
+    
     #display-de-produtos {
         flex-direction: column;
         align-items: center;
+        
         gap: 25px;
     }
-
-    .category h2 {
-        font-size: 18px;
-        text-align: center;
-    }
-
     .menu {
         flex-direction: column;
     }
@@ -461,6 +427,58 @@ footer a:hover {
 
     .menu-toggle {
         display: block; /* Mostra botão no mobile */
+    }
+
+    #header-buttons{
+        display: none;
+    }
+
+    /* Botão que aparece em telas pequenas*/    
+    #header-buttons.show{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+    /* Botão que aparece em telas pequenas*/    
+    #header-buttons.show button{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    #header-buttons button{
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .item-images{
+        border: none;
+        text-align: center;
+    }
+
+    .header{
+        flex-direction: column;
+        align-items: center;
+    }
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
+    }
+
+    .items {
+        width: 100%;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align items */
+        gap: 20px; /* Add spacing between items */
     }
 
     .rodape-conteudo {

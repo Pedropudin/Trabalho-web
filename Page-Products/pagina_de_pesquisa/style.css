@@ -13,7 +13,6 @@ body {
     flex-direction: column;
 }
 
-
 /* Header */
 header {
     background-color: #004d66;
@@ -26,12 +25,11 @@ header {
     justify-content: space-between; /* Itens espaçados */
     align-items: center; /* Centraliza verticalmente */
     padding: 10px;
-    flex-wrap: wrap; /* Permite quebra de linha */
+    flex-wrap: nowrap; /* Permite quebra de linha */
     gap: 10px;
 }
-  
 
-/* Logo principal com responsividade e efeito de aumento */
+/* Logo */
 #logo {
     width: 85px;
     height: 85px;
@@ -41,12 +39,11 @@ header {
     cursor: pointer;
 }
 
-/* EFEITO HOVER DA LOGO */
-#logo:hover {
+#logo:hover {/*Efeito aplicado a logo quando o mouse passa por cima*/
     transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
-
+/* Barra de pesquisa */
 .search-bar {
     background-color: white;
     border: 0.5px solid white;
@@ -54,8 +51,9 @@ header {
     display: flex;
     align-items: center;
     padding: 10px;
-    width: 530px;
-    margin: 0 auto;
+    max-width: 530px;
+    margin-left: 50px;
+    box-sizing: border-box;
 }
 
 .search-bar input {
@@ -65,7 +63,7 @@ header {
     outline: none;
 }
 
-
+/* Botões do cabeçalho (perfil, sair, carrinho)*/
 #header-buttons button {
     margin-left: 10px;
     padding: 8px 12px;
@@ -74,11 +72,20 @@ header {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
 
-/* Menu */
+#header-buttons{
+    display: flex;
+    align-items: center;
+    gap: 6px; /* espaçamento entre os botões */
+}
+
+/* Botões do produto (hardware, celulares,...) */
 .menu {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     background-color: #003d52;
@@ -95,37 +102,41 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.menu a:hover {
+.menu a:hover {/* Efeito aplicado aos botões do menu quando o mouse passa por cima */
     background-color: #007b99;
 }
 
-.menu-toggle {
+.menu-toggle {/* Botão que aparece em telas pequenas*/
     display: none;
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 28px;
     cursor: pointer;
 }
-
-/* Main Content */
+/* Controle do conteúdo da página, tudo entre o footer e a header */
 #conteudo-principal {
+    flex: 1;
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 50px;
     margin: 40px auto;
     padding: 12px;
-    max-width: 1200px;
+    box-sizing: border-box;
     width: 100%;
+    max-width: 1200px;
+    height: auto;
 }
-
+/* Barra que tem as opções de filtros e categorias relacionadas*/
 #barra-lateral-de-produtos {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: flex-start; /* Align all elements to the left */
-    padding: 20px; /* Add consistent padding */
-    gap: 10px; /* Add spacing between sections */
-    border-right: 2px solid #ccc; /* Keep the vertical line */
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 20px; 
+    gap: 10px; 
+    border-right: 2px solid #ccc; 
+    box-sizing: border-box; 
 }
 
 #barra-lateral-de-produtos a {
@@ -159,7 +170,9 @@ header {
     box-sizing: border-box;
 }
 
-/* Style the checkbox container */
+/* Parte de filtros da barra lateral */
+
+/* Filtros de marca */
 .filtro-marca {
     display: flex;
     align-items: center;
@@ -170,8 +183,7 @@ header {
     cursor: pointer;
 }
 
-/* Style the native checkbox */
-.filtro-marca input[type="checkbox"] {
+.filtro-marca input[type="checkbox"] {/* Alterações aplicadas somente a inputs do tipo checkbox*/
     width: 18px;
     height: 18px;
     border: 1px solid #007b99;
@@ -184,16 +196,15 @@ header {
     vertical-align: middle;
 }
 
-/* Style the checked state */
-.filtro-marca input[type="checkbox"]:checked {
+.filtro-marca input[type="checkbox"]:checked {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
     background-color: #007b99;
     border-color: #007b99;
     color: white;
     position: relative;
 }
 
-.filtro-marca input[type="checkbox"]:checked::after {
-    content: "✔";
+.filtro-marca input[type="checkbox"]:checked::after {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
+    content: "";
     color: white;
     font-size: 12px;
     position: absolute;
@@ -203,7 +214,7 @@ header {
     text-align: center;
 }
 
-/* Price Inputs */
+/* Filtros de preço */
 .price-inputs {
     display: flex;
     align-items: center;
@@ -225,7 +236,7 @@ header {
     color: #333;
 }
 
-.price-inputs input[type="number"] {
+.price-inputs input[type="number"] {/* Alterações aplicadas somente a inputs do tipo number*/
     width: 100%; 
     padding: 6px;
     border: 1px solid #ccc;
@@ -233,7 +244,9 @@ header {
     text-align: center;
 }
 
-/* Product Display */
+/* Parte que os produtos aparecem */
+
+/* Produtos em geral */
 #display-de-produtos {
     display: flex;
     flex-wrap: wrap;
@@ -277,7 +290,7 @@ header {
     margin: 10px 0;
     font-weight: bold;
 }
-
+/* Botões que ficam dentro dos produtos*/
 .botao-de-compra-display-produtos {
     background-color: #333;
     color: white;
@@ -294,7 +307,7 @@ header {
     background-color: #0056b3;
 }
 
-/* Pagination */
+/* Troca página */
 #page-changer {
     display: flex;
     justify-content: center;
@@ -326,8 +339,8 @@ footer {
     margin-top: 40px;
 }
 
-/* Bloco de informações do rodapé */
-.rodape-conteudo {
+
+.rodape-conteudo {/* Bloco de informações do rodapé */
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: repeat(3, 1fr);
@@ -341,21 +354,17 @@ footer {
   text-decoration: none;
 }
 
-/* Texto do rodapé */
-footer p {
+footer p {/* Texto do rodapé */
   margin: 0;
 }
 
-/* Texto de direitos autorais */
-footer .copyright {
+footer .copyright {/* Texto de direitos autorais */
   font-size: 12px;
   color: #ccc;
 }
-
-/* Links no rodapé */
 footer a,
 footer a:hover,
-footer a:visited {
+footer a:visited {/* Links no rodapé */
     color: inherit; /* Usa a cor herdada de 'footer', que é white */
     text-decoration: none; /* Remove o sublinhado */
 }
@@ -368,7 +377,7 @@ footer a:hover {
     color: #99ccff;
 }
 
-.social-icons {
+.social-icons {/* Redes sociais no rodapé */
   display: flex;
   gap: 30px;
   justify-content: center;
@@ -389,39 +398,28 @@ footer a:hover {
     *{
         max-width: 100%;
     }
-
-    .items {
-        width: 100%;
-    }
-
-    .header{
+    
+    #display-de-produtos {
         flex-direction: column;
         align-items: center;
+        gap: 25px;
     }
-
     .menu {
         flex-direction: column;
     }
-
     .menu a {
         display: block;
         padding: 10px;
         text-align: center;
     }
-
     .menu-toggle {
         display: block; /* Mostra botão no mobile */
     }
-
-    .search-bar {
-        width: 90%; /* Aumenta a largura no mobile */
-        max-width: 350px; /* Limita a largura máxima */
-        margin: 0 auto; /* Mantém centralizado */
-    }
-
     #header-buttons{
         display: none;
     }
+
+    /* Botão que aparece em telas pequenas*/    
     #header-buttons.show{
         display: flex;
         flex-direction: column;
@@ -431,6 +429,8 @@ footer a:hover {
         padding: 10px 0;
         gap: 10px;
     }
+
+    /* Botão que aparece em telas pequenas*/    
     #header-buttons.show button{
         display: flex;
         flex-direction: column;
@@ -445,15 +445,31 @@ footer a:hover {
         max-width: 200px;
     }
 
-    #display-de-produtos {
+    .item-images{
+        border: none;
+        text-align: center;
+    }
+    .header{
         flex-direction: column;
         align-items: center;
-        gap: 25px;
+    }
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
+    }
+
+    .items {
+        width: 100%;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align items */
+        gap: 20px; /* Add spacing between items */
     }
 
     .rodape-conteudo {
         font-size: 12px;
         gap: 15px;
     }
-    
 }
+
+
