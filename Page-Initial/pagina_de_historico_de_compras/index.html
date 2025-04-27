@@ -2,28 +2,40 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Definições de codificação e responsividade -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Compras</title>
+
+    <!-- Título exibido na aba do navegador -->
+    <title>Página de histórico de compras</title>
+
+    <!-- Estilos principais da página -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Biblioteca de ícones Font Awesome para elementos visuais -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 <header>
-    <nav class="header">
+    <!-- Navegação principal com logo, busca e menus -->
+    <nav>
+        <!-- Link para página de pesquisa com logotipo -->
         <a href="../../Page-Products/pagina_de_pesquisa/index.html">
             <img id="logo" src="../../Page-Products/logo-com-borda.png" alt="Logo">
         </a>
 
+        <!-- Campo de busca de produtos -->
         <div class="search-bar">
             <label for="search-bar">
                 <input type="text" placeholder="Pesquisar.." id="search-bar">
             </label>
         </div>
 
+        <!-- Botão de menu responsivo (mobile) -->
         <button class="menu-toggle"><i class="fas fa-bars"></i></button>
 
+        <!-- Botões de ação: Perfil, Carrinho, Sair -->
         <div class="buttons">
             <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
             <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
@@ -31,6 +43,7 @@
         </div>
     </nav>
 
+    <!-- Menu de categorias de produtos -->
     <div class="menu">
         <a href="#">Hardware</a>
         <a href="#">Periféricos</a>
@@ -39,17 +52,24 @@
     </div>
 </header>
 
+<!-- Seção para exibição da data da compra -->
 <section class="compras">
     <p>(Dia + mês da compra)</p>
 </section>
 
+<!-- Seção de avaliação de produtos aguardando feedback -->
 <section class="avaliacao">
+    <!-- Miniatura do produto aguardando avaliação -->
     <img src="imagens/raquete_elétrica2.jpeg" alt="Produto aguardando avaliação" class="img-miniatura">
+    <!-- Texto de chamada para o usuário avaliar -->
     <p>X produtos esperam sua opinião/avaliação</p>
+    <!-- Botão que leva para o fluxo de avaliação -->
     <button><i class="fas fa-star"></i> Avaliar</button>
 </section>
 
+<!-- Galeria de produtos comprados -->
 <section class="produtos">
+    <!-- "Cartão" de produto individual -->
     <div class="produto">
         <img src="imagens/raquete_elétrica2.jpeg" alt="Produto">
         <p>Raquete Elétrica</p>
@@ -77,6 +97,7 @@
     </div>
 </section>
 
+<!-- Rodapé com informações institucionais e ícones sociais -->
 <footer>
     <div class="rodape-conteudo">
         <p>000.000.000-00</p>
@@ -84,16 +105,20 @@
         <p>Tel: (00) 00000-0000</p>
         <p><a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">Termos e Condições</a></p>
         <p>Endereço</p>
-        <!-- Container de ícones -->
+
+        <!-- Ícones sociais para redes externas -->
         <div class="social-icons">
             <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
             <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
         </div>
     </div>
+
+    <!-- Copyright legal -->
     <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
+<!-- Inclusão do script JavaScript para interatividade -->
 <script src="script.js"></script>
 
 </body>

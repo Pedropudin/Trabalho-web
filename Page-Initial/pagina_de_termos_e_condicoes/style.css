@@ -162,8 +162,8 @@ h3 {
     transform: scale(0.9);
 }
 
-/* Corrigido: faísca para faiska */
-.faiska {
+/* Faísca do botão de scroll para cima */
+.faisca {
     transform: rotate(45deg);
     background-color: yellow;
     width: 6px;

@@ -2,93 +2,165 @@
 administrador. -->
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
+    <!-- Definições de codificação e responsividade -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Título mostrado na aba do navegador -->
     <title>Página de Login</title>
+
+    <!-- Estilos principais -->
     <link rel="stylesheet" href="style.css" />
-    <!-- Link para o Font Awesome, utilizado para ícones -->
+
+    <!-- Script do Lucide Icons para gerar ícones SVG -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Font Awesome para ícones de redes sociais -->
+
+    <!-- Font Awesome para ícones de redes sociais e interface -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <!-- Inclusão do script.js, carregado com defer -->
+
+    <!-- Script de lógica de login, carregado com "defer" para executar após o HTML carregar -->
     <script src="script.js" defer></script>
 </head>
 
 <body>
 
-<!-- Cabeçalho -->
+<!-- Cabeçalho com logo -->
 <header>
-    <!-- Logo do aplicativo -->
-    <img src="../../Page-Products/logo-com-escrita.png" alt="Logo" id="logo" />
+    <!-- Logo principal do aplicativo, navegável para página inicial se necessário -->
+    <img src="../../Page-Products/logo-com-escrita.png"
+         alt="Logo"
+         id="logo" />
 </header>
 
-<!-- Container Principal -->
+<!-- Container principal que engloba todo o conteúdo de login -->
 <div class="container">
 
-    <!-- Opções de Usuário (Cliente ou Administrador) -->
+    <!-- Seção de opções de usuário (seleção de perfil) -->
     <div class="user-options">
-        <!-- Botão para Cliente -->
-        <button class="user-btn" id="btn-cliente">
-            <i data-lucide="user"></i><br>Cliente
+        <!-- Botão para selecionar o formulário de Cliente -->
+        <button class="user-btn" id="btn-cliente" type="button">
+            <!-- Ícone de usuário, gerado pelo Lucide -->
+            <i data-lucide="user"></i><br>
+            Cliente
         </button>
 
-        <!-- Botão para Administrador -->
-        <button class="user-btn" id="btn-admin">
-            <i data-lucide="shield"></i><br>Administrador
+        <!-- Botão para selecionar o formulário de Administrador -->
+        <button class="user-btn" id="btn-admin" type="button">
+            <!-- Ícone de escudo, usando Lucide para representar segurança -->
+            <i data-lucide="shield"></i><br>
+            Administrador
         </button>
     </div>
 
-    <!-- Formulário Cliente -->
+    <!-- Formulário de login do Cliente -->
     <form id="form-cliente" class="login-box show">
+        <!-- Campo de nome do cliente -->
         <label for="nome-cliente">Nome</label>
-        <input type="text" id="nome-cliente" required placeholder="(mínimo de 6 caracteres e 1 especial)">
+        <input type="text"
+               id="nome-cliente"
+               required
+               placeholder="(mínimo de 6 caracteres e 1 especial. Ex: $Abcdef)">
+
+        <!-- Campo de e-mail do cliente -->
         <label for="email-cliente">E-mail</label>
-        <input type="email" id="email-cliente" required placeholder="(coloque algum domínio válido)">
+        <input type="email"
+               id="email-cliente"
+               required
+               placeholder="(coloque algum domínio válido. Ex: @yahoo e @gmail)">
+
+        <!-- Campo de senha do cliente -->
         <label for="senha-cliente">Senha</label>
-        <input type="password" id="senha-cliente" required placeholder="(mínimo 8 caracteres: letra maiúscula, minúscula, número e caractere especial)">
-        <button type="submit" class="btn-enviar" id="submit-cliente">Entrar</button>
+        <input type="password"
+               id="senha-cliente"
+               required
+               placeholder="(mínimo 8 caracteres. Ex: @Eletrocurte-se-100%)">
+
+        <!-- Botão de envio do formulário de cliente -->
+        <button type="submit" class="btn-enviar" id="submit-cliente">
+            Entrar
+        </button>
     </form>
 
-    <!-- Formulário Administrador -->
+    <!-- Formulário de login do Administrador, inicialmente oculto -->
     <form id="form-admin" class="login-box hidden">
+        <!-- Campo de nome do administrador -->
         <label for="nome-admin">Nome</label>
-        <input type="text" id="nome-admin" required placeholder="(mínimo de 6 caracteres e 1 especial)">
+        <input type="text"
+               id="nome-admin"
+               required
+               placeholder="(mínimo de 6 caracteres e 1 especial. Ex: $Abcdef)">
+
+        <!-- Campo de e-mail do administrador -->
         <label for="email-admin">E-mail</label>
-        <input type="email" id="email-admin" required placeholder="(coloque algum domínio válido)">
+        <input type="email"
+               id="email-admin"
+               required
+               placeholder="(coloque algum domínio válido. Ex: @yahoo e @gmail)">
+
+        <!-- Campo de senha do administrador -->
         <label for="senha-admin">Senha</label>
-        <input type="password" id="senha-admin" required placeholder="(mínimo 8 caracteres: letra maiúscula, minúscula, número e caractere especial)">
+        <input type="password"
+               id="senha-admin"
+               required
+               placeholder="(mínimo 8 caracteres. Ex: @Eletrocurte-se-100%)">
+
+        <!-- Campo para token de segurança de 6 dígitos -->
         <label for="token">Token de segurança</label>
-        <input type="text" id="token" required placeholder="(deve ter exatamente 6 dígitos numéricos)">
-        <button type="submit" class="btn-enviar" id="submit-admin">Entrar</button>
+        <input type="text"
+               id="token"
+               required
+               placeholder="(deve conter exatamente 6 dígitos. Ex: 123456)">
+
+        <!-- Botão de envio do formulário de administrador -->
+        <button type="submit" class="btn-enviar" id="submit-admin">
+            Entrar
+        </button>
     </form>
 
 </div>
 
+<!-- Caixa de mensagens de erro ou sucesso, controlada pelo JS -->
 <div id="mensagem" class="mensagem hidden"></div>
 
-<!-- Rodapé -->
+<!-- Rodapé com informações de contato e links externos -->
 <footer>
+    <!-- Seção superior do rodapé com horário de atendimento -->
     <div class="footer-top">
         Atendimento: (00) 00000-0000 — Seg. a Sex. das 08h às 18h
     </div>
+
+    <!-- Conteúdo principal do rodapé: CNPJ, e-mail, telefone, termos e endereço -->
     <div class="rodape-conteudo">
         <p>000.000.000-00</p>
         <p>email@gmail.com</p>
         <p>Tel: (00) 00000-0000</p>
-        <p><a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">Termos e Condições</a></p>
+        <p>
+            <a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">
+                Termos e Condições
+            </a>
+        </p>
         <p>Endereço</p>
-        <!-- Container de ícones -->
+
+        <!-- Ícones de redes sociais -->
         <div class="social-icons">
-            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.twitter.com/" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
         </div>
     </div>
-    <p class="copyright">Copyright &copy;2025</p>
+
+    <!-- Direitos autorais -->
+    <p class="copyright">
+        Copyright &copy;2025
+    </p>
 </footer>
 
 </body>
-
 </html>

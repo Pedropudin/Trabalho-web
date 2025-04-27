@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const data = new Date();
     const opcoes = { day: '2-digit', month: 'long' };
     const dataFormatada = data.toLocaleDateString('pt-BR', opcoes);
-    compras.textContent = `Compra realizada em ${dataFormatada}`;
+    compras.textContent = `Produto visualizado em ${dataFormatada}`;
 
     // Mapeamento de IDs para URLs de destino
     const rotas = {
@@ -64,6 +64,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Funcionalidade de abrir/fechar modal
     const openBtn = document.querySelector('.open-modal');
     const closeBtn = document.querySelector('.close-modal');
-    if (openBtn)  openBtn.addEventListener('click', abrirModal);
-    if (closeBtn) closeBtn.addEventListener('click', fecharModal);
+
+    if (openBtn)
+        openBtn.addEventListener('click', abrirModal);
+
+    if (closeBtn)
+        closeBtn.addEventListener('click', fecharModal);
 });

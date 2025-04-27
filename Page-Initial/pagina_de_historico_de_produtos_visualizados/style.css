@@ -317,20 +317,6 @@ footer a:hover {
         margin: 0 auto; /* Mantém centralizado */
     }
 
-    .avaliacao {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .avaliacao p {
-        margin: 10px 0;
-    }
-
-    .avaliacao img {
-        margin-bottom: 10px;
-    }
-
     .compras {
         flex-direction: column;
         gap: 10px;
@@ -347,18 +333,12 @@ footer a:hover {
         max-width: 250px;
     }
 
-    .avaliacao button {
-        width: 90%; /* Aumenta a largura do botão */
-        max-width: 250px; /* Limita o tamanho máximo */
-    }
-
     .rodape-conteudo {
         font-size: 12px;
         gap: 15px;
     }
 }
 
-/* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
 @media (max-width: 480px) {
     .menu-toggle {
@@ -421,14 +401,5 @@ footer a:hover {
 
     .produto img {
         max-width: 100px; /* Ajusta o tamanho da imagem do produto */
-    }
-
-    .avaliacao {
-        padding: 15px;
-    }
-
-    .avaliacao button {
-        width: 80%; /* Ajusta o tamanho do botão */
-        max-width: 200px;
     }
 }
