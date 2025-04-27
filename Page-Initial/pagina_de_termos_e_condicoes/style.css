@@ -232,7 +232,7 @@ footer a:hover {
 }
 
 /* Formato de faísca do botão de scroll para cima */
-.faísca {
+.faisca {
     transform: rotate(45deg);
     background-color: yellow;
     width: 6px;
