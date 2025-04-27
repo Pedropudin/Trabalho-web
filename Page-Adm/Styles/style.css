@@ -3,7 +3,8 @@
     padding: 0px;
     list-style: none;
     font-family: Arial, sans-serif;
-    font-size: 20px;
+    box-sizing: border-box;
+    text-decoration: none;
 }
 
 body {
@@ -14,117 +15,6 @@ a {
     text-decoration: none;
     color: black;
 }
-
-/*============= Cabeçalho ===========*/
-
-/* CABEÇALHO */
-header {
-    background-color: #004d66; /* Fundo azul escuro */
-    color: white; /* Texto branco */
-    padding: 10px; /* Espaçamento interno */
-}
-
-/* BARRA DE NAVEGAÇÃO */
-nav {
-    display: flex; /* Usa Flexbox */
-    justify-content: space-between; /* Espaço entre logo, busca e botões */
-    align-items: center; /* Alinha verticalmente */
-    padding: 10px;
-}
-
-.search-bar {
-    background-color: #D9D9D9; 
-    font-size: 16px;
-    width: 100%;
-    height: 0.8em;
-    padding: 12px 24px;
-    border-radius: 50px; 
-    border: 1px solid #575756;
-    background-image: url(search-icon.png);
-    background-repeat: no-repeat;
-    background-size: 18px 18px;
-    background-position: 97% center;
-    &::placeholder {
-        color: #5a5a5a;
-    }
-}
-
-/* LOGO PRINCIPAL */
-.logo-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Formato circular */
-    margin-right: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
-    cursor: pointer;
-}
-
-/* EFEITO HOVER DA LOGO */
-.logo-img:hover {
-    transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
-}
-
-/* BOTÕES DO TOPO */
-.buttons button {
-    margin-left: 10px;
-    padding: 8px 12px;
-    border: none;
-    background-color: #007b99; /* Cor de fundo azul */
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Estilos de foco e clique */
-.buttons button:focus, .buttons button:active {
-    outline: 3px solid #005d73; /* Realce do foco */
-}
-
-/* MENU PRINCIPAL (links do topo) */
-.menu {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  background-color: #003d52;
-  padding: 10px;
-}
-
-/* Estilo dos links do menu */
-.menu a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-.menu a:hover {
-  background-color: #005f73;
-  border-radius: 5px;
-  padding: 5px 8px;
-}
-
-.menu a:focus, .menu a:active {
-  outline: 3px solid #005f73; /* Realce do foco */
-}
-
-/* BOTÃO PARA ABRIR MENU EM TELAS PEQUENAS */
-.menu-toggle {
-    display: none; /* Escondido por padrão, só aparece no mobile */
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* Ícone de menu no mobile */
-.menu-toggle:before {
-    content: "\2630"; /* Ícone de menu (hamburger) */
-    font-size: 24px;
-}
-
-/*========= Página ============*/
 
 .page {
     width: 100%;
@@ -151,9 +41,18 @@ nav {
 
 .sidebar {
     width: 215px;
-    overflow: auto;
+    overflow: hidden;
     background-color: #ECFCFF;
     z-index: 1000;
+}
+
+.sidebar-toogle {
+    display: none;
+    background: none;
+    border: none;
+    margin: 10px 15px;
+    font-size: 28px;
+    cursor: pointer;
 }
 
 .sidebar>nav {
@@ -175,87 +74,17 @@ nav {
     text-align: center;
 }
 
-/*================= Rodapé =============*/
-
-/* Rodapé principal */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 30px 40px;
-}
-  
-  /* Informações rápidas no topo */
-.footer-top {
-    font-size: 14px;
-    color: #ccc;
-    margin-bottom: 20px;
-}
-  
-  /* Conteúdo principal em grade */
-.rodape-conteudo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-  
-  /* Texto e links */
-.rodape-conteudo p,
-.rodape-conteudo a {
-    margin: 0;
-    color: #ccc;
-    text-decoration: none;
-}
-  
-.rodape-conteudo a:hover {
-    text-decoration: underline;
-}
-  
-  /* Rodapé inferior */
-footer .copyright {
-    font-size: 12px;
-    color: #ccc;
-    margin-top: 15px;
-  }
-
-/*============== Responsividade ============*/
-
-@media (max-width: 768px) {
-
-    .menu {
-        flex-direction: column;
-        display: none; /* Menu escondido inicialmente */
-    }
-
-    .menu a {
+@media (max-width: 1380px) {
+    .sidebar-toogle {
         display: block;
-        padding: 10px;
-        text-align: center;
     }
 
-    .menu-toggle {
-        display: block; /* Mostra botão no mobile */
+    .sidebar {
+        width: 50px;
+        background-color: transparent
     }
- 
-    .rodape-conteudo {
-      grid-template-columns: 1fr; /* Coluna única no rodapé */
-      text-align: center;
-      gap: 15px;
-    }
-  
-    footer {
-      padding: 20px;
-    }
-  
-    .footer-top,
-    .rodape-conteudo p,
-    .rodape-conteudo a,
-    footer .copyright {
-      font-size: 12px; /* Texto levemente reduzido */
+
+    .sidebar>nav {
+        display: none;
     }
 }

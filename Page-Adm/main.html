@@ -5,6 +5,7 @@
 <head>
     <title>Eletrocurte-se: Admin</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" type="text/css" href="Styles/style.css">
     <link rel="stylesheet" type="text/css" href="Styles/header.css">
     <link rel="stylesheet" type="text/css" href="Styles/cards.css">
@@ -17,31 +18,34 @@
 <header>
     <nav class="header">
         <a href="../Page-Products/pagina_de_pesquisa/index.html">
-            <img id="logo" src="../Page-Products/logo-com-borda.png" alt="Logo">
+            <img src="../Page-Products/logo-com-borda.png" alt="Logo" id="logo" />
         </a>
-        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
-
         <div class="search-bar">
-            <label>
-                <input type="text" placeholder="Pesquisar..">
-            </label>
-        </div>
-
-        <div class="buttons">
-            <button id="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            <input type="text" placeholder="Pesquisar..">
+        </div>  
+        <!-- Botão para abrir o menu lateral -->
+        <button class="menu-toggle">☰</button>   
+        <div id="header-buttons">
+            <button><i class="fas fa-user"></i> Perfil</button>
+            <button><i class="fas fa-shopping-cart"></i> Carrinho</button>
+            <button><i class="fas fa-sign-out-alt"></i> Sair</button>
         </div>
     </nav>
 
+
+    <!-- Product Categories Bar -->
     <div class="menu">
-        <a href="#">Desempenho</a>
-        <a href="#">Produtos</a>
-        <a href="#">Pendências</a>
+        <a href="../../Page-Products/pagina_de_setor/index.html">Hardware</a>
+        <a href="#">Periféricos</a>
+        <a href="#">Computadores</a>
+        <a href="#">Celulares</a>
     </div>
 </header>
 
 <div class="page">
 
     <aside class="sidebar">
+        <button class="sidebar-toogle">☰</button>
         <nav>
             <a href="#dashboard">Dashboard</a>
             <span class="sidebar-separator"></span>
