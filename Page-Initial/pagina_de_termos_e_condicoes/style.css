@@ -162,14 +162,6 @@ h3 {
     transform: scale(0.9);
 }
 
-/* Faísca do botão de scroll para cima */
-.faisca {
-    transform: rotate(45deg);
-    background-color: yellow;
-    width: 6px;
-    height: 12px;
-}
-
 /* Rodapé */
 footer {
     width: 100%;
@@ -239,7 +231,7 @@ footer a:hover {
     background-color: magenta;
 }
 
-/* Formato de faísca */
+/* Formato de faísca do botão de scroll para cima */
 .faísca {
     transform: rotate(45deg);
     background-color: yellow;
