@@ -307,9 +307,8 @@ footer a:hover {
 
     .footer-top,
     .rodape-conteudo p,
-    .rodape-conteudo a,
     footer .copyright {
-       font-size: 14px;
+       font-size: 12px;
     }
 
     .rodape {

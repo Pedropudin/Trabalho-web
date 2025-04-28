@@ -171,3 +171,47 @@
 .number-popularity {
     font-size: 30px;
 }
+
+@media (max-width: 1380px) {
+    .content {
+        padding: 20px 0 40px 0;
+    }
+
+    .content-horizontal {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sub-card-sell {
+        grid-template-columns: 150px 200px 200px 150px;
+    }
+
+    .sub-card-sell>button {
+        font-size: 20px;
+        padding: 10px 30px;
+    }
+}
+
+@media (max-width: 844px) {
+    .card-horizontal {
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    #historico {
+        width: fit-content;
+    }
+
+    #historico>h2 {
+        font-size: 15px;
+    }
+
+    .sub-card-sell {
+        grid-template-columns: 200px 200px;
+        width: fit-content;
+    }
+
+    .sub-card-sell>img {
+        display: none;
+    }
+}

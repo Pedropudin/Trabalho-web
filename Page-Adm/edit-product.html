@@ -15,37 +15,36 @@
 
 <body>
 
-<header>
-    <nav class="header">
-        <a href="../Page-Products/pagina_de_pesquisa/index.html">
-            <img id="logo" src="../Page-Products/logo-com-borda.png" alt="Logo">
-        </a>
-        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
-
-        <div class="search-bar">
-            <label>
+    <header>
+        <nav class="header">
+            <a>
+                <img src="../Page-Products/logo-com-borda.png" alt="Logo" id="logo" />
+            </a>
+            <div class="search-bar">
                 <input type="text" placeholder="Pesquisar..">
-            </label>
+            </div>  
+            <!-- Botão para abrir o menu lateral -->
+            <button class="menu-toggle">☰</button>   
+            <div id="header-buttons">
+                <button><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+        </nav>
+    
+    
+        <!-- Product Categories Bar -->
+        <div class="menu">
+            <a href="#">DESEMPENHO</a>
+            <a href="#">PRODUTOS</a>
+            <a href="#">PENDÊNCIAS</a>
         </div>
-
-        <div class="buttons">
-            <button id="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
-        </div>
-    </nav>
-
-    <div class="menu">
-        <a href="#">Desempenho</a>
-        <a href="#">Produtos</a>
-        <a href="#">Pendências</a>
-    </div>
-</header>
+    </header>
 
 <div class="page">
 
     <div class="content">
 
         <div class="card edit-product">
-            <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" width="500px">
+            <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" width="560px">
             <form class="edit-product-form">
                 <div>
                     <label>Nome: </label>
