@@ -51,7 +51,7 @@ header {
     display: flex;
     align-items: center;
     padding: 10px;
-    max-width: 530px;
+    width: 260px;
     margin-left: 50px;
     box-sizing: border-box;
 }
