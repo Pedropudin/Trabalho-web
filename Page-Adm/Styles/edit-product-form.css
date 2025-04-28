@@ -61,3 +61,14 @@
         align-items: center;
     }
 }
+
+@media (max-width: 768px) {
+    .edit-product>img {
+        width: 250px;
+    }
+
+    .edit-product-form>div {
+        display: flex;
+        flex-direction: column;
+    }
+}
