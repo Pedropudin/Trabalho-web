@@ -49,8 +49,10 @@ Com a estrutura feita, bastou se basear nos mockups para adicionar as regras de 
 # Descrição do Projeto
 O projeto consiste de um website para a venda de produtos eletrônicos de uma loja fictícia chamada **Eletrocurte-se**.
 
-O website possui duas partes, uma de acesso geral e uma de acesso apenas para administradores da loja.
+O website possui três partes, uma de acesso geral, uma do perfil e uma de acesso apenas para administradores da loja.
 
 A página de acesso geral é onde os usuários procuram por produtos para comprar.
+
+A página do perfil é onde os usuários podem verificar os históricos relacionados às interações com os produtos do site (visualização e compras), os dados pessoais, as mensagens do sistema e/ou do administrador, além de várias outras opções disponíveis.
 
 A página dos administradores é onde os donos da loja podem não apenas controlar os produtos disponíveis para venda (adicionar, remover ou alterar) como também ver estatísticas sobre as vendas, responder perguntas e reclamações de usuários, verificar quais produtos esperam para serem enviados entre outras funcionalidades.
