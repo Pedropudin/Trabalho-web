@@ -10,15 +10,18 @@
     </head>
     <body>
         <header>
-            <nav class="header">
+            <nav class="header-content">
                 <a href="../../Page-Products/pagina_de_pesquisa/index.html">
                     <img src="../../Page-Products/logo-com-borda.png" alt="Logo" id="logo" />
                 </a>
                 <div class="search-bar">
-                    <input type="text" placeholder="Pesquisar..">
-                </div>  
+                  <label for="search-bar">
+                      <input type="text" placeholder="Pesquisar.." id="search-bar">
+                  </label>
+                </div> 
                 <!-- Botão para abrir o menu lateral -->
-                <button class="menu-toggle">☰</button>   
+                <button class="menu-toggle">☰</button>
+                <!-- Botão para abrir o menu lateral -->
                 <div id="header-buttons">
                     <button><i class="fas fa-user"></i> Perfil</button>
                     <button><i class="fas fa-shopping-cart"></i> Carrinho</button>
@@ -36,110 +39,111 @@
             </div>
         </header>
         <!-- Main Content -->
-        <div id="conteudo-principal">
+        <div id="main-content">
             <!-- Sidebar -->
-            <div id="barra-lateral-de-produtos">
-                <h4 id="categorias">Categorias Relacionadas</h4>
+            <div id="product-sidebar">
+                <h4 id="product-category">Categorias Relacionadas</h4>
                 <ul>
                   <li><a href="../../Page-Products/pagina_de_setor/index.html">Hardware</a></li>
                   <li><a href="#">Periféricos</a></li>
                   <li><a href="#">Celulares</a></li>
                   <li><a href="#">Notebooks</a></li>
-                </ul>  
-              
-                <h4 id="filtros">Filtros</h4>
+                </ul>                
+                <h4 id="filters">Filtros</h4>
                 <!-- Filtro de Preço -->
                 <div>
-                  <legend>Preço</legend>
-                  <div class="price-inputs">
+                    <legend>Preço</legend>
+                    <div class="price-filter">
                     <div>
-                      <label for="min-price">Mínimo</label>
-                      <input type="number" id="min-price" value="8.0" min="8.00" max="299.00">
+                        <label for="min-price">
+                            <span>Mínimo</span>
+                            <input type="number" id="min-price" value="8.0" min="8.00" max="299.00">
+                        </label>
                     </div>
                     <div>
-                      <label for="max-price">Máximo</label>
-                      <input type="number" id="max-price" value="299.00" min="8.00" max="299.00">
+                        <label for="max-price">
+                            <span>Máximo</span>
+                            <input type="number" id="max-price" value="299.00" min="8.00" max="299.00">
+                        </label>
                     </div>
-                  </div>
-                </div> 
-              
+                    </div>
+                </div>               
                 <!-- Filtro por Marca -->
                 <div>
                   <legend>Marca</legend>
-                  <label class="filtro-marca">
+                  <label class="brand-filter" for="hyperx">
                     <input type="checkbox" id="hyperx" value="hyperx" name="marca"> 
                     <span>HyperX</span>
                   </label>
-                  <label class="filtro-marca">
+                  <label class="brand-filter" for="razer">
                     <input type="checkbox" id="razer" value="razer" name="marca"> 
                     <span>Razer</span>
                   </label>
-                  <label class="filtro-marca">
+                  <label class="brand-filter" for="corsair">
                     <input type="checkbox" id="corsair" value="corsair" name="marca"> 
                     <span>Corsair</span>
                   </label>
-                  <label class="filtro-marca">
+                  <label class="brand-filter" for="steelseries">
                     <input type="checkbox" id="steelseries" value="steelseries" name="marca"> 
                     <span>Steelseries</span>
                   </label>
                 </div>
-              </div>              
+            </div>              
 
-            <div id="resultados">
+            <div id="results">
                 <h4>Resultados para: "Hardware"</h4>
-                <nav id="display-de-produtos">
-                        <h2>Placa de Vídeo</h2>
-                        <div id="placa-de-video">
-                            <div class="items">
-                                <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" alt="GTX 2080 TI">
-                                <p id="nome-produto">GTX 2080 TI <br />R$ 2999,00</p>
-                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            </div>
-                            <div class="items">
-                                <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" alt="GTX 2080 TI">
-                                <p id="nome-produto">GTX 2080 TI <br />R$ 2999,00</p>
-                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            </div>
+                <div id="product-display">
+                    <h2>Placa de Vídeo</h2>
+                    <div id="placa-de-video">
+                        <div class="items">
+                            <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" alt="GTX 2080 TI">
+                            <p class="product-name">GTX 2080 TI <br />R$ 2999,00</p>
+                            <button class="product-display-purchase-button">COMPRAR</button>
                         </div>
-                    
-                        <h2>Placa Mãe</h2>
-                        <div id="placa-mae">
-                            <div class="items">
-                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
-                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
-                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            </div>
-                            <div class="items">
-                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
-                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
-                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            </div>
-                            <div class="items">
-                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
-                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
-                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            </div>
-                            <div class="items">
-                                <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
-                                <p id="nome-produto">Placa Mãe <br />R$ 299,00</p>
-                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            </div>
-                        </div>
-
-                        <h2>Memória</h2>
-                        <div id="memoria">
-                            <div class="items">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXz1hdxuvwuSiuV8On5VGZ7DmFdbmWM-NF4A&s" alt="Memória RAM">
-                                <p id="nome-produto">Memória RAM HyperX 8gb 2400Mhz DDR4 <br />R$ 299,00</p>
-                                <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            </div>
-                            <div class="items">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXz1hdxuvwuSiuV8On5VGZ7DmFdbmWM-NF4A&s" alt="Memória RAM" style="filter: grayscale(100%);">
-                                <p id="nome-produto">Produto Indisponível no momento.</p>
-                            </div>
+                        <div class="items">
+                            <img src="https://images1.kabum.com.br/produtos/fotos/98101/98101_1535044621_index_g.jpg" alt="GTX 2080 TI">
+                            <p class="product-name">GTX 2080 TI <br />R$ 2999,00</p>
+                            <button class="product-display-purchase-button">COMPRAR</button>
                         </div>
                     </div>
-                </nav>
+                
+                    <h2>Placa Mãe</h2>
+                    <div id="placa-mae">
+                        <div class="items">
+                            <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                            <p class="product-name">Placa Mãe <br />R$ 299,00</p>
+                            <button class="product-display-purchase-button">COMPRAR</button>
+                        </div>
+                        <div class="items">
+                            <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                            <p class="product-name">Placa Mãe <br />R$ 299,00</p>
+                            <button class="product-display-purchase-button">COMPRAR</button>
+                        </div>
+                        <div class="items">
+                            <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                            <p class="product-name">Placa Mãe <br />R$ 299,00</p>
+                            <button class="product-display-purchase-button">COMPRAR</button>
+                        </div>
+                        <div class="items">
+                            <img src="https://cdn.awsli.com.br/600x1000/165/165970/produto/221926533/placa-mae-intel--m9pda7bkk8.jpg" alt="Placa Mãe">
+                            <p class="product-name">Placa Mãe <br />R$ 299,00</p>
+                            <button class="product-display-purchase-button">COMPRAR</button>
+                        </div>
+                    </div>
+
+                    <h2>Memória</h2>
+                    <div id="memoria">
+                        <div class="items">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXz1hdxuvwuSiuV8On5VGZ7DmFdbmWM-NF4A&s" alt="Memória RAM">
+                            <p class="product-name">Memória RAM HyperX 8gb 2400Mhz DDR4 <br />R$ 299,00</p>
+                            <button class="product-display-purchase-button">COMPRAR</button>
+                        </div>
+                        <div class="items">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXz1hdxuvwuSiuV8On5VGZ7DmFdbmWM-NF4A&s" alt="Memória RAM" style="filter: grayscale(100%);">
+                            <p class="product-name">Produto Indisponível no momento.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="page-changer">
@@ -151,7 +155,7 @@
             </ul>
         </div>
         <footer>
-            <div class="rodape-conteudo">
+            <div class="footer-content">
                 <p>000.000.000-00</p>
                 <p>email@gmail.com</p>
                 <p>Tel: (00) 00000-0000</p>

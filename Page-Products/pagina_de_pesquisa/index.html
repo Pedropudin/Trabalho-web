@@ -10,24 +10,22 @@
     </head>
     <body>
         <header>
-            <nav class="header">
+            <nav class="header-content">
               <a href="../../Page-Products/pagina_de_pesquisa/index.html">
                 <img src="../../Page-Products/logo-com-borda.png" alt="Logo" id="logo" />
-              </a>
-                
-                <div class="search-bar">
-                  <label>
-                      <input type="text" placeholder="Pesquisar..">
-                  </label>
-                </div> 
-                <!-- Botão para abrir o menu lateral -->
-                <button class="menu-toggle">☰</button>
-                
-                <div id="header-buttons">
-                    <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
-                    <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
-                    <button id="sair"><i class="fas fa-sign-out-alt"></i> Sair</button>
-                </div>
+              </a>  
+              <div class="search-bar">
+                <label for="search-bar">
+                    <input type="text" placeholder="Pesquisar.." id="search-bar">
+                </label>
+              </div> 
+              <!-- Botão para abrir o menu lateral -->
+              <button class="menu-toggle">☰</button>                
+              <div id="header-buttons">
+                  <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
+                  <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
+                  <button id="sair"><i class="fas fa-sign-out-alt"></i> Sair</button>
+              </div>
             </nav>
 
             <!-- Product Categories Bar -->
@@ -39,80 +37,81 @@
             </div>
         </header>
         <!-- Main Content -->
-        <div id="conteudo-principal">
+        <div id="main-content">
             <!-- Sidebar -->
-            <div id="barra-lateral-de-produtos">
-                <h4 id="categorias">Categorias Relacionadas</h4>
-                <ul>
-                  <li><a href="../../Page-Products/pagina_de_setor/index.html">Hardware</a></li>
-                  <li><a href="#">Periféricos</a></li>
-                  <li><a href="#">Celulares</a></li>
-                  <li><a href="#">Notebooks</a></li>
-                </ul>  
-              
-                <h4 id="filtros">Filtros</h4>
-              
-                <!-- Filtro de Preço -->
-                <div>
-                  <legend>Preço</legend>
-                  <div class="price-inputs">
-                    <div>
-                      <label for="min-price">Mínimo</label>
+            <div id="product-sidebar">
+              <h4 id="product-category">Categorias Relacionadas</h4>
+              <ul>
+                <li><a href="../../Page-Products/pagina_de_setor/index.html">Hardware</a></li>
+                <li><a href="#">Periféricos</a></li>
+                <li><a href="#">Celulares</a></li>
+                <li><a href="#">Notebooks</a></li>
+              </ul>   
+              <h4 id="filters">Filtros</h4>    
+              <!-- Filtro de Preço -->
+              <div>
+                <legend>Preço</legend>
+                <div class="price-filter">
+                  <div>
+                    <label for="min-price">
+                      <span>Mínimo</span>
                       <input type="number" id="min-price" value="8.0" min="8.00" max="299.00">
-                    </div>
-                    <div>
-                      <label for="max-price">Máximo</label>
-                      <input type="number" id="max-price" value="299.00" min="8.00" max="299.00">
-                    </div>
+                    </label>
                   </div>
-                </div> 
-              
-                <!-- Filtro por Marca -->
-                <div>
-                  <legend>Marca</legend>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="hyperx" value="hyperx" name="marca"> 
-                    <span>HyperX</span>
-                  </label>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="razer" value="razer" name="marca"> 
-                    <span>Razer</span>
-                  </label>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="corsair" value="corsair" name="marca"> 
-                    <span>Corsair</span>
-                  </label>
-                  <label class="filtro-marca">
-                    <input type="checkbox" id="steelseries" value="steelseries" name="marca"> 
-                    <span>Steelseries</span>
-                  </label>
+                  <div>
+                    <label for="max-price">
+                      <span>Máximo</span>
+                      <input type="number" id="max-price" value="299.00" min="8.00" max="299.00">
+                    </label>
+                  </div>
                 </div>
-              </div>              
+              </div>             
+              <!-- Filtro por Marca -->
+              <div>
+                <legend>Marca</legend>
+                <label class="brand-filter" for="hyperx">
+                  <input type="checkbox" id="hyperx" value="hyperx" name="marca"> 
+                  <span>HyperX</span>
+                </label>
+                <label class="brand-filter" for="razer">
+                  <input type="checkbox" id="razer" value="razer" name="marca"> 
+                  <span>Razer</span>
+                </label>
+                <label class="brand-filter" for="corsair">
+                  <input type="checkbox" id="corsair" value="corsair" name="marca"> 
+                  <span>Corsair</span>
+                </label>
+                <label class="brand-filter" for="steelseries">
+                  <input type="checkbox" id="steelseries" value="steelseries" name="marca"> 
+                  <span>Steelseries</span>
+                </label>
+              </div>
+            </div>              
 
             <!-- Search Results -->
-            <div id="resultados">
+            <div id="results">
                 <h4>Resultados para: "Headset Preto P2"</h4>
-                <nav id="display-de-produtos">
+                <nav id="product-display">
                     <!-- Items -->
                     <div class="items">
                         <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                        <p class="product-name">Headset HyperX Cloud II <br />R$ 299,00</p>
+                        <button class="product-display-purchase-button">COMPRAR</button>
                     </div>
                     <div class="items">
                         <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                        <p class="product-name">Headset HyperX Cloud II <br />R$ 299,00</p>
+                        <button class="product-display-purchase-button">COMPRAR</button>
                     </div>
                     <div class="items">
                         <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II">
-                        <p id="nome-produto">Headset HyperX Cloud II <br />R$ 299,00</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                        <p class="product-name">Headset HyperX Cloud II <br />R$ 299,00</p>
+                        <button class="product-display-purchase-button">COMPRAR</button>
                     </div>
                     <div class="items">
                         <img src="https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" alt="Headset HyperX Cloud II" style="filter: grayscale(100%);">
-                        <p id="nome-produto">Produto Indisponível no momento.</p>
-                        <button class="botao-de-compra-display-produtos">COMPRAR</button>
+                        <p class="product-name">Produto Indisponível no momento.</p>
+                        <button class="product-display-purchase-button">COMPRAR</button>
                     </div>
                 </nav>
             </div>
@@ -130,7 +129,7 @@
 
         <!-- Footer -->
         <footer>
-            <div class="rodape-conteudo">
+            <div class="footer-content">
                 <p>000.000.000-00</p>
                 <p>email@gmail.com</p>
                 <p>Tel: (00) 00000-0000</p>

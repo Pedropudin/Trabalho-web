@@ -20,7 +20,7 @@ header {
     padding: 10px;
 }
 
-.header {
+.header-content {
     display: flex; /* Layout em linha */
     justify-content: space-between; /* Itens espaçados */
     align-items: center; /* Centraliza verticalmente */
@@ -115,7 +115,7 @@ header {
     cursor: pointer;
 }
 /* Controle do conteúdo da página, tudo entre o footer e a header */
-#conteudo-principal {
+#main-content {
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -166,7 +166,7 @@ header {
     padding-right: 20px;
 }
 
-#imagem-do-produto {
+#product-image {
     width: 100%;
     max-width: 300px;
     height: auto;
@@ -179,7 +179,6 @@ header {
     border-right: 1px solid grey; 
     padding-right: 40px; 
 }
-
 
 /*Flecha para passar imagens para direita, carrossel abaixo da foto principal do produto*/
 .IconArrowCarousel{
@@ -211,20 +210,21 @@ header {
 }
 
 /*Partes que aparecem junto ao produto, botão, nome, preço, etc*/
-#nome-produto {
+#product-name {
     margin: 10px 0;
     font-weight: bold;
 }
-#preco-produto {
+#product-price {
     margin-top: 40px;
     font-size: 30px;
     color: #333;
 }
 
-#botoes-do-produto {
+#product-buttons {
     display: flex;
     flex-flow: row wrap;
 }
+
 /*Descrição e especificação mais detalhada do produto*/
 #text-specifications, #text-description {
     background-color: #f9f9f9; 
@@ -276,7 +276,7 @@ footer {
     margin-top: 40px;
 }
 
-.rodape-conteudo {/* Bloco de informações do rodapé */
+.footer-content {/* Bloco de informações do rodapé */
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: repeat(3, 1fr);
@@ -285,7 +285,7 @@ footer {
   font-size: 14px;
 }
 
-.rodape-conteudo a {
+.footer-content a {
   color: white;
   text-decoration: none;
 }
@@ -338,7 +338,7 @@ footer a:hover {
         max-width: 100%;
     }
     
-    #display-de-produtos {
+    #main-content {
         flex-direction: column;
         align-items: center;
         
@@ -410,7 +410,7 @@ footer a:hover {
         gap: 20px; /* Add spacing between items */
     }
 
-    .rodape-conteudo {
+    .footer-content {
         font-size: 12px;
         gap: 15px;
     }

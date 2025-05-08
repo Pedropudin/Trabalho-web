@@ -20,7 +20,7 @@ header {
     padding: 10px;
 }
 
-.header {
+.header-content{
     display: flex; /* Layout em linha */
     justify-content: space-between; /* Itens espaçados */
     align-items: center; /* Centraliza verticalmente */
@@ -64,6 +64,12 @@ header {
 }
 
 /* Botões do cabeçalho (perfil, sair, carrinho)*/
+#header-buttons{
+    display: flex;
+    align-items: center;
+    gap: 6px; /* espaçamento entre os botões */
+}
+
 #header-buttons button {
     margin-left: 10px;
     padding: 8px 12px;
@@ -74,12 +80,6 @@ header {
     cursor: pointer;
     align-items: center;
     transition: background-color 0.3s ease;
-}
-
-#header-buttons{
-    display: flex;
-    align-items: center;
-    gap: 6px; /* espaçamento entre os botões */
 }
 
 /* Botões do produto (hardware, celulares,...) */
@@ -115,7 +115,7 @@ header {
     cursor: pointer;
 }
 /* Controle do conteúdo da página, tudo entre o footer e a header */
-#conteudo-principal {
+#main-content {
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -129,7 +129,7 @@ header {
     height: auto;
 }
 /* Barra que tem as opções de filtros e categorias relacionadas*/
-#barra-lateral-de-produtos {
+#product-sidebar {
     display: flex;
     flex-direction: column; 
     align-items: flex-start;
@@ -139,30 +139,30 @@ header {
     box-sizing: border-box; 
 }
 
-#barra-lateral-de-produtos a {
+#product-sidebar a {
     color: black;
     text-decoration: none;
 }
 
-#barra-lateral-de-produtos ul {
+#product-sidebar ul {
     list-style: none;
     padding: 0;
     margin: 0;
     width: 100%;
 }
 
-#barra-lateral-de-produtos ul li {
+#product-sidebar ul li {
     margin: 10px 0;
     cursor: pointer;
 }
 
-#barra-lateral-de-produtos h4 {
+#product-sidebar h4 {
     margin: 0 0 10px 0; 
     font-size: 18px;
     font-weight: bold;
 }
 
-#barra-lateral-de-produtos, #resultados {
+#product-sidebar, #results {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -173,7 +173,7 @@ header {
 /* Parte de filtros da barra lateral */
 
 /* Filtros de marca */
-.filtro-marca {
+.brand-filter {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -183,7 +183,7 @@ header {
     cursor: pointer;
 }
 
-.filtro-marca input[type="checkbox"] {/* Alterações aplicadas somente a inputs do tipo checkbox*/
+.brand-filter input[type="checkbox"] {/* Alterações aplicadas somente a inputs do tipo checkbox*/
     width: 18px;
     height: 18px;
     border: 1px solid #007b99;
@@ -196,14 +196,14 @@ header {
     vertical-align: middle;
 }
 
-.filtro-marca input[type="checkbox"]:checked {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
+.brand-filter input[type="checkbox"]:checked {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
     background-color: #007b99;
     border-color: #007b99;
     color: white;
     position: relative;
 }
 
-.filtro-marca input[type="checkbox"]:checked::after {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
+.brand-filter input[type="checkbox"]:checked::after {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
     content: "";
     color: white;
     font-size: 12px;
@@ -214,7 +214,7 @@ header {
     text-align: center;
 }
 /* Filtros de preço */
-.price-inputs { /*Parte dos filtros de preço */
+.price-filter { /*Parte dos filtros de preço */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -222,20 +222,20 @@ header {
     width: 100%;
 }
 
-.price-inputs div {
+.price-filter div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     flex: 1;
 }
 
-.price-inputs label {
+.price-filter label {
     font-size: 14px;
     margin-bottom: 5px;
     color: #333;
 }
 
-.price-inputs input[type="number"] {/* Alterações aplicadas somente a inputs do tipo number*/
+.price-filter input[type="number"] {/* Alterações aplicadas somente a inputs do tipo number*/
     width: 100%; 
     padding: 6px;
     border: 1px solid #ccc;
@@ -246,12 +246,12 @@ header {
 /* Parte que os produtos aparecem */
 
 /* Produtos em geral */
-#display-de-produtos {
+#product-display {
     display: flex;
     flex-direction: column;
 }
 
-#display-de-produtos > h2 {
+#product-display > h2 {
     margin-top: 40px;
     margin-right: 50px;
     margin-bottom: 10px;
@@ -264,7 +264,7 @@ header {
     gap: 30px;
 }
 
-#display-de-produtos .items img {
+#product-display .items img {
     width: 150px;
     height: 150px;
     object-fit: contain;
@@ -293,13 +293,13 @@ header {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#nome-produto {
+.product-name {
     margin: 10px 0;
     font-weight: bold;
 }
 
 /* Botões que ficam dentro dos produtos*/
-.botao-de-compra-display-produtos {
+.product-display-purchase-button {
     border: #333;
     background-color: #333;
     color: white;
@@ -313,7 +313,7 @@ header {
     font-size: 14px;
 }
 
-.botao-de-compra-display-produtos:hover {
+.product-display-purchase-button:hover {
     background-color: #0056b3;
 }
 
@@ -346,7 +346,7 @@ footer {
     margin-top: 40px;
 }
 
-.rodape-conteudo {/* Bloco de informações do rodapé */
+.footer-content {/* Bloco de informações do rodapé */
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: repeat(3, 1fr);
@@ -355,7 +355,7 @@ footer {
   font-size: 14px;
 }
 
-.rodape-conteudo a {
+.footer-content a {
   color: white;
   text-decoration: none;
 }
@@ -409,7 +409,7 @@ footer a:hover {
         max-width: 100%;
     }
     
-    #display-de-produtos {
+    #product-display {
         flex-direction: column;
         align-items: center;
         
@@ -481,7 +481,7 @@ footer a:hover {
         gap: 20px; /* Add spacing between items */
     }
 
-    .rodape-conteudo {
+    .footer-content {
         font-size: 12px;
         gap: 15px;
     }

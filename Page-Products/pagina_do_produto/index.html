@@ -10,19 +10,21 @@
     </head>
     <body>
         <header>
-            <nav class="header">
-                <button class="menu-toggle">☰</button>
+            <nav class="header-content">
                 <a href="../../Page-Products/pagina_de_pesquisa/index.html">
                     <img src="../../Page-Products/logo-com-borda.png" alt="Logo" id="logo" />
                 </a>
                 <div class="search-bar">
-                    <input type="text" placeholder="Pesquisar.."></input>
-                </div>   
-                
+                    <label for="search-bar">
+                        <input type="text" placeholder="Pesquisar.." id="search-bar">
+                    </label>
+                </div> 
+                <!-- Botão para abrir o menu lateral -->
+                <button class="menu-toggle">☰</button>                
                 <div id="header-buttons">
-                    <button><i class="fas fa-user"></i> Perfil</button>
-                    <button><i class="fas fa-shopping-cart"></i> Carrinho</button>
-                    <button><i class="fas fa-sign-out-alt"></i> Sair</button>
+                    <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
+                    <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
+                    <button id="sair"><i class="fas fa-sign-out-alt"></i> Sair</button>
                 </div>
             </nav>
             <!-- Product Categories Bar -->
@@ -34,13 +36,13 @@
             </div>
         </header>
         <!-- Main Content -->
-        <div id="conteudo-principal">
+        <div id="main-content">
             <!-- Search Results -->
-            <div id="produto">                
+            <div id="products">                
                 <!-- Items -->
                 <div class="items">
                     <div class="item-images"> 
-                        <img id="imagem-do-produto" src="../../Page-Products/fone-hyperx.jpg" alt="Headset HyperX Cloud II">
+                        <img id="product-image" src="../../Page-Products/fone-hyperx.jpg" alt="Headset HyperX Cloud II">
                         <div class="thumbs">
                             <img class="thumb" src="../../Page-Products/fone-hyperx1.jpg" alt="Headset HyperX Cloud II">
                             <img class="thumb" src="../../Page-Products/fone-hyperx2.jpg" alt="Headset HyperX Cloud II">
@@ -49,13 +51,13 @@
                         </div>    
                     </div>
                     <div class="item-information">
-                        <h1 id="nome-produto">Headset HyperX Cloud II</h1>
-                        <p id="descricao-produto">Compatível com PC, PS5, Xbox Series X/S, Drivers Angulados de 53mm, Áudio DTS, Microfone de 10 mm, USB-C, USB-A, Fio de 3,5 mm, Vermelho e Preto (727A9AA)<br /></p>
-                        <h2 id="preco-produto">R$ 299,00</h2>
+                        <h1 id="product-name">Headset HyperX Cloud II</h1>
+                        <p id="product-description">Compatível com PC, PS5, Xbox Series X/S, Drivers Angulados de 53mm, Áudio DTS, Microfone de 10 mm, USB-C, USB-A, Fio de 3,5 mm, Vermelho e Preto (727A9AA)<br /></p>
+                        <h2 id="product-price">R$ 299,00</h2>
                         <p>Em até 10x de R$ 29,90 sem juros no cartão.</p>
-                        <div id="#botoes-do-produto ">
-                            <button class="botao-de-compra-display-produtos">COMPRAR</button>
-                            <button class="botao-de-carrinho-display-produtos">ADICIONAR AO CARRINHO</button>
+                        <div id="product-buttons">
+                            <button class="product-display-purchase-button">COMPRAR</button>
+                            <button class="product-cart-purchase-button">ADICIONAR AO CARRINHO</button>
                         </div>     
                    </div>
                 </div>
@@ -138,7 +140,7 @@
         </div>
         <!-- Footer -->
         <footer>
-            <div class="rodape-conteudo">
+            <div class="footer-content">
                 <p>000.000.000-00</p>
                 <p>email@gmail.com</p>
                 <p>Tel: (00) 00000-0000</p>
