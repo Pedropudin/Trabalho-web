@@ -1,11 +1,18 @@
-<!-- index.html -->
+<!-- Esta é a página HTML a qual contém a estrutura geral do perfil do cliente/usuário, com as devidas opções de funcionalidade. -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Metadados da página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Perfil do Usuário</title>
+
+    <!-- Título da aba -->
+    <title>Página de perfil do usuário</title>
+
+    <!-- Importação do CSS local -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Importação dos ícones da biblioteca Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -14,18 +21,22 @@
 <!--=== HEADER ===-->
 <header>
     <nav>
+        <!-- Logotipo com link para a página de pesquisa de produtos -->
         <a href="../../Page-Products/pagina_de_pesquisa/index.html">
             <img id="logo" src="../../Page-Products/logo-com-borda.png" alt="Logo">
         </a>
 
+        <!-- Barra de pesquisa -->
         <div class="search-bar">
             <label for="search-bar">
                 <input type="text" placeholder="Pesquisar.." id="search-bar">
             </label>
         </div>
 
+        <!-- Botão de menu para dispositivos móveis -->
         <button class="menu-toggle"><i class="fas fa-bars"></i></button>
 
+        <!-- Botões de perfil, carrinho e logout -->
         <div class="buttons">
             <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
             <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
@@ -33,6 +44,7 @@
         </div>
     </nav>
 
+    <!-- Menu de categorias -->
     <div class="menu">
         <a href="#">Hardware</a>
         <a href="#">Periféricos</a>
@@ -44,45 +56,55 @@
 <!--=== CORPO PRINCIPAL ===-->
 <main class="body-content">
     <br>
+    <!-- Saudação personalizada ao usuário -->
     <h2>Olá, <span id="nome-usuario">XXXXXXXXXX</span></h2>
 
+    <!-- Grade de cartões com funcionalidades -->
     <div class="cards-grid">
+
+        <!-- Cartão: Pedidos -->
         <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
             <i class="fas fa-search fa-2x"></i>
             <h3>Pedidos</h3>
             <p>Acompanhe o status dos seus produtos</p>
         </div>
 
+        <!-- Cartão: Mensagens -->
         <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
             <i class="fas fa-envelope fa-2x"></i>
             <h3>Mensagens</h3>
             <p>Veja suas mensagens e novidades</p>
         </div>
 
+        <!-- Cartão: Carteira -->
         <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
             <i class="fas fa-wallet fa-2x"></i>
             <h3>Carteira</h3>
             <p>Gerencie seu saldo e contas</p>
         </div>
 
+        <!-- Cartão: Segurança -->
         <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
             <i class="fas fa-shield-alt fa-2x"></i>
             <h3>Segurança</h3>
             <p>Atualize senha, e-mail e CPF</p>
         </div>
 
+        <!-- Cartão: Endereços -->
         <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
             <i class="fas fa-map-marker-alt fa-2x"></i>
             <h3>Endereços</h3>
             <p>Administre seus locais de entrega</p>
         </div>
 
+        <!-- Cartão: Privacidade -->
         <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
             <i class="fas fa-user-secret fa-2x"></i>
             <h3>Privacidade</h3>
             <p>Configurações de segurança e dados</p>
         </div>
 
+        <!-- Cartão: Histórico de compras (mais largo) -->
         <div class="card wide-card" data-href="../pagina_de_historico_de_compras/index.html">
             <i class="fas fa-history fa-2x"></i>
             <h3>Histórico</h3>
@@ -94,24 +116,34 @@
 <!--=== FOOTER ===-->
 <footer>
     <div class="rodape-conteudo">
+        <!-- Informações do usuário -->
         <p>000.000.000-00</p>
         <p id="email-usuario">email@gmail.com</p>
         <p>Tel: (00) 00000-0000</p>
+
+        <!-- Link para termos e condições -->
         <p>
             <a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">
                 Termos e Condições
             </a>
         </p>
+
+        <!-- Endereço genérico -->
         <p>Endereço</p>
+
+        <!-- Ícones de redes sociais -->
         <div class="social-icons">
             <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.twitter.com/"    target="_blank"><i class="fab fa-twitter"></i></a>
             <a href="https://www.facebook.com/"   target="_blank"><i class="fab fa-facebook"></i></a>
         </div>
     </div>
+
+    <!-- Direitos autorais -->
     <p class="copyright">Copyright &copy;2025</p>
 </footer>
 
+<!-- Importação do JavaScript externo -->
 <script src="script.js"></script>
 </body>
 </html>
