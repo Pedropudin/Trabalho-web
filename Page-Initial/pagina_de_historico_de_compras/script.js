@@ -56,23 +56,4 @@ document.addEventListener("DOMContentLoaded", function () {
             buttons.classList.remove('show');
         }
     });
-
-    // Exibe o modal
-    function abrirModal() {
-        document.getElementById('modal').style.display = 'block';
-    }
-
-    // Oculta o modal
-    function fecharModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
-
-    const openBtn = document.querySelector('.open-modal');
-    const closeBtn = document.querySelector('.close-modal');
-
-    if (openBtn)
-        openBtn.addEventListener('click', abrirModal);
-
-    if (closeBtn)
-        closeBtn.addEventListener('click', fecharModal);
 });

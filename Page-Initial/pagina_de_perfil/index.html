@@ -1,0 +1,117 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfil do Usuário</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<!--=== HEADER ===-->
+<header>
+    <nav>
+        <a href="../../Page-Products/pagina_de_pesquisa/index.html">
+            <img id="logo" src="../../Page-Products/logo-com-borda.png" alt="Logo">
+        </a>
+
+        <div class="search-bar">
+            <label for="search-bar">
+                <input type="text" placeholder="Pesquisar.." id="search-bar">
+            </label>
+        </div>
+
+        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+
+        <div class="buttons">
+            <button id="perfil"><i class="fas fa-user"></i> Perfil</button>
+            <button id="carrinho"><i class="fas fa-shopping-cart"></i> Carrinho</button>
+            <button id="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        </div>
+    </nav>
+
+    <div class="menu">
+        <a href="#">Hardware</a>
+        <a href="#">Periféricos</a>
+        <a href="#">Computadores</a>
+        <a href="#">Celulares</a>
+    </div>
+</header>
+
+<!--=== CORPO PRINCIPAL ===-->
+<main class="body-content">
+    <br>
+    <h2>Olá, <span id="nome-usuario">XXXXXXXXXX</span></h2>
+
+    <div class="cards-grid">
+        <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
+            <i class="fas fa-search fa-2x"></i>
+            <h3>Pedidos</h3>
+            <p>Acompanhe o status dos seus produtos</p>
+        </div>
+
+        <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
+            <i class="fas fa-envelope fa-2x"></i>
+            <h3>Mensagens</h3>
+            <p>Veja suas mensagens e novidades</p>
+        </div>
+
+        <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
+            <i class="fas fa-wallet fa-2x"></i>
+            <h3>Carteira</h3>
+            <p>Gerencie seu saldo e contas</p>
+        </div>
+
+        <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
+            <i class="fas fa-shield-alt fa-2x"></i>
+            <h3>Segurança</h3>
+            <p>Atualize senha, e-mail e CPF</p>
+        </div>
+
+        <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
+            <i class="fas fa-map-marker-alt fa-2x"></i>
+            <h3>Endereços</h3>
+            <p>Administre seus locais de entrega</p>
+        </div>
+
+        <div class="card" data-href="../pagina_de_alteracao_de_dados/index.html">
+            <i class="fas fa-user-secret fa-2x"></i>
+            <h3>Privacidade</h3>
+            <p>Configurações de segurança e dados</p>
+        </div>
+
+        <div class="card wide-card" data-href="../pagina_de_historico_de_compras/index.html">
+            <i class="fas fa-history fa-2x"></i>
+            <h3>Histórico</h3>
+            <p>Visualize suas compras e produtos</p>
+        </div>
+    </div>
+</main>
+
+<!--=== FOOTER ===-->
+<footer>
+    <div class="rodape-conteudo">
+        <p>000.000.000-00</p>
+        <p id="email-usuario">email@gmail.com</p>
+        <p>Tel: (00) 00000-0000</p>
+        <p>
+            <a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">
+                Termos e Condições
+            </a>
+        </p>
+        <p>Endereço</p>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com/"    target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.facebook.com/"   target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+    </div>
+    <p class="copyright">Copyright &copy;2025</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

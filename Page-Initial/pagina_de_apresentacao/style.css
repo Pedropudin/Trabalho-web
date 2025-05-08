@@ -352,8 +352,6 @@ footer a:hover {
     }
 
     .rodape-conteudo {
-        grid-template-columns: repeat(2, 1fr);
-        text-align: center;
         gap: 10px;
     }
 
@@ -375,7 +373,6 @@ footer a:hover {
 
     .btn-retorno {
         bottom: 20px;
-        right: 0;
         margin: 0;
     }
 }
