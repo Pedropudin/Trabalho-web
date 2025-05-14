@@ -48,7 +48,6 @@ footer a:hover {
   display: flex;
   gap: 30px;
   justify-content: center;
-  margin-top: -2px;
 }
 
 .social-icons a {
@@ -59,4 +58,42 @@ footer a:hover {
 
 .social-icons a:hover {
   color: #0077ff;
+}
+
+@media (max-width: 768px) {
+    .rodape-conteudo {
+        grid-template-columns: repeat(2, 1fr);
+        text-align: center;
+        gap: 15px;
+    }
+
+    footer {
+        padding: 20px;
+        padding-bottom: 60px;  /* Reserva espaço interno para o botão */
+    
+    }
+}
+
+@media (max-width: 480px) {
+    .rodape-conteudo {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    footer {
+        padding: 15px;
+        padding-bottom: 60px;  /* reserva espaço interno para o botão */
+    }
+
+    .footer-top,
+    .rodape-conteudo p,
+    .rodape-conteudo a,
+    footer .copyright {
+        font-size: 14px;
+    }
+
+    .copyright {
+        font-size: 10px;
+    }
 }
