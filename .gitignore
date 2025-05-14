@@ -1,4 +1,4 @@
 *.pdf
 *.xcf
-*/Icons/*
-*/Ignore/*
+Old-Version/Icons/*
+**/Ignore/*
