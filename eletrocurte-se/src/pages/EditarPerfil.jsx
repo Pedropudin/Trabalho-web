@@ -1,0 +1,141 @@
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import ROUTES from '../routes';
+import '../styles/EditarPerfil.css';
+
+/*
+  Página de edição de perfil do usuário.
+  Permite alterar nome, e-mail, senha, CPF e endereço.
+*/
+
+export default function EditarPerfil() {
+  const [form, setForm] = useState({
+    nome: '',
+    email: '',
+    senha: '',
+    cpf: '',
+    endereco: '',
+  });
+  const [mensagem, setMensagem] = useState('');
+  const navigate = useNavigate();
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Validação simples (pode ser expandida)
+    if (!form.nome || !form.email || !form.senha || !form.cpf || !form.endereco) {
+      setMensagem('Preencha todos os campos!');
+      return;
+    }
+    setMensagem('Dados atualizados com sucesso!');
+    setTimeout(() => {
+      setMensagem('');
+      navigate(ROUTES.PERFIL);
+    }, 1500);
+  }
+
+  return (
+    <>
+      <main className="editar-perfil-container">
+        <h2>Editar Perfil</h2>
+        <form className="editar-perfil-form" onSubmit={handleSubmit}>
+          <label htmlFor="nome">Nome:</label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            value={form.nome}
+            onChange={handleChange}
+            placeholder="Digite seu nome completo"
+            required
+          />
+
+          <label htmlFor="email">E-mail:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            placeholder="Digite seu e-mail"
+            required
+          />
+
+          <label htmlFor="senha">Senha:</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            value={form.senha}
+            onChange={handleChange}
+            placeholder="Nova senha"
+            required
+          />
+
+          <label htmlFor="cpf">CPF:</label>
+          <input
+            type="text"
+            id="cpf"
+            name="cpf"
+            value={form.cpf}
+            onChange={handleChange}
+            placeholder="000.000.000-00"
+            required
+          />
+
+          <label htmlFor="endereco">Endereço:</label>
+          <input
+            type="text"
+            id="endereco"
+            name="endereco"
+            value={form.endereco}
+            onChange={handleChange}
+            placeholder="Rua, número, bairro, cidade"
+            required
+          />
+
+          <button type="submit" className="btn-salvar">
+            Salvar Alterações
+          </button>
+        </form>
+        {mensagem && <div className="mensagem-editar">{mensagem}</div>}
+        <button className="btn-voltar" onClick={() => navigate(ROUTES.PERFIL)}>
+          Voltar ao Perfil
+        </button>
+      </main>
+
+      {/* Rodapé padrão */}
+      <footer>
+        <div className="rodape-conteudo">
+          <p>000.000.000-00</p>
+          <p>email@gmail.com</p>
+          <p>Tel: (00) 00000-0000</p>
+          <p>
+            <Link to={ROUTES.TERMOS} target="_blank">
+              Termos e Condições
+            </Link>
+          </p>
+          <p>Endereço</p>
+          <div className="social-icons">
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-facebook"></i>
+            </a>
+          </div>
+        </div>
+        <br />
+        <p className="copyright">
+          Copyright &copy;2025
+        </p>
+      </footer>
+    </>
+  );
+}

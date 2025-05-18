@@ -1,0 +1,201 @@
+/* RESET E CONFIGURAÇÃO GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; /* Fonte padrão da página */
+}
+
+body {
+  background-color: #f4f4f4; /* Cinza claro de fundo */
+  text-align: center; /* Centraliza textos por padrão */
+}
+
+/* --- HEADER COM LOGO ESTILIZADA --- */
+header {
+  background-color: #004d66; /* Azul escuro */
+  padding: 20px; /* Espaçamento interno */
+}
+
+#logo {
+  width: 350px;
+  height: 100px;
+  transform: scale(1.1); /* Aumenta e inclina a logo */
+  transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
+}
+
+#logo:hover {
+  transform: scale(1.2); /* Foco em hover */
+}
+
+/* --- CONTAINER DE LOGOUT --- */
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 60vh; /* Garante altura mínima na tela */
+}
+
+.logout-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra sutil */
+  max-width: 400px;
+  width: 90%;
+  animation: fadeIn 1s ease-in; /* Animação ao entrar */
+}
+
+.logout-box h2 {
+  margin-bottom: 20px;
+}
+
+.logout-box p {
+  margin-bottom: 10px;
+}
+
+.home-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #004d66;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.home-button:hover {
+  background-color: #007b99; /* Azul mais claro ao passar o mouse */
+}
+
+/* --- RODAPÉ DIVIDIDO --- */
+/* Rodapé */
+footer {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 30px 40px;
+  margin-top: 40px;
+  bottom: 0px;
+}
+
+/* Bloco de informações do rodapé */
+.rodape-conteudo {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Texto do rodapé */
+footer p {
+  margin: 0;
+}
+
+/* Texto de direitos autorais */
+footer .copyright {
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* Links no rodapé */
+footer a,
+footer a:hover,
+footer a:visited {
+    color: inherit; /* Usa a cor herdada de 'footer', que é white */
+    text-decoration: none; /* Remove o sublinhado */
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #99ccff;
+}
+
+.footer-top {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: -2px;
+}
+
+.social-icons a {
+  color: #555;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #0077ff;
+}
+
+/* --- ANIMAÇÕES --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ----------- Responsividade ----------- */
+/* Ajustes para telas médias (tablets e celulares) - 768px */
+@media (max-width: 768px) {
+  .logout-container {
+    width: 90%;
+    margin: 0 auto;   /* faz o bloco de 90% ficar centrado */
+    padding: 10px;
+  }
+
+  .rodape-conteudo {
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    gap: 15px;
+  }
+
+  footer {
+    padding: 20px;
+  }
+
+  .footer-top,
+  .rodape-conteudo p,
+  footer .copyright {
+    font-size: 12px;
+  }
+}
+
+/* Ajustes para telas pequenas (celulares) - 480px */
+@media (max-width: 480px) {
+  /* Ajustes de largura e fonte para uma tela ainda menor */
+  .logout-container {
+    width: 95%;
+    margin: 0 auto;   /* faz o bloco de 95% ficar centrado */
+    padding: 8px;
+  }
+
+  .rodape-conteudo {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 10px;
+  }
+
+  footer {
+    padding: 15px;
+  }
+
+  .footer-top,
+  .rodape-conteudo p,
+  footer .copyright {
+    font-size: 11px;
+  }
+}
