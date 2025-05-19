@@ -1,0 +1,316 @@
+/* Reset básico e fonte padrão para todos os elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Cor de fundo geral do corpo da página */
+body {
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+/* Cabeçalho superior com fundo azul petróleo */
+header {
+  padding: 20px;;
+  background-color: #004d66; /* Azul escuro */
+}
+
+#logo {
+  width: 350px;
+  height: 100px;
+  transform: scale(1.1); /* Aumenta e inclina a logo */
+  transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
+}
+
+#logo:hover {
+  transform: scale(1.2); /* Foco em hover */
+}
+
+/* Container central da página */
+.container {
+  max-width: 600px; /* Limita largura do conteúdo */
+  margin: 30px auto; /* Centraliza na horizontal com margem vertical */
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+/* Área dos botões (Cliente/Admin) */
+.user-options {
+  display: flex; /* Alinha botões lado a lado */
+  gap: 20px; /* Espaço entre os botões */
+  padding-top: 10px; /* Distância adicional do topo */
+  margin-bottom: 30px; /* Espaço da parte inferior */
+  margin-top: -20px; /* Espaço do topo */
+}
+
+/* Botões circulares para selecionar perfil */
+.user-btn {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Deixa o botão redondo */
+  border: 2px solid black;
+  background-color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.3s; /* Suaviza mudanças */
+  display: flex;
+  flex-direction: column; /* Ícone em cima do texto */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efeito visual ao passar o mouse no botão */
+.user-btn:hover {
+  background-color: #ddd;
+}
+
+/* Estilo do ícone SVG dentro dos botões */
+.user-btn svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 5px;
+}
+
+/* Estilo base do formulário (invisível por padrão) */
+.login-box {
+  background-color: #e2e2e2; /* Cor de fundo da caixa de login */
+  padding: 20px; /* Espaçamento interno de 20px */
+  border-radius: 12px; /* Cantos arredondados */
+  text-align: left; /* Alinha o texto à esquerda */
+  display: none; /* Formulário oculto inicialmente */
+  opacity: 0; /* Torna o formulário transparente */
+  transform: translateY(-10px); /* Move a caixa levemente para cima */
+  transition: opacity 0.6s ease, transform 0.6s ease; /* Transições suaves para opacidade e movimento */
+}
+
+/* Quando o formulário é ativado, ele aparece com transição */
+.login-box.show {
+  display: block; /* Torna o formulário visível e ocupa espaço */
+  opacity: 1; /* Torna o formulário completamente visível */
+  transform: translateY(0); /* Reseta a posição para o seu lugar original */
+}
+
+/* Estilo das labels dos inputs */
+.login-box label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Campos de entrada */
+.login-box input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+
+.login-box input:focus {
+  border-color: #006d84;
+  outline: none;
+}
+
+/* Botão de envio */
+.btn-enviar {
+  background-color: #006d84;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+/* Efeito ao passar o mouse no botão de envio */
+.btn-enviar:hover {
+  background-color: #004f63;
+}
+
+/* Rodapé */
+footer {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 30px 40px;
+  margin-top: 40px;
+  bottom: 0px;
+}
+
+/* Bloco de informações do rodapé */
+.rodape-conteudo {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Texto do rodapé */
+footer p {
+  margin: 0;
+}
+
+/* Texto de direitos autorais */
+footer .copyright {
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* Links no rodapé */
+footer a,
+footer a:hover,
+footer a:visited {
+    color: inherit; /* Usa a cor herdada de 'footer', que é white */
+    text-decoration: none; /* Remove o sublinhado */
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #99ccff;
+}
+
+.footer-top {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: -2px;
+}
+
+.social-icons a {
+  color: #555;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #0077ff;
+}
+
+/* Estilo para mensagens no topo */
+.mensagem {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* Visível */
+.mensagem.show {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Oculto */
+.mensagem.hidden {
+  display: none;
+}
+
+/* Tipos de mensagem */
+.mensagem.sucesso {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.mensagem.erro {
+  background-color: #F44336;
+  color: white;
+}
+
+.mensagem.info {
+  background-color: #2196F3;
+  color: white;
+}
+
+/* ----------- Responsividade ----------- */
+/* Ajustes para telas médias (tablets e celulares) - 768px */
+@media (max-width: 768px) {
+  .user-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .container {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .rodape-conteudo {
+    font-size: 12px;
+    gap: 15px;
+  }
+
+  footer {
+    padding: 20px;
+  }
+
+  .footer-top,
+  .rodape-conteudo p,
+  footer .copyright {
+    font-size: 12px;
+  }
+}
+
+/* Ajustes para telas pequenas (celulares) - 480px */
+@media (max-width: 480px) {
+  /* Ajustes de largura e fonte para uma tela ainda menor */
+  .user-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px; /* Reduz o espaço entre os botões */
+  }
+
+  .user-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 10px;
+  }
+
+  .container {
+    width: 95%;
+    padding: 8px;
+  }
+
+  .rodape-conteudo {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 10px;
+  }
+
+  footer {
+    padding: 15px;
+  }
+
+  .footer-top,
+  .rodape-conteudo p,
+  .rodape-conteudo a,
+  footer .copyright {
+    font-size: 11px;
+  }
+}
