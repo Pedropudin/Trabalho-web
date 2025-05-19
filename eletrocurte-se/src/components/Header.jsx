@@ -247,7 +247,6 @@ function Header({
           {categories.map((cat) => (
             <CategoryLink
               key={cat}
-              href="#"
               active={selectedCategory === cat ? 1 : 0}
               onClick={() => handleCategoryClick(cat)}
             >

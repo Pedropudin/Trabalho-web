@@ -1,13 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import ROUTES from '../routes';
 import '../styles/HistoricoCompras.css';
-
-/*
-  Página de Histórico de Compras do usuário.
-  Exibe lista de produtos comprados, data da compra e seção de avaliação.
-*/
 
 export default function HistoricoCompras() {
   // Exemplo de dados estáticos
@@ -44,42 +39,54 @@ export default function HistoricoCompras() {
     },
   ];
 
+  // Data dinâmica no formato "Compra realizada em 19 de maio"
+  const dataCompra = useMemo(() => {
+    const data = new Date();
+    const opcoes = { day: '2-digit', month: 'long' };
+    return `Compra realizada em ${data.toLocaleDateString('pt-BR', opcoes)}`;
+  }, []);
+
+  // Contador de produtos aguardando avaliação
+  const produtosAguardando = produtos.length;
+
+  // Função para calcular o valor da parcela
+  function valorParcela(preco) {
+    const valor = parseFloat(preco.replace(/[^\d,]/g, '').replace(',', '.'));
+    if (isNaN(valor)) return '';
+    return (valor / 12).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 });
+  }
+
   return (
     <>
       <Header />
-      <main className="container">
-        {/* Logo e título */}
-        <img src="/logo-com-borda.png" alt="Logo do website" className="logo" />
-        <h2>Histórico de Compras</h2>
-        <br />
+      <section className="compras">
+        <p>{dataCompra}</p>
+      </section>
 
-        {/* Seção para exibição da data da compra */}
-        <section className="compras">
-          <p>(Dia + mês da compra)</p>
-        </section>
+      <section className="avaliacao">
+        <img src="/imagens/raquete_elétrica2.jpeg" alt="Produto aguardando avaliação" className="img-miniatura" />
+        <p>
+          {produtosAguardando} produto{produtosAguardando > 1 ? 's' : ''} esperam sua opinião/avaliação
+        </p>
+        <button>
+          <i className="fas fa-star"></i> Avaliar
+        </button>
+      </section>
 
-        {/* Seção de avaliação de produtos aguardando feedback */}
-        <section className="avaliacao">
-          <img src="/imagens/raquete_elétrica2.jpeg" alt="Produto aguardando avaliação" className="img-miniatura" />
-          <p>{produtos.length} produtos esperam sua opinião/avaliação</p>
-          <button>
-            <i className="fas fa-star"></i> Avaliar
-          </button>
-        </section>
+      <section className="produtos">
+        {produtos.map((produto, idx) => (
+          <div className="produto" key={idx}>
+            <img src={produto.img} alt={produto.nome} />
+            <p>{produto.nome}</p>
+            <p className="preco">
+              {produto.preco}
+              <br />
+              <small>ou 12x {valorParcela(produto.preco)}</small>
+            </p>
+          </div>
+        ))}
+      </section>
 
-        {/* Galeria de produtos comprados */}
-        <section className="produtos">
-          {produtos.map((produto, idx) => (
-            <div className="produto" key={idx}>
-              <img src={produto.img} alt={produto.nome} />
-              <p>{produto.nome}</p>
-              <p className="preco">{produto.preco}<br /><small>{produto.data}</small></p>
-            </div>
-          ))}
-        </section>
-      </main>
-
-      {/* Rodapé com informações institucionais e ícones sociais */}
       <footer>
         <div className="rodape-conteudo">
           <p>000.000.000-00</p>
