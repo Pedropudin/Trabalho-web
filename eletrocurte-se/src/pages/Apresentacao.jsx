@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import EfeitoEletrico from '../components/EfeitoEletrico';
 import ROUTES from '../routes';
-import '../styles/Apresentacao.module.css';
+import '../styles/Apresentacao.css';
 
 /*
   Esta é a página documental "sobre nós" do site, que apresenta uma visão geral do portal de e-commerce,

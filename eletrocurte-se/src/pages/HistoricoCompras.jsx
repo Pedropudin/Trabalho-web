@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import ROUTES from '../routes';
-import '../styles/HistoricoCompras.module.css';
+import '../styles/HistoricoCompras.css';
 
 /*
   Página de Histórico de Compras do usuário.

@@ -1,0 +1,162 @@
+-web\eletrocurte-se\src\styles\EditarPerfil.css */
+
+/* RESET E BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.editarperfil-body-content {
+  max-width: 600px;
+  margin: 40px auto 0 auto;
+  padding: 0 16px 40px 16px;
+}
+
+.editarperfil-cards-grid {
+  display: flex;
+  justify-content: center;
+}
+
+.editarperfil-card-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 32px 28px 24px 28px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.editarperfil-card-form label {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.editarperfil-card-form input {
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  background: #f9f9f9;
+  transition: border 0.2s;
+}
+
+.editarperfil-card-form input:focus {
+  border: 1.5px solid #007b99;
+  outline: none;
+  background: #fff;
+}
+
+.editarperfil-btn-salvar,
+.editarperfil-btn-voltar {
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.editarperfil-btn-salvar {
+  background: #007b99;
+  color: #fff;
+  font-weight: bold;
+}
+
+.editarperfil-btn-salvar:hover {
+  background: #005f73;
+}
+
+.editarperfil-btn-voltar {
+  background: #e0e0e0;
+  color: #333;
+  margin-top: 0;
+}
+
+.editarperfil-btn-voltar:hover {
+  background: #ccc;
+}
+
+.editarperfil-mensagem-editar {
+  margin: 10px 0 0 0;
+  padding: 8px 0;
+  color: #fff;
+  background: #007b99;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* RODAPÉ (mantém as classes globais para rodapé) */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 30px 20px 20px;
+  margin-top: 40px;
+}
+
+.rodape-conteudo {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.rodape-conteudo p,
+.rodape-conteudo a {
+  margin: 0;
+  color: white;
+  text-decoration: none;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons a {
+  color: #aaa;
+  font-size: 1.2rem;
+}
+
+.social-icons a:hover {
+  color: white;
+}
+
+footer .copyright {
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .editarperfil-body-content {
+    max-width: 100%;
+    padding: 0 4vw 40px 4vw;
+  }
+  .editarperfil-card-form {
+    padding: 18px 8px 18px 8px;
+    max-width: 100%;
+  }
+  .rodape-conteudo {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    font-size: 13px;
+  }
+}

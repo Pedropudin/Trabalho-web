@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/HeaderLogs.module.css';
+import '../styles/HeaderLogs.css';
 
 /*
   HeaderLogs: Cabeçalho simples para páginas de Login e Logout.

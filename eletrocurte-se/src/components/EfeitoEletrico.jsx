@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/EfeitoEletrico.module.css';
+import '../styles/EfeitoEletrico.css';
 
 export default function EfeitoEletrico({ trigger }) {
   const [particulas, setParticulas] = useState([]);

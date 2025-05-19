@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import HeaderLogs from '../components/HeaderLogs';
 import ROUTES from '../routes';
-import '../styles/Logout.module.css';
+import '../styles/Logout.css';
 
 /*
   Página de Logout adaptada do HTML antigo.

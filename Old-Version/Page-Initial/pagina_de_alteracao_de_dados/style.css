@@ -1,0 +1,257 @@
+/* RESET E ESTILOS BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+/* CABEÇALHO */
+header {
+  background-color: #004d66;
+  color: white;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+#logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+#logo:hover {
+  transform: rotate(10deg) scale(1.05);
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+.search-bar {
+  flex: 1;
+  max-width: 600px;
+  background: white;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 0 20px;
+}
+.search-bar input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none; /* só aparece em mobile */
+}
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+.buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #007b99;
+  color: white;
+  cursor: pointer;
+}
+.buttons button:focus {
+  outline: 2px solid #005f73;
+}
+
+/* MENU SECUNDÁRIO RESPONSIVO */
+.menu {
+  display: flex;
+  justify-content: center;
+  background: #003d52;
+  padding: 8px 20px;
+  gap: 10px;
+}
+.menu a {
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+.menu a:hover {
+  background: #007b99;
+}
+.menu.show {
+  display: flex;
+  flex-direction: column;
+}
+.menu .buttons {
+  display: none; /* só exibido em mobile via media query */
+}
+
+/* CORPO PRINCIPAL */
+.settings-body {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+.breadcrumb {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+.breadcrumb a {
+  color: #004d66;
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+.settings-container {
+  background: #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+}
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+}
+.setting-row:last-child {
+  margin-bottom: 0;
+}
+.setting-info {
+  display: flex;
+  flex-direction: column;
+}
+.setting-info label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+.setting-value {
+  font-size: 1rem;
+  color: #333;
+  word-break: break-word;
+  max-width: 550px;
+}
+.btn-edit {
+  padding: 6px 14px;
+  background: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-edit:hover {
+  background: #bbb;
+}
+
+/* RODAPÉ */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 30px 20px 20px;
+}
+.rodape-conteudo {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.rodape-conteudo p,
+.rodape-conteudo a {
+  margin: 0;
+  color: white;
+  text-decoration: none;
+}
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.social-icons a {
+  color: #aaa;
+  font-size: 1.2rem;
+}
+.social-icons a:hover {
+  color: white;
+}
+footer .copyright {
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* RESPONSIVIDADE ATÉ 768px */
+@media (max-width: 768px) {
+  /* mostra o hamburger */
+  .menu-toggle {
+    display: block;
+  }
+  /* esconde os botões do header */
+  .header .buttons {
+    display: none;
+  }
+  /* layout do menu ao abrir */
+  .menu {
+    display: none;
+  }
+  .menu.show {
+    display: flex;
+  }
+  /* exibe os botões dentro do menu */
+  .menu.show .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  /* reordena itens do header:
+     1. logo, 2. search-bar, 3. toggle abaixo da search-bar */
+  .header #logo {
+    order: 1;
+  }
+  .header .search-bar {
+    order: 2;
+    width: 100%;
+    margin: 10px 0;
+  }
+  .header .menu-toggle {
+    order: 3;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+}
+
+/* RESPONSIVIDADE ATÉ 480px */
+@media (max-width: 480px) {
+  .setting-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .btn-edit {
+    align-self: flex-end;
+  }
+  .rodape-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+  }
+}
