@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/EfeitoEletrico.css';
 
 export default function EfeitoEletrico({ trigger }) {
   const [particulas, setParticulas] = useState([]);
+  const lastTrigger = useRef(null);
 
   useEffect(() => {
-    if (trigger && trigger.x !== undefined && trigger.y !== undefined) {
+    // Só executa se o trigger mudou de fato
+    if (
+      trigger &&
+      trigger.x !== undefined &&
+      trigger.y !== undefined &&
+      (lastTrigger.current?.x !== trigger.x || lastTrigger.current?.y !== trigger.y)
+    ) {
+      lastTrigger.current = trigger;
+
       // Toca o som
       const som = new Audio('/electric_zap_001-6374.mp3');
       som.volume = 0.3;

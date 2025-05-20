@@ -8,6 +8,11 @@
   transform: scale(0.5);
 }
 
+.btn-retorno > span {
+  position: relative;
+  display: inline-block;
+}
+
 .circulo {
   border-radius: 50%;
   background-color: cyan;
