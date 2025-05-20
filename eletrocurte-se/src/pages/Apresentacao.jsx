@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import EfeitoEletrico from '../components/EfeitoEletrico';
 import ROUTES from '../routes';
 import '../styles/Apresentacao.css';
+import ScrollToTop from '../components/ScrollToTop';
 
 /*
   Esta é a página documental "sobre nós" do site, que apresenta uma visão geral do portal de e-commerce,
@@ -89,16 +89,7 @@ export default function Apresentacao() {
         </div>
       </main>
 
-      {/* Botão de retorno ao topo da página, posicionamento fixo, conforme as proporções do dispositivo */}
-      <button
-        type="button"
-        className="btn-retorno"
-        onClick={handleRetornoClick}
-        style={{ position: 'fixed', bottom: 30, right: 30, zIndex: 1000 }}
-      >
-        <EfeitoEletrico trigger={efeito} />
-        <i className="fas fa-arrow-up"></i>
-      </button>
+      <ScrollToTop />
 
       {/* Rodapé com informações de contato e redes sociais */}
       <footer>

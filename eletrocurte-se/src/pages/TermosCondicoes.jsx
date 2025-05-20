@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/TermosCondicoes.css';
 import ROUTES from '../routes';
+import ScrollToTop from '../components/ScrollToTop';
 
 /*
   Página de Termos e Condições do site.
@@ -105,6 +106,8 @@ export default function TermosCondicoes() {
           </p>
         </section>
       </main>
+
+      <ScrollToTop />
 
       {/* Rodapé com informações institucionais e redes sociais */}
       <footer>
