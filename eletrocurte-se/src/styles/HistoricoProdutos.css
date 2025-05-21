@@ -44,31 +44,6 @@ nav {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
 
-/* Botões à direita (login, cadastro, etc) */
-.buttons button {
-  margin-left: 10px;
-  padding: 8px 12px;
-  border: none;
-  background-color: #007b99;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 6px; /* espaçamento entre os botões */
-}
-
-/* Estilos de foco e clique */
-.buttons button:focus,
-.buttons button:active {
-    outline: 3px solid #005d73; /* Realce do foco */
-}
-
 /* Seção de compras, tipo uma chamada ou destaque */
 .compras {
   display: flex;
@@ -128,35 +103,6 @@ nav {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
-    /* Esconde apenas os botões até que o toggle seja acionado */
-    .buttons {
-        display: none;
-    }
-
-    /* Quando ganhar .show, vira flexbox em coluna */
-    .buttons.show {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
-        gap: 10px;
-    }
-
-    /* Estilo específico para os botões com classe show */
-    .buttons.show button {
-        width: 90%;
-        max-width: 200px;
-        margin: 5px 0;
-    }
-
-    /* Alinhamento padrão dos demais botões em telas pequenas */
-    .buttons button {
-        width: 100%;
-        max-width: 200px;
-    }
-
     /* Mantém a busca responsiva e o layout geral */
     nav {
         flex-direction: column;
@@ -182,18 +128,6 @@ nav {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
 @media (max-width: 480px) {
-    .buttons {
-        display: none;
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .buttons button {
-        width: 100%;
-        max-width: 180px; /* Ajusta para telas muito pequenas */
-    }
-
     .produto {
         width: 100%;
         max-width: 200px; /* Ajusta o tamanho do produto */
