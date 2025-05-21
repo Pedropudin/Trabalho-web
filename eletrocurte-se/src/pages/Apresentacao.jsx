@@ -69,16 +69,6 @@ export default function Apresentacao() {
           </p>
           <br />
         </section>
-
-        {/* Título e exibição de fornecedores associados ao portal (caráter figurativo, apenas) */}
-        <h3>Alguns fornecedores associados ao site:</h3>
-        <br />
-        <div className="fornecedores">
-          {/* Imagens dos fornecedores */}
-          <img src="/imagens/electrolux.png" alt="Electrolux" />
-          <img src="/imagens/polishop.jpeg" alt="Polishop" />
-          <img src="/imagens/brastemp.png" alt="Brastemp" />
-        </div>
       </main>
 
       <ScrollToTop />
