@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import HeaderLogs from '../components/HeaderLogs';
 import ROUTES from '../routes';
 import '../styles/Login.css';
+import Footer from '../components/Footer';
 
 /*
   Página de Login adaptada do HTML antigo.
@@ -172,39 +173,7 @@ export default function Login() {
         <div className={`mensagem show ${mensagemTipo}`}>{mensagem}</div>
       )}
 
-      {/* Rodapé com informações de contato e links externos */}
-      <footer>
-        <div className="footer-top">
-          Atendimento: Seg. a Sex. das 08h às 18h
-        </div>
-        <br />
-        <div className="rodape-conteudo">
-          <p>000.000.000-00</p>
-          <p>email@gmail.com</p>
-          <p>Tel: (00) 00000-0000</p>
-          <p>
-            <Link to={ROUTES.TERMOS} target="_blank">
-              Termos e Condições
-            </Link>
-          </p>
-          <p>Endereço</p>
-          <div className="social-icons">
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"></i>
-            </a>
-          </div>
-        </div>
-        <br />
-        <p className="copyright">
-          Copyright &copy;2025
-        </p>
-      </footer>
+      <Footer />
     </>
   );
 }

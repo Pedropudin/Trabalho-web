@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes';
 import '../styles/Apresentacao.css';
 import ScrollToTop from '../components/ScrollToTop';
+import Footer from '../components/Footer';
 
 /*
   Esta é a página documental "sobre nós" do site, que apresenta uma visão geral do portal de e-commerce,
@@ -92,38 +93,7 @@ export default function Apresentacao() {
       <ScrollToTop />
 
       {/* Rodapé com informações de contato e redes sociais */}
-      <footer>
-        <div className="rodape-conteudo">
-          <p>000.000.000-00</p>
-          <p>email@gmail.com</p>
-          <p>Tel: (00) 00000-0000</p>
-
-          {/* Link para termos e condições em nova aba */}
-          <p>
-            <Link to={ROUTES.TERMOS} target="_blank">
-              Termos e Condições
-            </Link>
-          </p>
-          <p>Endereço</p>
-
-          {/* Ícones de redes sociais com links externos */}
-          <div className="social-icons">
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"></i>
-            </a>
-          </div>
-        </div>
-
-        <br />
-        {/* Copyright padrão */}
-        <p className="copyright">Copyright &copy;2025</p>
-      </footer>
+      <Footer />
     </>
   );
 }

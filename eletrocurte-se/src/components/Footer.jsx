@@ -1,5 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link, useNavigate } from 'react-router-dom'
+import ROUTES from "../routes";
 import { faInstagram, faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import "../styles/Footer.css";
@@ -7,19 +9,19 @@ import "../styles/Footer.css";
 const Footer = () => {
     return(
         <footer>
-            <div class="rodape-conteudo">
+            <div className="rodape-conteudo">
                 <p>000.000.000-00</p>
                 <p>email@gmail.com</p>
                 <p>Tel: (00) 00000-0000</p>
 
                 <p>
-                    <a href="../pagina_de_termos_e_condicoes/index.html" target="_blank">
+                    <Link to={ROUTES.TERMOS} target="_blank">
                         Termos e Condições
-                    </a>
+                    </Link>
                 </p>
                 <p>Endereço</p>
 
-                <div class="social-icons">
+                <div className="social-icons">
                     <a href="https://www.instagram.com/" target="_blank">
                         <FontAwesomeIcon icon={faInstagram} />
                     </a>
@@ -33,7 +35,7 @@ const Footer = () => {
             </div>
 
             <br/>
-            <p class="copyright">Copyright &copy;2025</p>
+            <p className="copyright">Copyright &copy;2025</p>
         </footer>
     );
 };
