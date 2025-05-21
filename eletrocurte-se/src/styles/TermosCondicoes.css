@@ -93,57 +93,6 @@ h3 {
     margin: 20px 0 10px;
 }
 
-/* Contêiner das imagens de fornecedores */
-.fornecedores {
-    display: flex; /* Layout flexível em linha */
-    justify-content: center; /* Centraliza os itens */
-    flex-wrap: wrap; /* Permite quebra de linha */
-    gap: 35px; /* Espaço entre as imagens */
-    margin-bottom: 20px;
-}
-
-/* Estilo das imagens dos fornecedores */
-.fornecedores img {
-    width: 120px;
-    height: auto;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-    border-radius: 8px;
-}
-
-/* Efeito ao passar o mouse nas imagens */
-.fornecedores img:hover {
-    transform: scale(1.1); /* Aumenta um pouco */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra */
-}
-
-/* Botão de retorno ao logo */
-.btn-retorno {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 9999;
-    background-color: #003b5c;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    padding: 15px 25px;
-    font-size: 16px;
-    cursor: pointer;
-    opacity: 0.9;
-    transition: background 0.3s, transform 0.2s, opacity 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.btn-retorno:hover {
-    background-color: #005d8f;
-    transform: scale(1.05);
-}
-
-/* Efeito de clique apenas no botão voltar ao topo */
-.btn-retorno:active {
-    transform: scale(0.9);
-}
-
 /* Responsividade para telas menores que 768px */
 @media (max-width: 768px) {
     .container {
@@ -156,19 +105,6 @@ h3 {
         max-width: 400px;
         height: auto;
         margin-bottom: 15px;
-    }
-
-    .fornecedores {
-        gap: 15px;
-    }
-
-    .fornecedores img {
-        width: 80px;
-    }
-
-    .btn-retorno {
-        bottom: 0;
-        right: 0;
     }
 
     h2 {
@@ -197,21 +133,5 @@ h3 {
 
     .logo {
         width: 80px;
-    }
-
-    .fornecedores {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .fornecedores img {
-        width: 70px;
-    }
-
-    .btn-retorno {
-        bottom: 20px;
-        right: 0;
-        margin: 0;
     }
 }
