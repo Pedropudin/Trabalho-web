@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import ROUTES from '../routes';
 import Header from '../components/Header';
 import '../styles/EditarPerfil.css';
+import Footer from '../components/Footer';
 
 /*
   Página de edição de perfil do usuário.
@@ -113,34 +114,7 @@ export default function EditarPerfil() {
         </div>
       </main>
 
-      <footer>
-        <div className="rodape-conteudo">
-          <p>000.000.000-00</p>
-          <p>email@gmail.com</p>
-          <p>Tel: (00) 00000-0000</p>
-          <p>
-            <Link to={ROUTES.TERMOS} target="_blank">
-              Termos e Condições
-            </Link>
-          </p>
-          <p>Endereço</p>
-          <div className="social-icons">
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"></i>
-            </a>
-          </div>
-        </div>
-        <br />
-        <p className="copyright">
-          Copyright &copy;2025
-        </p>
-      </footer>
+      <Footer />
     </>
   );
 }
