@@ -10,6 +10,7 @@ import HistoricoProdutos from './pages/HistoricoProdutos';
 import TermosCondicoes from './pages/TermosCondicoes';
 import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
+import PaginaPesquisa from './pages/PaginaPesquisa';
 
 // Rotas centralizadas
 import ROUTES from './routes';
@@ -22,6 +23,8 @@ function AppRoutes() {
         <Route path={ROUTES.APRESENTACAO} element={<Apresentacao />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.PERFIL} element={<Perfil />} />
+        <Route path={ROUTES.LOGOUT} element={<Logout />} />
+        <Route path={ROUTES.PAG_PESQUISA} element={<PaginaPesquisa />} />
         <Route path={ROUTES.HIST_COMPRAS} element={<HistoricoCompras />} />
         <Route path={ROUTES.EDITAR_PERFIL} element={<EditarPerfil />} />
         <Route path={ROUTES.HIST_PRODUTOS} element={<HistoricoProdutos />} />
