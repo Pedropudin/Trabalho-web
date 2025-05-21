@@ -43,16 +43,6 @@ nav {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
 }
 
-/* BOTÃO PARA ABRIR MENU EM TELAS PEQUENAS */
-.menu-toggle {
-    display: none; /* Escondido por padrão, só aparece no mobile */
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
 /* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
 .compras {
     display: flex;
@@ -153,10 +143,6 @@ nav {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* Mostra botão no mobile */
-    }
-
     /* Mantém a busca responsiva e o layout geral */
     nav {
         flex-direction: column;

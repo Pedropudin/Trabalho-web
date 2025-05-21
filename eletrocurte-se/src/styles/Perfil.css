@@ -50,18 +50,6 @@ nav {
   text-align: center; /* Centraliza o título */
 }
 
-
-/* === BOTÃO DE MENU RESPONSIVO (HAMBÚRGUER) === */
-.menu-toggle {
-  display: none; /* Oculto por padrão, visível só em telas pequenas */
-  background: none; /* Remove plano de fundo */
-  border: none;
-  color: white;
-  font-size: 1.5rem; /* Tamanho grande para ícone */
-  cursor: pointer;
-}
-
-
 /* === BARRA DE PESQUISA === */
 .search-bar {
   background-color: white;
@@ -144,10 +132,6 @@ nav {
 
 /* === RESPONSIVIDADE: AJUSTES PARA TELAS PEQUENAS (até 768px) === */
 @media (max-width: 768px) {
-  .menu-toggle {
-    display: block; /* Botão de menu visível */
-  }
-
   nav {
     flex-direction: column; /* Logo, busca e botões empilhados */
   }

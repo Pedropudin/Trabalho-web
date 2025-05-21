@@ -69,16 +69,6 @@ nav {
     outline: 3px solid #005d73; /* Realce do foco */
 }
 
-/* Ícone de menu que aparece apenas em telas pequenas */
-.menu-toggle {
-  display: none; /* Oculto por padrão */
-  background: none;
-  border: none;
-  color: white;
-  font-size: 28px;
-  cursor: pointer;
-}
-
 /* Seção de compras, tipo uma chamada ou destaque */
 .compras {
   display: flex;
@@ -138,10 +128,6 @@ nav {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* Mostra botão no mobile */
-    }
-
     /* Esconde apenas os botões até que o toggle seja acionado */
     .buttons {
         display: none;
@@ -196,10 +182,6 @@ nav {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
 @media (max-width: 480px) {
-    .menu-toggle {
-        display: block; /* Mostra botão no mobile */
-    }
-
     .buttons {
         display: none;
         flex-direction: column;
