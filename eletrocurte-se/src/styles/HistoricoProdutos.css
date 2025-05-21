@@ -186,80 +186,6 @@ nav {
   margin-top: 5px;
 }
 
-/* Rodapé */
-footer {
-  width: 100%;
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 30px 40px;
-  margin-top: 40px;
-}
-
-/* Bloco de informações do rodapé */
-.rodape-conteudo {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.rodape-conteudo a {
-  color: white;
-  text-decoration: none;
-}
-
-/* Texto do rodapé */
-footer p {
-  margin: 0;
-}
-
-.footer-top {
-  font-size: 12px;
-  margin-bottom: 15px;
-}
-
-/* Texto de direitos autorais */
-footer .copyright {
-  font-size: 12px;
-  color: #ccc;
-}
-
-/* Links no rodapé */
-footer a,
-footer a:hover,
-footer a:visited {
-    color: inherit; /* Usa a cor herdada de 'footer', que é white */
-    text-decoration: none; /* Remove o sublinhado */
-}
-
-footer a {
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #99ccff;
-}
-
-.social-icons {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  margin-top: -2px;
-}
-
-.social-icons a {
-  color: #555;
-  font-size: 20px;
-  transition: color 0.3s;
-}
-
-.social-icons a:hover {
-  color: #0077ff;
-}
-
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
     .menu {
@@ -332,11 +258,6 @@ footer a:hover {
         width: 100%;
         max-width: 250px;
     }
-
-    .rodape-conteudo {
-        font-size: 12px;
-        gap: 15px;
-    }
 }
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
@@ -366,27 +287,6 @@ footer a:hover {
     .produto {
         width: 100%;
         max-width: 200px; /* Ajusta o tamanho do produto */
-    }
-
-    footer {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px;
-    }
-
-    .rodape-conteudo {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .rodape-conteudo p {
-        font-size: 12px; /* Diminui o tamanho da fonte */
-    }
-
-    .copyright {
-        font-size: 10px; /* Diminui ainda mais no rodapé */
-        margin-top: 10px;
     }
 
     .compras {
