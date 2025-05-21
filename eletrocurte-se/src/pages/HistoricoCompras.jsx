@@ -65,7 +65,7 @@ export default function HistoricoCompras() {
       </section>
 
       <section className="avaliacao">
-        <img src="/imagens/raquete_elétrica2.jpeg" alt="Produto aguardando avaliação" className="img-miniatura" />
+        <img src="/imagens/raquete_elétrica2.jpeg" alt="Produto aguardando avaliação"/>
         <p>
           {produtosAguardando} produto{produtosAguardando > 1 ? 's' : ''} esperam sua opinião/avaliação
         </p>
