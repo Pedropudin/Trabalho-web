@@ -78,53 +78,6 @@ h2 {
     hyphens: auto; /* Hifenização automática em navegadores que suportem */
 }
 
-/* Botão de cadastro */
-.cadastro {
-    background-color: #003b5c; /* Azul escuro */
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    font-size: 18px;
-    cursor: pointer; /* Cursor de mãozinha */
-    border-radius: 8px;
-    transition: background 0.3s, transform 0.2s; /* Efeitos visuais */
-}
-
-/* Efeito ao passar o mouse no botão */
-.cadastro:hover {
-    background-color: #005d8f; /* Azul mais claro */
-    transform: scale(1.05); /* Leve aumento do tamanho*/
-}
-
-/* Título da seção de fornecedores */
-h3 {
-    color: #003b5c; /* Azul escuro consistente com o tema */
-    margin: 20px 0 10px;
-}
-
-/* Contêiner das imagens de fornecedores */
-.fornecedores {
-    display: flex; /* Layout flexível em linha */
-    justify-content: center; /* Centraliza os itens */
-    flex-wrap: wrap; /* Permite quebra de linha */
-    gap: 35px; /* Espaço entre as imagens */
-    margin-bottom: 20px;
-}
-
-/* Estilo das imagens dos fornecedores */
-.fornecedores img {
-    width: 120px;
-    height: auto;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-    border-radius: 8px;
-}
-
-/* Efeito ao passar o mouse nas imagens */
-.fornecedores img:hover {
-    transform: scale(1.1); /* Aumenta um pouco */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona sombra */
-}
-
 /* Botão de retorno ao logo */
 .btn-retorno {
     position: fixed; /* Fixa posição na viewport */
@@ -153,76 +106,6 @@ h3 {
     transform: scale(0.9);
 }
 
-/* Bloco de informações do rodapé */
-.rodape-conteudo {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-/* Estilo base para as partículas de eletricidade */
-.efeito-eletrico {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    pointer-events: none;
-    z-index: 99999;
-    animation: eletricidade 0.5s ease-out;
-    transform: scale(0.5);
-}
-
-/* Formato circular */
-.circulo {
-    border-radius: 50%;
-    background-color: cyan;
-}
-
-/* Formato quadrado */
-.quadrado {
-    background-color: magenta;
-}
-
-/* Formato de faísca */
-.faisca {
-    transform: rotate(45deg);
-    background-color: yellow;
-    width: 6px;
-    height: 12px;
-}
-
-/* Animação da partícula de eletricidade */
-@keyframes eletricidade {
-    0% {
-        transform: scale(0.5);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1.5);
-        opacity: 0;
-    }
-}
-
-/* Ícones sociais no rodapé com estilo e hover */
-.social-icons {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  margin-top: -2px;
-}
-
-.social-icons a {
-  color: #555;
-  font-size: 20px;
-  transition: color 0.3s;
-}
-
-.social-icons a:hover {
-  color: #0077ff;
-}
-
 /* Responsividade para telas menores que 768px */
 @media (max-width: 768px) {
     .container {
@@ -236,25 +119,6 @@ h3 {
         height: auto;
         margin-bottom: 15px;
     }
-
-    .fornecedores {
-        gap: 15px;
-    }
-
-    .fornecedores img {
-        width: 80px;
-    }
-
-    .cadastro {
-        font-size: 16px;
-        padding: 10px 20px;
-    }
-
-    .rodape-conteudo {
-        grid-template-columns: repeat(2, 1fr);
-        text-align: center;
-        gap: 15px;
-      }
 
     .btn-retorno {
         bottom: 0;
@@ -287,25 +151,6 @@ h3 {
 
     .logo {
         width: 80px;
-    }
-
-    .fornecedores {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .fornecedores img {
-        width: 70px;
-    }
-
-    .cadastro {
-        font-size: 14px;
-        padding: 8px 15px;
-    }
-
-    .rodape-conteudo {
-        gap: 10px;
     }
 
     .btn-retorno {

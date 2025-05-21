@@ -17,7 +17,7 @@ const Footer = () => {
                     <p>email@gmail.com</p>
                     <p>Tel: (00) 00000-0000</p>
                     <p>
-                        <Link to={ROUTES.APRESENTACAO} target="_blank">
+                        <Link to={ROUTES.APRESENTACAO}>
                             Sobre nós!
                         </Link>
                     </p>
@@ -44,7 +44,7 @@ const Footer = () => {
                     <p>email@gmail.com</p>
                     <p>Tel: (00) 00000-0000</p>
                     <p>
-                        <Link to={ROUTES.TERMOS} target="_blank">
+                        <Link to={ROUTES.TERMOS}>
                             Termos e Condições
                         </Link>
                     </p>
