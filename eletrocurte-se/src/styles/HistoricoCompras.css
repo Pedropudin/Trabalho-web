@@ -27,26 +27,6 @@ nav {
     gap: 10px;
 }
 
-/* CAMPO DE BUSCA */
-.search-bar {
-    background-color: white;
-    border: 0.5px solid white;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    width: 260px;
-    margin-left: 70px;
-    box-sizing: border-box;
-}
-
-.search-bar input {
-    border: none;
-    font-size: 16px;
-    flex: 1;
-    outline: none;
-}
-
 /* LOGO PRINCIPAL */
 #logo {
     width: 85px;
@@ -61,71 +41,6 @@ nav {
 #logo:hover {
     transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
-}
-
-/* BOTÕES DO TOPO */
-.buttons button {
-    margin-left: 10px;
-    padding: 8px 12px;
-    border: none;
-    background-color: #007b99; /* Cor de fundo azul */
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    align-items: center;
-    transition: background-color 0.3s ease;
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 6px; /* espaçamento entre os botões */
-}
-
-/* Estilos de foco e clique */
-.buttons button:focus,
-.buttons button:active {
-    outline: 3px solid #005d73; /* Realce do foco */
-}
-
-/* MENU PRINCIPAL (links do topo) */
-.menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: #003d52;
-    padding: 8px;
-    gap: 10px;
-}
-
-/* Estilos de links para o menu */
-.menu a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.menu a:hover {
-    background-color: #007b99;
-}
-
-.menu a:focus,
-.menu a:active {
-  outline: 3px solid #005f73; /* Realce do foco */
-}
-
-/* BOTÃO PARA ABRIR MENU EM TELAS PEQUENAS */
-.menu-toggle {
-    display: none; /* Escondido por padrão, só aparece no mobile */
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
 }
 
 /* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
@@ -226,131 +141,12 @@ nav {
     margin-top: 5px;
 }
 
-/* Rodapé */
-footer {
-    width: 100%;
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 30px 40px;
-    margin-top: 40px;
-}
-
-/* Texto do rodapé */
-footer p {
-  margin: 0;
-}
-
-/* Texto de direitos autorais */
-footer .copyright {
-  font-size: 12px;
-  color: #ccc;
-}
-
-/* Links no rodapé */
-footer a,
-footer a:hover,
-footer a:visited {
-    color: inherit; /* Usa a cor herdada de 'footer', que é white */
-    text-decoration: none; /* Remove o sublinhado */
-}
-
-footer a {
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #99ccff;
-}
-
-/* Bloco de informações do rodapé */
-.rodape-conteudo {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.rodape-conteudo a {
-  color: white;
-  text-decoration: none;
-}
-
-/* Ícones sociais no rodapé com estilo e hover */
-.social-icons {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  margin-top: -2px;
-}
-
-.social-icons a {
-  color: #555;
-  font-size: 20px;
-  transition: color 0.3s;
-}
-
-.social-icons a:hover {
-  color: #0077ff;
-}
-
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
-    .menu {
-        flex-direction: column;
-    }
-
-    .menu a {
-        display: block;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .menu-toggle {
-        display: block; /* Mostra botão no mobile */
-    }
-
-    /* Esconde apenas os botões até que o toggle seja acionado */
-    .buttons {
-        display: none;
-    }
-
-    /* Quando ganhar .show, vira flexbox em coluna */
-    .buttons.show {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
-        gap: 10px;
-    }
-
-    /* Estilo específico para os botões com classe show */
-    .buttons.show button {
-        width: 90%;
-        max-width: 200px;
-        margin: 5px 0;
-    }
-
-    /* Alinhamento padrão dos demais botões em telas pequenas */
-    .buttons button {
-        width: 100%;
-        max-width: 200px;
-    }
-
     /* Mantém a busca responsiva e o layout geral */
     nav {
         flex-direction: column;
         gap: 10px;
-    }
-
-    .search-bar {
-        width: 90%; /* Aumenta a largura no mobile */
-        max-width: 350px; /* Limita a largura máxima */
-        margin: 0 auto; /* Mantém centralizado */
     }
 
     .avaliacao {
@@ -387,45 +183,13 @@ footer a:hover {
         width: 90%; /* Aumenta a largura do botão */
         max-width: 250px; /* Limita o tamanho máximo */
     }
-
-    .rodape-conteudo {
-        font-size: 12px;
-        gap: 15px;
-    }
 }
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 480PX --- */
 @media (max-width: 480px) {
-    .search-bar {
-        width: 85%; /* Menor largura no mobile */
-        max-width: 300px; /* Limita a largura máxima */
-        margin: 0 auto;
-    }
-
     .produto {
         width: 100%;
         max-width: 200px; /* Ajusta o tamanho do produto */
-    }
-
-    footer {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px;
-    }
-
-    .rodape-conteudo {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .rodape-conteudo p {
-        font-size: 12px; /* Diminui o tamanho da fonte */
-    }
-
-    .copyright {
-        font-size: 10px; /* Diminui ainda mais no rodapé */
-        margin-top: 10px;
     }
 
     .compras {
