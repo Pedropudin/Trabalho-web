@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 
 export default function Perfil() {
   const navigate = useNavigate();
-  const nomeUsuario = "João Silva"; // Substitua por dados reais do usuário
+  const nomeUsuario = "João Silva"; // A ser substituído por dados reais do usuário
 
   // Função para navegação dos cards (pode ser expandida)
   function handleCardClick(url) {
