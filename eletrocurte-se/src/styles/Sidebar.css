@@ -1,31 +1,27 @@
 .product-sidebar {
     display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
-    padding: 20px; 
-    gap: 10px; 
-    border-right: 2px solid #ccc; 
-    box-sizing: border-box; 
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 10px;
+    border-right: 2px solid #ccc;
+    box-sizing: border-box;
 }
-
 .product-sidebar a {
     color: black;
     text-decoration: none;
 }
-
 .product-sidebar ul {
     list-style: none;
     padding: 0;
     margin: 0 0 10px 0;
     width: 100%;
 }
-
 .product-sidebar ul li {
     margin: 8px 0;
     padding-left: 0;
     text-align: left;
 }
-
 .product-sidebar ul li a {
     text-decoration: none ;
     color: black;
@@ -34,18 +30,23 @@
     padding: 4px 0;
     display: block;
     border-radius: 4px;
-    transition: background 0.2s, color 0.2s;
+    transition:  0.2s, color 0.2s;
 }
-
 .product-sidebar ul li a:hover {
     background: #f0f4fa;
     color: #0d47a1;
 }
-
 .product-sidebar h4 {
-    margin: 0 0 10px 0; 
+    margin: 0 0 8px 0;
     font-size: 18px;
     font-weight: bold;
+}
+.product-sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    box-sizing: border-box;
 }
 .brand-filter {
     display: flex;
@@ -56,28 +57,25 @@
     color: #333;
     cursor: pointer;
 }
-
-.brand-filter input[type="checkbox"] {/* Alterações aplicadas somente a inputs do tipo checkbox*/
+.brand-filter input[type="checkbox"] {
     width: 18px;
     height: 18px;
     border: 1px solid #007b99;
-    border-radius: 4px; 
-    appearance: none; 
+    border-radius: 4px;
+    appearance: none;
     -webkit-appearance: none;
     background-color: white;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
 }
-
-.brand-filter input[type="checkbox"]:checked {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
+.brand-filter input[type="checkbox"]:checked {
     background-color: #007b99;
     border-color: #007b99;
     color: white;
     position: relative;
 }
-
-.brand-filter input[type="checkbox"]:checked::after {/* Aplicado apenas quando as caixas de seleção foram selecionadas */
+.brand-filter input[type="checkbox"]:checked::after {
     content: "";
     color: white;
     font-size: 12px;
@@ -87,8 +85,6 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
-
-/* Filtros de preço */
 .price-filter {
     display: flex;
     align-items: flex-start;
@@ -96,28 +92,24 @@
     width: auto;
     min-width: 160px;
 }
-
 .price-filter div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     flex: 1;
 }
-
 .price-filter label {
     font-size: 14px;
     margin-bottom: 5px;
     color: #333;
 }
-
-.price-filter input[type="number"] {/* Alterações aplicadas somente a inputs do tipo number*/
-    width: 100%; 
+.price-filter input[type="number"] {
+    width: 100%;
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
 }
-
 .filter-row {
     display: flex;
     flex-direction: row;
@@ -125,13 +117,11 @@
     gap: 24px;
     width: 100%;
 }
-
 .brand-filter-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-
 .filter-titles-row {
     display: flex;
     flex-direction: row;
@@ -139,7 +129,6 @@
     gap: 24px;
     margin-bottom: 8px;
 }
-
 .filter-title {
     font-size: 16px;
     font-weight: 600;

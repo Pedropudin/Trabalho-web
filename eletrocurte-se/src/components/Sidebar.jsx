@@ -1,7 +1,15 @@
 import React from "react";
 import '../styles/Sidebar.css'
 
-export default function Sidebar({ items = [] }) {
+export default function Sidebar({
+    items = [],
+    selectedBrands = [],
+    setSelectedBrands,
+    minPrice,
+    setMinPrice,
+    maxPrice,
+    setMaxPrice
+}) {
     const priceRange = () => {
         if (!items.length) return [0, 0];
         const prices = items.map(item => item.price);
@@ -9,6 +17,24 @@ export default function Sidebar({ items = [] }) {
         const maxPrice = Math.max(...prices);
         return [minPrice, maxPrice];
     };
+
+    const [minAvailable, maxAvailable] = priceRange();
+
+    const handleBrandChange = (e) => {
+        const { value, checked } = e.target;
+        if (checked) {
+            setSelectedBrands([...selectedBrands, value]);
+        } else {
+            setSelectedBrands(selectedBrands.filter(b => b !== value));
+        }
+    };
+
+    const brands = [
+        { id: "hyperx", label: "HyperX" },
+        { id: "razer", label: "Razer" },
+        { id: "corsair", label: "Corsair" },
+        { id: "steelseries", label: "Steelseries" }
+    ];
 
     return (
         <div className="product-sidebar">
@@ -31,9 +57,10 @@ export default function Sidebar({ items = [] }) {
                             <input
                                 type="number"
                                 id="min-price"
-                                defaultValue={priceRange()[0]}
-                                min={priceRange()[0]}
-                                max={priceRange()[1]}
+                                value={minPrice}
+                                min={minAvailable}
+                                max={maxAvailable}
+                                onChange={e => setMinPrice(e.target.value)}
                             />
                         </label>
                     </div>
@@ -43,9 +70,10 @@ export default function Sidebar({ items = [] }) {
                             <input
                                 type="number"
                                 id="max-price"
-                                defaultValue={priceRange()[1]}
-                                min={priceRange()[0]}
-                                max={priceRange()[1]}
+                                value={maxPrice}
+                                min={minAvailable}
+                                max={maxAvailable}
+                                onChange={e => setMaxPrice(e.target.value)}
                             />
                         </label>
                     </div>
@@ -55,22 +83,18 @@ export default function Sidebar({ items = [] }) {
             <div className="filter-titles-row">
                 <span className="filter-title">Marca</span>
             </div>
-                <label className="brand-filter" htmlFor="hyperx">
-                    <input type="checkbox" id="hyperx" value="hyperx" name="marca" />
-                    <span>HyperX</span>
-                </label>
-                <label className="brand-filter" htmlFor="razer">
-                    <input type="checkbox" id="razer" value="razer" name="marca" />
-                    <span>Razer</span>
-                </label>
-                <label className="brand-filter" htmlFor="corsair">
-                    <input type="checkbox" id="corsair" value="corsair" name="marca" />
-                    <span>Corsair</span>
-                </label>
-                <label className="brand-filter" htmlFor="steelseries">
-                    <input type="checkbox" id="steelseries" value="steelseries" name="marca" />
-                    <span>Steelseries</span>
-                </label>
+                {brands.map(brand => (
+                    <label className="brand-filter" htmlFor={brand.id} key={brand.id}>
+                        <input
+                            type="checkbox"
+                            id={brand.id}
+                            value={brand.id}
+                            checked={selectedBrands.includes(brand.id)}
+                            onChange={handleBrandChange}
+                        />
+                        <span>{brand.label}</span>
+                    </label>
+                ))}
             </div>
         </div>
     );
