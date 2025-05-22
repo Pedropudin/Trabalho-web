@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
-import ROUTES from '../routes';
+import ScrollToTop from '../components/ScrollToTop';
 import '../styles/PaginaPesquisa.css';
 
 function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
@@ -16,6 +15,7 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
         { id: 2, name: "byperX Cloud II", marca:"hyperx", price: 231.0, available: false, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
         { id: 3, name: "ayperX Cloud II", marca:"hyperx", price: 41.0, available: true, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
         { id: 4, name: "Mouse Razer", marca:"razer", price: 150.0, available: true, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
+        { id: 5, name: "aouse Razer", marca:"razer", price: 120.0, available: true, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
     ]);
 
 
@@ -23,7 +23,6 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
         setOrder(e.target.value);
     }
 
-    // Always sort products by available first, then by selected order
     const orderedProducts = React.useMemo(() => {
         let products = [...sortedProducts];
         products.sort((a, b) => {
@@ -106,6 +105,7 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
                     </nav>
                 </div>
             </div>
+            <ScrollToTop/>
             <Footer/>
         </>    
     );

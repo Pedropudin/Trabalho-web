@@ -1,0 +1,259 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+}
+
+body {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Botões do produto (hardware, celulares,...) */
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #003d52;
+    padding: 8px;
+    gap: 10px;
+}
+/* Controle do conteúdo da página, tudo entre o footer e a header */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 50px;
+    margin: 40px auto;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+}
+/*Produto apresentado na página*/
+.items {
+    display: flex;
+    flex-flow: row nowrap;
+    border-color: #004d66;
+    background-color: white;
+    padding: 80px;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+.items button{
+    align-items: center;
+    border: #004d66;
+    background-color: #004d66;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 30px 10px 10px 0;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.items button:hover {
+    background-color: #007b99;
+}
+
+/*Conteúdo do produto*/
+.item-information {
+    justify-content: space-between;
+    border-left: 2px solid #007b99;
+    padding-left: 20px;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain; 
+}
+
+.item-images{
+    margin: 20px 50px 20px 0; 
+    gap: 10px;
+    border-right: 1px solid grey; 
+    padding-right: 40px; 
+}
+
+/*Flecha para passar imagens para direita, carrossel abaixo da foto principal do produto*/
+.IconArrowCarousel{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0 10px;
+    rotate: 90deg;
+}
+
+/*Carrossel*/
+.thumbs{
+    display: flex;
+    flex-direction: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Fotos do produto no carrossel*/
+.thumb{
+    object-fit: contain;
+    margin-right: 8px;
+    width: 80px;
+    height: 80px;
+    border: 0.5px solid lightgray;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+
+}
+
+/*Partes que aparecem junto ao produto, botão, nome, preço, etc*/
+.product-name {
+    margin: 10px 0;
+    font-weight: bold;
+}
+.product-price {
+    margin-top: 40px;
+    font-size: 30px;
+    color: #333;
+}
+
+.product-buttons {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+/*Descrição e especificação mais detalhada do produto*/
+.text-specifications, .text-description {
+    background-color: #f9f9f9; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    margin-top: 50px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.text-specifications h2, .text-description h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007b99;
+    padding-bottom: 5px;
+}
+
+.text-specifications ul, .text-description ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.text-specifications ul > li, .text-description ul > li {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.text-specifications ul ul, .text-description ul ul {
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+.text-specifications ul ul li, .text-description ul ul li {
+    font-weight: normal;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+
+@media (max-width: 768px) {
+    *{
+        max-width: 100%;
+    }
+    
+    #main-content {
+        flex-direction: column;
+        align-items: center;
+        
+        gap: 25px;
+    }
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu a {
+        display: block;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: block; /* Mostra botão no mobile */
+    }
+
+    #header-buttons{
+        display: none;
+    }
+
+    /* Botão que aparece em telas pequenas*/    
+    #header-buttons.show{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+    /* Botão que aparece em telas pequenas*/    
+    #header-buttons.show button{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #003d52;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    #header-buttons button{
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .item-images{
+        border: none;
+        text-align: center;
+    }
+
+    .header{
+        flex-direction: column;
+        align-items: center;
+    }
+    .search-bar {
+        width: 90%; /* Aumenta a largura no mobile */
+        max-width: 350px; /* Limita a largura máxima */
+        margin: 0 auto; /* Mantém centralizado */
+    }
+
+    .items {
+        width: 100%;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align items */
+        gap: 20px; /* Add spacing between items */
+    }
+
+    .footer-content {
+        font-size: 12px;
+        gap: 15px;
+    }
+}
