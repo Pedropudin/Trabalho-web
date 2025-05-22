@@ -64,7 +64,8 @@ export default function HistoricoCompras() {
         <p>{dataCompra}</p>
       </section>
 
-      <section className="avaliacao">
+      {/* Exibir produtos a serem avaliados, via props e componente UserRating. */}
+      {/* <section className="avaliacao">
         <img src="/imagens/raquete_elétrica2.jpeg" alt="Produto aguardando avaliação"/>
         <p>
           {produtosAguardando} produto{produtosAguardando > 1 ? 's' : ''} esperam sua opinião/avaliação
@@ -72,7 +73,7 @@ export default function HistoricoCompras() {
         <button>
           <i className="fas fa-star"></i> Avaliar
         </button>
-      </section>
+      </section> */}
 
       <section className="produtos">
         {produtos.map((produto, idx) => (
