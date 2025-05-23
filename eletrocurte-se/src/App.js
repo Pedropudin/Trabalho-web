@@ -11,6 +11,7 @@ import TermosCondicoes from './pages/TermosCondicoes';
 import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
 import PaginaInicial from './pages/PaginaInicial';
+
 // Rotas centralizadas
 import ROUTES from './routes';
 
