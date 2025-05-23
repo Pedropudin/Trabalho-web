@@ -1,0 +1,16 @@
+import React from 'react';
+import Header from '../components/Header';
+import ROUTES from '../routes';
+import '../styles/ResumoCompra.css';
+import Footer from '../components/Footer';
+
+export default function ResumoCompra(){
+
+    return(
+        <>
+            <Header/>
+            <h1>djasjdoias</h1>
+            <Footer/>
+        </>
+    )
+}

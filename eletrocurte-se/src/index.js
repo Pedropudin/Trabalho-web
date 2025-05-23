@@ -13,6 +13,12 @@ import './styles/TermosCondicoes.css';
 import './styles/Header.css';
 import './styles/HeaderLogs.css';
 import './styles/EfeitoEletrico.css';
+import './styles/PaginaPesquisa.css';
+import './styles/PaginaProduto.css';
+import './styles/CompraFinalizada.css';
+import './styles/ConfirmacaoCompra.css';
+import './styles/InsercaoDeDadosCompra.css';
+import './styles/ResumoCompra.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
