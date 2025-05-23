@@ -13,3 +13,4 @@ export default function CompraFinalizada(){
         </>
     )
 }
+//Mostrar resumo da comprar + os dados

@@ -14,3 +14,5 @@ export default function ResumoCompra(){
         </>
     )
 }
+
+//Mostrar produtos, quantidades e o total da compra

@@ -1,12 +1,12 @@
-h1{
+.textos-confirmacao{
     font-size: large;
-    margin: 50px;
+    margin: 15px;
 }
-img{
-    width: 80%;
+.foto-confirmacao{
+    width: 50%;
 }
 
-button {
+.botao-inicio {
     justify-content: center;
     background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
     color: #fff;
@@ -19,10 +19,10 @@ button {
     font-size: 14px;
     font-weight: 600;
     transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-    margin: 0 10px 0 0;
+    margin: 5px 10px 0 0;
 }
 
-button:hover {
+.botao-inicio:hover {
     background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
     transform: translateY(-2px) scale(1.04);

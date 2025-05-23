@@ -13,3 +13,5 @@ export default function InsercaoDeDadosCompra(){
         </>
     )
 }
+
+//Pegar dados: endereço, cartão e nome 
