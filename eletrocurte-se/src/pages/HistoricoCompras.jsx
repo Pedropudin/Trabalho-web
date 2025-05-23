@@ -44,11 +44,25 @@ export default function HistoricoCompras() {
 
   // Flags de avaliação para cada produto (simulação)
   const [avaliados, setAvaliados] = useState(produtos.map(() => false));
+  // Adiciona um estado para armazenar avaliações detalhadas
+  const [avaliacoes, setAvaliacoes] = useState([]); // [{produtoIdx, nota, comentario, data}]
 
   // Função chamada ao avaliar um produto
   const handleAvaliar = (nota, comentario, idx) => {
+    setAvaliacoes(avaliacoes => {
+      // Atualiza ou adiciona avaliação para o produto
+      const outras = avaliacoes.filter(a => a.produtoIdx !== idx);
+      return [
+        ...outras,
+        {
+          produtoIdx: idx,
+          nota,
+          comentario,
+          data: new Date().toLocaleString('pt-BR')
+        }
+      ];
+    });
     setAvaliados(avaliados => avaliados.map((v, i) => i === idx ? true : v));
-    // Aqui você pode salvar a avaliação em um backend, se desejar
   };
 
   // Produtos aguardando avaliação
@@ -67,6 +81,11 @@ export default function HistoricoCompras() {
     if (isNaN(valor)) return '';
     return (valor / 12).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 });
   }
+
+  // Função para abrir detalhes do produto avaliado
+  const [produtoDetalhe, setProdutoDetalhe] = useState(null); // idx do produto
+  const handleAbrirDetalhe = idx => setProdutoDetalhe(idx);
+  const handleFecharDetalhe = () => setProdutoDetalhe(null);
 
   return (
     <>
@@ -111,7 +130,13 @@ export default function HistoricoCompras() {
 
       <section className="produtos">
         {produtos.map((produto, idx) => (
-          <div className="produto" key={idx} style={{ opacity: avaliados[idx] ? 0.5 : 1 }}>
+          <div
+            className="produto"
+            key={idx}
+            style={{ opacity: avaliados[idx] ? 0.5 : 1, cursor: avaliados[idx] ? 'pointer' : 'default' }}
+            onClick={avaliados[idx] ? () => handleAbrirDetalhe(idx) : undefined}
+            title={avaliados[idx] ? 'Ver detalhes da avaliação' : ''}
+          >
             <img src={produto.img} alt={produto.nome} />
             <p>{produto.nome}</p>
             <p className="preco">
@@ -124,6 +149,37 @@ export default function HistoricoCompras() {
           </div>
         ))}
       </section>
+
+      {/* Modal de detalhes do produto avaliado */}
+      {produtoDetalhe !== null && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          background: 'rgba(0,0,0,0.35)', zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }} onClick={handleFecharDetalhe}>
+          <div style={{ background: '#fff', borderRadius: 12, padding: 32, minWidth: 320, maxWidth: 420, boxShadow: '0 8px 32px #0003', position: 'relative' }} onClick={e => e.stopPropagation()}>
+            <button onClick={handleFecharDetalhe} style={{ position: 'absolute', top: 12, right: 12, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: '#888' }}>&times;</button>
+            <img src={produtos[produtoDetalhe].img} alt={produtos[produtoDetalhe].nome} style={{ width: 120, borderRadius: 8, marginBottom: 16 }} />
+            <h2 style={{ margin: 0 }}>{produtos[produtoDetalhe].nome}</h2>
+            <p style={{ margin: '8px 0', fontWeight: 500 }}>{produtos[produtoDetalhe].preco}</p>
+            <p style={{ margin: '8px 0', color: '#555' }}>Data da compra: {produtos[produtoDetalhe].data}</p>
+            {/* Mostra avaliação se houver */}
+            {(() => {
+              const avaliacao = avaliacoes.find(a => a.produtoIdx === produtoDetalhe);
+              if (!avaliacao) return <p style={{color:'#888'}}>Nenhuma avaliação encontrada.</p>;
+              return (
+                <div style={{ marginTop: 16 }}>
+                  <div style={{ color: '#ffc107', fontSize: 22 }}>
+                    {'★'.repeat(avaliacao.nota)}
+                    {'☆'.repeat(5 - avaliacao.nota)}
+                  </div>
+                  <p style={{ margin: '8px 0', color: '#333' }}><b>Comentário:</b> {avaliacao.comentario}</p>
+                  <p style={{ margin: '8px 0', color: '#888', fontSize: 13 }}>Avaliado em: {avaliacao.data}</p>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

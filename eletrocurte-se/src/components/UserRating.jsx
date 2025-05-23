@@ -108,13 +108,7 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
         updateStars();
         // Comentário
         const textarea = doc.getElementById('comentario');
-        textarea.value = comentario;
-        textarea.oninput = (e) => {
-          setComentario(e.target.value);
-        };
-        textarea.addEventListener('input', function(e) {
-          setComentario(e.target.value);
-        });
+        // Corrige: captura o valor do textarea no submit e envia corretamente
         // Cancelar
         doc.getElementById('cancelar').onclick = (e) => {
           e.preventDefault();
@@ -123,20 +117,29 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
         // Submit
         form.onsubmit = (e) => {
           e.preventDefault();
-          if (nota < 5) {
-            alert('Por favor, avalie com 5 estrelas para enviar.');
+          // Mensagem de erro customizada
+          let msgErro = doc.getElementById('msg-erro');
+          if (!msgErro) {
+            msgErro = doc.createElement('div');
+            msgErro.id = 'msg-erro';
+            msgErro.style.cssText = 'color:#b71c1c;background:#fff3f3;border:1px solid #ffcdd2;padding:8px 12px;border-radius:6px;margin-bottom:10px;font-size:15px;display:none;align-items:center;gap:8px;';
+            form.insertBefore(msgErro, form.firstChild);
+          }
+          msgErro.style.display = 'none';
+          const comentarioAtual = doc.getElementById('comentario').value;
+          if (nota < 1) {
+            msgErro.innerHTML = '<i class="fas fa-exclamation-circle" style="color:#e53935"></i>Por favor, selecione uma nota de estrelas para enviar.';
+            msgErro.style.display = 'flex';
             return;
           }
-          handleSubmit(e);
+          if (comentarioAtual.trim() === '') {
+            msgErro.innerHTML = '<i class="fas fa-exclamation-circle" style="color:#e53935"></i>Por favor, escreva um comentário antes de enviar.';
+            msgErro.style.display = 'flex';
+            return;
+          }
+          onAvaliar(nota, comentarioAtual, produtoIdx);
+          handleClose();
         };
-        // Desabilita botão enviar se não for 5 estrelas
-        const btnEnviar = doc.getElementById('enviar');
-        btnEnviar.disabled = (nota < 5);
-        // Observa mudanças na nota para atualizar botão
-        const notaObserver = new MutationObserver(() => {
-          btnEnviar.disabled = (nota < 5);
-        });
-        notaObserver.observe(ratingSpan, { childList: true, subtree: true });
       }
     }
     // eslint-disable-next-line
