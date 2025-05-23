@@ -13,7 +13,7 @@ export default function HistoricoCompras() {
     {
       nome: 'Raquete Elétrica',
       preco: 'R$ 89,90',
-      img: '/imagens/raquete_elétrica2.jpeg',
+      img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80', // imagem pública para teste
       data: '12/03/2025',
     },
     {
