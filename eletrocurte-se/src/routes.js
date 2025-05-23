@@ -7,6 +7,7 @@ const ROUTES = {
   HIST_PRODUTOS: '/pages/HistoricoProdutos',
   TERMOS: '/pages/TermosCondicoes',
   LOGOUT: '/pages/Logout',
+  DESEMPENHO: '/pages/Desempenho',
 };
 
 export default ROUTES;

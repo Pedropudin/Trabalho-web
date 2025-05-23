@@ -120,6 +120,7 @@ function Header({
   onSearchChange,
   categories = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'],
   onCategoryClick,
+  useElementsMenu = [true, true, true],
   onProfile,
   onCart,
   onLogout,
@@ -182,7 +183,7 @@ function Header({
               minWidth: 0,
             }}
           >
-            <IconButton
+            { useElementsMenu[0] && <IconButton
               color="inherit"
               onClick={onProfile}
               sx={{
@@ -191,8 +192,8 @@ function Header({
               }}
             >
               <AccountCircle />
-            </IconButton>
-            <IconButton
+            </IconButton>}
+            { useElementsMenu[1] && <IconButton
               color="inherit"
               onClick={onCart}
               sx={{
@@ -215,8 +216,8 @@ function Header({
               >
                 <ShoppingCartIcon />
               </Badge>
-            </IconButton>
-            <IconButton
+            </IconButton>}
+            { useElementsMenu[2] && <IconButton
               color="inherit"
               onClick={onLogout}
               sx={{
@@ -225,7 +226,7 @@ function Header({
               }}
             >
               <LogoutIcon />
-            </IconButton>
+            </IconButton>}
           </Box>
           {/* Menu mobile */}
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
