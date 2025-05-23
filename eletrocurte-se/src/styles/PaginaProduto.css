@@ -13,16 +13,6 @@ body {
     flex-direction: column;
 }
 
-/* Botões do produto (hardware, celulares,...) */
-.menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: #003d52;
-    padding: 8px;
-    gap: 10px;
-}
 /* Controle do conteúdo da página, tudo entre o footer e a header */
 .main-content {
     flex: 1;
@@ -41,11 +31,11 @@ body {
 .items {
     display: flex;
     flex-flow: row nowrap;
-    border-color: #004d66;
     background-color: white;
-    padding: 80px;
+    padding: 32px; /* Ajustado para um padding mais equilibrado */
     border-radius: 10px;
     width: 100%;
+    height: auto;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
     align-items: center;
 }
@@ -60,6 +50,7 @@ body {
     width: 200px;
     height: 50px;
     text-align: center;
+    align-items: center;
     font-size: 14px;
 }
 
@@ -68,35 +59,37 @@ body {
 }
 
 /*Conteúdo do produto*/
-.item-information {
-    justify-content: space-between;
-    border-left: 2px solid #007b99;
-    padding-left: 20px;
+.product-information {
+    justify-content: space-between; 
+    padding-right: 20px;
 }
 
 .product-image {
     width: 100%;
-    max-width: 300px;
+    max-width: 220px;
     height: auto;
-    object-fit: contain; 
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
 
 .item-images{
     margin: 20px 50px 20px 0; 
     gap: 10px;
-    border-right: 1px solid grey; 
+    border-right: 1px solid #007b99;
     padding-right: 40px; 
 }
 
 /*Flecha para passar imagens para direita, carrossel abaixo da foto principal do produto*/
 .IconArrowCarousel{
+    color: n;
     width: 20px;
     height: 20px;
     cursor: pointer;
     margin: 0 10px;
     rotate: 90deg;
+    cursor: pointer
 }
-
 /*Carrossel*/
 .thumbs{
     display: flex;
@@ -104,9 +97,8 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 /*Fotos do produto no carrossel*/
-.thumb{
+.thumbs img{
     object-fit: contain;
     margin-right: 8px;
     width: 80px;
@@ -132,10 +124,12 @@ body {
 .product-buttons {
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
 }
 
 /*Descrição e especificação mais detalhada do produto*/
 .text-specifications, .text-description {
+    text-align: start;
     background-color: #f9f9f9; 
     padding: 20px;
     border-radius: 10px;
@@ -168,92 +162,91 @@ body {
     padding-left: 0;
 }
 
-.text-specifications ul ul li, .text-description ul ul li {
+.text-specifications ul ul li,  .text-description ul ul li {
     font-weight: normal;
     color: #555;
     margin-bottom: 5px;
 }
 
+.product-cart-purchase-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    margin: 0 10px 0 0;
+}
+
+.product-cart-purchase-button:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    transform: translateY(-2px) scale(1.04);
+}
+
+.product-display-purchase-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    margin: 0 10px 0 0;
+}
+
+.product-display-purchase-button:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    transform: translateY(-2px) scale(1.04);
+}
 
 @media (max-width: 768px) {
     *{
         max-width: 100%;
     }
     
-    #main-content {
+    .main-content {
         flex-direction: column;
         align-items: center;
-        
-        gap: 25px;
-    }
-    .menu {
-        flex-direction: column;
-    }
-
-    .menu a {
-        display: block;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .menu-toggle {
-        display: block; /* Mostra botão no mobile */
-    }
-
-    #header-buttons{
-        display: none;
-    }
-
-    /* Botão que aparece em telas pequenas*/    
-    #header-buttons.show{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
         gap: 10px;
-    }
-    /* Botão que aparece em telas pequenas*/    
-    #header-buttons.show button{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background-color: #003d52;
-        padding: 10px 0;
-        gap: 10px;
-    }
-
-    #header-buttons button{
-        width: 100%;
-        max-width: 200px;
     }
 
     .item-images{
         border: none;
         text-align: center;
-    }
-
-    .header{
-        flex-direction: column;
-        align-items: center;
-    }
-    .search-bar {
-        width: 90%; /* Aumenta a largura no mobile */
-        max-width: 350px; /* Limita a largura máxima */
-        margin: 0 auto; /* Mantém centralizado */
+        padding-right: 0;
+        margin: 0 0 16px 0;
     }
 
     .items {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         width: 100%;
-        flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center align items */
-        gap: 20px; /* Add spacing between items */
+        max-width: 100vw;
+        padding: 16px;
+        box-sizing: border-box;
     }
 
-    .footer-content {
-        font-size: 12px;
-        gap: 15px;
+    .product-buttons{
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
     }
 }
