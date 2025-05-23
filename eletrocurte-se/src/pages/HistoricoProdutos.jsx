@@ -47,9 +47,6 @@ export default function HistoricoCompras() {
     return `Produto visualizado em ${data.toLocaleDateString('pt-BR', opcoes)}`;
   }, []);
 
-  // Contador de produtos aguardando avaliação
-  const produtosAguardando = produtos.length;
-
   // Função para calcular o valor da parcela
   function valorParcela(preco) {
     const valor = parseFloat(preco.replace(/[^\d,]/g, '').replace(',', '.'));
