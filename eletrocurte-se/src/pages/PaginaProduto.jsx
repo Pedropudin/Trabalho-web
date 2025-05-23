@@ -1,8 +1,7 @@
+import '../styles/PaginaProduto.css';
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../styles/PaginaProduto.css';
-import PaginaPesquisa from './PaginaPesquisa';
 
 export default function PaginaProduto() {
     //Mesma coisa!! 
@@ -30,7 +29,7 @@ export default function PaginaProduto() {
       <Header />
       <main className="main-content">
         <div className="products">
-          <div className="items">
+          <div className="item">
             <div className="item-images">
               <img
                 className="product-image"
@@ -68,8 +67,8 @@ export default function PaginaProduto() {
                 Em até 10x de R$ {(product.price / 10).toFixed(2).replace('.', ',')} sem juros no cartão de crédito.
               </p>
               <div className="product-buttons" style={{ display: "flex", gap: "16px" }}>
-                <button className="product-display-purchase-button">COMPRAR</button>
-                <button className="product-cart-purchase-button">ADICIONAR AO CARRINHO</button>
+                <button className="product-purchase-button">COMPRAR</button>
+                <button className="product-cart-button">ADICIONAR AO CARRINHO</button>
               </div>
             </div>
           </div>

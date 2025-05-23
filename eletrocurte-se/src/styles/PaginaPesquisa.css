@@ -133,12 +133,6 @@
     border: 1px solid #ccc;
     font-size: 14px;
 }
-Footer{
-    width: 100%;
-    text-align: center;
-    padding: 30px 40px;
-    margin-top: 40px;
-}
 .results-header-row {
     display: flex;
     flex-direction: row;

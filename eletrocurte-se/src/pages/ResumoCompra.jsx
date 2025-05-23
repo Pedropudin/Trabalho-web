@@ -1,7 +1,7 @@
+import '../styles/ResumoCompra.css';
 import React from 'react';
 import Header from '../components/Header';
 import ROUTES from '../routes';
-import '../styles/ResumoCompra.css';
 import Footer from '../components/Footer';
 
 export default function ResumoCompra(){

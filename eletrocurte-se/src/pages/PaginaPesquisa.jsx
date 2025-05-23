@@ -1,9 +1,10 @@
+import '../styles/PaginaPesquisa.css';
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
-import '../styles/PaginaPesquisa.css';
+
 
 function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
     const [order, setOrder] = useState("");

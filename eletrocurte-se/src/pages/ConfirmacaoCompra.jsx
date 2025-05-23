@@ -1,8 +1,8 @@
+import '../styles/ConfirmacaoCompra.css';
 import React from 'react';
 import Header from '../components/Header';
 import ROUTES from '../routes';
 import { navigate, useNavigate } from "react-router-dom";
-import '../styles/ConfirmacaoCompra.css';
 import Footer from '../components/Footer';
 
 export default function ConfirmacaoCompra(){
