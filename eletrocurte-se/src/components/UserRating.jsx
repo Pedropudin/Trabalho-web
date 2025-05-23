@@ -58,7 +58,7 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
             <span>Avaliação:</span>
             <span id='rating'></span>
           </div>
-          <textarea id='comentario' placeholder='Deixe seu comentário...' rows='6' required></textarea>
+          <textarea id='comentario' placeholder='Deixe seu comentário...' rows='6'></textarea>
           <div class='botoes'>
             <button type='submit' id='enviar'>Enviar</button>
             <button type='button' id='cancelar'>Cancelar</button>
@@ -93,9 +93,13 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
               s.innerHTML = (nota >= idx + 1) ? '★' : '☆';
             });
           };
-          // Seleciona a nota
+          // Seleciona ou remove a nota
           star.onclick = () => {
-            setNota(i);
+            if (nota === i) {
+              setNota(0); // Permite desmarcar todas as estrelas
+            } else {
+              setNota(i);
+            }
           };
           ratingSpan.appendChild(star);
         }
@@ -108,7 +112,13 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
         updateStars();
         // Comentário
         const textarea = doc.getElementById('comentario');
-        // Corrige: captura o valor do textarea no submit e envia corretamente
+        // Preserva o conteúdo do comentário ao reabrir
+        textarea.value = comentario;
+        // Atualiza o estado SOMENTE ao sair do campo (onblur)
+        textarea.onblur = (e) => {
+          setComentario(e.target.value);
+        };
+        // Também atualiza no submit (garantia)
         // Cancelar
         doc.getElementById('cancelar').onclick = (e) => {
           e.preventDefault();
@@ -137,13 +147,13 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
             msgErro.style.display = 'flex';
             return;
           }
+          setComentario(comentarioAtual); // Atualiza o estado só no submit
           onAvaliar(nota, comentarioAtual, produtoIdx);
           handleClose();
         };
       }
     }
-    // eslint-disable-next-line
-  }, [open, nota, comentario, produtoIdx, produtosParaAvaliar]);
+  }, [open, produtoIdx, produtosParaAvaliar, nota, comentario]);
 
   useEffect(() => {
     if (open) {
@@ -158,7 +168,7 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
 
   return (
     <section className="avaliacao">
-      <button onClick={handleAvaliarClick}>
+      <button onClick={handleAvaliarClick} disabled={open}>
         <i className="fas fa-star"></i> Avaliar
       </button>
       {open && (
