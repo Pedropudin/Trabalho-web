@@ -121,8 +121,13 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
   const handleClose = () => setOpen(false);
 
   return (
-    <section className="avaliacao">
-      <button onClick={handleAvaliarClick} disabled={open}>
+    <section>
+      <button 
+        onClick={handleAvaliarClick} 
+        disabled={open} 
+        className="avaliacao-btn"
+        type="button"
+      >
         <i className="fas fa-star"></i> Avaliar
       </button>
       <AvaliacaoModal

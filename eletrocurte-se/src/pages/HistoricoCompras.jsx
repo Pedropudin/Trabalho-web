@@ -111,20 +111,23 @@ export default function HistoricoCompras() {
             boxShadow: '0 2px 8px #0001',
             display: 'flex',
             alignItems: 'center',
-            gap: 10
+            gap: 16,
+            flexDirection: 'row',
+            justifyContent: 'center'
           }}>
             <i className="fas fa-info-circle" style={{ fontSize: 22, color: '#ffc107' }}></i>
-            Há produtos que ainda não foram avaliados. Compartilhe sua opinião!
+            <span>Há produtos que ainda não foram avaliados. Compartilhe sua opinião!</span>
+            {/* Botão Avaliar dentro do banner, sem classe/estilo antigo */}
+            <UserRating
+              produtosAguardando={produtosAguardando.length}
+              produtosParaAvaliar={produtosAguardando}
+              onAvaliar={(nota, comentario, idxAguardando) => {
+                // Marca o produto selecionado como avaliado
+                const idx = produtos.findIndex((p, i) => !avaliados[i] && produtosAguardando[idxAguardando].nome === p.nome);
+                handleAvaliar(nota, comentario, idx);
+              }}
+            />
           </div>
-          <UserRating
-            produtosAguardando={produtosAguardando.length}
-            produtosParaAvaliar={produtosAguardando}
-            onAvaliar={(nota, comentario, idxAguardando) => {
-              // Marca o produto selecionado como avaliado
-              const idx = produtos.findIndex((p, i) => !avaliados[i] && produtosAguardando[idxAguardando].nome === p.nome);
-              handleAvaliar(nota, comentario, idx);
-            }}
-          />
         </div>
       )}
 

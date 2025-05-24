@@ -50,6 +50,42 @@
     font-size: 1.2rem; /* Tamanho do ícone */
 }
 
+/* UserRating.css */
+
+.avaliacao-btn {
+  background: #fff;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 6px 18px 6px 14px;
+  margin-left: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.18s, border 0.18s, color 0.18s;
+  box-shadow: 0 1px 4px #0001;
+}
+
+.avaliacao-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.avaliacao-btn i {
+  margin-right: 6px;
+  color: #ffc107;
+  font-size: 1.1em;
+}
+
+.avaliacao-btn:hover,
+.avaliacao-btn:focus {
+  background: #fff8e1;
+  border-color: #ffd54f;
+  color: #a67c00;
+}
+
 @media (max-width: 768px) {
     .avaliacao {
         flex-direction: column;
@@ -80,4 +116,12 @@
         width: 80%; /* Ajusta o tamanho do botão */
         max-width: 200px;
     }
+}
+
+@media (max-width: 600px) {
+  .avaliacao-btn {
+    font-size: 0.95em;
+    padding: 5px 10px;
+    margin-left: 6px;
+  }
 }
