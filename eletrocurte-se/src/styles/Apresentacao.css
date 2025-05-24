@@ -48,20 +48,6 @@ h2 {
     color: #003b5c; /* Azul escuro */
     font-size: 24px;
     margin-bottom: 10px;
-    animation: aparecer 1s ease-out forwards; /* Animação de aparição */
-}
-
-/* Keyframes para animação fade-in e slide-down */
-@keyframes aparecer {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Parágrafo descritivo */
@@ -104,6 +90,17 @@ h2 {
 /* Efeito de clique apenas no botão voltar ao topo */
 .btn-retorno:active {
     transform: scale(0.9);
+}
+
+/* Animação de aparição */
+@keyframes aparecer {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Classe para aplicar a animação de aparição */
+.aparecer {
+    animation: aparecer 1s ease-out forwards;
 }
 
 /* Responsividade para telas menores que 768px */

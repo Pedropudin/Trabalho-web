@@ -21,7 +21,7 @@ export default function Apresentacao() {
         <img src="/logo-com-escrita.png" alt="Logo do website" className="logo" />
 
         {/* Título de destaque explicando proposta do portal */}
-        <h2>Encontre os melhores produtos e fornecedores em um só lugar!</h2>
+        <h2 className="aparecer">Encontre os melhores produtos e fornecedores em um só lugar!</h2>
         <br />
 
         {/* Seção de descrição com explicação técnica e direta sobre o trabalho */}

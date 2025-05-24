@@ -15,8 +15,8 @@ export default function PaginaProduto() {
 
     //Função para miniaturas 
     const displayThumbs = (
-        thumbs.map((thumbs) => (
-            <div className="thumbs">
+        thumbs.map((thumbs, idx) => (
+            <div className="thumbs" key={thumbs.name + '-' + idx}>
                 <img className="thumb"
                     src={thumbs.link}
                     alt={thumbs.alt}
