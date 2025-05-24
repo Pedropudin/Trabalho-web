@@ -105,13 +105,11 @@ export const produtosVisualizados = [
 
 // Função utilitária para obter produtos por rota
 export function getProdutosByRoute(route) {
-  // Exemplo: pode expandir para outras rotas e lógicas
   switch (route) {
     case '/historico-compras':
       return produtosHistorico;
     case '/historico-produtos':
       return produtosVisualizados;
-    // Adicione outros cases para outras rotas e listas de produtos
     default:
       return [];
   }
