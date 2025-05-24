@@ -8,6 +8,7 @@ const ROUTES = {
   TERMOS: '/pages/TermosCondicoes',
   LOGOUT: '/pages/Logout',
   DESEMPENHO: '/pages/Desempenho',
+  PENDENCIAS: '/pages/Pendencias',
 };
 
 export default ROUTES;
