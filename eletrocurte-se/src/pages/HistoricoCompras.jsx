@@ -6,41 +6,11 @@ import '../styles/HistoricoCompras.css';
 import Footer from '../components/Footer';
 import UserRating from '../components/UserRating';
 import '../styles/UserRating.css';
+import { getProdutosByRoute } from '../products';
 
 export default function HistoricoCompras() {
-  // Exemplo de dados estáticos
-  const produtos = [
-    {
-      nome: 'Raquete Elétrica',
-      preco: 'R$ 89,90',
-      img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80', // imagem pública para teste
-      data: '12/03/2025',
-    },
-    {
-      nome: 'Escova Elétrica',
-      preco: 'R$ 159,99',
-      img: '/imagens/escova_elétrica.jpeg',
-      data: '15/03/2025',
-    },
-    {
-      nome: 'Aspirador de Pó',
-      preco: 'R$ 349,90',
-      img: '/imagens/aspirador_de_pó.jpeg',
-      data: '20/03/2025',
-    },
-    {
-      nome: 'Máquina de Lavar',
-      preco: 'R$ 2.799,00',
-      img: '/imagens/máquina_de_lavar.jpeg',
-      data: '25/03/2025',
-    },
-    {
-      nome: 'Air Fryer',
-      preco: 'R$ 479,00',
-      img: '/imagens/airfryer.jpeg',
-      data: '28/03/2025',
-    },
-  ];
+  // Obtém produtos do histórico via products.js
+  const produtos = getProdutosByRoute('/historico-compras');
 
   // Flags de avaliação para cada produto (simulação)
   const [avaliados, setAvaliados] = useState(produtos.map(() => false));
@@ -68,12 +38,55 @@ export default function HistoricoCompras() {
   // Produtos aguardando avaliação
   const produtosAguardando = produtos.filter((_, idx) => !avaliados[idx]);
 
-  // Data dinâmica no formato "Compra realizada em 19 de maio"
-  const dataCompra = useMemo(() => {
-    const data = new Date();
-    const opcoes = { day: '2-digit', month: 'long' };
-    return `Compra realizada em ${data.toLocaleDateString('pt-BR', opcoes)}`;
-  }, []);
+  // Data dinâmica e agrupamento por ano/mês
+  const { dataCompra, produtosPorAnoMes, anoMesAtual } = useMemo(() => {
+    // Agrupa produtos por ano e mês
+    function agruparPorAnoMes(produtos) {
+      return produtos.reduce((acc, produto) => {
+        if (!produto.data) return acc;
+        const [dia, mes, ano] = produto.data.split('/');
+        const chave = `${ano}-${mes}`;
+        if (!acc[chave]) acc[chave] = { ano, mes, produtos: [] };
+        acc[chave].produtos.push(produto);
+        return acc;
+      }, {});
+    }
+    const agrupados = agruparPorAnoMes(produtos);
+    // Descobre o mês/ano mais recente (considerando produtos ordenados por data)
+    let anoMesAtual = null;
+    if (produtos.length > 0) {
+      const datas = produtos.map(p => {
+        const [d, m, a] = p.data.split('/');
+        return new Date(`${a}-${m}-${d}`);
+      });
+      const maisRecente = new Date(Math.max.apply(null, datas));
+      const mes = String(maisRecente.getMonth() + 1).padStart(2, '0');
+      const ano = String(maisRecente.getFullYear());
+      anoMesAtual = { ano, mes };
+    }
+    // Nome do mês/ano atual
+    function nomeMes(mes) {
+      const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+      return meses[parseInt(mes, 10) - 1] || mes;
+    }
+    let dataCompra = '';
+    if (anoMesAtual) {
+      dataCompra = `Compras realizadas em ${nomeMes(anoMesAtual.mes)} de ${anoMesAtual.ano}`;
+    }
+    return { dataCompra, produtosPorAnoMes: agrupados, anoMesAtual };
+  }, [produtos]);
+
+  // Função utilitária para renderizar o cabeçalho de mês/ano
+  function renderCabecalhoMesAno(mes, ano) {
+    const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    return (
+      <section className="compras" style={{ width: '100%', flexBasis: '100%' }}>
+        <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0, width: '100%', textAlign: 'center' }}>
+          Compras realizadas em {meses[parseInt(mes, 10) - 1]} de {ano}
+        </p>
+      </section>
+    );
+  }
 
   // Função para calcular o valor da parcela
   function valorParcela(preco) {
@@ -90,67 +103,36 @@ export default function HistoricoCompras() {
   return (
     <>
       <Header />
-      <section className="compras">
-        <p>{dataCompra}</p>
-      </section>
-
-      {/* Exibe UserRating apenas se houver produtos não avaliados */}
-      {produtosAguardando.length > 0 && (
-        <div style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '32px 0 16px 0',
-        }}>
-          <div style={{
-            background: '#fffbe6',
-            color: '#856404',
-            border: '1px solid #ffeeba',
-            borderRadius: 8,
-            padding: '16px 24px',
-            fontSize: 18,
-            fontWeight: 500,
-            marginBottom: 16,
-            boxShadow: '0 2px 8px #0001',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 16,
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}>
-            <i className="fas fa-info-circle" style={{ fontSize: 22, color: '#ffc107' }}></i>
-            <span>Há produtos que ainda não foram avaliados. Compartilhe sua opinião!</span>
-            {/* Botão Avaliar dentro do banner, sem classe/estilo antigo */}
-            <UserRating
-              produtosAguardando={produtosAguardando.length}
-              produtosParaAvaliar={produtosAguardando}
-              onAvaliar={(nota, comentario, idxAguardando) => {
-                // Marca o produto selecionado como avaliado
-                const idx = produtos.findIndex((p, i) => !avaliados[i] && produtosAguardando[idxAguardando].nome === p.nome);
-                handleAvaliar(nota, comentario, idx);
-              }}
-            />
-          </div>
-        </div>
-      )}
-
       <section className="produtos">
-        {produtos.map((produto, idx) => (
-          <div
-            className="produto"
-            key={idx}
-            style={{ opacity: avaliados[idx] ? 0.5 : 1, cursor: avaliados[idx] ? 'pointer' : 'default' }}
-            onClick={avaliados[idx] ? () => handleAbrirDetalhe(idx) : undefined}
-            title={avaliados[idx] ? 'Ver detalhes da avaliação' : ''}
-          >
-            <img src={produto.img} alt={produto.nome} />
-            <p>{produto.nome}</p>
-            <p className="preco">
-              {produto.preco}
-              <br />
-              <small>ou 12x {valorParcela(produto.preco)}</small>
-            </p>
-            {/* Flag visual para produto avaliado */}
-            {avaliados[idx] && <span style={{ color: '#1976d2', fontWeight: 'bold' }}>Avaliado</span>}
-          </div>
-        ))}
+        {Object.entries(produtosPorAnoMes)
+          .sort((a, b) => {
+            // Ordena por ano e mês decrescente (mais recente primeiro)
+            const [anoA, mesA] = a[0].split('-').map(Number);
+            const [anoB, mesB] = b[0].split('-').map(Number);
+            if (anoA !== anoB) return anoB - anoA;
+            return mesB - mesA;
+          })
+          .map(([chave, { ano, mes, produtos }]) => (
+            <div key={chave} style={{ marginBottom: 32 }}>
+              {renderCabecalhoMesAno(mes, ano)}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center' }}>
+                {produtos.map((produto, idx) => (
+                  <div className="produto" key={produto.nome + idx}>
+                    <img src={produto.img} alt={produto.nome} />
+                    <p>{produto.nome}</p>
+                    <p className="preco">
+                      {produto.preco}
+                      <br />
+                      <small>ou 12x {valorParcela(produto.preco)}</small>
+                      <br />
+                      <small>{produto.data}</small>
+                    </p>
+                    {/* ...UserRating e outros elementos se necessário... */}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
       </section>
 
       {/* Modal de detalhes do produto avaliado */}
