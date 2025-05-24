@@ -10,6 +10,7 @@ import HistoricoProdutos from './pages/HistoricoProdutos';
 import TermosCondicoes from './pages/TermosCondicoes';
 import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
+import PaginaInicial from './pages/PaginaInicial';
 
 // Rotas centralizadas
 import ROUTES from './routes';
@@ -27,6 +28,7 @@ function AppRoutes() {
         <Route path={ROUTES.HIST_PRODUTOS} element={<HistoricoProdutos />} />
         <Route path={ROUTES.TERMOS} element={<TermosCondicoes />} />
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
+        <Route path={ROUTES.PAGINA_INICIAL} element={<PaginaInicial />} />
       </Routes>
     </>
   );
