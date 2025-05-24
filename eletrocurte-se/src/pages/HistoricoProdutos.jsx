@@ -92,7 +92,7 @@ export default function HistoricoProdutos() {
               {renderCabecalhoMesAno(mes, ano)}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center' }}>
                 {produtos.map((produto, idx) => (
-                  <div className="produto" key={produto.nome + idx}>
+                  <div className="produto" key={(produto.id || produto.nome) + '-' + idx}>
                     <img src={produto.img} alt={produto.nome} />
                     <p>{produto.nome}</p>
                     <p className="preco">
