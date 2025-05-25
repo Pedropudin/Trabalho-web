@@ -31,7 +31,7 @@ function AppRoutes() {
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
         <Route path={ROUTES.PAG_PRODUTO} element={<PaginaProduto />} />
         <Route path={ROUTES.PAG_PESQUISA} element={<PaginaPesquisa />} />
-        <Route path={ROUTES.HIST_PRODUTOS} element={<HistoricoProdutos />} />
+        <Route path={ROUTES.HIST_COMPRAS} element={<HistoricoCompras />} />
         <Route path={ROUTES.FINAL_COMPRA} element={<CompraFinalizada />} />
         <Route path={ROUTES.CONFIRMA_COMPRA} element={<ConfirmacaoCompra />} />
         <Route path={ROUTES.DADOS_COMPRA} element={<InsercaoDeDadosCompra />} />
