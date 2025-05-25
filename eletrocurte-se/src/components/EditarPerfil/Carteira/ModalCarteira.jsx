@@ -5,7 +5,6 @@ import {
   FormControl, IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CadastrarCartao from './CadastrarCartao';
 
 const style = {
