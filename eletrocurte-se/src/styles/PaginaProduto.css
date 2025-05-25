@@ -82,7 +82,7 @@ body {
 
 /*Flecha para passar imagens para direita, carrossel abaixo da foto principal do produto*/
 .IconArrowCarousel{
-    color: n;
+    color: black;
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -120,7 +120,14 @@ body {
     font-size: 30px;
     color: #333;
 }
+.product-in-stock{
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: white; 
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 20px;
 
+}
 .product-buttons {
     display: flex;
     flex-flow: row wrap;
@@ -207,10 +214,10 @@ body {
         border: none;
         text-align: center;
         padding-right: 0;
-        margin: 0 0 16px 0;
+        margin: 16px 0 20px 0;
     }
 
-    .items {
+    .item {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -219,10 +226,9 @@ body {
         padding: 16px;
         box-sizing: border-box;
     }
-
-    .product-buttons{
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
+    .product-buttons {
+        display: column; 
+        justify-content: center;
     }
+
 }

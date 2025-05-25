@@ -1,29 +1,33 @@
 import '../styles/PaginaProduto.css';
 import React from 'react';
+import Products from '../Products'; 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import {useParams} from 'react-router-dom'; 
 
 export default function PaginaProduto() {
-    //Mesma coisa!! 
-    const product = { name: "Headset HyperX Cloud II", marca:"hyperx", price: Number(299.0), inStock: 10, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" };
-    //Acho que aqui tbm valeria separar, poderia ser no mesmo documento do outro, apenas colocando 3 thumbs como parte do objeto!! 
-    const thumbs = [
-            {name: "photo 1", link:"https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg", alt:"Headset HyperX Cloud II"},
-            {name: "photo 2", link:"https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg", alt:"Headset HyperX Cloud II"},
-            {name: "photo 3", link:"https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg", alt:"Headset HyperX Cloud II"},
-        ];
+  const { id } = useParams(); 
+  const products = Products.find(p => String(p.id) === String(id));
 
-    //Função para miniaturas 
-    const displayThumbs = (
-        thumbs.map((thumbs) => (
-            <div className="thumbs">
-                <img className="thumb"
-                    src={thumbs.link}
-                    alt={thumbs.alt}
-                />
-            </div>
-        ))
+  if (!products) {
+    return (
+      <>
+        <Header />
+        <main className="main-content">
+          <h2 style={{ margin: '2rem', textAlign: 'center' }}>Produto não encontrado.</h2>
+        </main>
+        <Footer />
+      </>
     );
+  }
+
+  const displayThumbs = (
+    products?.thumbs?.map((thumbUrl, index) => (
+      <div key={index} className="thumbs">
+        <img className="thumb" src={thumbUrl} alt={`Imagem miniatura de ${products.name}`} />
+      </div>
+    ))
+  );
   return (
     <>
       <Header />
@@ -55,16 +59,17 @@ export default function PaginaProduto() {
               </div>
             </div>
             <div className="item-information">
-              <h1 className="product-name">{product.name}</h1>
+              <h1 className="product-name">{products.name}</h1>
               <p className="product-description">
                 Compatível com PC, PS5, Xbox Series X/S, Drivers Angulados de 53mm, Áudio DTS, Microfone de 10 mm, USB-C, USB-A, Fio de 3,5 mm, Vermelho e Preto (727A9AA)
                 <br />
               </p>
               <h2 className="product-price">
-                R${product.price.toFixed(2).replace('.', ',')}
+                R${products.price.toFixed(2).replace('.', ',')}
               </h2>
               <p>
-                Em até 10x de R$ {(product.price / 10).toFixed(2).replace('.', ',')} sem juros no cartão de crédito.
+                Em até 10x de R$ {(products.price / 10).toFixed(2).replace('.', ',')} sem juros no cartão de crédito.
+                <p className="product-in-stock">Em estoque: {products.inStock}</p>
               </p>
               <div className="product-buttons" style={{ display: "flex", gap: "16px" }}>
                 <button className="product-purchase-button">COMPRAR</button>

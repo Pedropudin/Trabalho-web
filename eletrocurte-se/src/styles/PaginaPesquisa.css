@@ -7,7 +7,7 @@
 }
 .main-content {
     display: flex;
-    align-items: stretch; /* importante! */
+    align-items: stretch;
     flex: 1;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -18,7 +18,7 @@
     width: 100%;
     max-width: 1200px;
     height: auto;
-    min-height: 500px; /* ajuste conforme necessário */
+    min-height: 500px;
 }
 .results select, .results h4{
     display: inherit;
@@ -59,14 +59,14 @@
     padding: 10px;
     border-radius: 10px;
     text-align: center;
-    width: 200px;         /* largura fixa */
-    height: 340px;        /* altura fixa, ajuste conforme necessário */
+    width: 200px;         
+    height: 340px;        
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* garante que o conteúdo fique no topo */
+    justify-content: flex-start; 
     box-sizing: border-box;
 }
 .items img {
@@ -160,9 +160,9 @@
 
     .items {
         width: 100%;
-        flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center align items */
-        gap: 20px; /* Add spacing between items */
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; 
     }
 
     .main-content {
@@ -180,6 +180,8 @@
         border-radius: 0 0 12px 12px;
         padding: 12px 8px;
         box-shadow: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .results {
@@ -219,40 +221,39 @@
         flex-direction: column;
     }
     .product-sidebar {
-        min-width: 100%;
+        min-width: 80%;
         border-right: none;
         border-bottom: 2px solid #ccc;
-        padding: 12px 8px 0 8px; /* Remove padding-bottom */
-        margin-bottom: 0;        /* Remove qualquer margem inferior */
+        padding: 12px 8px 0 8px;
+        margin-bottom: 0;
         box-shadow: none;
     }
     .results {
-        width: 100%;
-        padding: 8px 0 0 0; /* Remove padding-top para colar nos produtos */
+        width: 80%;
+        padding: 8px 0 0 0;
     }
 }
 @media (max-width: 768px) {
     .product-sidebar {
         border-right: none;
         border-bottom: 2px solid #ccc;
-        /* ...outros estilos... */
     }
-}
-.product-sidebar {
-    border-right: 2px solid #ccc;
-    height: 100%;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    gap: 10px;
-    box-sizing: border-box;
-}
-.main-content {
-    min-height: 500px; /* ou o que preferir */
-}
-.product-sidebar {
-    height: 100%;
-    min-height: 100%;
+    .product-sidebar {
+        border-right: 2px solid #ccc;
+        height: 100%;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+    .main-content {
+        min-height: 500px;
+    }
+    .product-sidebar {
+        height: 100%;
+        min-height: 100%;
+    }
 }

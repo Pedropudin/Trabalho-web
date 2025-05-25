@@ -1,5 +1,8 @@
 import '../styles/PaginaPesquisa.css';
 import React, { useState } from 'react';
+import Products from '../Products'; 
+import { navigate, useNavigate } from "react-router-dom";
+import ROUTES from '../routes';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
@@ -11,59 +14,51 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
-    const [sortedProducts, setSortedProducts] = useState([
-        { id: 1, name: "cyperX Cloud II", marca:"hyperx", price: 111.0, available: true, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
-        { id: 2, name: "byperX Cloud II", marca:"hyperx", price: 231.0, available: false, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
-        { id: 3, name: "ayperX Cloud II", marca:"hyperx", price: 41.0, available: true, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
-        { id: 4, name: "Mouse Razer", marca:"razer", price: 150.0, available: true, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
-        { id: 5, name: "aouse Razer", marca:"razer", price: 120.0, available: true, img: "https://m.media-amazon.com/images/I/71++S+DNJ+L._AC_UF1000,1000_QL80_.jpg" },
-    ]);
-
+    let navigate = useNavigate();
 
     function handleOrderChange(e) {
         setOrder(e.target.value);
     }
 
     const orderedProducts = React.useMemo(() => {
-        let products = [...sortedProducts];
+        let products = [...Products];
         products.sort((a, b) => {
-            if (a.available === b.available) {
-                if (order === "alphabetical-asc") {
-                    return a.name.localeCompare(b.name);
-                } else if (order === "alphabetical-desc") {
-                    return b.name.localeCompare(a.name);
-                } else if (order === "low-price") {
-                    return a.price - b.price;
-                } else if (order === "high-price") {
-                    return b.price - a.price;
-                }
-                return 0;
+            if (a.inStock > 0  && b.inStock === 0) return -1; 
+            if (a.inStock === 0  && b.inStock > 0) return 1; 
+            if (order === "alphabetical-asc") {
+                return a.name.localeCompare(b.name);
+            } else if (order === "alphabetical-desc") {
+                return b.name.localeCompare(a.name);
+            } else if (order === "low-price") {
+                return a.price - b.price;
+            } else if (order === "high-price") {
+                return b.price - a.price;
             }
-            return a.available ? -1 : 1;
+            return 0;
         });
         return products;
-    }, [sortedProducts, order]);
+    }, [order]);
 
     // Filtra produtos pela marca selecionada
-    const filteredProducts = orderedProducts.filter(product => {
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.marca);
-        const matchesMin = minPrice === '' || product.price >= Number(minPrice);
-        const matchesMax = maxPrice === '' || product.price <= Number(maxPrice);
+    const filteredProducts = orderedProducts.filter(Products => {
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(Products.marca);
+        const matchesMin = minPrice === '' || Products.price >= Number(minPrice);
+        const matchesMax = maxPrice === '' || Products.price <= Number(maxPrice);
         return matchesBrand && matchesMin && matchesMax;
     });
 
     const displayProducts = filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
-            <div key={product.id} className="items">
+        filteredProducts.map((Products) => (
+            <div key={Products.id} className="items">
                 <img className="item-image"
-                    src={product.img}
-                    alt={"Imagem do " + product.name}
-                    style={!product.available ? { filter: "grayscale(100%)" } : {}}
+                    src={Products.img}
+                    alt={"Imagem do " + Products.name}
+                    style={!Products.inStock > 0 ? { filter: "grayscale(100%)" } : {}}
                 />
-                <p className="item-name">{product.name}</p><br />
-                <p className="item-price">{product.available ? "R$" + product.price.toFixed(2) : ""}</p>
-                {product.available ? (
-                    <button className="product-display-purchase-button">Comprar</button>
+                <p className="item-name">{Products.name}</p><br />
+                <p className="item-price">{Products.inStock > 0 ? "R$" + Products.price.toFixed(2) : ""}</p>
+                {Products.inStock > 0 ? (
+                    <button className="product-display-purchase-button" onClick={() => navigate(`/pages/PaginaProduto/${Products.id}`)}>Comprar</button>
                 ) : (
                     <p className="product-unavailable"><strong>Produto Indisponível</strong></p>
                 )}
@@ -78,7 +73,7 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
             <Header/>
             <div className="main-content">
                 <Sidebar
-                    items={sortedProducts}
+                    items={Products}
                     selectedBrands={selectedBrands}
                     setSelectedBrands={setSelectedBrands}
                     minPrice={minPrice}

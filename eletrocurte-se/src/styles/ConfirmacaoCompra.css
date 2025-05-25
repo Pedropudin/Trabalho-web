@@ -27,3 +27,12 @@
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
     transform: translateY(-2px) scale(1.04);
 }
+@media (max-width: 768px) {
+    .textos-confirmacao{
+        font-size: large;
+        margin: 30px;
+    }
+    .foto-confirmacao{
+        width: 100%;
+    }
+}
