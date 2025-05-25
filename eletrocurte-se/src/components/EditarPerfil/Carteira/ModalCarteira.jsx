@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/EditarPerfil.css';
+import '../../../styles/EditarPerfil.css';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -34,6 +34,7 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
   const [novoCartao, setNovoCartao] = useState({ bandeira: '', numero: '' });
   const [mensagem, setMensagem] = useState('');
   const [step, setStep] = useState('adicionar');
+  const [erroForm, setErroForm] = useState('');
 
   useEffect(() => {
     document.body.classList.add('modal-carteira-open');
@@ -48,17 +49,23 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
 
   function handleAdicionarSaldo(e) {
     e.preventDefault();
+    setErroForm('');
+    if (!valorAdicionar) {
+      setErroForm('Por favor, informe o valor a ser adicionado.');
+      return;
+    }
     const valor = parseFloat(valorAdicionar.replace(',', '.'));
     if (isNaN(valor) || valor <= 0) {
-      setMensagem('Digite um valor válido!');
+      setErroForm('Digite um valor válido maior que zero.');
       return;
     }
     if (!cartaoSelecionado) {
-      setMensagem('Selecione um cartão!');
+      setErroForm('Selecione um cartão para adicionar saldo.');
       return;
     }
     setSaldo(s => s + valor);
     setMensagem('Saldo adicionado com sucesso!');
+    setValorAdicionar('');
     setTimeout(() => {
       setMensagem('');
       onClose();
@@ -67,8 +74,9 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
 
   function handleSalvarCartao(e) {
     e.preventDefault();
+    setErroForm('');
     if (!validarCartao(novoCartao)) {
-      setMensagem('Cartão inválido! Use 16 dígitos e preencha a bandeira.');
+      setErroForm('Cartão inválido! Use 16 dígitos e preencha a bandeira.');
       return;
     }
     const final = novoCartao.numero.replace(/\D/g, '').slice(-4);
@@ -95,38 +103,53 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
           Saldo disponível: <b>{saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b>
         </Typography>
         {step === 'adicionar' && (
-          <Box component="form" onSubmit={handleAdicionarSaldo} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField
-              label="Adicionar dinheiro"
-              type="number"
-              inputProps={{ min: 1, step: 0.01 }}
-              value={valorAdicionar}
-              onChange={e => setValorAdicionar(e.target.value)}
-              placeholder="Valor em R$"
-              required
-              fullWidth
-            />
-            <FormControl fullWidth required>
-              <InputLabel id="cartao-label">Cartão para cobrança</InputLabel>
-              <Select
-                labelId="cartao-label"
-                value={cartaoSelecionado}
-                label="Cartão para cobrança"
-                onChange={e => {
-                  if (e.target.value === 'novo') setStep('novoCartao');
-                  else setCartaoSelecionado(e.target.value);
-                }}
-              >
-                {cartoes.map(c => (
-                  <MenuItem key={c.final} value={c.final}>{c.bandeira} **** {c.final}</MenuItem>
-                ))}
-                <MenuItem value="novo">Cadastrar novo cartão...</MenuItem>
-              </Select>
-            </FormControl>
-            <Button type="submit" variant="contained" color="primary" sx={{ mt: 1 }}>
-              Adicionar saldo
+          <>
+            <Box component="form" onSubmit={handleAdicionarSaldo} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <TextField
+                label="Adicionar dinheiro"
+                type="number"
+                inputProps={{ min: 1, step: 0.01 }}
+                value={valorAdicionar}
+                onChange={e => setValorAdicionar(e.target.value)}
+                placeholder="Valor em R$"
+                fullWidth
+                error={!!erroForm && !valorAdicionar}
+              />
+              <FormControl fullWidth required error={!!erroForm && !cartaoSelecionado}>
+                <InputLabel id="cartao-label">Cartão para cobrança</InputLabel>
+                <Select
+                  labelId="cartao-label"
+                  value={cartaoSelecionado}
+                  label="Cartão para cobrança"
+                  onChange={e => {
+                    if (e.target.value === 'novo') setStep('novoCartao');
+                    else setCartaoSelecionado(e.target.value);
+                  }}
+                >
+                  {cartoes.map(c => (
+                    <MenuItem key={c.final} value={c.final}>{c.bandeira} **** {c.final}</MenuItem>
+                  ))}
+                  <MenuItem value="novo">Cadastrar novo cartão...</MenuItem>
+                </Select>
+              </FormControl>
+              {erroForm && (
+                <Typography color="error" align="center" fontSize={14} mt={1}>
+                  {erroForm}
+                </Typography>
+              )}
+              <Button type="submit" variant="contained" color="primary" sx={{ mt: 1 }}>
+                Adicionar saldo
+              </Button>
+            </Box>
+            <Button
+              variant="text"
+              color="primary"
+              sx={{ mt: 1, fontSize: 14, alignSelf: 'center' }}
+              onClick={() => setStep('novoCartao')}
+            >
+              + Cadastrar novo cartão
             </Button>
-          </Box>
+          </>
         )}
         {step === 'novoCartao' && (
           <Box component="form" onSubmit={handleSalvarCartao} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -135,8 +158,8 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
               value={novoCartao.bandeira}
               onChange={e => setNovoCartao({ ...novoCartao, bandeira: e.target.value })}
               placeholder="Ex: Visa, Mastercard"
-              required
               fullWidth
+              error={!!erroForm && (!novoCartao.bandeira || !validarCartao(novoCartao))}
             />
             <TextField
               label="Número do cartão (16 dígitos)"
@@ -144,9 +167,14 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
               onChange={e => setNovoCartao({ ...novoCartao, numero: e.target.value.replace(/\D/g, '').slice(0, 16) })}
               placeholder="Número do cartão"
               inputProps={{ maxLength: 16 }}
-              required
               fullWidth
+              error={!!erroForm && (!novoCartao.numero || !validarCartao(novoCartao))}
             />
+            {erroForm && (
+              <Typography color="error" align="center" fontSize={14} mt={1}>
+                {erroForm}
+              </Typography>
+            )}
             <Button type="submit" variant="contained" color="primary" sx={{ mt: 1 }}>
               Salvar Cartão
             </Button>
