@@ -1,17 +1,36 @@
 import React from 'react';
+import { Button, Typography, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../routes';
 
 export default function Historico({ onVoltar }) {
+  const navigate = useNavigate();
+
   return (
     <div className="editarperfil-card-form">
-      <h2>Histórico de Compras</h2>
-      <ul>
-        <li>Máquina de Lavar - 25/03/2025</li>
-        <li>Air Fryer - 28/03/2025</li>
-        <li>Raquete Elétrica - 12/03/2025</li>
-      </ul>
-      <button className="editarperfil-btn-voltar" onClick={onVoltar}>
-        Voltar ao Perfil
-      </button>
+      <Typography variant="h5" gutterBottom>
+        Histórico
+      </Typography>
+      <Stack spacing={2} sx={{ mt: 2 }}>
+        <Button
+          variant="outlined"
+          onClick={() => navigate(ROUTES.HIST_COMPRAS)}
+        >
+          Ver Histórico de Compras
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate(ROUTES.HIST_PRODUTOS)}
+        >
+          Ver Histórico de Produtos Visualizados
+        </Button>
+        <Button
+          variant="contained"
+          onClick={onVoltar}
+        >
+          Voltar ao Perfil
+        </Button>
+      </Stack>
     </div>
   );
 }
