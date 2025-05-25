@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import Pedidos from '../components/EditarPerfil/Pedidos';
 import Mensagens from '../components/EditarPerfil/Mensagens';
 import Carteira from '../components/EditarPerfil/Carteira/Carteira';
-import Enderecos from '../components/EditarPerfil/Enderecos';
+import Enderecos from '../components/EditarPerfil/Enderecos/Enderecos';
 import Privacidade from '../components/EditarPerfil/Privacidade';
 import FormSeguranca from '../components/EditarPerfil/Seguranca';
 import Historico from '../components/EditarPerfil/Historico';
