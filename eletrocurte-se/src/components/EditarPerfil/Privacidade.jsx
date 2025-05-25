@@ -52,7 +52,7 @@ export default function Privacidade({ onVoltar }) {
 
       <div style={{ marginTop: '1rem' }}>
         <Button variant="contained" color="primary" onClick={onVoltar}>
-          Voltar ao Perfil
+          Confirmar e voltar ao Perfil
         </Button>
       </div>
     </div>

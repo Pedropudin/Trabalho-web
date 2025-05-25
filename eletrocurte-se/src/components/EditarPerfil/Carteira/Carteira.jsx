@@ -1,14 +1,24 @@
-import React, { useState, useMemo } from 'react';
-import { Button, Box, Typography, Paper } from '@mui/material';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Button, Typography, Paper } from '@mui/material';
 import ModalCarteira from './ModalCarteira';
 import CartoesList from './CartoesList';
 import '../../../styles/EditarPerfil.css';
 
 export default function Carteira({ onVoltar }) {
-  const [saldo, setSaldo] = useState(150.00);
-  const [cartoes, setCartoes] = useState([
-    { bandeira: 'Visa', final: '1234', numero: '**** **** **** 1234' }
-  ]);
+  // Inicializa saldo com localStorage, ou 150 se vazio
+  const [saldo, setSaldo] = useState(() => {
+    const saldoArmazenado = localStorage.getItem('carteiraSaldo');
+    return saldoArmazenado ? parseFloat(saldoArmazenado) : 150.0;
+  });
+
+  // Inicializa cartões com localStorage, ou com um cartão padrão
+  const [cartoes, setCartoes] = useState(() => {
+    const cartoesArmazenados = localStorage.getItem('carteiraCartoes');
+    return cartoesArmazenados
+      ? JSON.parse(cartoesArmazenados)
+      : [{ bandeira: 'Visa', final: '1234', numero: '**** **** **** 1234' }];
+  });
+
   const [modalAberto, setModalAberto] = useState(false);
 
   const cartoesValidados = useMemo(() => {
@@ -16,6 +26,16 @@ export default function Carteira({ onVoltar }) {
       ...c,
       saldo: c.saldo ?? 0,
     }));
+  }, [cartoes]);
+
+  // Atualiza o localStorage sempre que o saldo mudar
+  useEffect(() => {
+    localStorage.setItem('carteiraSaldo', saldo.toString());
+  }, [saldo]);
+
+  // Atualiza o localStorage sempre que os cartões mudarem
+  useEffect(() => {
+    localStorage.setItem('carteiraCartoes', JSON.stringify(cartoes));
   }, [cartoes]);
 
   function handleExcluirCartao(final) {
