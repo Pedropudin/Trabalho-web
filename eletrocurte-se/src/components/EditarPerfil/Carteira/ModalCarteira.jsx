@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import '../../../styles/EditarPerfil.css';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import {
+  Box, Typography, Button, Modal,
+  TextField, Select, MenuItem, InputLabel,
+  FormControl, IconButton
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CadastrarCartao from './CadastrarCartao';
 
 const style = {
   position: 'absolute',
@@ -28,10 +25,9 @@ const style = {
   gap: 2,
 };
 
-export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, onClose }) {
+export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, onClose }) {
   const [valorAdicionar, setValorAdicionar] = useState('');
   const [cartaoSelecionado, setCartaoSelecionado] = useState(cartoes[0]?.final || '');
-  const [novoCartao, setNovoCartao] = useState({ bandeira: '', numero: '' });
   const [mensagem, setMensagem] = useState('');
   const [step, setStep] = useState('adicionar');
   const [erroForm, setErroForm] = useState('');
@@ -43,72 +39,84 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
     };
   }, []);
 
-  function validarCartao(cartao) {
-    return /^\d{16}$/.test(cartao.numero.replace(/\D/g, '')) && cartao.bandeira.length > 2;
-  }
-
   function handleAdicionarSaldo(e) {
     e.preventDefault();
     setErroForm('');
+
     if (!valorAdicionar) {
       setErroForm('Por favor, informe o valor a ser adicionado.');
       return;
     }
+
     const valor = parseFloat(valorAdicionar.replace(',', '.'));
     if (isNaN(valor) || valor <= 0) {
       setErroForm('Digite um valor válido maior que zero.');
       return;
     }
+
     if (!cartaoSelecionado) {
       setErroForm('Selecione um cartão para adicionar saldo.');
       return;
     }
-    setSaldo(s => s + valor);
+
+    setCartoes(prev =>
+      prev.map(c =>
+        c.final === cartaoSelecionado
+          ? { ...c, saldo: (c.saldo ?? 0) + valor }
+          : c
+      )
+    );
+
     setMensagem('Saldo adicionado com sucesso!');
     setValorAdicionar('');
+
     setTimeout(() => {
       setMensagem('');
       onClose();
     }, 1200);
   }
 
-  function handleSalvarCartao(e) {
-    e.preventDefault();
-    setErroForm('');
-    if (!validarCartao(novoCartao)) {
-      setErroForm('Cartão inválido! Use 16 dígitos e preencha a bandeira.');
-      return;
+  function handleExcluirCartao(final) {
+    const confirm = window.confirm('Tem certeza que deseja excluir este cartão?');
+    if (confirm) {
+      setCartoes(prev => prev.filter(c => c.final !== final));
+      if (cartaoSelecionado === final) {
+        const restante = cartoes.filter(c => c.final !== final);
+        setCartaoSelecionado(restante[0]?.final || '');
+      }
     }
-    const final = novoCartao.numero.replace(/\D/g, '').slice(-4);
-    setCartoes(cs => [...cs, {
-      bandeira: novoCartao.bandeira,
-      final,
-      numero: '**** **** **** ' + final
-    }]);
-    setCartaoSelecionado(final);
-    setNovoCartao({ bandeira: '', numero: '' });
-    setMensagem('Cartão cadastrado!');
-    setStep('adicionar');
-    setTimeout(() => setMensagem(''), 1200);
   }
 
+  const saldoSelecionado = cartoesValidados.find(c => c.final === cartaoSelecionado)?.saldo ?? 0;
+
   return (
-    <Modal open onClose={onClose} aria-labelledby="modal-carteira-title" sx={{zIndex: 1300}}>
+    <Modal open onClose={onClose} aria-labelledby="modal-carteira-title" sx={{ zIndex: 1300 }}>
       <Box sx={style}>
-        <Button onClick={onClose} sx={{ alignSelf: 'flex-end', minWidth: 0, p: 0, mb: 1 }}><CloseIcon /></Button>
-        <Typography id="modal-carteira-title" variant="h5" component="h2" align="center" fontWeight={600} mb={2}>
+        <Button onClick={onClose} sx={{ alignSelf: 'flex-end', minWidth: 0, p: 0, mb: 1 }}>
+          <CloseIcon />
+        </Button>
+
+        <Typography
+          id="modal-carteira-title"
+          variant="h5"
+          component="h2"
+          align="center"
+          fontWeight={600}
+          mb={2}
+        >
           Carteira
         </Typography>
+
         <Typography align="center" fontSize={18} mb={2}>
-          Saldo disponível: <b>{saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b>
+          Saldo disponível: <b>{saldoSelecionado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b>
         </Typography>
+
         {step === 'adicionar' && (
           <>
             <Box component="form" onSubmit={handleAdicionarSaldo} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField
                 label="Adicionar dinheiro"
                 type="number"
-                inputProps={{ min: 1, step: 0.01 }}
                 value={valorAdicionar}
                 onChange={e => setValorAdicionar(e.target.value)}
                 placeholder="Valor em R$"
@@ -121,26 +129,39 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
                   labelId="cartao-label"
                   value={cartaoSelecionado}
                   label="Cartão para cobrança"
-                  onChange={e => {
-                    if (e.target.value === 'novo') setStep('novoCartao');
-                    else setCartaoSelecionado(e.target.value);
-                  }}
+                  onChange={e => setCartaoSelecionado(e.target.value)}
                 >
-                  {cartoes.map(c => (
-                    <MenuItem key={c.final} value={c.final}>{c.bandeira} **** {c.final}</MenuItem>
+                  {cartoesValidados.map(c => (
+                    <MenuItem key={c.final} value={c.final}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <Box>{c.bandeira} **** {c.final}</Box>
+                        <IconButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleExcluirCartao(c.final);
+                          }}
+                          size="small"
+                          edge="end"
+                          aria-label="Excluir cartão"
+                        >
+                        </IconButton>
+                      </Box>
+                    </MenuItem>
                   ))}
-                  <MenuItem value="novo">Cadastrar novo cartão...</MenuItem>
                 </Select>
               </FormControl>
+
               {erroForm && (
                 <Typography color="error" align="center" fontSize={14} mt={1}>
                   {erroForm}
                 </Typography>
               )}
+
               <Button type="submit" variant="contained" color="primary" sx={{ mt: 1 }}>
                 Adicionar saldo
               </Button>
             </Box>
+
             <Button
               variant="text"
               color="primary"
@@ -151,39 +172,25 @@ export default function ModalCarteira({ saldo, cartoes, setCartoes, setSaldo, on
             </Button>
           </>
         )}
+
         {step === 'novoCartao' && (
-          <Box component="form" onSubmit={handleSalvarCartao} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField
-              label="Bandeira"
-              value={novoCartao.bandeira}
-              onChange={e => setNovoCartao({ ...novoCartao, bandeira: e.target.value })}
-              placeholder="Ex: Visa, Mastercard"
-              fullWidth
-              error={!!erroForm && (!novoCartao.bandeira || !validarCartao(novoCartao))}
-            />
-            <TextField
-              label="Número do cartão (16 dígitos)"
-              value={novoCartao.numero}
-              onChange={e => setNovoCartao({ ...novoCartao, numero: e.target.value.replace(/\D/g, '').slice(0, 16) })}
-              placeholder="Número do cartão"
-              inputProps={{ maxLength: 16 }}
-              fullWidth
-              error={!!erroForm && (!novoCartao.numero || !validarCartao(novoCartao))}
-            />
-            {erroForm && (
-              <Typography color="error" align="center" fontSize={14} mt={1}>
-                {erroForm}
-              </Typography>
-            )}
-            <Button type="submit" variant="contained" color="primary" sx={{ mt: 1 }}>
-              Salvar Cartão
-            </Button>
-            <Button type="button" variant="outlined" color="secondary" sx={{ mt: 1 }} onClick={() => setStep('adicionar')}>
-              Cancelar
-            </Button>
-          </Box>
+          <CadastrarCartao
+            onSalvar={(cartaoSalvo) => {
+              setCartoes(cs => [...cs, { ...cartaoSalvo, saldo: 0 }]);
+              setCartaoSelecionado(cartaoSalvo.final);
+              setMensagem('Cartão cadastrado!');
+              setStep('adicionar');
+              setTimeout(() => setMensagem(''), 1200);
+            }}
+            onCancelar={() => setStep('adicionar')}
+          />
         )}
-        {mensagem && <Typography color="success.main" align="center" mt={2}>{mensagem}</Typography>}
+
+        {mensagem && (
+          <Typography color="success.main" align="center" mt={2}>
+            {mensagem}
+          </Typography>
+        )}
       </Box>
     </Modal>
   );
