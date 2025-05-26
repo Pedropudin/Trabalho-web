@@ -5,12 +5,14 @@
     display: flex;
     gap: 1%;
     padding: 10px;
+    height: 150px;
 }
 
 .question-product-info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 30%;
 }
 
 .product-name {
@@ -33,4 +35,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 10%;
+}
+
+.question-buttons-container {
+    display: flex;
+    gap: 5px;
 }

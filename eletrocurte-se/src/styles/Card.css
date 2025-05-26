@@ -28,3 +28,10 @@
     align-items: center;
     gap: 30px;
 }
+
+.card-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
