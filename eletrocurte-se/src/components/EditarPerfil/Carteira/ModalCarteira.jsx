@@ -5,7 +5,7 @@ import {
   FormControl, IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CadastrarCartao from './CadastrarCartao';
+//import CadastrarCartao from './CadastrarCartao';
 
 const style = {
   position: 'absolute',
@@ -178,7 +178,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
         )}
 
         {step === 'novoCartao' && (
-          <CadastrarCartao
+          {/* <CadastrarCartao
             onSalvar={(cartaoSalvo) => {
               const final = cartaoSalvo.numero.slice(-4);
               setCartoes(cs => [...cs, { ...cartaoSalvo, final, saldo: 0 }]);
@@ -188,7 +188,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
               setTimeout(() => setMensagem(''), 1200);
             }}
             onCancelar={() => setStep('adicionar')}
-          />
+          /> */}
         )}
 
         {mensagem && (
