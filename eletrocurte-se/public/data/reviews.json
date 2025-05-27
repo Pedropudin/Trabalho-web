@@ -1,0 +1,14 @@
+{
+    "reviews": [
+        {
+            "rating": 5,
+            "product_name": "Genérico 1",
+            "product_photo": "https://m.media-amazon.com/images/I/514n0rnHIgL.jpg",
+            "date": "25/11/2003",
+            "question": "Uma pergunta muito bonita pode ser inserida aqui",
+            "person_name": "Pedro MO",
+            "person_photo": "https://cdn-icons-png.freepik.com/512/7235/7235968.png"
+        }
+       
+    ]
+}

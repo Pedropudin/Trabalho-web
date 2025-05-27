@@ -1,0 +1,27 @@
+/* Mesmo estilo do container da pergunta */
+.infoRedirect-container {
+    display: flex;
+    gap: 15px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.infoRedirect-elements-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.element-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.element-description {
+    font-size: 15px;
+    font-weight: lighter;
+}

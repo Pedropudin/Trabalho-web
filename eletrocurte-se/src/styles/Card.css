@@ -1,0 +1,42 @@
+.card-container {
+    text-align: left;
+    box-sizing: border-box;
+    background-color: rgba(256,256,256,0.46);
+    border-radius: 10px;
+    border: 2px solid #ebebeb;
+    box-shadow: 0 6px 16px 1px rgba(0,0,0,0.1);
+    padding: 10px 30px 30px 30px;
+}
+
+.card-container>h1 {
+    font-size: 20px;
+    color: #003d52;
+}
+
+.card-container>p {
+    font-size: 13px;
+    margin-bottom: 20px;
+    color: #575756;
+}
+
+.card-description>h1 {
+    margin-bottom: 0;
+}
+
+.card-popularity>.text {
+    display: inline-block;
+    width: 300px;
+}
+
+.card-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.card-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
