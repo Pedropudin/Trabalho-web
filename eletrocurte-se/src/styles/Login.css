@@ -8,7 +8,7 @@
 
 /* Cor de fundo geral do corpo da página */
 body {
-  background-color: #f4f4f4;
+  background-color: #f5fafd;
   text-align: center;
 }
 
@@ -134,32 +134,14 @@ header {
 
 /* Estilo para mensagens no topo */
 .mensagem {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 24px;
+  margin-top: 12px;
   border-radius: 8px;
   font-weight: bold;
-  z-index: 999;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-/* Visível */
-.mensagem.show {
   display: block;
   opacity: 1;
-  pointer-events: auto;
+  transition: opacity 0.5s ease;
 }
 
-/* Oculto */
-.mensagem.hidden {
-  display: none;
-}
-
-/* Tipos de mensagem */
 .mensagem.sucesso {
   background-color: #4CAF50;
   color: white;
@@ -173,6 +155,20 @@ header {
 .mensagem.info {
   background-color: #2196F3;
   color: white;
+}
+
+/* Remove estilos antigos do formulário principal */
+.container, .login-box, .user-options, .btn-enviar {
+  all: unset;
+}
+
+@media (max-width: 600px) {
+  .MuiPaper-root {
+    padding: 12px !important;
+  }
+  .MuiTypography-h4 {
+    font-size: 1.5rem !important;
+  }
 }
 
 /* ----------- Responsividade ----------- */
