@@ -1,0 +1,22 @@
+{
+    "soldProducts": [
+        {
+            "product_name": "Genérico 1",
+            "product_photo": "https://m.media-amazon.com/images/I/514n0rnHIgL.jpg",
+            "date": "25/11/2003",
+            "person_name": "Pedro MO",
+            "person_photo": "https://cdn-icons-png.freepik.com/512/7235/7235968.png",
+            "delivery_city": "Xique Xique",
+            "delivery_state": "Bahia"
+        },
+        {
+            "product_name": "Caixa de som",
+            "product_photo": "https://s2magazine.cdn.magazord.com.br/img/2021/10/produto/9141/alto-falante-subwoofer-12-polegadas-swrms350-jbl.jpg?ims=fit-in/800x800/filters:fill(white)",
+            "date": "28/01/2005",
+            "person_name": "Matheus",
+            "person_photo": "https://i.fbcd.co/products/resized/resized-750-500/l010e-6-e02-mainpreview-3720591835ee8456a0067e9828c79295abd5810e798a532e1c013a3114580b44.jpg",
+            "delivery_city": "São Paulo",
+            "delivery_state": "São Paulo"
+        }
+    ]
+}
