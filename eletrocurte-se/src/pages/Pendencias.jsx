@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTES from '../routes';
 import Footer from "../components/Footer";
-import Header from "../components/Header";
+import AdminHeader from "../components/admin/AdminHeader";
 import Card from "../components/Card";
 import Question from "../components/Pendencias/Question";
 import GenericInfoRedirect from "../components/Pendencias/GenericInfoRedirect";
@@ -12,7 +12,6 @@ const Pendencias = () => {
     const [complainingsData, setComplainingsData] = useState(null);
     const [soldData, setSoldData] = useState(null);
     const [serviceData, setServiceData] = useState(null);
-    const categories = ["Desempenho", "Produtos", "Pendências"];
 
     useEffect(() => {
         fetch("/data/questions.json")
@@ -56,7 +55,7 @@ const Pendencias = () => {
 
     return(
         <div>
-            <Header categories={categories} useElementsMenu={[true, false, true]} selectedCategoryIndex={2}/>
+            <AdminHeader categoryIndex={2} />
             <div className="content">
                 <Card title={"Perguntas"} type={"card-vertical"} style={{width: '80%'}} >
                     {questionsData && questionsData.map((q) => {
