@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Paper, Typography, Button } from '@mui/material';
 import HeaderLogs from '../components/HeaderLogs';
 import ROUTES from '../routes';
 import '../styles/Logout.css';
@@ -14,26 +15,31 @@ export default function Logout() {
   const navigate = useNavigate();
   const timerRef = useRef(null);
   const intervalRef = useRef(null);
+  const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
-    let countdown = 10;
-    if (timerRef.current) timerRef.current.textContent = countdown;
+    // Ao fazer logout, remove o flag de login
+    localStorage.removeItem('isLoggedIn');
 
+    setCountdown(10);
+    if (timerRef.current) timerRef.current.textContent = 10;
     intervalRef.current = setInterval(() => {
-      countdown--;
-      if (timerRef.current) timerRef.current.textContent = countdown;
-      if (countdown <= 0) {
-        clearInterval(intervalRef.current);
-        navigate('/');
-      }
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalRef.current);
+          navigate(ROUTES.PAGINA_INICIAL);
+          return 0;
+        }
+        if (timerRef.current) timerRef.current.textContent = prev - 1;
+        return prev - 1;
+      });
     }, 1000);
-
     return () => clearInterval(intervalRef.current);
   }, [navigate]);
 
   function handleHomeClick() {
     clearInterval(intervalRef.current);
-    navigate('/');
+    navigate(ROUTES.PAGINA_INICIAL);
   }
 
   return (
@@ -42,19 +48,25 @@ export default function Logout() {
       <HeaderLogs />
 
       {/* Container principal do logout, centralizando conteúdo */}
-      <div className="logout-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 20px', minHeight: '60vh' }}>
-        <div className="logout-box" style={{ background: 'white', padding: 30, borderRadius: 10, boxShadow: '0 0 10px rgba(0,0,0,0.2)', maxWidth: 400, width: '90%' }}>
-          <h2>Logout</h2>
-          <p>Operação de saída efetuada com sucesso</p>
-          <br />
-          <p>Obrigado por nos visitar, volte sempre ;)</p>
-          <br />
-          <p>Você será redirecionado em <span id="timer" ref={timerRef}>10</span> segundos...</p>
-          <button className="home-button" id="homeRedirect" type="button" onClick={handleHomeClick}>
+      <Box sx={{ minHeight: '100vh', background: '#f5fafd', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 6 }}>
+        <Paper elevation={6} sx={{ maxWidth: 420, width: '100%', p: { xs: 3, md: 5 }, borderRadius: 4, mt: 6, textAlign: 'center', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.10)' }}>
+          <Typography variant="h4" sx={{ fontWeight: 700, color: '#004d66', mb: 2 }}>
+            Logout
+          </Typography>
+          <Typography variant="h6" sx={{ color: '#007b99', mb: 2 }}>
+            Operação de saída efetuada com sucesso
+          </Typography>
+          <Typography sx={{ color: '#333', mb: 2 }}>
+            Obrigado por nos visitar, volte sempre ;)
+          </Typography>
+          <Typography sx={{ color: '#555', mb: 2 }}>
+            Você será redirecionado em <span ref={timerRef}>{countdown}</span> segundos...
+          </Typography>
+          <Button variant="contained" color="primary" onClick={handleHomeClick} sx={{ mt: 2, fontWeight: 600, borderRadius: 2, background: '#007b99', '&:hover': { background: '#004d66' } }}>
             Voltar para a Home
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Paper>
+      </Box>
 
       {/* Rodapé com informações de contato e links externos */}
       <Footer />
