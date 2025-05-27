@@ -54,7 +54,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
     }
 
     if (!cartaoSelecionado) {
-      setErroForm('Selecione um cartão para adicionar saldo.');
+      setErroForm('Selecione um cartão para cobrança antes de adicionar saldo.');
       return;
     }
 
@@ -68,7 +68,6 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
 
     setMensagem('Saldo adicionado com sucesso!');
     setValorAdicionar('');
-
     setTimeout(() => {
       setMensagem('');
       onClose();
@@ -117,10 +116,16 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
                 label="Adicionar dinheiro"
                 type="number"
                 value={valorAdicionar}
-                onChange={e => setValorAdicionar(e.target.value)}
+                onChange={e => {
+                  // Impede valores negativos
+                  const v = e.target.value;
+                  if (v === '' || /^\d*\.?\d*$/.test(v)) {
+                    setValorAdicionar(v);
+                  }
+                }}
                 placeholder="Valor em R$"
                 fullWidth
-                error={!!erroForm && !valorAdicionar}
+                error={!!erroForm && (!valorAdicionar || parseFloat(valorAdicionar) <= 0)}
               />
               <FormControl fullWidth required error={!!erroForm && !cartaoSelecionado}>
                 <InputLabel id="cartao-label">Cartão para cobrança</InputLabel>
@@ -175,8 +180,9 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
         {step === 'novoCartao' && (
           <CadastrarCartao
             onSalvar={(cartaoSalvo) => {
-              setCartoes(cs => [...cs, { ...cartaoSalvo, saldo: 0 }]);
-              setCartaoSelecionado(cartaoSalvo.final);
+              const final = cartaoSalvo.numero.slice(-4);
+              setCartoes(cs => [...cs, { ...cartaoSalvo, final, saldo: 0 }]);
+              setCartaoSelecionado(final);
               setMensagem('Cartão cadastrado!');
               setStep('adicionar');
               setTimeout(() => setMensagem(''), 1200);

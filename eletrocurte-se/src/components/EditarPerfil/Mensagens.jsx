@@ -11,6 +11,10 @@ import {
   Divider,
   Paper,
   Chip,
+  Snackbar,
+  Alert,
+  Avatar,
+  Skeleton
 } from '@mui/material';
 
 const agruparMensagensPorData = (mensagens) => {
@@ -58,6 +62,13 @@ export default function Mensagens({ onVoltar }) {
   const [novaMensagem, setNovaMensagem] = useState('');
   const [filtro, setFiltro] = useState('todas');
   const [mensagemEmDestaque, setMensagemEmDestaque] = useState(null);
+  const [snackbar, setSnackbar] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -89,10 +100,7 @@ export default function Mensagens({ onVoltar }) {
     };
     setMensagens((prev) => [nova, ...prev]);
     setNovaMensagem('');
-    setMensagemEmDestaque(nova.id);
-
-    const audio = new Audio('/notification.mp3');
-    audio.play();
+    setSnackbar(true);
   };
 
   const marcarComoLida = (id) => {
@@ -116,72 +124,93 @@ export default function Mensagens({ onVoltar }) {
           <Typography variant="h5" gutterBottom>
             Mensagens do Administrador
           </Typography>
-
-          {/* Filtros */}
-          <ToggleButtonGroup
-            value={filtro}
-            exclusive
-            onChange={(e, value) => value && setFiltro(value)}
-            sx={{ mb: 2 }}
-          >
-            <ToggleButton value="todas">Todas</ToggleButton>
-            <ToggleButton value="importantes">Importantes</ToggleButton>
-            <ToggleButton value="naoLidas">Não Lidas</ToggleButton>
-          </ToggleButtonGroup>
-
-          {/* Agrupamento */}
-          {Object.entries(agrupadas).map(([grupo, msgs]) => (
-            <Box key={grupo} mb={3}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                {grupo}
-              </Typography>
-              <Divider />
-              {msgs.map((msg) => (
-                <Paper
-                  key={msg.id}
-                  elevation={msg.id === mensagemEmDestaque ? 6 : 1}
-                  sx={{
-                    mt: 1,
-                    p: 2,
-                    bgcolor: msg.id === mensagemEmDestaque ? 'primary.light' : msg.lida ? 'grey.100' : 'info.light',
-                    borderLeft: msg.importante ? '5px solid red' : 'none',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => marcarComoLida(msg.id)}
-                >
-                  <Typography variant="body2">{msg.texto}</Typography>
-                  <Box display="flex" justifyContent="space-between" mt={1}>
-                    <Typography variant="caption">
-                      {new Date(msg.data).toLocaleString()}
-                    </Typography>
-                    {msg.importante && <Chip label="Importante" size="small" color="error" />}
-                  </Box>
-                </Paper>
+          {loading ? (
+            <>
+              <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+              <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+              <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+            </>
+          ) : (
+            <>
+              <ToggleButtonGroup
+                value={filtro}
+                exclusive
+                onChange={(e, value) => value && setFiltro(value)}
+                sx={{ mb: 2 }}
+              >
+                <ToggleButton value="todas">Todas</ToggleButton>
+                <ToggleButton value="importantes">Importantes</ToggleButton>
+                <ToggleButton value="naoLidas">Não Lidas</ToggleButton>
+              </ToggleButtonGroup>
+              {Object.entries(agrupadas).map(([grupo, msgs]) => (
+                <Box key={grupo} mb={3}>
+                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                    {grupo}
+                  </Typography>
+                  <Divider />
+                  {msgs.map((msg) => (
+                    <Paper
+                      key={msg.id}
+                      elevation={msg.id === mensagemEmDestaque ? 6 : 1}
+                      sx={{
+                        mt: 1,
+                        p: 2,
+                        bgcolor: msg.id === mensagemEmDestaque ? 'primary.light' : msg.lida ? 'grey.100' : 'info.light',
+                        borderLeft: msg.importante ? '5px solid red' : 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2
+                      }}
+                      onClick={() => marcarComoLida(msg.id)}
+                    >
+                      <Avatar sx={{ bgcolor: msg.importante ? 'error.main' : 'primary.main', width: 32, height: 32, fontSize: 18 }}>
+                        A
+                      </Avatar>
+                      <Box flex={1}>
+                        <Typography variant="body2">{msg.texto}</Typography>
+                        <Box display="flex" justifyContent="space-between" mt={1}>
+                          <Typography variant="caption">
+                            {new Date(msg.data).toLocaleString()}
+                          </Typography>
+                          {msg.importante && <Chip label="Importante" size="small" color="error" />}
+                        </Box>
+                      </Box>
+                    </Paper>
+                  ))}
+                </Box>
               ))}
-            </Box>
-          ))}
-
-          {/* Campo de nova mensagem */}
-          <Box display="flex" gap={2} mt={4}>
-            <TextField
-              label="Nova mensagem"
-              fullWidth
-              value={novaMensagem}
-              onChange={(e) => setNovaMensagem(e.target.value)}
-              variant="outlined"
-            />
-            <Button variant="contained" onClick={adicionarMensagem}>
-              Enviar
-            </Button>
-          </Box>
-
-          <Box mt={4} textAlign="right">
-            <Button onClick={onVoltar} variant="outlined">
-              Voltar ao Perfil
-            </Button>
-          </Box>
+              <Box display="flex" gap={2} mt={4}>
+                <TextField
+                  label="Nova mensagem"
+                  fullWidth
+                  value={novaMensagem}
+                  onChange={(e) => setNovaMensagem(e.target.value)}
+                  variant="outlined"
+                />
+                <Button variant="contained" onClick={adicionarMensagem}>
+                  Enviar
+                </Button>
+              </Box>
+              <Box mt={4} textAlign="right">
+                <Button onClick={onVoltar} variant="outlined">
+                  Voltar ao Perfil
+                </Button>
+              </Box>
+            </>
+          )}
         </CardContent>
       </Card>
+      <Snackbar
+        open={snackbar}
+        autoHideDuration={2500}
+        onClose={() => setSnackbar(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="success" sx={{ width: '100%' }}>
+          Mensagem enviada!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

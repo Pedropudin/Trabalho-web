@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertTitle, Button, Typography } from '@mui/material';
+import { Alert, AlertTitle, Button, Typography, Paper, TextField, Snackbar } from '@mui/material';
 
 const senhaSegura = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
@@ -13,6 +13,7 @@ export default function FormSeguranca({ onVoltar }) {
   const [mensagem, setMensagem] = useState('');
   const [tipoMensagem, setTipoMensagem] = useState('info');
   const [validando, setValidando] = useState(false);
+  const [snackbar, setSnackbar] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +63,7 @@ export default function FormSeguranca({ onVoltar }) {
     if (!valida.valido) {
       setMensagem(valida.mensagem);
       setTipoMensagem('error');
+      setSnackbar(true);
       return;
     }
 
@@ -73,11 +75,13 @@ export default function FormSeguranca({ onVoltar }) {
     if (!dominioValido) {
       setMensagem('Domínio do e-mail não existe ou não possui registro MX válido.');
       setTipoMensagem('error');
+      setSnackbar(true);
       return;
     }
 
     setMensagem('Alterações salvas com sucesso!');
     setTipoMensagem('success');
+    setSnackbar(true);
   };
 
   useEffect(() => {
@@ -91,36 +95,35 @@ export default function FormSeguranca({ onVoltar }) {
   }, [tipoMensagem]);
 
   return (
-    <>
-      <form className="editarperfil-card-form" onSubmit={handleSubmit} noValidate>
-        <h2>Segurança</h2>
-
-        <label htmlFor="email">E-mail:</label>
-        <input
+    <Paper elevation={4} sx={{ p: 4, maxWidth: 420, mx: 'auto', borderRadius: 3 }}>
+      <Typography variant="h5" align="center" fontWeight={700} mb={2}>
+        Segurança
+      </Typography>
+      <form onSubmit={handleSubmit} noValidate>
+        <TextField
+          label="E-mail"
           type="email"
-          id="email"
           name="email"
           value={form.email}
           onChange={handleChange}
-          placeholder="Digite seu e-mail"
+          fullWidth
+          margin="normal"
           disabled={validando}
         />
-
-        <label htmlFor="senha">Senha:</label>
-        <input
+        <TextField
+          label="Senha"
           type="password"
-          id="senha"
           name="senha"
           value={form.senha}
           onChange={handleChange}
-          placeholder="Nova senha (mínimo 8 caracteres, incluindo maiúsculas, minúsculas, números e caracteres especiais)"
+          fullWidth
+          margin="normal"
           disabled={validando}
+          helperText="Mínimo 8 caracteres, incluindo maiúsculas, minúsculas, números e especiais."
         />
-
-        <label htmlFor="cpf">CPF:</label>
-        <input
+        <TextField
+          label="CPF"
           type="text"
-          id="cpf"
           name="cpf"
           value={form.cpf}
           onChange={(e) => {
@@ -134,33 +137,29 @@ export default function FormSeguranca({ onVoltar }) {
             }
             handleChange({ target: { name: 'cpf', value: raw } });
           }}
-          placeholder="000.000.000-00"
+          fullWidth
+          margin="normal"
           disabled={validando}
+          placeholder="000.000.000-00"
         />
-
-        <button type="submit" className="editarperfil-btn-salvar" disabled={validando}>
+        <Button type="submit" variant="contained" color="primary" fullWidth disabled={validando} sx={{ mt: 2 }}>
           {validando ? 'Validando...' : 'Salvar Alterações'}
-        </button>
-
-        {mensagem && (
-          <Alert
-            severity={tipoMensagem}
-            sx={{
-              mt: 2,
-              mx: 'auto',
-              maxWidth: 400,
-              textAlign: 'center',
-            }}
-          >
-            <AlertTitle>{tipoMensagem === 'success' ? 'Sucesso' : tipoMensagem === 'warning' ? 'Aviso' : 'Erro'}</AlertTitle>
-            {mensagem}
-          </Alert>
-        )}
-
-        <button type="button" className="editarperfil-btn-voltar" onClick={onVoltar} disabled={validando}>
+        </Button>
+        <Button type="button" variant="outlined" color="inherit" fullWidth onClick={onVoltar} sx={{ mt: 2 }} disabled={validando}>
           Voltar ao Perfil
-        </button>
+        </Button>
       </form>
-    </>
+      <Snackbar
+        open={snackbar}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={tipoMensagem} sx={{ width: '100%' }}>
+          <AlertTitle>{tipoMensagem === 'success' ? 'Sucesso' : tipoMensagem === 'warning' ? 'Aviso' : 'Erro'}</AlertTitle>
+          {mensagem}
+        </Alert>
+      </Snackbar>
+    </Paper>
   );
 }

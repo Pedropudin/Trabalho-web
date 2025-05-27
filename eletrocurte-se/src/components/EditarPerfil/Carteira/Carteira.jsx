@@ -2,6 +2,10 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Button, Typography, Paper } from '@mui/material';
 import ModalCarteira from './ModalCarteira';
 import CartoesList from './CartoesList';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import '../../../styles/EditarPerfil.css';
 
 export default function Carteira({ onVoltar }) {
@@ -20,6 +24,8 @@ export default function Carteira({ onVoltar }) {
   });
 
   const [modalAberto, setModalAberto] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [cartaoParaExcluir, setCartaoParaExcluir] = useState(null);
 
   const cartoesValidados = useMemo(() => {
     return cartoes.map(c => ({
@@ -39,10 +45,19 @@ export default function Carteira({ onVoltar }) {
   }, [cartoes]);
 
   function handleExcluirCartao(final) {
-    const confirm = window.confirm('Tem certeza que deseja excluir este cartão?');
-    if (confirm) {
-      setCartoes(prev => prev.filter(c => c.final !== final));
-    }
+    setCartaoParaExcluir(final);
+    setDialogOpen(true);
+  }
+
+  function confirmarExclusao() {
+    setCartoes(prev => prev.filter(c => c.final !== cartaoParaExcluir));
+    setDialogOpen(false);
+    setCartaoParaExcluir(null);
+  }
+
+  function cancelarExclusao() {
+    setDialogOpen(false);
+    setCartaoParaExcluir(null);
   }
 
   return (
@@ -83,6 +98,17 @@ export default function Carteira({ onVoltar }) {
           onClose={() => setModalAberto(false)}
         />
       )}
+
+      <Dialog open={dialogOpen} onClose={cancelarExclusao}>
+        <DialogTitle>Confirmação</DialogTitle>
+        <DialogContent>
+          <Typography>Tem certeza que deseja excluir o cartão selecionado?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={cancelarExclusao} color="inherit">Cancelar</Button>
+          <Button onClick={confirmarExclusao} color="error" variant="contained">Excluir</Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 }

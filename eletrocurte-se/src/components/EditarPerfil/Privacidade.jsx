@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, FormControlLabel, Typography, Button } from '@mui/material';
+import { Switch, FormControlLabel, Typography, Button, Paper, Snackbar, Alert } from '@mui/material';
 
 export default function Privacidade({ onVoltar }) {
   // Estado inicial lendo do localStorage
@@ -13,6 +13,8 @@ export default function Privacidade({ onVoltar }) {
     return prefs?.compartilharDados ?? false;
   });
 
+  const [snackbar, setSnackbar] = useState(false);
+
   // Atualiza o localStorage sempre que os valores mudarem
   useEffect(() => {
     localStorage.setItem(
@@ -24,9 +26,13 @@ export default function Privacidade({ onVoltar }) {
     );
   }, [notificacoesEmail, compartilharDados]);
 
+  const handleSalvar = () => {
+    setSnackbar(true);
+  };
+
   return (
-    <div className="editarperfil-card-form">
-      <Typography variant="h5" gutterBottom>
+    <Paper elevation={4} sx={{ p: 4, maxWidth: 420, mx: 'auto', borderRadius: 3 }}>
+      <Typography variant="h5" gutterBottom align="center">
         Configurações de Privacidade
       </Typography>
 
@@ -50,11 +56,36 @@ export default function Privacidade({ onVoltar }) {
         label="Compartilhamento de dados com parceiros"
       />
 
-      <div style={{ marginTop: '1rem' }}>
-        <Button variant="contained" color="primary" onClick={onVoltar}>
-          Confirmar e voltar ao Perfil
-        </Button>
-      </div>
-    </div>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSalvar}
+        sx={{ mt: 2 }}
+        fullWidth
+      >
+        Salvar Preferências
+      </Button>
+
+      <Button
+        variant="outlined"
+        color="inherit"
+        onClick={onVoltar}
+        sx={{ mt: 2 }}
+        fullWidth
+      >
+        Confirmar e voltar ao Perfil
+      </Button>
+
+      <Snackbar
+        open={snackbar}
+        autoHideDuration={2500}
+        onClose={() => setSnackbar(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="success" sx={{ width: '100%' }}>
+          Preferências salvas com sucesso!
+        </Alert>
+      </Snackbar>
+    </Paper>
   );
 }
