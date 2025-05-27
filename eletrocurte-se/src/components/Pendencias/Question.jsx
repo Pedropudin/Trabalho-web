@@ -2,10 +2,10 @@ import React from "react";
 import Button from "../Button";
 import "../../styles/Question.css";
 
-const Question = ({ data }) => {
+const Question = ({ data, style }) => {
 
     return(
-        <div className="question-container">
+        <div className="question-container" style={style} >
             <img src={data.product_photo} style={{width: '10%'}} />
             <div className="question-product-info">
                 <span className="product-name">{data.product_name}</span>

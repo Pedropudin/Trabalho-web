@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 30%;
+    width: 25%;
 }
 
 .product-name {
@@ -25,6 +25,7 @@
 }
 
 .question-text {
+    background-color: white;
     border: 1px solid black;
     border-radius: 15px;
     padding: 5px;

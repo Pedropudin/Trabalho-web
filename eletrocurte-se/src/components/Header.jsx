@@ -119,6 +119,7 @@ function Header({
   onLogoClick,
   onSearchChange,
   categories = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'],
+  selectedCategoryIndex = 0,
   onCategoryClick,
   useElementsMenu = [true, true, true],
   onProfile,
@@ -127,7 +128,7 @@ function Header({
   cartCount = 3,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0] || '');
+  const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
