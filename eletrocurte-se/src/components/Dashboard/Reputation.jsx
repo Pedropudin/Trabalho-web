@@ -2,26 +2,31 @@ import React from "react";
 import Card from "../Card";
 import DataDescription from "./DataDescription";
 
-const NewCard = ({ data }) => {
+const NewCard = ({ 
+    percentage,
+    complainings,
+    late_send,
+    new_users
+ }) => {
     return(
-        <div className="content">
+        <div>
             <Card title={"Reputação"} type={"card-horizontal"}>
                 <DataDescription 
-                    value={data.sales_percentage}
+                    value={percentage}
                     valueColor="#5d7861"
                     description={"Vendas com relação aos últimos 30 dias"}
                     newStyle={{"width": "150px"}}
                 />
                 <DataDescription
-                    value={data.complainings}
+                    value={complainings}
                     description={"Reclamações nos últimos 30 dias"}
                 />
                 <DataDescription
-                    value={data.late_send}
+                    value={late_send}
                     description={"Despachos com atraso"}
                 />
                 <DataDescription
-                    value={data.new_users}
+                    value={new_users}
                     description={"Usuários novos nos últimos 30 dias"}
                 />
             </Card>
