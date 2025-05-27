@@ -14,9 +14,9 @@ export default function Perfil() {
   const navigate = useNavigate();
   const nomeUsuario = "João Silva"; // A ser substituído por dados reais do usuário
 
-  // Função para navegação dos cards (pode ser expandida)
+  // Função para navegação dos cards
   function handleCardClick(flag) {
-    navigate('/pages/EditarPerfil', { state: { flag } });
+    navigate(ROUTES.EDITAR_PERFIL, { state: { flag } });
   }
 
   return (
