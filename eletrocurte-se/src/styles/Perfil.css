@@ -29,38 +29,10 @@ nav {
   gap: 10px; /* Espaço entre os elementos filhos */
 }
 
-
-/* === LOGO (circular com animação) === */
-#logo {
-  width: 85px;
-  height: 85px;
-  border-radius: 50%; /* Deixa a imagem completamente circular */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
-  cursor: pointer; /* Indica que é clicável */
-}
-
-#logo:hover {
-  transform: rotate(10deg) scale(1.05); /* Animação ao passar o mouse: gira e aumenta */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Destaque com sombra suave */
-}
-
-
 /* === TÍTULO PRINCIPAL DA PÁGINA === */
 .body-content h2 {
   text-align: center; /* Centraliza o título */
 }
-
-
-/* === BOTÃO DE MENU RESPONSIVO (HAMBÚRGUER) === */
-.menu-toggle {
-  display: none; /* Oculto por padrão, visível só em telas pequenas */
-  background: none; /* Remove plano de fundo */
-  border: none;
-  color: white;
-  font-size: 1.5rem; /* Tamanho grande para ícone */
-  cursor: pointer;
-}
-
 
 /* === BARRA DE PESQUISA === */
 .search-bar {
@@ -78,55 +50,6 @@ nav {
   flex: 1; /* Ocupa o espaço restante */
   outline: none; /* Remove contorno azul ao focar */
 }
-
-
-/* === BOTÕES DE AÇÃO (Login, Perfil etc.) === */
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 6px; /* Espaço entre botões */
-}
-
-.buttons button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #007b99; /* Cor primária */
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease; /* Efeito suave ao passar mouse */
-}
-
-.buttons button:focus,
-.buttons button:active {
-  outline: 3px solid #005d73; /* Destaque visual ao usar teclado */
-}
-
-
-/* === MENU SECUNDÁRIO (links de navegação) === */
-.menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-color: #003d52; /* Azul escuro diferente do header */
-  padding: 8px;
-  gap: 10px;
-}
-
-.menu a {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.menu a:hover,
-.menu a:focus {
-  background-color: #007b99; /* Realce ao passar ou focar */
-}
-
 
 /* === GRID DE CARDS === */
 .cards-grid {
@@ -191,102 +114,8 @@ nav {
   }
 }
 
-
-/* === RODAPÉ === */
-footer {
-  background-color: #333; /* Fundo escuro */
-  color: white;
-  text-align: center;
-  padding: 30px 40px;
-  margin-top: 40px;
-}
-
-
-/* === CONTEÚDO DO RODAPÉ EM 3 COLUNAS === */
-.rodape-conteudo {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.rodape-conteudo a {
-  color: white;
-  text-decoration: none;
-}
-
-
-/* === ÍCONES DE REDES SOCIAIS === */
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: -2px;
-}
-
-.social-icons a {
-  color: #555;
-  font-size: 20px;
-  transition: color 0.3s;
-}
-
-.social-icons a:hover {
-  color: #0077ff; /* Realce ao passar o mouse */
-}
-
-
-/* === LINKS NO RODAPÉ === */
-footer a:hover {
-  color: #3399ff;
-}
-
-footer a:visited {
-  color: #99ccff;
-}
-
-footer .copyright {
-  font-size: 12px;
-  color: #ccc;
-}
-
-
 /* === RESPONSIVIDADE: AJUSTES PARA TELAS PEQUENAS (até 768px) === */
 @media (max-width: 768px) {
-  .menu {
-    flex-direction: column; /* Menu fica vertical */
-  }
-
-  .menu a {
-    display: block;
-    padding: 10px;
-    text-align: center;
-  }
-
-  .menu-toggle {
-    display: block; /* Botão de menu visível */
-  }
-
-  .buttons {
-    display: none; /* Botões escondidos inicialmente */
-  }
-
-  .buttons.show {
-    display: flex; /* Exibe botões ao clicar no menu-toggle */
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    background-color: #003d52;
-    padding: 10px 0;
-    gap: 10px;
-  }
-
-  .buttons.show button {
-    width: 90%;
-    max-width: 200px;
-    margin: 5px 0;
-  }
-
   nav {
     flex-direction: column; /* Logo, busca e botões empilhados */
   }

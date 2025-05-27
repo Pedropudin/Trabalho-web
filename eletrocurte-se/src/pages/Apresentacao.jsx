@@ -13,15 +13,6 @@ import Footer from '../components/Footer';
 */
 
 export default function Apresentacao() {
-  const navigate = useNavigate();
-  const [efeito, setEfeito] = useState(null);
-
-  // Função para rolar ao topo da página (navegação suave) e disparar o efeito elétrico
-  const handleRetornoClick = (e) => {
-    setEfeito({ x: e.clientX, y: e.clientY });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <>
       {/* Container principal alinhando itens ao centro */}
@@ -36,14 +27,14 @@ export default function Apresentacao() {
         {/* Seção de descrição com explicação técnica e direta sobre o trabalho */}
         <section className="descricao">
           <p>
-            <strong>Projeto Integrador:</strong>
+            <strong>Projeto Integrador: </strong>
             Este portal de e-commerce de dispositivos eletrônicos foi desenvolvido
             como um trabalho da disciplina <em>Introdução ao Desenvolvimento Web</em>.
           </p>
           <br />
 
           <p>
-            <strong>Estrutura Semântica:</strong>
+            <strong>Estrutura Semântica: </strong>
             Utilizamos HTML5 semântico, estruturando conteúdo em cabeçalhos
             (<code>&lt;h2&gt;, &lt;h3&gt;</code>) e seções, correspondendo o conteúdos ao contexto de interação
             do usuário com o site.
@@ -51,14 +42,14 @@ export default function Apresentacao() {
           <br />
 
           <p>
-            <strong>Layout Responsivo:</strong>
+            <strong>Layout Responsivo: </strong>
             Aplicamos CSS3 com Flexbox e Grid para garantir fluidez em diversas
             resoluções (desktop, tablet e mobile), com media queries para ajustes finos de tipografia e espaçamento.
           </p>
           <br />
 
           <p>
-            <strong>Interatividade:</strong>
+            <strong>Interatividade: </strong>
             A lógica de front-end foi implementada em JavaScript, manipulando o DOM
             para validação de formulários, navegação suave (smooth scroll) e animações via
             <code>@keyframes</code> e transições CSS. Além disso, foi feito o uso de framework
@@ -67,7 +58,7 @@ export default function Apresentacao() {
           <br />
 
           <p>
-            <strong>Fluxo de trabalho:</strong>
+            <strong>Fluxo de trabalho: </strong>
             Adotamos Git/GitHub para controle de versão e revisão de código.
           </p>
           <br />
@@ -78,16 +69,6 @@ export default function Apresentacao() {
           </p>
           <br />
         </section>
-
-        {/* Título e exibição de fornecedores associados ao portal (caráter figurativo, apenas) */}
-        <h3>Alguns fornecedores associados ao site:</h3>
-        <br />
-        <div className="fornecedores">
-          {/* Imagens dos fornecedores */}
-          <img src="/imagens/electrolux.png" alt="Electrolux" />
-          <img src="/imagens/polishop.jpeg" alt="Polishop" />
-          <img src="/imagens/brastemp.png" alt="Brastemp" />
-        </div>
       </main>
 
       <ScrollToTop />

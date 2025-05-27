@@ -8,7 +8,7 @@
 
 /* Cor de fundo geral do corpo da página */
 body {
-  background-color: #f4f4f4;
+  background-color: #f5fafd;
   text-align: center;
 }
 
@@ -132,104 +132,16 @@ header {
   background-color: #004f63;
 }
 
-/* Rodapé */
-footer {
-  width: 100%;
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 30px 40px;
-  margin-top: 40px;
-  bottom: 0px;
-}
-
-/* Bloco de informações do rodapé */
-.rodape-conteudo {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-/* Texto do rodapé */
-footer p {
-  margin: 0;
-}
-
-/* Texto de direitos autorais */
-footer .copyright {
-  font-size: 12px;
-  color: #ccc;
-}
-
-/* Links no rodapé */
-footer a,
-footer a:hover,
-footer a:visited {
-    color: inherit; /* Usa a cor herdada de 'footer', que é white */
-    text-decoration: none; /* Remove o sublinhado */
-}
-
-footer a {
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #99ccff;
-}
-
-.footer-top {
-  font-size: 14px;
-  margin-bottom: 15px;
-}
-
-.social-icons {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  margin-top: -2px;
-}
-
-.social-icons a {
-  color: #555;
-  font-size: 20px;
-  transition: color 0.3s;
-}
-
-.social-icons a:hover {
-  color: #0077ff;
-}
-
 /* Estilo para mensagens no topo */
 .mensagem {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 24px;
+  margin-top: 12px;
   border-radius: 8px;
   font-weight: bold;
-  z-index: 999;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-/* Visível */
-.mensagem.show {
   display: block;
   opacity: 1;
-  pointer-events: auto;
+  transition: opacity 0.5s ease;
 }
 
-/* Oculto */
-.mensagem.hidden {
-  display: none;
-}
-
-/* Tipos de mensagem */
 .mensagem.sucesso {
   background-color: #4CAF50;
   color: white;
@@ -245,6 +157,20 @@ footer a:hover {
   color: white;
 }
 
+/* Remove estilos antigos do formulário principal */
+.container, .login-box, .user-options, .btn-enviar {
+  all: unset;
+}
+
+@media (max-width: 600px) {
+  .MuiPaper-root {
+    padding: 12px !important;
+  }
+  .MuiTypography-h4 {
+    font-size: 1.5rem !important;
+  }
+}
+
 /* ----------- Responsividade ----------- */
 /* Ajustes para telas médias (tablets e celulares) - 768px */
 @media (max-width: 768px) {
@@ -258,21 +184,6 @@ footer a:hover {
   .container {
     width: 90%;
     padding: 10px;
-  }
-
-  .rodape-conteudo {
-    font-size: 12px;
-    gap: 15px;
-  }
-
-  footer {
-    padding: 20px;
-  }
-
-  .footer-top,
-  .rodape-conteudo p,
-  footer .copyright {
-    font-size: 12px;
   }
 }
 
@@ -295,22 +206,5 @@ footer a:hover {
   .container {
     width: 95%;
     padding: 8px;
-  }
-
-  .rodape-conteudo {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 10px;
-  }
-
-  footer {
-    padding: 15px;
-  }
-
-  .footer-top,
-  .rodape-conteudo p,
-  .rodape-conteudo a,
-  footer .copyright {
-    font-size: 11px;
   }
 }

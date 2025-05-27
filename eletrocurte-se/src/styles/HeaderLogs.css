@@ -1,5 +1,4 @@
 /* HeaderLogs: cabeçalho simples para Login e Logout */
-
 .headerLogs {
   background-color: #004d66;
   text-align: center;
@@ -9,7 +8,6 @@
 .headerLogsLogo {
   width: 350px;
   height: 100px;
-  transform: scale(1.1);
   transition: transform 0.3s ease-in-out;
 }
 

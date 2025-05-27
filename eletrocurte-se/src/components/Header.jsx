@@ -104,6 +104,7 @@ const CategoryLink = styled('a', {
   fontWeight: active ? 'bold' : 'normal',
   backgroundColor: 'transparent',
   boxShadow: 'none',
+  cursor: 'pointer',
   transition: 'background-color 0.3s, font-weight 0.3s, box-shadow 0.2s',
   '&:hover': {
     backgroundColor: '#007b99',

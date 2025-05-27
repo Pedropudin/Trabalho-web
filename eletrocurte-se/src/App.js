@@ -12,6 +12,7 @@ import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
 import Desempenho from './pages/Desempenho';
 import Pendencias from './pages/Pendencias';
+import PaginaInicial from './pages/PaginaInicial';
 
 // Rotas centralizadas
 import ROUTES from './routes';
@@ -31,6 +32,7 @@ function AppRoutes() {
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
         <Route path={ROUTES.DESEMPENHO} element={<Desempenho />} />
         <Route path={ROUTES.PENDENCIAS} element={<Pendencias />} />
+        <Route path={ROUTES.PAGINA_INICIAL} element={<PaginaInicial />} />
       </Routes>
     </>
   );
