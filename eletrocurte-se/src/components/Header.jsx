@@ -100,6 +100,7 @@ const CategoryLink = styled('a', {
   fontSize: 16,
   padding: '8px 16px',
   borderRadius: 5,
+  cursor: 'pointer',
   fontWeight: active ? 'bold' : 'normal',
   backgroundColor: 'transparent',
   boxShadow: 'none',
