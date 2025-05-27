@@ -83,7 +83,9 @@ export default function Mensagens({ onVoltar }) {
       setMensagemEmDestaque(nova.id);
 
       const audio = new Audio('/notification.ogg');
-      audio.play();
+      audio.play().catch((error) => {
+        console.error('Erro ao reproduzir o áudio:', error);
+      });
     }, 10000);
 
     return () => clearTimeout(timer);
