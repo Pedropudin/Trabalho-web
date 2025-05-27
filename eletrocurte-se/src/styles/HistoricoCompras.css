@@ -27,22 +27,6 @@ nav {
     gap: 10px;
 }
 
-/* LOGO PRINCIPAL */
-#logo {
-    width: 85px;
-    height: 85px;
-    border-radius: 50%; /* Formato circular */
-    margin-right: 5px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
-    cursor: pointer;
-}
-
-/* EFEITO HOVER DA LOGO */
-#logo:hover {
-    transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
-}
-
 /* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
 .compras {
     display: flex;
