@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Button from "../Button";
 import "../../styles/Question.css";
 
-const Answer = () => {
+const Answer = ({ value, change, submit }) => {
+
     return(
-        <div className="answer-container" >
+        <div className="answer-container">
             <span style={{fontWeight: 'bold'}} >Sua resposta:</span>
-            <textarea rows={5} cols={50} className="answer-box" />
+            <textarea rows={5} cols={50} className="answer-box" value={value} onChange={e => change(e.target.value)}/>
+            <Button text={"Enviar"} onClick={submit} type={1} style={{marginTop: '10px'}}/>
         </div>
     );
 };
 
 const Question = ({ data, style }) => {
     const [showAnswer, setShowAnswer] = useState(false);
+    const [answerText, setAnswerText] = useState("");
 
     const handleAnswer = () => {
         setShowAnswer(!showAnswer);
@@ -20,6 +23,11 @@ const Question = ({ data, style }) => {
 
     const handleRedirectProduct = () => {
         alert("Faz nada ainda");
+    };
+
+    const handleSubmit = () => {
+        setAnswerText("");
+        alert("Resposta enviada")
     };
 
     return(
@@ -42,7 +50,7 @@ const Question = ({ data, style }) => {
                     <img src={data.person_photo} style={{height: '80%'}} />
                 </div>
             </div>
-            {showAnswer && <Answer />}
+            {showAnswer && <Answer value={answerText} change={e => setAnswerText(e)} submit={handleSubmit} />}
         </div>
     );
 }
