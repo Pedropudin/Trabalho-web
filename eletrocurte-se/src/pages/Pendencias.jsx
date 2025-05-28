@@ -57,9 +57,9 @@ const Pendencias = () => {
         <div>
             <AdminHeader categoryIndex={2} />
             <div className="content">
-                <Card title={"Perguntas"} type={"card-vertical"} style={{width: '80%'}} >
+                <Card title={"Perguntas"} type={"card-vertical"} >
                     {questionsData && questionsData.map((q) => {
-                        return <Question data={q} />
+                        return <Question data={q} style={{width: '1000px'}}/>
                         //Unique key warning
                     })}
                 </Card>
@@ -67,10 +67,9 @@ const Pendencias = () => {
                     title={"Reclamações"}
                     type={"card-vertical"}
                     description="Avaliações com 3 estrelas ou menos" 
-                    style={{width: '80%'}} 
                 >
                     {complainingsData && complainingsData.map((c) => {
-                        return <Question data={c} style={{backgroundColor: '#FFEDED'}}/>
+                        return <Question data={c} style={{backgroundColor: '#FFEDED', width: '1000px'}}/>
                     })}
                 </Card>
                 <div style={{
