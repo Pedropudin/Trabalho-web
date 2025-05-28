@@ -86,7 +86,7 @@ const Pendencias = () => {
                     {currentQuestions.map((q, index) => {
                         let i = index+(questionsPerPage*currentPage);
                         console.log("Do index: ",i," tem ", answersData[i]);
-                        return <Question key={index} data={q} answer={answersData[index+(questionsPerPage*currentPage)]} answerGetter={handleAnswer} style={{width: '1000px'}} />
+                        return <Question key={index} data={q} style={{width: '1000px'}} />
                     })}
                     {/*questionsData && questionsData.map((q) => {
                         return <Question data={q} style={{width: '1000px'}}/>
