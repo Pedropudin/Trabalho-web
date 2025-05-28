@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, Button, CircularProgress, Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
+import { TextField, Button, Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
 
-const steps = ['CEP', 'Número/Complemento', 'Confirmação'];
+const steps = ['CEP', 'Endereço', 'Confirmar'];
 
 export default function ModalEndereco({ onSalvar }) {
   const [activeStep, setActiveStep] = useState(0);
@@ -68,8 +68,8 @@ export default function ModalEndereco({ onSalvar }) {
   };
 
   return (
-    <Box>
-      <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 3 }}>
+    <Box className="modal-endereco">
+      <Stepper activeStep={activeStep} sx={{ mb: 3 }}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
@@ -90,48 +90,16 @@ export default function ModalEndereco({ onSalvar }) {
         )}
         {activeStep === 1 && endereco && (
           <>
-            <TextField
-              label="Rua"
-              value={endereco.logradouro}
-              disabled
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              label="Número"
-              value={numero}
-              onChange={(e) => setNumero(e.target.value)}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              label="Complemento"
-              value={complemento}
-              onChange={(e) => setComplemento(e.target.value)}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              label="Bairro"
-              value={endereco.bairro}
-              disabled
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              label="Cidade/UF"
-              value={`${endereco.localidade}/${endereco.uf}`}
-              disabled
-              fullWidth
-              sx={{ mb: 1 }}
-            />
+            <TextField label="Rua" value={endereco.logradouro} disabled fullWidth sx={{ mb: 1 }} />
+            <TextField label="Número" value={numero} onChange={(e) => setNumero(e.target.value)} fullWidth sx={{ mb: 1 }} />
+            <TextField label="Complemento" value={complemento} onChange={(e) => setComplemento(e.target.value)} fullWidth sx={{ mb: 1 }} />
+            <TextField label="Bairro" value={endereco.bairro} disabled fullWidth sx={{ mb: 1 }} />
+            <TextField label="Cidade/UF" value={`${endereco.localidade}/${endereco.uf}`} disabled fullWidth sx={{ mb: 1 }} />
           </>
         )}
         {activeStep === 2 && endereco && (
           <Box>
-            <Typography variant="subtitle1" mb={2}>
-              Confirme os dados do endereço:
-            </Typography>
+            <Typography variant="subtitle1" mb={2}>Confirme os dados do endereço:</Typography>
             <Typography>Rua: <b>{endereco.logradouro}</b></Typography>
             <Typography>Número: <b>{numero}</b></Typography>
             <Typography>Complemento: <b>{complemento}</b></Typography>
@@ -141,17 +109,11 @@ export default function ModalEndereco({ onSalvar }) {
         )}
         {erro && <Typography color="error" sx={{ mt: 1 }}>{erro}</Typography>}
         <Box display="flex" justifyContent="space-between" mt={3}>
-          <Button onClick={handleBack} color="inherit" variant="outlined" disabled={activeStep === 0}>
-            Voltar
-          </Button>
+          <Button onClick={handleBack} color="inherit" variant="outlined" disabled={activeStep === 0}>Voltar</Button>
           {activeStep < steps.length - 1 ? (
-            <Button onClick={handleNext} color="primary" variant="contained" disabled={carregando}>
-              Avançar
-            </Button>
+            <Button onClick={handleNext} color="primary" variant="contained" disabled={carregando}>Avançar</Button>
           ) : (
-            <Button type="submit" color="primary" variant="contained">
-              Salvar Endereço
-            </Button>
+            <Button type="submit" color="primary" variant="contained">Salvar Endereço</Button>
           )}
         </Box>
       </form>

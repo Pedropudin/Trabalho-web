@@ -221,7 +221,70 @@ body.modal-carteira-open {
   background: #fff;
 }
 
-/* RESPONSIVO */
+/* MODAL ENDERECO (ajuste visual para seguir padrão do modal-carteira) */
+.modal-endereco-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 34, 60, 0.55);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInModal 0.2s;
+  pointer-events: all;
+}
+
+body.modal-endereco-open {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+.modal-endereco {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px #0003, 0 1.5px 4px #0002;
+  padding: 24px 16px 18px 16px;
+  min-width: 320px;
+  max-width: 540px;
+  width: 96vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  transition: max-width 0.2s, min-width 0.2s, padding 0.2s;
+  overflow: visible;
+}
+
+.modal-endereco .MuiStepper-root {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.modal-endereco .MuiStepLabel-label {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .modal-endereco {
+    padding: 12px 2vw;
+    max-width: 98vw;
+  }
+
+  .modal-endereco .MuiStepLabel-label {
+    font-size: 0.8rem;
+  }
+} 
+
+.modal-endereco .MuiStepper-root .MuiStepConnector-line {
+  min-height: 2px;
+  border-top-width: 2px;
+  border-radius: 1px;
+}
+
+
 @media (max-width: 600px) {
   .editarperfil-body-content {
     max-width: 100%;
@@ -240,4 +303,19 @@ body.modal-carteira-open {
   .modal-carteira h2 {
     font-size: 1.2rem;
   }
+  .modal-endereco {
+    padding: 12px 2vw 12px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  .modal-endereco h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Corrige linha do Stepper cortada */
+.modal-endereco .MuiStepper-root .MuiStepConnector-line {
+  min-height: 2px;
+  border-top-width: 2px;
+  border-radius: 1px;
 }

@@ -36,6 +36,7 @@ export default function Enderecos({ onVoltar }) {
   );
 
   const [modalAberto, setModalAberto] = useState(false);
+  const [dialogRemover, setDialogRemover] = useState({ open: false, id: null });
 
   useEffect(() => {
     localStorage.setItem('enderecos', JSON.stringify(enderecos));
@@ -46,7 +47,11 @@ export default function Enderecos({ onVoltar }) {
   }, [enderecoSelecionado]);
 
   const adicionarEndereco = (enderecoCompleto) => {
-    const novo = { id: `endereco${Date.now()}`, texto: enderecoCompleto };
+    // Se for objeto, transforma em string formatada, senão mantém como está
+    const texto = typeof enderecoCompleto === 'object' && enderecoCompleto !== null
+      ? `${enderecoCompleto.logradouro || ''}, ${enderecoCompleto.numero || ''} ${enderecoCompleto.complemento ? '- ' + enderecoCompleto.complemento : ''} - ${enderecoCompleto.bairro || ''}, ${enderecoCompleto.localidade || ''}/${enderecoCompleto.uf || ''}`.replace(/\s+/g, ' ').trim()
+      : enderecoCompleto;
+    const novo = { id: `endereco${Date.now()}`, texto };
     setEnderecos([...enderecos, novo]);
     setEnderecoSelecionado(novo.id);
   };
@@ -59,6 +64,19 @@ export default function Enderecos({ onVoltar }) {
     } else if (filtrados.length === 0) {
       setEnderecoSelecionado('');
     }
+  };
+
+  const handleRemoverClick = (id) => {
+    setDialogRemover({ open: true, id });
+  };
+
+  const confirmarRemover = () => {
+    removerEndereco(dialogRemover.id);
+    setDialogRemover({ open: false, id: null });
+  };
+
+  const cancelarRemover = () => {
+    setDialogRemover({ open: false, id: null });
   };
 
   return (
@@ -77,8 +95,8 @@ export default function Enderecos({ onVoltar }) {
                 control={<Radio />}
                 label={endereco.texto}
               />
-              <IconButton onClick={() => removerEndereco(endereco.id)}>
-                <DeleteIcon />
+              <IconButton onClick={() => handleRemoverClick(endereco.id)}>
+                <DeleteIcon color="error" />
               </IconButton>
             </div>
           ))}
@@ -99,6 +117,17 @@ export default function Enderecos({ onVoltar }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setModalAberto(false)}>Cancelar</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={dialogRemover.open} onClose={cancelarRemover}>
+        <DialogTitle>Confirmação</DialogTitle>
+        <DialogContent>
+          <Typography>Tem certeza que deseja remover o local cadastrado?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={cancelarRemover} color="inherit">Cancelar</Button>
+          <Button onClick={confirmarRemover} color="error" variant="contained">Remover</Button>
         </DialogActions>
       </Dialog>
 
