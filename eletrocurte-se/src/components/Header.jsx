@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ROUTES from '../routes';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -95,7 +97,7 @@ const CategoryBar = styled(Box)(({ theme }) => ({
 const CategoryLink = styled('a', {
   shouldForwardProp: (prop) => prop !== 'active',
 })(({ theme, active }) => ({
-  color: '#fff',
+  color: 'white',
   textDecoration: 'none',
   fontSize: 16,
   padding: '8px 16px',
@@ -251,7 +253,8 @@ function Header({
               active={selectedCategory === cat ? 1 : 0}
               onClick={() => handleCategoryClick(cat)}
             >
-              {cat}
+               <Link to={ROUTES.PAG_SETOR.replace(":name",cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())}
+               style={{color:'inherit'}}>{cat}</Link>
             </CategoryLink>
           ))}
         </CategoryBar>

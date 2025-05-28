@@ -1,5 +1,7 @@
 import React from "react";
 import '../styles/Sidebar.css'
+import { Link } from "react-router-dom";
+import ROUTES from "../routes";
 
 export default function Sidebar({
     items = [],
@@ -8,7 +10,7 @@ export default function Sidebar({
     minPrice,
     setMinPrice,
     maxPrice,
-    setMaxPrice
+    setMaxPrice,
 }) {
     const priceRange = () => {
         if (!items.length) return [0, 0];
@@ -39,12 +41,14 @@ export default function Sidebar({
     return (
         <div className="product-sidebar">
             <h4 className="product-category">Categorias Relacionadas</h4>
+               
             <ul>
-                <li><a href="../../Page-Products/pagina_de_setor/index.html">Hardware</a></li>
-                <li><a href="#">Periféricos</a></li>
-                <li><a href="#">Celulares</a></li>
-                <li><a href="#">Notebooks</a></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Perifericos")}>Perifericos</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Hardware")}>Hardware</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Celulares")}>Celulares</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Computadores")}>Computadores</Link></li>
             </ul>
+            
             <h4 className="filters">Filtros</h4>
             <div className="filter-titles-row">
                 <span className="filter-title">Preço</span>
@@ -60,6 +64,7 @@ export default function Sidebar({
                                 value={minPrice}
                                 min={minAvailable}
                                 max={maxAvailable}
+                                placeholder={minAvailable}
                                 onChange={e => setMinPrice(e.target.value)}
                             />
                         </label>
@@ -73,6 +78,7 @@ export default function Sidebar({
                                 value={maxPrice}
                                 min={minAvailable}
                                 max={maxAvailable}
+                                placeholder={maxAvailable}
                                 onChange={e => setMaxPrice(e.target.value)}
                             />
                         </label>

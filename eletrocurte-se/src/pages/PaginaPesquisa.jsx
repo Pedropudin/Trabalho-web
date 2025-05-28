@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
+import ProductCard from '../components/ProductCard'; // Importando o componente ProductCard
 
 
 function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
@@ -14,7 +15,6 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
-    let navigate = useNavigate();
 
     function handleOrderChange(e) {
         setOrder(e.target.value);
@@ -47,27 +47,6 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
         return matchesBrand && matchesMin && matchesMax;
     });
 
-    const displayProducts = filteredProducts.length > 0 ? (
-        filteredProducts.map((Products) => (
-            <div key={Products.id} className="items">
-                <img className="item-image"
-                    src={Products.img}
-                    alt={"Imagem do " + Products.name}
-                    style={!Products.inStock > 0 ? { filter: "grayscale(100%)" } : {}}
-                />
-                <p className="item-name">{Products.name}</p><br />
-                <p className="item-price">{Products.inStock > 0 ? "R$" + Products.price.toFixed(2) : ""}</p>
-                {Products.inStock > 0 ? (
-                    <button className="product-display-purchase-button" onClick={() => navigate(`/pages/PaginaProduto/${Products.id}`)}>Comprar</button>
-                ) : (
-                    <p className="product-unavailable"><strong>Produto Indisponível</strong></p>
-                )}
-            </div>
-        ))
-    ) : (
-        <p style={{ margin: "40px auto", fontWeight: "bold" }}>Nenhum produto encontrado.</p>
-    );
-
     return(
         <>
             <Header/>
@@ -97,7 +76,13 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
                         </select>
                     </div>
                     <nav className="product-display">
-                        {displayProducts}
+                        {filteredProducts.length === 0 ? (
+                            <p style={{ margin: "40px auto", fontWeight: "bold" }}>Nenhum produto encontrado.</p>
+                        ) : (
+                            filteredProducts.map(product => (
+                                <ProductCard key={product.id} product={product} />
+                            ))
+                        )}
                     </nav>
                 </div>
             </div>

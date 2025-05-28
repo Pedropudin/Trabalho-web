@@ -12,6 +12,7 @@ import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
 import PaginaPesquisa from './pages/PaginaPesquisa';
 import PaginaProduto from './pages/PaginaProduto';
+import PaginaSetor from './pages/PaginaSetor';
 import CompraFinalizada from './pages/CompraFinalizada';
 import ConfirmacaoCompra from './pages/ConfirmacaoCompra';
 import InsercaoDeDadosCompra from './pages/InsercaoDeDadosCompra';
@@ -31,6 +32,7 @@ function AppRoutes() {
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
         <Route path={ROUTES.PAG_PRODUTO} element={<PaginaProduto />} />
         <Route path={ROUTES.PAG_PESQUISA} element={<PaginaPesquisa />} />
+        <Route path={ROUTES.PAG_SETOR} element={<PaginaSetor />} />
         <Route path={ROUTES.HIST_COMPRAS} element={<HistoricoCompras />} />
         <Route path={ROUTES.FINAL_COMPRA} element={<CompraFinalizada />} />
         <Route path={ROUTES.CONFIRMA_COMPRA} element={<ConfirmacaoCompra />} />

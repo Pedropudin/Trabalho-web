@@ -10,6 +10,8 @@ const ROUTES = {
   HIST_COMPRAS: '/pages/HistoricoCompras',
   PAG_PESQUISA: '/pages/PaginaPesquisa',
   PAG_PRODUTO: '/pages/PaginaProduto/:id',
+  CHECKOUT: '/pages/Checkout',
+  PAG_SETOR: '/pages/PaginaSetor/:name',
   HIST_PRODUTOS: '/pages/HistoricoProdutos',
   TERMOS: '/pages/TermosCondicoes',
   LOGOUT: '/pages/Logout',
