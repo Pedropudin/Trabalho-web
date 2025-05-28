@@ -1,21 +1,33 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import Header from '../components/Header';
-import '../../styles/HistoricoProdutos.css';
+import '../styles/HistoricoProdutos.css';
 import Footer from '../components/Footer';
-import { getProdutosByRoute } from '../products';
 import ProductCard from '../components/ProductCard';
 import ProductDetailsModal from '../components/ProductDetailsModal';
+
+function getProdutosByRoute(route, data) {
+  switch (route) {
+    case '/historico-compras':
+      return data.produtosHistorico || [];
+    case '/historico-produtos':
+      return data.produtosVisualizados || [];
+    default:
+      return [];
+  }
+}
 
 export default function HistoricoProdutos() {
   // Estado para produtos (simulando fetch)
   const [produtos, setProdutos] = useState([]);
+  const [jsonData, setJsonData] = useState({});
 
   useEffect(() => {
-    // Simula um fetch (poderia ser fetch real de API)
-    // Aqui usamos a função utilitária para garantir modularização
-    setTimeout(() => {
-      setProdutos(getProdutosByRoute('/historico-produtos'));
-    }, 200); // delay para simular requisição
+    fetch(process.env.PUBLIC_URL + '/data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        setJsonData(data);
+        setProdutos(getProdutosByRoute('/historico-produtos', data));
+      });
   }, []);
 
   // Data dinâmica e agrupamento por ano/mês

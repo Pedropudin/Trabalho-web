@@ -1,18 +1,36 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import ROUTES from '../routes';
-import '../../styles/HistoricoCompras.css';
+import '../styles/HistoricoCompras.css';
 import Footer from '../components/Footer';
 import UserRating from '../components/UserRating';
-import '../../styles/UserRating.css';
-import { getProdutosByRoute } from '../products';
-import ProductCard from '../components/ProductCard';
-import ProductDetailsModal from '../components/ProductDetailsModal';
+import '../styles/UserRating.css';
+
+function getProdutosByRoute(route, data) {
+  switch (route) {
+    case '/historico-compras':
+      return data.produtosHistorico || [];
+    case '/historico-produtos':
+      return data.produtosVisualizados || [];
+    default:
+      return [];
+  }
+}
 
 export default function HistoricoCompras() {
   // Obtém produtos do histórico via products.js
-  const produtos = getProdutosByRoute('/historico-compras');
+  const [produtos, setProdutos] = useState([]);
+  const [jsonData, setJsonData] = useState({});
+
+  useEffect(() => {
+    fetch(process.env.PUBLIC_URL + '/data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        setJsonData(data);
+        setProdutos(getProdutosByRoute('/historico-compras', data));
+      });
+  }, []);
 
   // Flags de avaliação para cada produto (simulação)
   const [avaliados, setAvaliados] = useState(produtos.map(() => false));

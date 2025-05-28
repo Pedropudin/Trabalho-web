@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { produtosHistorico } from '../products';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -19,12 +18,19 @@ const PaginaInicial = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [mensagem, setMensagem] = useState('');
+    const [produtosHistorico, setProdutosHistorico] = useState([]);
     // Estado para modal de detalhes do produto
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    }, []);
+
+    useEffect(() => {
+        fetch(process.env.PUBLIC_URL + '/data/products.json')
+            .then(res => res.json())
+            .then(data => setProdutosHistorico(data.produtosHistorico || []));
     }, []);
 
     // Handler para funcionalidades restritas
