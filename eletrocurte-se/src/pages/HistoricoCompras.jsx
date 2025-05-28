@@ -6,6 +6,8 @@ import '../styles/HistoricoCompras.css';
 import Footer from '../components/Footer';
 import UserRating from '../components/UserRating';
 import '../styles/UserRating.css';
+import ProductCard from '../components/ProductCard';
+import ProductDetailsModal from '../components/ProductDetailsModal';
 
 function getProdutosByRoute(route, data) {
   switch (route) {
