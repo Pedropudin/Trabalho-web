@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import '../styles/PaginaInicial.css';
 import ROUTES from '../routes';
+import ProductCard from '../components/ProductCard';
+import ProductDetailsModal from '../components/ProductDetailsModal';
 
 const categorias = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'];
 
@@ -17,6 +19,9 @@ const PaginaInicial = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [mensagem, setMensagem] = useState('');
+    // Estado para modal de detalhes do produto
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
@@ -87,6 +92,15 @@ const PaginaInicial = () => {
         // Aqui você pode implementar a lógica de filtro real
     }
 
+    const handleProductClick = (product) => {
+        setSelectedProduct(product);
+        setModalOpen(true);
+    };
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setSelectedProduct(null);
+    };
+
     return (
         <>
             <Header
@@ -129,11 +143,7 @@ const PaginaInicial = () => {
                         spacing={3} 
                         justifyContent="center" 
                         alignItems="stretch"
-                        sx={{
-                            margin: 0,
-                            width: '100%',
-                            flexWrap: 'wrap',
-                        }}
+                        sx={{ margin: 0, width: '100%', flexWrap: 'wrap' }}
                     >
                         {produtosHistorico.slice(0, 6).length === 0 ? (
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -145,20 +155,8 @@ const PaginaInicial = () => {
                             </Grid>
                         ) : (
                             produtosHistorico.slice(0, 6).map((produto, idx) => (
-                                <Grid 
-                                    item 
-                                    xs={12} sm={6} md={4} 
-                                    key={produto.nome + idx}
-                                    sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                    <Paper elevation={2} className="produto-card" sx={{ p: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', transition: '0.2s', '&:hover': { boxShadow: 8, transform: 'scale(1.03)' }, width: '100%', maxWidth: 320 }}>
-                                        <Box component="img" src={produto.img} alt={produto.nome} sx={{ width: 100, height: 100, objectFit: 'contain', mb: 2, borderRadius: 1, background: '#f5f5f5' }} />
-                                        <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1, textAlign: 'center' }}>{produto.nome}</Typography>
-                                        <Typography className="preco" sx={{ color: '#007b99', fontWeight: 700, mb: 2 }}>{produto.preco}</Typography>
-                                        <Button variant="contained" sx={{ background: '#007b99', color: '#fff', borderRadius: 1, px: 3, py: 1, fontWeight: 500, '&:hover': { background: '#004d66' } }} onClick={handleRestrito}>
-                                            Comprar
-                                        </Button>
-                                    </Paper>
+                                <Grid item xs={12} sm={6} md={4} key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <ProductCard product={produto} onClick={handleProductClick} />
                                 </Grid>
                             ))
                         )}
@@ -178,6 +176,7 @@ const PaginaInicial = () => {
                     </Box>
                 )}
             </Box>
+            <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
             <Footer />
         </>
     );

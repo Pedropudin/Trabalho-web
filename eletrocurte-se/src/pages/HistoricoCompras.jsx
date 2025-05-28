@@ -7,6 +7,8 @@ import Footer from '../components/Footer';
 import UserRating from '../components/UserRating';
 import '../styles/UserRating.css';
 import { getProdutosByRoute } from '../products';
+import ProductCard from '../components/ProductCard';
+import ProductDetailsModal from '../components/ProductDetailsModal';
 
 export default function HistoricoCompras() {
   // Obtém produtos do histórico via products.js
@@ -16,6 +18,10 @@ export default function HistoricoCompras() {
   const [avaliados, setAvaliados] = useState(produtos.map(() => false));
   // Adiciona um estado para armazenar avaliações detalhadas
   const [avaliacoes, setAvaliacoes] = useState([]); // [{produtoIdx, nota, comentario, data}]
+
+  // Estado para modal de detalhes do produto
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Função chamada ao avaliar um produto
   const handleAvaliar = (nota, comentario, idx) => {
@@ -96,13 +102,41 @@ export default function HistoricoCompras() {
   }
 
   // Função para abrir detalhes do produto avaliado
-  const [produtoDetalhe, setProdutoDetalhe] = useState(null); // idx do produto
-  const handleAbrirDetalhe = idx => setProdutoDetalhe(idx);
-  const handleFecharDetalhe = () => setProdutoDetalhe(null);
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedProduct(null);
+  };
 
   return (
     <>
       <Header />
+      {/* Seção de avaliação destacada no topo, como no HTML antigo */}
+      <section className="avaliacao">
+        <img
+          src={produtosAguardando[0]?.img || "/imagens/raquete_elétrica2.jpeg"}
+          alt="Produto aguardando avaliação"
+          className="img-miniatura"
+        />
+        <p>
+          {produtosAguardando.length > 0
+            ? `${produtosAguardando.length} produto${produtosAguardando.length > 1 ? 's' : ''} esperam sua opinião/avaliação`
+            : 'Todos os produtos já foram avaliados!'}
+        </p>
+        <UserRating
+          produtosAguardando={produtosAguardando.length}
+          imagem={produtosAguardando[0]?.img || "/imagens/raquete_elétrica2.jpeg"}
+          produtosParaAvaliar={produtosAguardando}
+          onAvaliar={(nota, comentario, idx) => {
+            // O idx recebido é o índice dentro de produtosAguardando, precisamos mapear para o índice real em produtos
+            const idxReal = produtos.findIndex(p => p === produtosAguardando[idx]);
+            handleAvaliar(nota, comentario, idxReal);
+          }}
+        />
+      </section>
       <section className="produtos">
         {Object.entries(produtosPorAnoMes)
           .sort((a, b) => {
@@ -118,54 +152,14 @@ export default function HistoricoCompras() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center' }}>
                 {produtos.map((produto, idx) => (
                   <div className="produto" key={produto.nome + idx}>
-                    <img src={produto.img} alt={produto.nome} />
-                    <p>{produto.nome}</p>
-                    <p className="preco">
-                      {produto.preco}
-                      <br />
-                      <small>ou 12x {valorParcela(produto.preco)}</small>
-                      <br />
-                      <small>{produto.data}</small>
-                    </p>
-                    {/* ...UserRating e outros elementos se necessário... */}
+                    <ProductCard product={produto} onClick={handleProductClick} />
                   </div>
                 ))}
               </div>
             </div>
           ))}
       </section>
-
-      {/* Modal de detalhes do produto avaliado */}
-      {produtoDetalhe !== null && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          background: 'rgba(0,0,0,0.35)', zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center'
-        }} onClick={handleFecharDetalhe}>
-          <div style={{ background: '#fff', borderRadius: 12, padding: 32, minWidth: 320, maxWidth: 420, boxShadow: '0 8px 32px #0003', position: 'relative' }} onClick={e => e.stopPropagation()}>
-            <button onClick={handleFecharDetalhe} style={{ position: 'absolute', top: 12, right: 12, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: '#888' }}>&times;</button>
-            <img src={produtos[produtoDetalhe].img} alt={produtos[produtoDetalhe].nome} style={{ width: 120, borderRadius: 8, marginBottom: 16 }} />
-            <h2 style={{ margin: 0 }}>{produtos[produtoDetalhe].nome}</h2>
-            <p style={{ margin: '8px 0', fontWeight: 500 }}>{produtos[produtoDetalhe].preco}</p>
-            <p style={{ margin: '8px 0', color: '#555' }}>Data da compra: {produtos[produtoDetalhe].data}</p>
-            {/* Mostra avaliação se houver */}
-            {(() => {
-              const avaliacao = avaliacoes.find(a => a.produtoIdx === produtoDetalhe);
-              if (!avaliacao) return <p style={{color:'#888'}}>Nenhuma avaliação encontrada.</p>;
-              return (
-                <div style={{ marginTop: 16 }}>
-                  <div style={{ color: '#ffc107', fontSize: 22 }}>
-                    {'★'.repeat(avaliacao.nota)}
-                    {'☆'.repeat(5 - avaliacao.nota)}
-                  </div>
-                  <p style={{ margin: '8px 0', color: '#333' }}><b>Comentário:</b> {avaliacao.comentario}</p>
-                  <p style={{ margin: '8px 0', color: '#888', fontSize: 13 }}>Avaliado em: {avaliacao.data}</p>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-      )}
-
+      <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <Footer />
     </>
   );

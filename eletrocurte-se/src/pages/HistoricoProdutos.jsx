@@ -1,10 +1,10 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import ROUTES from '../routes';
 import '../styles/HistoricoCompras.css';
 import Footer from '../components/Footer';
 import { getProdutosByRoute } from '../products';
+import ProductCard from '../components/ProductCard';
+import ProductDetailsModal from '../components/ProductDetailsModal';
 
 export default function HistoricoProdutos() {
   // Estado para produtos (simulando fetch)
@@ -75,6 +75,19 @@ export default function HistoricoProdutos() {
     );
   }
 
+  // Estado para modal de detalhes
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleCardClick = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <>
       <Header />
@@ -93,21 +106,14 @@ export default function HistoricoProdutos() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center' }}>
                 {produtos.map((produto, idx) => (
                   <div className="produto" key={(produto.id || produto.nome) + '-' + idx}>
-                    <img src={produto.img} alt={produto.nome} />
-                    <p>{produto.nome}</p>
-                    <p className="preco">
-                      {produto.preco}
-                      <br />
-                      <small>ou 12x {valorParcela(produto.preco)}</small>
-                      <br />
-                      <small>{produto.data}</small>
-                    </p>
+                    <ProductCard product={produto} onClick={handleCardClick} />
                   </div>
                 ))}
               </div>
             </div>
           ))}
       </section>
+      <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <Footer />
     </>
   );
