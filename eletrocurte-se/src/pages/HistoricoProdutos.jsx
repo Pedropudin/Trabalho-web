@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import Header from '../components/Header';
-import '../styles/HistoricoCompras.css';
+import '../../styles/HistoricoProdutos.css';
 import Footer from '../components/Footer';
 import { getProdutosByRoute } from '../products';
 import ProductCard from '../components/ProductCard';

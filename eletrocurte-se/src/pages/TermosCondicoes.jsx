@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/TermosCondicoes.css';
+import '../../styles/TermosCondicoes.css';
 import ROUTES from '../routes';
 import ScrollToTop from '../components/ScrollToTop';
 

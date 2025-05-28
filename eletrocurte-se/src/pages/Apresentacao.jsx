@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes';
-import '../styles/Apresentacao.css';
 import ScrollToTop from '../components/ScrollToTop';
 import Footer from '../components/Footer';
+import '../styles/Apresentacao.css';
 
 /*
   Esta é a página documental "sobre nós" do site, que apresenta uma visão geral do portal de e-commerce,

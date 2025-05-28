@@ -4,6 +4,7 @@ import { Box, Paper, Typography, Button, TextField, Tabs, Tab } from '@mui/mater
 import HeaderLogs from '../components/HeaderLogs';
 import ROUTES from '../routes';
 import Footer from '../components/Footer';
+import '../styles/Login.css';
 
 /*
   Página de Login adaptada do HTML antigo.
