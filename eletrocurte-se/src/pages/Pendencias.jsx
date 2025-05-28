@@ -6,12 +6,19 @@ import AdminHeader from "../components/admin/AdminHeader";
 import Card from "../components/Card";
 import Question from "../components/Pendencias/Question";
 import GenericInfoRedirect from "../components/Pendencias/GenericInfoRedirect";
+import ReactPaginate from 'react-paginate';
+
+import "../styles/Pendencias.css";
 
 const Pendencias = () => {
     const [questionsData, setQuestionsData] = useState(null);
     const [complainingsData, setComplainingsData] = useState(null);
     const [soldData, setSoldData] = useState(null);
     const [serviceData, setServiceData] = useState(null);
+
+    const [usePagination,setUsePagination] = useState(false);
+    const [currentPage, setCurrentPage] = useState(0);
+    const questionsPerPage = 5;
 
     useEffect(() => {
         fetch("/data/questions.json")
@@ -20,6 +27,9 @@ const Pendencias = () => {
         })
         .then(respData => {
             setQuestionsData(respData.questions);
+            if(respData.questions.length > questionsPerPage) {
+                setUsePagination(true);
+            }
         })
     }, []);
 
@@ -53,16 +63,36 @@ const Pendencias = () => {
         })
     }, []);
 
+    // Calculate the questions to display for the current page
+    const offset = currentPage * questionsPerPage;
+    const currentQuestions = questionsData ? questionsData.slice(offset, offset + questionsPerPage) : [];
+
+    // Handle page change
+    const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
     return(
         <div>
             <AdminHeader categoryIndex={2} />
             <div className="content">
                 <Card title={"Perguntas"} type={"card-vertical"} >
-                    {questionsData && questionsData.map((q) => {
+                    {currentQuestions.map((q, index) => {
+                        return <Question key={index} data={q} style={{width: '1000px'}} />
+                    })}
+                    {/*questionsData && questionsData.map((q) => {
                         return <Question data={q} style={{width: '1000px'}}/>
                         //Unique key warning
-                    })}
+                    })*/}
                 </Card>
+                {questionsData && usePagination && <ReactPaginate
+                    pageCount={Math.ceil(questionsData.length / questionsPerPage)}
+                    onPageChange={handlePageChange}
+                    previousLabel="Anterior"
+                    nextLabel="Próxima"
+                    containerClassName="questions-pagination"
+                    activeClassName="active"
+                /> }
                 <Card 
                     title={"Reclamações"}
                     type={"card-vertical"}
