@@ -9,9 +9,6 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import '../styles/PaginaInicial.css';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ScrollToTop from '../components/ScrollToTop';
 import ROUTES from '../routes';
 
 const categorias = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'];
