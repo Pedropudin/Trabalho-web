@@ -1,0 +1,45 @@
+.question-container {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    gap: 1%;
+    padding: 10px;
+    height: 150px;
+}
+
+.question-product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25%;
+}
+
+.product-name {
+    font-size: 22px;
+}
+
+.question-date {
+    font-size: 14px;
+    color: #5B5B5B;
+}
+
+.question-text {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 5px;
+    width: 50%;
+}
+
+.question-person-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 10%;
+}
+
+.question-buttons-container {
+    display: flex;
+    gap: 5px;
+}
