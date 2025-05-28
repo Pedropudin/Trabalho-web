@@ -1,5 +1,7 @@
 import React, { use, useState } from "react";
 import Button from "../Button";
+import MessageAlert from "../MessageAlert";
+
 import "../../styles/Question.css";
 
 const Answer = ({ value, change, submit }) => {
@@ -16,6 +18,7 @@ const Answer = ({ value, change, submit }) => {
 const Question = ({ data, style }) => {
     const [showAnswer, setShowAnswer] = useState(false);
     const [answerText, setAnswerText] = useState("");
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const handleAnswer = () => {
         setShowAnswer(!showAnswer);
@@ -27,11 +30,14 @@ const Question = ({ data, style }) => {
 
     const handleSubmit = () => {
         setAnswerText("");
-        alert("Resposta enviada")
+        setShowConfirmation(true);
+        setShowAnswer(false);
+        setTimeout(() => {setShowConfirmation(false)}, 2000);
     };
 
     return(
         <div>
+            {showConfirmation && <MessageAlert message={"Resposta enviada"} />}
             <div className="question-container" style={style} >
                 <img src={data.product_photo} style={{width: '10%'}} />
                 <div className="question-product-info">

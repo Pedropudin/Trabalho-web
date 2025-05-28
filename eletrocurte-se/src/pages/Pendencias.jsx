@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTES from '../routes';
 import Footer from "../components/Footer";
@@ -12,6 +12,7 @@ import "../styles/Pendencias.css";
 
 const Pendencias = () => {
     const [questionsData, setQuestionsData] = useState(null);
+    const [answersData, setAnswersData] = useState({});
     const [complainingsData, setComplainingsData] = useState(null);
     const [soldData, setSoldData] = useState(null);
     const [serviceData, setServiceData] = useState(null);
@@ -27,6 +28,7 @@ const Pendencias = () => {
         })
         .then(respData => {
             setQuestionsData(respData.questions);
+            setAnswersData(Array(respData.questions.length))
             if(respData.questions.length > questionsPerPage) {
                 setUsePagination(true);
             }
@@ -72,13 +74,19 @@ const Pendencias = () => {
         setCurrentPage(selected);
     };
 
+    const handleAnswer = (e) => {
+        console.log(e);
+    };
+
     return(
         <div>
             <AdminHeader categoryIndex={2} />
             <div className="content">
                 <Card title={"Perguntas"} type={"card-vertical"} >
                     {currentQuestions.map((q, index) => {
-                        return <Question key={index} data={q} style={{width: '1000px'}} />
+                        let i = index+(questionsPerPage*currentPage);
+                        console.log("Do index: ",i," tem ", answersData[i]);
+                        return <Question key={index} data={q} answer={answersData[index+(questionsPerPage*currentPage)]} answerGetter={handleAnswer} style={{width: '1000px'}} />
                     })}
                     {/*questionsData && questionsData.map((q) => {
                         return <Question data={q} style={{width: '1000px'}}/>
