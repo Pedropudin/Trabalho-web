@@ -128,6 +128,8 @@ function Header({
   onCart,
   onLogout,
   cartCount = 3,
+  searchDisabled = false,
+  onSearchDenied,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
@@ -169,11 +171,20 @@ function Header({
               <InputBase
                 placeholder="Pesquisar…"
                 inputProps={{ 'aria-label': 'search' }}
-                onChange={onSearchChange}
+                onChange={searchDisabled ? (e) => {
+                  if (onSearchDenied) onSearchDenied();
+                  e.target.value = '';
+                } : onSearchChange}
+                onKeyDown={searchDisabled ? (e) => {
+                  if (onSearchDenied) onSearchDenied();
+                  e.preventDefault();
+                } : undefined}
                 sx={{
                   width: '100%',
                   fontSize: { xs: 16, sm: 18 },
                   color: '#222',
+                  backgroundColor: '#fff',
+                  cursor: 'text',
                 }}
               />
             </Search>

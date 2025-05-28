@@ -18,8 +18,9 @@ export default function Logout() {
   const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
-    // Ao fazer logout, remove o flag de login
+    // Ao fazer logout, remove o flag de login e o tipo de usuário
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userType');
 
     setCountdown(10);
     if (timerRef.current) timerRef.current.textContent = 10;
@@ -34,7 +35,9 @@ export default function Logout() {
         return prev - 1;
       });
     }, 1000);
-    return () => clearInterval(intervalRef.current);
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, [navigate]);
 
   function handleHomeClick() {

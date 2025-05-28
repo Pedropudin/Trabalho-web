@@ -62,6 +62,7 @@ const PaginaInicial = () => {
     function handleLogout() {
         if (!isLoggedIn) return; // Não faz nada se não estiver logado
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userType');
         setIsLoggedIn(false);
         setMensagem('Logout realizado com sucesso!');
         setTimeout(() => setMensagem(''), 3500);
@@ -94,6 +95,11 @@ const PaginaInicial = () => {
                 onLogout={handleLogout}
                 onSearchChange={handleSearchChange}
                 onCategoryClick={handleCategoryClick}
+                searchDisabled={!isLoggedIn}
+                onSearchDenied={() => {
+                    setMensagem('Faça login para pesquisar produtos!');
+                    setTimeout(() => setMensagem(''), 3500);
+                }}
             />
             {/* Mensagem amigável para funcionalidades restritas */}
             {mensagem && (
