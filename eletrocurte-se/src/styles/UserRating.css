@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #007b99;
+    background: #007b99; /* Fundo azul institucional */
     color: white;
     padding: 15px;
     margin: 20px;
@@ -50,8 +50,7 @@
     font-size: 1.2rem; /* Tamanho do ícone */
 }
 
-/* UserRating.css */
-
+/* Botão de avaliação destacado (UserRating) */
 .avaliacao-btn {
   background: #fff;
   color: #856404;
@@ -86,32 +85,30 @@
   color: #a67c00;
 }
 
+/* Responsividade para tablets */
 @media (max-width: 768px) {
     .avaliacao {
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
-
     .avaliacao p {
         margin: 10px 0;
     }
-
     .avaliacao img {
         margin-bottom: 10px;
     }
-
     .avaliacao button {
         width: 90%; /* Aumenta a largura do botão */
         max-width: 250px; /* Limita o tamanho máximo */
     }
 }
 
+/* Responsividade para celulares */
 @media (max-width: 480px) {
     .avaliacao {
         padding: 15px;
     }
-
     .avaliacao button {
         width: 80%; /* Ajusta o tamanho do botão */
         max-width: 200px;

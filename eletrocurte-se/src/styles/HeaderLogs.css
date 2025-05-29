@@ -1,3 +1,10 @@
+/*
+  HeaderLogs.css
+  - CSS para o cabeçalho simplificado usado em Login e Logout.
+  - Centraliza logo e aplica cor institucional.
+  - Efeito de hover na logo para feedback visual.
+*/
+
 /* HeaderLogs: cabeçalho simples para Login e Logout */
 .headerLogs {
   background-color: #004d66;

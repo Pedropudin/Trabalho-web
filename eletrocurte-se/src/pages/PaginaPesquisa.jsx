@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
-import ProductCard from '../components/ProductCard'; 
+import ProductCard from '../components/ProductDisplay'; 
 
 
 function PaginaPesquisa({searchName = "HyperX Cloud II"}) {

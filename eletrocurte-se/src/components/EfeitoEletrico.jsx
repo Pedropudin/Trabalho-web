@@ -1,8 +1,16 @@
+// -----------------------------------------------------------------------------
+// EfeitoEletrico.jsx
+// Componente visual para efeito elétrico animado na tela.
+// Gera partículas animadas e toca som ao ser disparado por um trigger externo.
+// Usado para feedback visual em ações como ScrollToTop.
+// -----------------------------------------------------------------------------
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/EfeitoEletrico.css';
 
 export default function EfeitoEletrico({ trigger }) {
+  // Lista de partículas animadas na tela
   const [particulas, setParticulas] = useState([]);
+  // Guarda o último trigger para evitar repetição
   const lastTrigger = useRef(null);
 
   useEffect(() => {
@@ -15,12 +23,12 @@ export default function EfeitoEletrico({ trigger }) {
     ) {
       lastTrigger.current = trigger;
 
-      // Toca o som
+      // Toca o som do efeito elétrico
       const som = new Audio('/electric_zap_001-6374.mp3');
       som.volume = 0.3;
       som.play().catch(() => {});
 
-      // Cria partículas
+      // Cria partículas animadas em posições aleatórias próximas ao trigger
       const novas = [];
       for (let i = 0; i < 6; i++) {
         const formatos = ['circulo', 'quadrado', 'faisca'];
@@ -44,6 +52,7 @@ export default function EfeitoEletrico({ trigger }) {
 
   return (
     <>
+      {/* Renderiza partículas animadas na tela */}
       {particulas.map(p => (
         <div
           key={p.id}

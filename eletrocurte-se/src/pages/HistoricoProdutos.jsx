@@ -1,21 +1,39 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import ROUTES from '../routes';
-import '../styles/HistoricoCompras.css';
+import '../styles/HistoricoProdutos.css';
 import Footer from '../components/Footer';
-import { getProdutosByRoute } from '../products';
+import ProductCard from '../components/Produtos/ProductCard';
+import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+
+/*
+  Página de histórico de produtos visualizados pelo usuário.
+  - Exibe produtos agrupados por mês/ano de visualização.
+  - Modal de detalhes sempre com botão de compra.
+*/
+
+function getProdutosByRoute(route, data) {
+  switch (route) {
+    case '/historico-compras':
+      return data.produtosHistorico || [];
+    case '/historico-produtos':
+      return data.produtosVisualizados || [];
+    default:
+      return [];
+  }
+}
 
 export default function HistoricoProdutos() {
   // Estado para produtos (simulando fetch)
   const [produtos, setProdutos] = useState([]);
+  const [jsonData, setJsonData] = useState({});
 
   useEffect(() => {
-    // Simula um fetch (poderia ser fetch real de API)
-    // Aqui usamos a função utilitária para garantir modularização
-    setTimeout(() => {
-      setProdutos(getProdutosByRoute('/historico-produtos'));
-    }, 200); // delay para simular requisição
+    fetch(process.env.PUBLIC_URL + '/data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        setJsonData(data);
+        setProdutos(getProdutosByRoute('/historico-produtos', data));
+      });
   }, []);
 
   // Data dinâmica e agrupamento por ano/mês
@@ -67,17 +85,32 @@ export default function HistoricoProdutos() {
   function renderCabecalhoMesAno(mes, ano) {
     const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
     return (
-      <section className="compras" style={{ width: '100%', flexBasis: '100%' }}>
-        <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0, width: '100%', textAlign: 'center' }}>
+      <section className="compras">
+        <p>
           Produtos visualizados em {meses[parseInt(mes, 10) - 1]} de {ano}
         </p>
       </section>
     );
   }
 
+  // Estado para modal de detalhes
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // Handlers para abrir/fechar modal de detalhes
+  const handleCardClick = (product) => {
+    setSelectedProduct({ ...product, showBuyButton: true });
+    setModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <>
       <Header />
+      {/* Produtos agrupados por mês/ano de visualização */}
       <section className="produtos">
         {Object.entries(produtosPorAnoMes)
           .sort((a, b) => {
@@ -88,26 +121,18 @@ export default function HistoricoProdutos() {
             return mesB - mesA;
           })
           .map(([chave, { ano, mes, produtos }], idx) => (
-            <div key={chave} style={{ marginBottom: 32 }}>
+            <div key={chave}>
               {renderCabecalhoMesAno(mes, ano)}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center' }}>
+              <div className="produtos">
                 {produtos.map((produto, idx) => (
-                  <div className="produto" key={(produto.id || produto.nome) + '-' + idx}>
-                    <img src={produto.img} alt={produto.nome} />
-                    <p>{produto.nome}</p>
-                    <p className="preco">
-                      {produto.preco}
-                      <br />
-                      <small>ou 12x {valorParcela(produto.preco)}</small>
-                      <br />
-                      <small>{produto.data}</small>
-                    </p>
-                  </div>
+                  <ProductCard product={produto} onClick={handleCardClick} key={(produto.id || produto.nome) + '-' + idx} showBuyButton={true} />
                 ))}
               </div>
             </div>
           ))}
       </section>
+      {/* Modal de detalhes do produto */}
+      <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <Footer />
     </>
   );

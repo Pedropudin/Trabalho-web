@@ -1,0 +1,50 @@
+/* Botão flutuante de retorno ao topo */
+.btn-retorno {
+  position: fixed; /* Fixa o botão na tela, independente do scroll */
+  bottom: 30px; /* Distância da base da tela */
+  right: 30px; /* Distância da lateral direita */
+  z-index: 1000; /* Garante que fique acima de outros elementos */
+  background-color: #003b5c; /* Azul escuro institucional */
+  color: #fff; /* Ícone/texto branco */
+  border: none;
+  border-radius: 50%; /* Botão circular */
+  padding: 15px 25px; /* Tamanho do botão */
+  font-size: 1.5rem; /* Tamanho do ícone/texto */
+  cursor: pointer;
+  opacity: 0.9; /* Leve transparência para suavidade */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Sombra para destaque */
+  transition: background 0.3s, transform 0.2s, opacity 0.3s; /* Suaviza efeitos visuais */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-retorno:hover {
+  background-color: #005d8f; /* Azul mais claro ao passar o mouse */
+  transform: scale(1.08); /* Leve aumento para feedback visual */
+  opacity: 1;
+}
+
+.btn-retorno:active {
+  transform: scale(0.95); /* Efeito de clique */
+}
+
+/* Responsividade para tablets */
+@media (max-width: 768px) {
+  .btn-retorno {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 18px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Responsividade para celulares */
+@media (max-width: 480px) {
+  .btn-retorno {
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 14px;
+    font-size: 1rem;
+  }
+}

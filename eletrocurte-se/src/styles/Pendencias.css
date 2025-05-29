@@ -1,0 +1,23 @@
+.questions-pagination {
+    border: 1px solid black;
+    padding: 5px 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    list-style: none;
+    font-size: 18px;
+    background-color: rgba(0, 209, 255, 0.37);
+}
+
+.questions-pagination li {
+    cursor: pointer;
+}
+
+.questions-pagination li:hover {
+    background-color: rgba(0, 208, 255, 0.8);
+}
+
+.questions-pagination li.active {
+    font-weight: bolder;
+    text-decoration: underline;
+}

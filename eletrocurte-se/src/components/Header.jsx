@@ -1,3 +1,11 @@
+// -----------------------------------------------------------------------------
+// Header.jsx
+// Cabeçalho principal do sistema Eletrocurte-se.
+// Exibe logo, barra de pesquisa, menu de usuário, carrinho, logout e categorias.
+// Responsivo, utiliza Material-UI e styled-components para estilização.
+// Integração com badge animado, menu mobile e props customizáveis.
+// -----------------------------------------------------------------------------
+
 import React, { useState } from 'react';
 import ROUTES from '../routes';
 import { Link, useNavigate } from 'react-router-dom';
@@ -27,6 +35,7 @@ const pulseKeyframes = `
 }
 `;
 
+// Logo estilizado, com efeito de hover
 const Logo = styled('img')(({ theme }) => ({
   width: 85,
   height: 85,
@@ -40,60 +49,67 @@ const Logo = styled('img')(({ theme }) => ({
   },
 }));
 
+// Wrapper para centralizar barra de pesquisa
 const SearchWrapper = styled(Box)(({ theme }) => ({
-  flex: 1,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minWidth: 0,
-  marginLeft: theme.spacing(2),
-  marginRight: theme.spacing(2),
+  flex: 1, // Ocupa o máximo de espaço possível entre logo e ícones
+  display: 'flex', // Layout flexível horizontal
+  justifyContent: 'center', // Centraliza a barra de pesquisa
+  alignItems: 'center', // Alinha verticalmente
+  minWidth: 0, // Permite encolher em telas pequenas
+  marginLeft: theme.spacing(2), // Espaço à esquerda
+  marginRight: theme.spacing(2), // Espaço à direita
+  // theme.breakpoints.down('sm') aplica estilos para telas <= 600px (mobile)
   [theme.breakpoints.down('sm')]: {
-    order: 3,
-    width: '100%',
-    margin: `${theme.spacing(1)} 0`,
+    order: 3, // Move para baixo no layout mobile
+    width: '100%', // Ocupa toda a largura
+    margin: `${theme.spacing(1)} 0`, // Margem vertical reduzida
   },
 }));
 
-// Barra de pesquisa dinâmica, proporcional e sem efeito de foco
+// Barra de pesquisa estilizada, sem efeito de foco
 const Search = styled('div')(({ theme }) => ({
-  backgroundColor: '#fff',
-  borderRadius: 12,
-  display: 'flex',
-  alignItems: 'center',
-  padding: '12px 18px',
-  flex: 1,
-  minWidth: 0,
-  maxWidth: 700,
-  boxShadow: '0 2px 12px 0 rgba(0,0,0,0.08)',
-  transition: 'box-shadow 0.2s, border 0.2s',
-  border: '2px solid transparent',
-  // Efeito de foco removido
+  backgroundColor: '#fff', // Fundo branco
+  borderRadius: 12, // Cantos arredondados
+  display: 'flex', // Layout flexível horizontal
+  alignItems: 'center', // Alinha verticalmente
+  padding: '12px 18px', // Espaçamento interno padrão
+  flex: 1, // Ocupa o máximo de espaço possível
+  minWidth: 0, // Permite encolher
+  maxWidth: 700, // Largura máxima em telas grandes
+  boxShadow: '0 2px 12px 0 rgba(0,0,0,0.08)', // Sombra leve
+  transition: 'box-shadow 0.2s, border 0.2s', // Transição suave
+  border: '2px solid transparent', // Borda invisível (pode ser usada para foco)
+
+  // theme.breakpoints.down('md') aplica estilos para telas <= 900px (tablets)
   [theme.breakpoints.down('md')]: {
-    maxWidth: 450,
-    padding: '10px 12px',
+    maxWidth: 450, // Reduz largura máxima em tablets
+    padding: '10px 12px', // Reduz padding
   },
+
+  // theme.breakpoints.down('sm') aplica estilos para telas <= 600px (mobile)
   [theme.breakpoints.down('sm')]: {
-    maxWidth: '100%',
+    maxWidth: '100%', // Ocupa toda a largura
     width: '100%',
-    padding: '8px 8px',
+    padding: '8px 8px', // Padding ainda menor
   },
 }));
 
+// Barra de categorias horizontal
 const CategoryBar = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#003d52',
-  padding: '8px',
-  gap: '10px',
+  display: 'flex', // Layout horizontal
+  justifyContent: 'center', // Centraliza categorias
+  alignItems: 'center', // Alinha verticalmente
+  backgroundColor: '#003d52', // Fundo azul escuro
+  padding: '8px', // Espaçamento interno
+  gap: '10px', // Espaço entre categorias
+
   [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-    gap: '0',
+    flexDirection: 'column', // Empilha categorias verticalmente
+    gap: '0', // Remove espaçamento extra
   },
 }));
 
-// Sem destaque azul na seção ativa
+// Link de categoria customizado, sem destaque azul
 const CategoryLink = styled('a', {
   shouldForwardProp: (prop) => prop !== 'active',
 })(({ theme, active }) => ({
@@ -114,11 +130,23 @@ const CategoryLink = styled('a', {
   },
 }));
 
+// Normaliza o contador do carrinho para exibir '9+' se necessário
 function normalizeCartCount(count) {
   return count > 9 ? '9+' : count;
 }
 
 function Header({
+  // logoSrc: caminho da imagem da logo exibida no cabeçalho
+  // onLogoClick: função chamada ao clicar na logo
+  // onSearchChange: callback para mudança no campo de pesquisa
+  // categories: array de strings com nomes das categorias exibidas
+  // selectedCategoryIndex: índice da categoria inicialmente selecionada
+  // onCategoryClick: callback ao clicar em uma categoria
+  // useElementsMenu: array de booleans [perfil, carrinho, logout] para exibir ou não cada ícone
+  // onProfile, onCart, onLogout: callbacks para ações dos ícones
+  // cartCount: número de itens no carrinho (badge)
+  // searchDisabled: desabilita campo de pesquisa se true
+  // onSearchDenied: callback chamado ao tentar pesquisar com searchDisabled
   logoSrc = '/logo-com-borda.png',
   onLogoClick,
   onSearchChange,
@@ -130,16 +158,23 @@ function Header({
   onCart,
   onLogout,
   cartCount = 3,
+  searchDisabled = false,
+  onSearchDenied,
 }) {
+  // Estado do menu mobile
   const [anchorEl, setAnchorEl] = useState(null);
+  // Categoria atualmente selecionada
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
 
+  // Abre menu mobile
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
+  // Fecha menu mobile
   const handleClose = () => setAnchorEl(null);
 
+  // Seleciona categoria e dispara callback
   const handleCategoryClick = (cat) => {
     setSelectedCategory(cat);
     if (onCategoryClick) onCategoryClick(cat);
@@ -152,10 +187,12 @@ function Header({
 
   return (
     <>
+      {/* Animação pulse para badge do carrinho */}
       <style>{pulseKeyframes}</style>
       <AppBar
         position="static"
         sx={{
+          // Gradiente de fundo do cabeçalho
           background: 'linear-gradient(90deg, #004d66 80%, #007b99 100%)',
           color: '#fff',
           boxShadow: '0 4px 16px 0 rgba(0,0,0,0.10)',
@@ -163,32 +200,44 @@ function Header({
       >
         <Toolbar
           sx={{
-            display: 'flex',
+            display: 'flex', // Layout flexível horizontal
             alignItems: 'center',
-            gap: 2,
-            flexWrap: isMobile ? 'wrap' : 'nowrap',
+            gap: 2, // Espaçamento entre elementos
+            flexWrap: isMobile ? 'wrap' : 'nowrap', // Quebra linha no mobile
             justifyContent: isMobile ? 'center' : 'flex-start',
-            minHeight: { xs: 90, sm: 90, md: 100 },
+            minHeight: { xs: 90, sm: 90, md: 100 }, // Altura mínima responsiva
           }}
         >
+          {/* Logo do sistema */}
           <Logo src={logoSrc} alt="Logo" onClick={onLogoClick} />
+          {/* Barra de pesquisa centralizada */}
           <SearchWrapper>
             <Search>
               <InputBase
                 placeholder="Pesquisar…"
                 inputProps={{ 'aria-label': 'search' }}
-                onChange={onSearchChange}
+                onChange={searchDisabled ? (e) => {
+                  if (onSearchDenied) onSearchDenied();
+                  e.target.value = '';
+                } : onSearchChange}
+                onKeyDown={searchDisabled ? (e) => {
+                  if (onSearchDenied) onSearchDenied();
+                  e.preventDefault();
+                } : undefined}
                 sx={{
-                  width: '100%',
-                  fontSize: { xs: 16, sm: 18 },
-                  color: '#222',
+                  width: '100%', // Ocupa toda a largura do Search
+                  fontSize: { xs: 16, sm: 18 }, // Tamanho responsivo da fonte
+                  color: '#222', // Cor do texto
+                  backgroundColor: '#fff', // Fundo branco
+                  cursor: 'text', // Cursor padrão de texto
                 }}
               />
             </Search>
           </SearchWrapper>
+          {/* Menu desktop: perfil, carrinho, logout */}
           <Box
             sx={{
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: 'none', md: 'flex' }, // Esconde no mobile
               alignItems: 'center',
               gap: 2,
               minWidth: 0,
@@ -199,7 +248,7 @@ function Header({
               onClick={onProfile}
               sx={{
                 transition: 'background 0.2s',
-                '&:hover': { background: 'rgba(0,123,153,0.15)' },
+                '&:hover': { background: 'rgba(0,123,153,0.15)' }, // Hover azul claro
               }}
             >
               <AccountCircle />
@@ -217,10 +266,10 @@ function Header({
                 color="secondary"
                 sx={{
                   '& .MuiBadge-badge': {
-                    animation: 'pulse 1s infinite alternate',
-                    minWidth: 22,
-                    fontSize: 14,
-                    right: -3,
+                    animation: 'pulse 1s infinite alternate', // Animação do badge
+                    minWidth: 22, // Largura mínima do badge
+                    fontSize: 14, // Tamanho da fonte do badge
+                    right: -3, // Ajuste de posição
                     top: 6,
                   },
                 }}
@@ -239,7 +288,7 @@ function Header({
               <LogoutIcon />
             </IconButton>}
           </Box>
-          {/* Menu mobile */}
+          {/* Menu mobile: hambúrguer */}
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton color="inherit" onClick={handleMenu} aria-label="menu">
               <MenuIcon />

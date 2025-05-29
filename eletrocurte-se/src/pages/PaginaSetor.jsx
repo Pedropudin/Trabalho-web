@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
 import ScrollToTop from "../components/ScrollToTop";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/ProductDisplay";
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
