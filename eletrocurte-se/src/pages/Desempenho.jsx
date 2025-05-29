@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import MenuIcon from '@mui/icons-material/Menu';
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import ROUTES from '../routes';
 import Footer from "../components/Footer";
 import AdminHeader from "../components/admin/AdminHeader";
@@ -9,7 +7,7 @@ import Reputation from "../components/Dashboard/Reputation";
 import Card from "../components/Card";
 import "../styles/Desempenho.css"
 import "../styles/TextStyles.css"
-import { IconButton } from "@mui/material";
+import AdminSidebar from "../components/admin/AdminSidebar";
 
 const PopularProduct = ({
     name,
@@ -47,53 +45,9 @@ const PopularProduct = ({
     );
 };
 
-const AdminSidebar = ({ collapsed, style }) => {
-    return(
-        <Sidebar
-            collapsed={collapsed}
-            collapsedWidth="0px"
-            width="fit-content"
-            backgroundColor="white"
-            transitionDuration={1000}
-            rootStyles={{
-                border: "none"
-            }}
-        >
-            <Menu menuItemStyles={{
-                button: ({level, active, disabled}) => {
-                    if(active)
-                        return {
-                            fontSize: "20px",
-                            fontWeight: "bold",
-                            borderRadius: "10px"
-                        };
-                    else   
-                        return {
-                            fontSize: "18px",
-                            borderRadius: "10px"
-                        }
-                }
-            }}>
-                <MenuItem active>Dashboard</MenuItem>
-                <MenuItem>Empregados</MenuItem>
-                <MenuItem>Vendas</MenuItem>
-                <MenuItem>Estoque</MenuItem>
-            </Menu>
-        </Sidebar>
-    );
-};
-
 const Desempenho = () => {
     const navigate = useNavigate();
     const [data, setData] = useState(null);
-    const [showSidebar, setShowSidebar] = useState(false);
-    let s;
-
-    if(!showSidebar) {
-        s = { display: "flex", flexDirection: "column", marginBottom: '-40px', backgroundColor:"white"};
-    } else {
-        s = { display: "flex", flexDirection: "column"}
-    }
 
     /* Provisory local data */
     useEffect(() => {
@@ -110,22 +64,7 @@ const Desempenho = () => {
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
             <AdminHeader categoryIndex={0} />
             <div style={{ display: "flex", flex: 1}}>
-                <div style={s}>
-                    <IconButton
-                        onClick={() => setShowSidebar(!showSidebar)}
-                        style={{
-                            backgroundColor: "#003d52",
-                            color: "#fff",
-                            margin: "8px",
-                            borderRadius: "30px"
-                        }}
-                    >
-                        <MenuIcon fontSize="large"/>
-                    </IconButton>
-                    <div style={{ flex: 1, minHeight: 0 }}>
-                        <AdminSidebar style={{height: "100%"}} collapsed={showSidebar}/>
-                    </div>
-                </div>
+                <AdminSidebar activeIndex={0}/>
                 <div style={{ flex: 1, minHeight: 0 }}>
                     <div className="content">
                         { data && <Reputation
