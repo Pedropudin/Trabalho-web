@@ -74,7 +74,11 @@ const PaginaInicial = () => {
         }
     }
     function handleLogout() {
-        if (!isLoggedIn) return;
+        if (!isLoggedIn) {
+            setMensagem('Você já está deslogado!');
+            setTimeout(() => setMensagem(''), 3500);
+            return;
+        }
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userType');
         setIsLoggedIn(false);
@@ -121,6 +125,7 @@ const PaginaInicial = () => {
                     setMensagem('Faça login para pesquisar produtos!');
                     setTimeout(() => setMensagem(''), 3500);
                 }}
+                onLogoClick={undefined} // Desabilita o redirecionamento na página inicial
             />
             {/* Mensagem amigável para funcionalidades restritas */}
             {mensagem && (
@@ -143,16 +148,18 @@ const PaginaInicial = () => {
                 </Paper>
                 {/* Produtos em destaque */}
                 <Box className="produtos-destaque" sx={{ maxWidth: 1200, mx: 'auto', px: 2, mb: 6 }}>
-                    <Typography variant="h5" sx={{ color: '#004d66', mb: 2 }}>Produtos em destaque</Typography>
-                    <Grid 
-                        container 
-                        spacing={3} 
-                        justifyContent="center" 
+                    <Typography variant="h4" sx={{ color: '#004d66', mb: 5, }}>Produtos em destaque</Typography>
+                    <Grid
+                        container
+                        columns={{ xs: 1, sm: 2, md: 3 }}
+                        columnSpacing={3}
+                        rowSpacing={3}
+                        justifyContent="center"
                         alignItems="stretch"
                         sx={{ margin: 0, width: '100%', flexWrap: 'wrap' }}
                     >
-                        {produtosHistorico.slice(0, 6).length === 0 ? (
-                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                        {produtosHistorico.slice(0, 12).length === 0 ? (
+                            <Grid sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                                 <Paper elevation={2} sx={{ p: 4, borderRadius: 2, textAlign: 'center', width: '100%', maxWidth: 320 }}>
                                     <Typography variant="subtitle1" sx={{ color: '#888' }}>
                                         Nenhum produto disponível no momento.
@@ -160,8 +167,8 @@ const PaginaInicial = () => {
                                 </Paper>
                             </Grid>
                         ) : (
-                            produtosHistorico.slice(0, 6).map((produto, idx) => (
-                                <Grid item xs={12} sm={6} md={4} key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
+                            produtosHistorico.slice(0, 12).map((produto, idx) => (
+                                <Grid key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <ProductCard 
                                         product={produto} 
                                         onClick={handleProductClick} 

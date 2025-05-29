@@ -19,13 +19,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
 import { styled, alpha } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 import '../styles/Header.css';
+import ROUTES from '../routes';
 
 // Animação pulse para o badge do carrinho
 const pulseKeyframes = `
@@ -179,10 +182,21 @@ function Header({
     setSelectedCategory(cat);
     if (onCategoryClick) onCategoryClick(cat);
   };
-
+  
   const handleCartClick = () => {
     if (onCart) onCart();
     navigate(ROUTES.CHECKOUT);
+  };
+
+  const handleLogoClick = () => {
+    navigate(ROUTES.PAGINA_INICIAL);
+  };
+
+  // Logout interno, utilizado se onLogout não for passado como prop
+  const handleLogoutInternal = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userType');
+    navigate(ROUTES.LOGOUT, { replace: true });
   };
 
   return (
@@ -209,7 +223,7 @@ function Header({
           }}
         >
           {/* Logo do sistema */}
-          <Logo src={logoSrc} alt="Logo" onClick={onLogoClick} />
+          <Logo src={logoSrc} alt="Logo" onClick={handleLogoClick} />
           {/* Barra de pesquisa centralizada */}
           <SearchWrapper>
             <Search>
@@ -279,7 +293,7 @@ function Header({
             </IconButton>}
             { useElementsMenu[2] && <IconButton
               color="inherit"
-              onClick={onLogout}
+              onClick={onLogout || handleLogoutInternal}
               sx={{
                 transition: 'background 0.2s',
                 '&:hover': { background: 'rgba(0,123,153,0.15)' },
@@ -298,9 +312,31 @@ function Header({
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={onProfile}>Perfil</MenuItem>
-              <MenuItem onClick={onCart}>Carrinho</MenuItem>
-              <MenuItem onClick={onLogout}>Sair</MenuItem>
+              {/* Exibe apenas as opções ativas conforme useElementsMenu */}
+              {useElementsMenu[0] && (
+                <MenuItem onClick={onProfile}>
+                  <ListItemIcon>
+                    <AccountCircle fontSize="small" />
+                  </ListItemIcon>
+                  Perfil
+                </MenuItem>
+              )}
+              {useElementsMenu[1] && (
+                <MenuItem onClick={onCart}>
+                  <ListItemIcon>
+                    <ShoppingCartIcon fontSize="small" />
+                  </ListItemIcon>
+                  Carrinho
+                </MenuItem>
+              )}
+              {useElementsMenu[2] && (
+                <MenuItem onClick={onLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon fontSize="small" />
+                  </ListItemIcon>
+                  Sair
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
