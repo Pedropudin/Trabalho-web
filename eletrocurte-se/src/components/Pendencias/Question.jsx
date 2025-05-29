@@ -15,9 +15,8 @@ const Answer = ({ value, change, submit }) => {
     );
 };
 
-const Question = ({ data, style }) => {
+const Question = ({ data, style, answer, onAnswerChange }) => {
     const [showAnswer, setShowAnswer] = useState(false);
-    const [answerText, setAnswerText] = useState("");
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const handleAnswer = () => {
@@ -29,7 +28,7 @@ const Question = ({ data, style }) => {
     };
 
     const handleSubmit = () => {
-        setAnswerText("");
+        onAnswerChange(""); // Clear answer after submit if you want
         setShowConfirmation(true);
         setShowAnswer(false);
         setTimeout(() => {setShowConfirmation(false)}, 2000);
@@ -56,7 +55,7 @@ const Question = ({ data, style }) => {
                     <img src={data.person_photo} style={{height: '80%'}} />
                 </div>
             </div>
-            {showAnswer && <Answer value={answerText} change={e => setAnswerText(e)} submit={handleSubmit} />}
+            {showAnswer && <Answer value={answer} change={onAnswerChange} submit={handleSubmit} />}
         </div>
     );
 }

@@ -74,8 +74,11 @@ const Pendencias = () => {
         setCurrentPage(selected);
     };
 
-    const handleAnswer = (e) => {
-        console.log(e);
+    const handleAnswerChange = (questionId, value) => {
+        setAnswersData(prev => ({
+            ...prev,
+            [questionId]: value
+        }));
     };
 
     return(
@@ -83,15 +86,15 @@ const Pendencias = () => {
             <AdminHeader categoryIndex={2} />
             <div className="content">
                 <Card title={"Perguntas"} type={"card-vertical"} >
-                    {currentQuestions.map((q, index) => {
-                        let i = index+(questionsPerPage*currentPage);
-                        console.log("Do index: ",i," tem ", answersData[i]);
-                        return <Question key={index} data={q} style={{width: '1000px'}} />
-                    })}
-                    {/*questionsData && questionsData.map((q) => {
-                        return <Question data={q} style={{width: '1000px'}}/>
-                        //Unique key warning
-                    })*/}
+                    {currentQuestions.map((q) => {
+                        return <Question
+                            key={q.id}
+                            data={q}
+                            style={{width: '1000px'}}
+                            answer={answersData[q.id] || ""}
+                            onAnswerChange={value => handleAnswerChange(q.id, value)}
+                        />
+                        })}
                 </Card>
                 {questionsData && usePagination && <ReactPaginate
                     pageCount={Math.ceil(questionsData.length / questionsPerPage)}
