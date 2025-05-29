@@ -1,28 +1,35 @@
 import '../styles/PaginaPesquisa.css';
 import React, { useState } from 'react';
-import Products from '../Products.jsx'; 
+import Products from '../Products.json'; 
 import { navigate, useNavigate } from "react-router-dom";
 import ROUTES from '../routes';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
-import ProductCard from '../components/ProductCard'; // Importando o componente ProductCard
+import ProductCard from '../components/ProductCard'; 
 
 
 function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
+    //Variáveis de estado
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
 
+    
+    //Confere se existe algum item no localStorage, caso não exista, cria um 
+    const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products;
+    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
+    .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
+
+    //Lida com a mudança de ordem dos produtos 
     function handleOrderChange(e) {
         setOrder(e.target.value);
     }
-
+    //Utilização do useMemo para organizar, sempre que alterada, a nova ordem de nossos produtos
     const orderedProducts = React.useMemo(() => {
-        let products = [...Products];
-        products.sort((a, b) => {
+        produtosLocais.sort((a, b) => {
             if (a.inStock > 0  && b.inStock === 0) return -1; 
             if (a.inStock === 0  && b.inStock > 0) return 1; 
             if (order === "alphabetical-asc") {
@@ -36,12 +43,12 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
             }
             return 0;
         });
-        return products;
+        return produtosLocais;
     }, [order]);
 
     // Filtra produtos pela marca selecionada
     const filteredProducts = orderedProducts.filter(Products => {
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(Products.marca);
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(Products.marca.toLowerCase());
         const matchesMin = minPrice === '' || Products.price >= Number(minPrice);
         const matchesMax = maxPrice === '' || Products.price <= Number(maxPrice);
         return matchesBrand && matchesMin && matchesMax;
@@ -52,7 +59,8 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
             <Header/>
             <div className="main-content">
                 <Sidebar
-                    items={Products}
+                    items={produtosLocais}
+                    brands = {marcasLocais}
                     selectedBrands={selectedBrands}
                     setSelectedBrands={setSelectedBrands}
                     minPrice={minPrice}
@@ -79,8 +87,8 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
                         {filteredProducts.length === 0 ? (
                             <p style={{ margin: "40px auto", fontWeight: "bold" }}>Nenhum produto encontrado.</p>
                         ) : (
-                            filteredProducts.map(product => (
-                                <ProductCard key={product.id} product={product} />
+                            filteredProducts.map(produtos => (
+                                <ProductCard key={produtos.id} product={produtos} />
                             ))
                         )}
                     </nav>

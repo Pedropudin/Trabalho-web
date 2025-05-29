@@ -249,8 +249,16 @@
         gap: 10px;
         box-sizing: border-box;
     }
+    .product-display{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .main-content {
         min-height: 500px;
+        justify-content: center;
+        align-items: center;
     }
     .product-sidebar {
         height: 100%;

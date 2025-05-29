@@ -1,5 +1,5 @@
 import "../styles/PaginaSetor.css";
-import Products from '../Products.jsx'; 
+import Products from '../Products.json'; 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
@@ -9,22 +9,26 @@ import { useParams, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
 export default function PaginaSetor() {
-    const { name } = useParams(); // name será o setor da URL, ex: "Periférico"
+    const { name } = useParams(); 
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    
+    const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products; //Inicializa o localStorage ou copia dos produtos
+    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]//Pega todas as marcas disponíves
+    .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
-    //Função para retirada de caracteres especiais, como acentos 
+    //Função para desconsiderar os acentos, usada para tratar a origem do acesso
     const normalize = (str) =>
         str?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     //Obtém a origem do "clique"
-    const sectorProducts = Products.filter(
+    const sectorProducts = produtosLocais.filter(
         (p) => normalize(p.setorGeral) === normalize(name)
     );
 
-    // Ordenação
+    // Ordenação de produtos a partir da ordem escolhida
     const orderedProducts = React.useMemo(() => {
         let products = [...sectorProducts];
         products.sort((a, b) => {
@@ -46,13 +50,13 @@ export default function PaginaSetor() {
 
     // Filtros de marca e preço
     const filteredProducts = orderedProducts.filter(product => {
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.marca);
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.marca.toLowerCase());
         const matchesMin = minPrice === '' || product.price >= Number(minPrice);
         const matchesMax = maxPrice === '' || product.price <= Number(maxPrice);
         return matchesBrand && matchesMin && matchesMax;
     });
 
-    // Agrupa por setorEspecifico
+    //Pega todos os setores específicos dentro dessa página de setor geral
     const setoresEspecificos = Array.from(
         new Set(filteredProducts.map((p) => p.setorEspecifico))
     );
@@ -63,6 +67,7 @@ export default function PaginaSetor() {
             <div className="main-content">
                 <Sidebar
                     items={sectorProducts}
+                    brands={marcasLocais}
                     selectedBrands={selectedBrands}
                     setSelectedBrands={setSelectedBrands}
                     minPrice={minPrice}
@@ -98,8 +103,8 @@ export default function PaginaSetor() {
                                     <section key={setorEsp}>
                                         <h2 className="sector-name">{setorEsp}</h2>
                                         <div className="product-display">
-                                            {produtosSetorEsp.map(product => (
-                                                <ProductCard key={product.id} product={product}/>
+                                            {produtosSetorEsp.map(produtosLocais => (
+                                                <ProductCard key={produtosLocais.id} product={produtosLocais}/>
                                             ))}
                                         </div>
                                     </section>

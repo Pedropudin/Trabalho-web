@@ -27,6 +27,7 @@
 .results {
     display: flex;
     flex-direction: column;
+    text-align: start;
     align-items: flex-start;
     padding: 10px;
     box-sizing: border-box;
@@ -48,8 +49,9 @@
     width: 100%;
 }
 .sector-name{
+    font-weight: bold;
     text-align: start;
-    margin: 10px 0;
+    
 }
 .order-criterion {
     padding: 5px;

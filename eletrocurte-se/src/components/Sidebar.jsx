@@ -3,6 +3,7 @@ import '../styles/Sidebar.css'
 import { Link } from "react-router-dom";
 import ROUTES from "../routes";
 
+//Recebe dados da página como parâmetro, já que dependemos daquilo que foi renderizado para deifnir características de filtro
 export default function Sidebar({
     items = [],
     selectedBrands = [],
@@ -11,7 +12,9 @@ export default function Sidebar({
     setMinPrice,
     maxPrice,
     setMaxPrice,
+    brands 
 }) {
+    //Pega o menor e maior valor dos itens disponíveis naquela página
     const priceRange = () => {
         if (!items.length) return [0, 0];
         const prices = items.map(item => item.price);
@@ -22,6 +25,7 @@ export default function Sidebar({
 
     const [minAvailable, maxAvailable] = priceRange();
 
+    //Aplicação da filtragem de marca
     const handleBrandChange = (e) => {
         const { value, checked } = e.target;
         if (checked) {
@@ -30,14 +34,6 @@ export default function Sidebar({
             setSelectedBrands(selectedBrands.filter(b => b !== value));
         }
     };
-
-    const brands = [
-        { id: "hyperx", label: "HyperX" },
-        { id: "razer", label: "Razer" },
-        { id: "corsair", label: "Corsair" },
-        { id: "steelseries", label: "Steelseries" }
-    ];
-
     return (
         <div className="product-sidebar">
             <h4 className="product-category">Categorias Relacionadas</h4>

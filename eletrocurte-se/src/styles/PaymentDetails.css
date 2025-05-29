@@ -1,0 +1,104 @@
+.payment-details-form {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,123,153,0.09);
+    padding: 32px 28px 24px 28px;
+    max-width: 480px;
+    margin: 50px auto 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.payment-details-form h2 {
+    text-align: center;
+    color: #007b99;
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+}
+
+.payment-details-form input {
+    font-size: 1rem;
+    margin: 14px;
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+    background: #f7fafc;
+    color: #222;
+    border: 1.5px solid #e0f7fa;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.payment-details-form input:focus {
+    border-color: #007b99;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.08);
+    background: #fff;
+}
+
+.payment-details-form > div {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.payment-details-form > div input {
+    margin-bottom: 0;
+}
+
+.payment-details-form .button-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 28px;
+    margin-bottom: 0;
+    justify-content: stretch;
+}
+
+.payment-details-form .button-row button {
+    flex: 1 1 0;
+    width: 100%;
+    padding: 13px 0;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s, border-color 0.2s, color 0.2s;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0,123,153,0.10);
+}
+
+.payment-details-form .button-row .back-button {
+    background: #fff;
+    color: #007b99;
+    border: 2px solid #007b99;
+    box-shadow: none;
+}
+
+.payment-details-form .button-row .back-button:hover {
+    background: #e0f7fa;
+    border-color: #009fcf;
+}
+
+.payment-details-form .button-row .submit-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+}
+
+.payment-details-form .button-row .submit-button:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    box-shadow: 0 6px 24px rgba(0,123,153,0.18);
+    transform: translateY(-2px) scale(1.03);
+}
+
+
+.payment-details-form {
+   min-height: 480px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.payment-details-form .button-row {
+    margin-top: auto;
+}

@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import "../styles/PersonalDetails.css"
+import toast, { Toaster } from 'react-hot-toast';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { ptBR } from 'date-fns/locale';
 
-export default function PersonalDetails({ onSubmit }) {
+export default function PersonalDetails({ onSubmit, onNext, onBack }) {
+
+    //Verifica se existe um arquivo locar existente, ou cria um vazio. 
+    const personalDetails = JSON.parse(localStorage.getItem("personal"))|| [];
+    
+    //Formulário de informações básicas do usuário
     const [form, setForm] = useState({
         nome: "",
         sobrenome: "",
@@ -18,17 +28,20 @@ export default function PersonalDetails({ onSubmit }) {
         cep: ""
     });
 
+    //Atualização do form sempre que o formulário for preenchido
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
+    //Envio dos dados para nosso "banco de dados"
     function handleSubmit(e) {
         e.preventDefault();
+        localStorage.setItem("personal", JSON.stringify(form));
         if (onSubmit) onSubmit(form);
+        if (onNext) onNext();
     }
-
     return (
-        <form className="personal-details-form" onSubmit={handleSubmit} style={{maxWidth: 480, margin: "0 auto"}}>
+        <form className="personal-details-form" onSubmit={handleSubmit}>
             <h2>Dados Pessoais</h2>
             <div style={{display: "flex", gap: 12}}>
                 <input
@@ -77,15 +90,40 @@ export default function PersonalDetails({ onSubmit }) {
                 required
                 style={{width: "100%", marginTop: 12}}
             />
-            <input
-                type="date"
-                name="nascimento"
-                placeholder="Data de nascimento"
-                value={form.nascimento}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 12}}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                <DatePicker
+                    label="Data de nascimento"
+                    value={form.nascimento}
+                    onChange={newValue => setForm({ ...form, nascimento: newValue })}
+                    slotProps={{
+                        textField: {
+                            required: true,
+                            fullWidth: true,
+                            sx: {
+                                marginTop: 2,
+                                background: "#f7fafc",
+                                borderRadius: "5px",
+                                "& .MuiOutlinedInput-root": {
+                                    borderRadius: "5px",
+                                    fontSize: "1rem",
+                                    padding: "10px 12px",
+                                    background: "#f7fafc",
+                                },
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#e0f7fa",
+                                    borderRadius: "5px",
+                                    borderWidth: "1.5px",
+                                },
+                                "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#007b99",
+                                    borderRadius: "5px",
+                                },
+                            }
+                        }
+                    }}
+                    required
+                />
+            </LocalizationProvider>
             <h3 style={{marginTop: 18}}>Endereço</h3>
             <input
                 type="text"
@@ -112,6 +150,7 @@ export default function PersonalDetails({ onSubmit }) {
                     placeholder="Complemento"
                     value={form.complemento}
                     onChange={handleChange}
+                    required
                     style={{flex: 2}}
                 />
             </div>
@@ -153,20 +192,21 @@ export default function PersonalDetails({ onSubmit }) {
                     style={{flex: 1}}
                 />
             </div>
-            <button type="submit" style={{
-                marginTop: 24,
-                width: "100%",
-                padding: "12px 0",
-                background: "linear-gradient(90deg, #007b99 0%, #005f73 100%)",
-                color: "#fff",
-                border: "none",
-                borderRadius: 8,
-                fontWeight: 700,
-                fontSize: "1.1rem",
-                cursor: "pointer"
-            }}>
-                Confirmar Dados
-            </button>
+            <div className="button-row">
+                <button
+                    type="button"
+                    className="back-button"
+                    onClick={onBack}
+                >
+                    Voltar
+                </button>
+                <button
+                    type="submit"
+                    className="submit-button"
+                >
+                    Próximo
+                </button>
+            </div>
         </form>
     );
 }

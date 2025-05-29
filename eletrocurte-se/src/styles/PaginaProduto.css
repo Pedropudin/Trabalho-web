@@ -1,4 +1,3 @@
-/*Aplicações gerais*/
 * {
     margin: 0;
     padding: 0;
@@ -12,9 +11,10 @@ body {
     display: flex;
     flex-direction: column;
 }
-/*Estrutura geral de conteúdo*/
+
 .main-content {
     flex: 1;
+    text-align: center;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -27,12 +27,13 @@ body {
     max-width: 1200px;
     height: auto;
 }
-/*Produto apresentado na página*/
+
 .item {
     display: flex;
     flex-flow: row nowrap;
     background-color: white;
-    padding: 32px; /* Ajustado para um padding mais equilibrado */
+    justify-content: center;
+    padding: 32px;
     border-radius: 10px;
     width: 100%;
     height: auto;
@@ -58,7 +59,6 @@ body {
     background-color: #007b99;
 }
 
-/*Conteúdo do produto*/
 .product-information {
     justify-content: space-between; 
     justify-content: flex-start;
@@ -67,11 +67,13 @@ body {
 
 .product-image {
     width: 100%;
-    max-width: 220px;
+    max-width: 330px;
     height: auto;
     object-fit: contain;
     display: block;
-    margin: 0 auto;
+    padding: 20px;
+    margin: 4px auto;
+    border-radius: 5px;
 }
 
 .item-images{
@@ -81,7 +83,6 @@ body {
     padding-right: 40px; 
 }
 
-/*Flecha para passar imagens para direita, carrossel abaixo da foto principal do produto*/
 .IconArrowCarousel{
     color: black;
     width: 20px;
@@ -91,9 +92,9 @@ body {
     rotate: 90deg;
     cursor: pointer
 }
-/*Carrossel de imagens*/
 .thumbs{
     display: flex;
+    align-items: center;
     position: static;
     gap: 10px;
     margin-top: 10px;
@@ -112,8 +113,6 @@ body {
     box-sizing: border-box;
     transition: border 0.2s;
 }
-
-/*Partes que aparecem junto ao produto, botão, nome, preço, etc*/
 .product-name {
     margin: 10px 0;
     font-weight: bold;
@@ -164,8 +163,6 @@ body {
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
     transform: translateY(-2px) scale(1.04);
 }
-
-/*Descrição e especificação mais detalhada do produto*/
 .text-specifications, .text-description {
     text-align: start;
     background-color: #f9f9f9; 

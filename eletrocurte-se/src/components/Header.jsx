@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ROUTES from '../routes';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -135,6 +135,7 @@ function Header({
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -142,6 +143,11 @@ function Header({
   const handleCategoryClick = (cat) => {
     setSelectedCategory(cat);
     if (onCategoryClick) onCategoryClick(cat);
+  };
+
+  const handleCartClick = () => {
+    if (onCart) onCart();
+    navigate(ROUTES.CHECKOUT);
   };
 
   return (
@@ -200,7 +206,7 @@ function Header({
             </IconButton>}
             { useElementsMenu[1] && <IconButton
               color="inherit"
-              onClick={onCart}
+              onClick={handleCartClick}
               sx={{
                 transition: 'background 0.2s',
                 '&:hover': { background: 'rgba(0,123,153,0.15)' },

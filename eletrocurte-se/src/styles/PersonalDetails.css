@@ -4,7 +4,7 @@
     box-shadow: 0 4px 24px rgba(0,123,153,0.09);
     padding: 32px 28px 24px 28px;
     max-width: 480px;
-    margin: 32px auto;
+    margin: 32px auto 32px auto;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -44,7 +44,7 @@
     transition: border 0.2s, box-shadow 0.2s;
     background: #f7fafc;
     color: #222;
-    width: 100%;
+    width: 80%;
     box-sizing: border-box;
 }
 
@@ -55,7 +55,6 @@
 }
 
 .personal-details-form button[type="submit"] {
-    margin-top: 28px;
     width: 100%;
     padding: 13px 0;
     background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
@@ -82,13 +81,45 @@
     margin-bottom: 12px;
 }
 
-@media (max-width: 600px) {
-    .personal-details-form {
-        padding: 18px 6px 12px 6px;
-        max-width: 98vw;
-    }
-    .personal-details-form > div {
-        flex-direction: column;
-        gap: 8px;
-    }
+.personal-details-form .button-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.personal-details-form .button-row button {
+    flex: 1 1 0;
+    width: 100%;
+    padding: 13px 0;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s, border-color 0.2s, color 0.2s;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0,123,153,0.10);
+}
+
+.personal-details-form .button-row .back-button {
+    background: #fff;
+    color: #007b99;
+    border: 2px solid #007b99;
+    box-shadow: none;
+}
+
+.personal-details-form .button-row .back-button:hover {
+    background: #e0f7fa;
+    border-color: #009fcf;
+}
+
+.personal-details-form .button-row .submit-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+}
+
+.personal-details-form .button-row .submit-button:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    box-shadow: 0 6px 24px rgba(0,123,153,0.18);
+    transform: translateY(-2px) scale(1.03);
 }

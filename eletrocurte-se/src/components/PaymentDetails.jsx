@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/PaymentDetails.css"
 
-export default function PaymentDetails({ onSubmit }) {
+export default function PaymentDetails({ onSubmit, onNext, onBack }) {
     const [form, setForm] = useState({
         numero_cartao: "",
         nome_cartao: "",
@@ -10,17 +10,21 @@ export default function PaymentDetails({ onSubmit }) {
         cpf: "",
     });
 
+    const card = JSON.parse(localStorage.getItem("card"))|| [];
+
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
-
     function handleSubmit(e) {
         e.preventDefault();
+        localStorage.setItem("card", JSON.stringify(form));
         if (onSubmit) onSubmit(form);
+        if (onNext) onNext();
     }
 
     return (
-        <form className="personal-details-form" onSubmit={handleSubmit} style={{maxWidth: 480, margin: "0 auto"}}>
+
+        <form className="personal-details-form" onSubmit={handleSubmit} style={{maxWidth: 480, margin: "80px auto"}}>
             <h2>Dados de Pagamento</h2>
             <input
                 type="text"
@@ -74,20 +78,21 @@ export default function PaymentDetails({ onSubmit }) {
                 required
                 style={{width: "100%", marginTop: 12}}
             />
-            <button type="submit" style={{
-                marginTop: 24,
-                width: "100%",
-                padding: "12px 0",
-                background: "linear-gradient(90deg, #007b99 0%, #005f73 100%)",
-                color: "#fff",
-                border: "none",
-                borderRadius: 8,
-                fontWeight: 700,
-                fontSize: "1.1rem",
-                cursor: "pointer"
-            }}>
-                Confirmar 
-            </button>
+            <div className="button-row">
+                <button
+                    type="button"
+                    className="back-button"
+                    onClick={onBack}
+                >
+                    Voltar
+                </button>
+                <button
+                    type="submit"
+                    className="submit-button"
+                >
+                    Próximo
+                </button>
+            </div>
         </form>
     );
 }

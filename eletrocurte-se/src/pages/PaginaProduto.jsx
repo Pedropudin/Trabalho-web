@@ -1,19 +1,43 @@
 import '../styles/PaginaProduto.css';
 import React, { useState } from 'react';
-import Products from '../Products.jsx'; 
+import Products from '../Products.json'; 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useParams } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom'; 
+import { Paper, Stack } from '@mui/material';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function PaginaProduto() {
-  const { id } = useParams(); 
-  const product = Products.find(p => String(p.id) === String(id));
-
-  // Garante que a imagem principal está nas thumbs, sem duplicatas
-  const thumbs = product?.thumbs || [];
+  
+  const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products; //Lê arquivo local, caso for vazio, lê nosso arquivo JSON pré definido
+  const navigate = useNavigate();
+  const { id } = useParams();  //Faz a identificação do id da url 
+  const product = produtosLocais.find(p => String(p.id) === String(id));  //Procura o produto que tenha mesma URL que a do site
+  //Variáveis de estado, para atualização da interação com as fotos dos produtos
   const [mainImg, setMainImg] = useState(product?.img);
+  const [thumbs, setThumbs] = useState(product?.thumbs || []);
 
-  if (!product) {
+  //Ao clicar em "adicionar ao carrinho"
+  function handleAdicionarCarrinho(productId) {
+    const cart = JSON.parse(localStorage.getItem("cart")) || []; //Lê carrinho, caso não exista localmente, cria um vazio.
+    const existing = cart.find(item => item.id === productId);//Procura pelo produto de mesmo id da página em que estamos
+    const stock = product.inStock;//Acessa o estoque do produto
+
+    if (existing) {//Se achar o produto
+      if (existing.quantity + 1 > stock) {//Lida com a adição de mais produtos do que o estoque disponível
+        toast.error("Número máximo de produtos atingido. Erro: Falta de estoque!");//Mensagem de erro
+        return;
+      }
+      const updatedCart = cart.map(item =>//Caso esteja tudo ok, adiciona um produto no carrinho, mapeando isso pelo id
+        item.id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+      localStorage.setItem("cart", JSON.stringify(updatedCart));//Salva tudo no arquivo e exibe uma mensagemsa
+      toast.success('Produto colocado no carrinho com sucesso!');
+    }
+  }
+  if (!product) {//Caso não achar nenhum produto com esse id, mostra que produto não foi encontrado.
     return (
       <>
         <Header />
@@ -25,34 +49,56 @@ export default function PaginaProduto() {
     );
   }
 
-  return (
+  return (//Caso contrário, faz load na págija
     <>
       <Header />
       <main className="main-content">
         <div className="products">
           <div className="item">
-            <div className="item-images">
-              <img
-                className="product-image"
-                src={mainImg}
-                alt={product.name}
-                style={{ cursor: 'pointer' }}
-                onClick={() => window.open(mainImg, '_blank')}
-              />
-              <div className="thumbs">
+            <div className="item-images" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Paper
+                elevation={2}
+                sx={{
+                  width: 320,
+                  height: 320,
+                  mb: 2,
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)" // sombra sutil
+                }}
+              >
+                <img
+                  className="product-image"
+                  src={mainImg}
+                  alt={product.name}
+                  style={{ width: "100%", height: "100%", objectFit: "contain", cursor: "pointer" }}
+                  onClick={() => window.open(mainImg, '_blank')}
+                />
+              </Paper>
+              <Stack direction="row" spacing={2}>
                 {thumbs.map((thumbUrl, i) => (
-                  <img
+                  <Paper
                     key={i}
-                    className="thumb"
-                    src={thumbUrl}
-                    alt={`Miniatura de ${product.name}`}
-                    style={{
-                      border: mainImg === thumbUrl ? '2px solid #007b99' : undefined
+                    elevation={mainImg === thumbUrl ? 3 : 1}
+                    sx={{
+                      border: mainImg === thumbUrl ? '0 solid #1976d2' : '0 solid #eee',
+                      borderRadius: 2,
+                      p: 0.5,
+                      cursor: "pointer",
+                      background: mainImg === thumbUrl ? "#e3f2fd" : "#fff",
+                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)" // sombra ainda mais sutil
                     }}
-                    onClick={() => setMainImg(thumbUrl)}
-                  />
+                    onClick={() => {
+                      if (mainImg !== thumbUrl) {
+                        setThumbs(thumbs.map(t => t === thumbUrl ? mainImg : t));
+                        setMainImg(thumbUrl);
+                      }
+                    }}
+                  >
+                    <img src={thumbUrl} alt={`Miniatura de ${product.name}`} style={{ width: 56, height: 56, objectFit: "contain" }} />
+                  </Paper>
                 ))}
-              </div>
+              </Stack>
             </div>
             <div className="item-information">
               <h1 className="product-name">{product.name}</h1>
@@ -65,8 +111,22 @@ export default function PaginaProduto() {
                 <span className="product-in-stock">Em estoque: {product.inStock}</span>
               </p>
               <div className="product-buttons">
-                <button className="product-purchase-button">COMPRAR</button>
-                <button className="product-cart-button">ADICIONAR AO CARRINHO</button>
+                {product.inStock <= 0 ? 
+                  <>
+                    <button className="product-purchase-button" onClick={() => toast.error("Produto fora de estoque!")}>PRODUTO INDISPONÍVEL</button>  
+                    <Toaster/>
+                    <button className="product-cart-button" onClick={() => navigate(`/PaginaPesquisa`)}>VOLTAR AO INÍCIO</button>              
+                  </>
+                
+                : 
+                  <>
+                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(`/Checkout`)}}>COMPRAR</button>
+                    <Toaster/>
+                    <button className="product-cart-button" onClick={() => handleAdicionarCarrinho(product.id)}>
+                      ADICIONAR AO CARRINHO
+                    </button>              
+                  </>
+                }
               </div>
             </div>
           </div>
