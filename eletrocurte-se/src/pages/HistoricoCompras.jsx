@@ -27,6 +27,8 @@ export default function HistoricoCompras() {
   // Estado para modal de detalhes do produto
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  // Estado para controlar o índice do produto selecionado para avaliação
+  const [produtoAvaliacaoIdx, setProdutoAvaliacaoIdx] = useState(0);
 
   useEffect(() => {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
@@ -128,7 +130,7 @@ export default function HistoricoCompras() {
       {produtosAguardando.length > 0 && (
         <section className="avaliacao">
           <img
-            src={produtosAguardando[0]?.img || "/imagens/raquete_elétrica2.jpeg"}
+            src={produtosAguardando[produtoAvaliacaoIdx]?.img || "/imagens/raquete_elétrica2.jpeg"}
             alt="Produto aguardando avaliação"
             className="img-miniatura"
           />
@@ -139,9 +141,11 @@ export default function HistoricoCompras() {
           </p>
           <UserRating
             produtosAguardando={produtosAguardando.length}
-            imagem={produtosAguardando[0]?.img}
+            imagem={produtosAguardando[produtoAvaliacaoIdx]?.img}
             produtosParaAvaliar={produtosAguardando}
             onAvaliar={handleAvaliar}
+            produtoAvaliacaoIdx={produtoAvaliacaoIdx}
+            setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}
           />
         </section>
       )}

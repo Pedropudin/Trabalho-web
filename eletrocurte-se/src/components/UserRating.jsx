@@ -15,15 +15,16 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
-function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar }) {
+function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produtoAvaliacaoIdx, setProdutoAvaliacaoIdx }) {
   // Estado da nota de estrelas
   const [nota, setNota] = useState(0);
   // Estado do comentário
   const [comentario, setComentario] = useState('');
-  // Índice do produto selecionado
-  const [produtoIdx, setProdutoIdx] = useState(0);
   // Mensagem de erro para validação
   const [erro, setErro] = useState('');
+
+  // Produto atualmente selecionado
+  const produto = produtosParaAvaliar[produtoAvaliacaoIdx] || {};
 
   // Envia avaliação se nota e comentário forem válidos
   const handleSubmit = () => {
@@ -35,11 +36,11 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar }) {
       setErro('Por favor, escreva um comentário antes de enviar.');
       return;
     }
-    onAvaliar(nota, comentario, produtoIdx);
+    onAvaliar(nota, comentario, produtoAvaliacaoIdx);
     setNota(0);
     setComentario('');
-    setProdutoIdx(0);
     setErro('');
+    setProdutoAvaliacaoIdx(0); // volta para o primeiro produto após avaliação
     onClose();
   };
 
@@ -49,19 +50,26 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar }) {
     onClose();
   };
 
-  // Produto atualmente selecionado
-  const produto = produtosParaAvaliar[produtoIdx] || {};
-
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
       <DialogTitle>Avaliar Produto</DialogTitle>
       <DialogContent>
+        {/* Imagem do produto selecionado */}
+        <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
+          <img
+            src={produto.img || '/logo-sem-borda.png'}
+            alt={produto.nome || 'Produto'}
+            width={80}
+            height={80}
+            style={{ borderRadius: 12, boxShadow: '0 2px 8px #0002', background: '#fff', objectFit: 'cover' }}
+          />
+        </Box>
         {/* Seleção do produto a ser avaliado */}
         <TextField
           select
           label="Produto"
-          value={produtoIdx}
-          onChange={e => setProdutoIdx(Number(e.target.value))}
+          value={produtoAvaliacaoIdx}
+          onChange={e => setProdutoAvaliacaoIdx(Number(e.target.value))}
           fullWidth
           margin="normal"
         >
@@ -133,7 +141,7 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar }) {
   );
 }
 
-function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
+function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar, produtoAvaliacaoIdx, setProdutoAvaliacaoIdx }) {
   // Estado para abrir/fechar modal
   const [open, setOpen] = useState(false);
 
@@ -156,12 +164,14 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar }) {
         onClose={handleClose}
         produtosParaAvaliar={produtosParaAvaliar}
         onAvaliar={onAvaliar}
+        produtoAvaliacaoIdx={produtoAvaliacaoIdx}
+        setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}
       />
     </section>
   );
 }
 
-const UserRating = ({ produtosAguardando = 1, imagem = "/imagens/raquete_elétrica2.jpeg", produtosParaAvaliar = [], onAvaliar = () => {} }) => {
+const UserRating = ({ produtosAguardando = 1, imagem = "/imagens/raquete_elétrica2.jpeg", produtosParaAvaliar = [], onAvaliar = () => {}, produtoAvaliacaoIdx = 0, setProdutoAvaliacaoIdx = () => {} }) => {
   return (
     <div>
       {/* Card de avaliação de produtos aguardando avaliação */}
@@ -169,6 +179,8 @@ const UserRating = ({ produtosAguardando = 1, imagem = "/imagens/raquete_elétri
         produtosAguardando={produtosAguardando}
         produtosParaAvaliar={produtosParaAvaliar}
         onAvaliar={onAvaliar}
+        produtoAvaliacaoIdx={produtoAvaliacaoIdx}
+        setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}
       />
     </div>
   );
