@@ -24,12 +24,19 @@ const AdminHeader = ({ categoryIndex }) => {
         return;
     };
 
+    function handleLogout() {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userType');
+        navigate(ROUTES.LOGOUT);
+    }
+
     return(
         <Header 
             categories={categories}
             selectedCategoryIndex={categoryIndex}
             useElementsMenu={[true, false, true]}
             onCategoryClick={categoryNavigation}
+            onLogout={handleLogout}
         />
     );
 };

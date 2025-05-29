@@ -22,8 +22,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 import '../styles/Header.css';
+import ROUTES from '../routes';
 
 // Animação pulse para o badge do carrinho
 const pulseKeyframes = `
@@ -165,6 +167,7 @@ function Header({
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
 
   // Abre menu mobile
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
@@ -175,6 +178,10 @@ function Header({
   const handleCategoryClick = (cat) => {
     setSelectedCategory(cat);
     if (onCategoryClick) onCategoryClick(cat);
+  };
+
+  const handleLogoClick = () => {
+    navigate(ROUTES.PAGINA_INICIAL);
   };
 
   return (
@@ -201,7 +208,7 @@ function Header({
           }}
         >
           {/* Logo do sistema */}
-          <Logo src={logoSrc} alt="Logo" onClick={onLogoClick} />
+          <Logo src={logoSrc} alt="Logo" onClick={handleLogoClick} />
           {/* Barra de pesquisa centralizada */}
           <SearchWrapper>
             <Search>
