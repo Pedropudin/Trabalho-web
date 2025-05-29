@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
-import ProductCard from '../components/ProductDisplay'; 
+import ProductDisplay from '../components/ProductDisplay'; 
 
 
 function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
@@ -88,7 +88,7 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
                             <p style={{ margin: "40px auto", fontWeight: "bold" }}>Nenhum produto encontrado.</p>
                         ) : (
                             filteredProducts.map(produtos => (
-                                <ProductCard key={produtos.id} product={produtos} />
+                                <ProductDisplay key={produtos.id} product={produtos} />
                             ))
                         )}
                     </nav>

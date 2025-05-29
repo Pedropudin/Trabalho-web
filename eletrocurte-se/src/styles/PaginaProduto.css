@@ -113,8 +113,9 @@ body {
     box-sizing: border-box;
     transition: border 0.2s;
 }
-.product-name {
+.product-name-product-page{
     margin: 10px 0;
+    justify-content: center;
     font-weight: bold;
 }
 .product-price {
@@ -124,11 +125,27 @@ body {
 }
 .product-in-stock{
     text-align: center;
-    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    background-color: green;
     color: white; 
+    font-size: 1em;
     padding: 10px;
     width: 200px;
-    border-radius: 6px;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.product-unavailable-product-page{
+    text-align: center;
+    background-color: red;
+    color: white; 
+    font-size: 1em;
+    padding: 10px;
+    width: 200px;
+    font-weight: 600;
+    border-radius: 20px;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;

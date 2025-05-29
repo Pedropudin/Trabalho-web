@@ -19,21 +19,36 @@ export default function PaginaProduto() {
 
   //Ao clicar em "adicionar ao carrinho"
   function handleAdicionarCarrinho(productId) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || []; //Lê carrinho, caso não exista localmente, cria um vazio.
-    const existing = cart.find(item => item.id === productId);//Procura pelo produto de mesmo id da página em que estamos
-    const stock = product.inStock;//Acessa o estoque do produto
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find(item => item.id === productId);
+    const stock = product.inStock;
 
-    if (existing) {//Se achar o produto
-      if (existing.quantity + 1 > stock) {//Lida com a adição de mais produtos do que o estoque disponível
-        toast.error("Número máximo de produtos atingido. Erro: Falta de estoque!");//Mensagem de erro
+    if (existing) {//Produto já existente no carrinho 
+      if (existing.quantity + 1 > stock) {//Se quantidade de itens + 1 for maior que o estoque, ao clicar no botão ele irá gerar um aviso
+        toast.error("Número máximo de produtos atingido. Erro: Falta de estoque!");
         return;
       }
-      const updatedCart = cart.map(item =>//Caso esteja tudo ok, adiciona um produto no carrinho, mapeando isso pelo id
+      //Caso contrrário, damos início ao processo de adição do item ao carrinho
+      const updatedCart = cart.map(item =>
         item.id === productId
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));//Salva tudo no arquivo e exibe uma mensagemsa
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      toast.success('Produto colocado no carrinho com sucesso!');
+    } else {
+      // Adiciona novo produto ao carrinho ao final do arquivo
+      const updatedCart = [
+        ...cart,
+        {//Adição de uma unidade do produto 
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.img,
+          quantity: 1
+        }
+      ];
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       toast.success('Produto colocado no carrinho com sucesso!');
     }
   }
@@ -101,14 +116,16 @@ export default function PaginaProduto() {
               </Stack>
             </div>
             <div className="item-information">
-              <h1 className="product-name">{product.name}</h1>
+              <h1 className="product-name-product-page">{product.name}</h1>
               <p className="product-description">{product.description}</p>
               <h2 className="product-price">
                 R${product.price.toFixed(2).replace('.', ',')}
               </h2>
               <p>
-                Em até 10x de R$ {(product.price / 10).toFixed(2).replace('.', ',')} sem juros no cartão de crédito.
-                <span className="product-in-stock">Em estoque: {product.inStock}</span>
+                Em até 10x de R$ {(product.price / 12).toFixed(2).replace('.', ',')} sem juros no cartão de crédito.
+              </p>
+              <p>
+                {product.inStock > 0 ? <span className="product-in-stock">Em estoque ({product.inStock})</span> : <span className="product-unavailable-product-page">Fora de estoque ({product.inStock})</span>}
               </p>
               <div className="product-buttons">
                 {product.inStock <= 0 ? 
@@ -117,7 +134,6 @@ export default function PaginaProduto() {
                     <Toaster/>
                     <button className="product-cart-button" onClick={() => navigate(`/PaginaPesquisa`)}>VOLTAR AO INÍCIO</button>              
                   </>
-                
                 : 
                   <>
                     <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(`/Checkout`)}}>COMPRAR</button>

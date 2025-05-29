@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
 import ScrollToTop from "../components/ScrollToTop";
-import ProductCard from "../components/ProductDisplay";
+import ProductDisplay from "../components/ProductDisplay";
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
@@ -104,7 +104,7 @@ export default function PaginaSetor() {
                                         <h2 className="sector-name">{setorEsp}</h2>
                                         <div className="product-display">
                                             {produtosSetorEsp.map(produtosLocais => (
-                                                <ProductCard key={produtosLocais.id} product={produtosLocais}/>
+                                                <ProductDisplay key={produtosLocais.id} product={produtosLocais}/>
                                             ))}
                                         </div>
                                     </section>
