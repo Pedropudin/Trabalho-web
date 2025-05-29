@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 
 export default function Perfil() {
   const navigate = useNavigate();
-  const nomeUsuario = "João Silva"; // A ser substituído por dados reais do usuário
+  const nomeUsuario = localStorage.getItem('nomeUsuario') || "Usuário"; // Busca nome salvo
 
   // Navega para a área de edição correspondente ao card clicado
   function handleCardClick(flag) {

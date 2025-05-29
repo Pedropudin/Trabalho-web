@@ -163,7 +163,7 @@ export default function Mensagens({ onVoltar }) {
         {/* Card: destaca o conteúdo das mensagens */}
         <CardContent>
           {/* CardContent: área interna do Card */}
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{mb: 3}}>
             {/* Typography: título grande */}
             Mensagens do Administrador
           </Typography>
@@ -228,20 +228,53 @@ export default function Mensagens({ onVoltar }) {
                   ))}
                 </Box>
               ))}
-              <Box display="flex" gap={2} mt={4}>
+              <Box display="flex" gap={2} mt={4} flexDirection={{ xs: 'column', sm: 'row' }}>
                 <TextField
                   label="Nova mensagem"
                   fullWidth
                   value={novaMensagem}
                   onChange={(e) => setNovaMensagem(e.target.value)}
                   variant="outlined"
+                  multiline
+                  minRows={3}
+                  maxRows={6}
+                  sx={{ flex: 1 }}
+                  InputProps={{
+                    style: { resize: 'vertical' }
+                  }}
                 />
-                <Button variant="contained" onClick={adicionarMensagem}>
+                <Button
+                  variant="contained"
+                  onClick={adicionarMensagem}
+                  sx={{
+                    minWidth: 120,
+                    height: { xs: 48, sm: 'auto' },
+                    alignSelf: { xs: 'flex-end', sm: 'unset' }
+                  }}
+                >
                   Enviar
                 </Button>
               </Box>
-              <Box mt={4} textAlign="right">
-                <Button onClick={onVoltar} variant="outlined">
+              <Box mt={4} display="flex" justifyContent="center">
+                <Button
+                  onClick={onVoltar}
+                  variant="outlined"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: 16,
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: 2,
+                    background: '#fff',
+                    borderColor: '#007b99',
+                    color: '#007b99',
+                    '&:hover': {
+                      background: '#e3f2fd',
+                      borderColor: '#004d66',
+                      color: '#004d66'
+                    }
+                  }}
+                >
                   Voltar ao Perfil
                 </Button>
               </Box>

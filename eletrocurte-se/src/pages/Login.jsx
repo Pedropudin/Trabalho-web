@@ -131,6 +131,7 @@ export default function Login() {
     if (await validarCliente({ nome, email, senha })) {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userType', 'cliente');
+      localStorage.setItem('nomeUsuario', nome); // Salva nome do cliente
       exibirMensagem("Login do cliente efetuado com sucesso!", "sucesso");
       setTimeout(() => navigate(ROUTES.PAGINA_INICIAL), 1500);
     }
@@ -147,6 +148,7 @@ export default function Login() {
     if (await validarAdmin({ nome, email, senha, token })) {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userType', 'admin');
+      localStorage.setItem('nomeUsuario', nome); // Salva nome do admin
       exibirMensagem("Login do administrador efetuado com sucesso!", "sucesso");
       setTimeout(() => navigate(ROUTES.DESEMPENHO), 1500);
     }

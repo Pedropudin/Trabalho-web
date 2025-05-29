@@ -127,7 +127,7 @@ export default function Enderecos({ onVoltar }) {
       </FormControl>
 
       {/* Botão para abrir modal de cadastro de novo endereço */}
-      <Button variant="outlined" sx={{ mt: 3 }} onClick={() => setModalAberto(true)}>
+      <Button variant="outlined" sx={{ mt: 3, width: '100%' }} onClick={() => setModalAberto(true)}>
         Cadastrar Novo Endereço
       </Button>
 
@@ -160,7 +160,12 @@ export default function Enderecos({ onVoltar }) {
 
       {/* Botão para confirmar seleção e voltar ao perfil */}
       <div style={{ marginTop: '1rem' }}>
-        <Button variant="contained" color="primary" onClick={onVoltar}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onVoltar}
+          sx={{ width: '100%' }}
+        >
           Confirmar e Voltar ao Perfil
         </Button>
       </div>
