@@ -1,4 +1,6 @@
 .question-container {
+    z-index: 10;
+    position: relative;
     border: 1px solid black;
     border-radius: 10px;
     background-color: white;
@@ -42,4 +44,24 @@
 .question-buttons-container {
     display: flex;
     gap: 5px;
+}
+
+.answer-container {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    margin-top: -15px;
+    padding: 20px 0px 10px 0px;
+}
+
+.answer-box {
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
 }

@@ -5,16 +5,17 @@ const Button = ({
     text = "Botão",
     onClick,
     type = 0,
+    style,
 }) => {
 
     switch (type) {
         case 1:
             return(
-                <button className="btn-type1" onClick={onClick}>{text}</button>
+                <button className="btn-type1" onClick={onClick} style={style}>{text}</button>
             );
         default:
             return(
-                <button className="btn-generic" onClick={onClick}>{text}</button>
+                <button className="btn-generic" onClick={onClick} style={style}>{text}</button>
             );
     }
 };
