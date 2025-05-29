@@ -8,15 +8,12 @@ import Perfil from './pages/Perfil';
 import HistoricoCompras from './pages/HistoricoCompras';
 import HistoricoProdutos from './pages/HistoricoProdutos';
 import TermosCondicoes from './pages/TermosCondicoes';
+import Checkout from './pages/Checkout';
 import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
 import PaginaPesquisa from './pages/PaginaPesquisa';
 import PaginaProduto from './pages/PaginaProduto';
 import PaginaSetor from './pages/PaginaSetor';
-import CompraFinalizada from './pages/CompraFinalizada';
-import ConfirmacaoCompra from './pages/ConfirmacaoCompra';
-import InsercaoDeDadosCompra from './pages/InsercaoDeDadosCompra';
-import ResumoCompra from './pages/ResumoCompra';
 
 // Rotas centralizadas
 import ROUTES from './routes';
@@ -32,12 +29,9 @@ function AppRoutes() {
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
         <Route path={ROUTES.PAG_PRODUTO} element={<PaginaProduto />} />
         <Route path={ROUTES.PAG_PESQUISA} element={<PaginaPesquisa />} />
+        <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
         <Route path={ROUTES.PAG_SETOR} element={<PaginaSetor />} />
         <Route path={ROUTES.HIST_COMPRAS} element={<HistoricoCompras />} />
-        <Route path={ROUTES.FINAL_COMPRA} element={<CompraFinalizada />} />
-        <Route path={ROUTES.CONFIRMA_COMPRA} element={<ConfirmacaoCompra />} />
-        <Route path={ROUTES.DADOS_COMPRA} element={<InsercaoDeDadosCompra />} />
-        <Route path={ROUTES.RESUMO_COMPRA} element={<ResumoCompra />} />
         <Route path={ROUTES.EDITAR_PERFIL} element={<EditarPerfil />} />
         <Route path={ROUTES.HIST_PRODUTOS} element={<HistoricoProdutos />} />
         <Route path={ROUTES.TERMOS} element={<TermosCondicoes />} />

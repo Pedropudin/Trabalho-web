@@ -19,7 +19,8 @@ body {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 50px;
-    margin: 40px auto;
+    justify-content: center;
+    margin: 50px auto;
     padding: 12px;
     box-sizing: border-box;
     width: 100%;
@@ -93,21 +94,23 @@ body {
 /*Carrossel de imagens*/
 .thumbs{
     display: flex;
-    flex-direction: row nowrap;
-    justify-content: center;
-    align-items: center;
+    position: static;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-.thumbs img{
-    object-fit: contain;
-    margin-right: 8px;
+.thumbs img,
+.thumb {
     width: 80px;
     height: 80px;
-    border: 0.5px solid lightgray;
+    object-fit: cover;
     border-radius: 5px;
+    border: 0.5px solid lightgray;
     cursor: pointer;
-    padding: 10px;
-
+    padding: 4px;
+    background: #fff;
+    box-sizing: border-box;
+    transition: border 0.2s;
 }
 
 /*Partes que aparecem junto ao produto, botão, nome, preço, etc*/
@@ -121,12 +124,16 @@ body {
     color: #333;
 }
 .product-in-stock{
+    text-align: center;
     background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
     color: white; 
     padding: 10px;
+    width: 200px;
     border-radius: 6px;
     margin-top: 20px;
-
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 .product-buttons {
     display: flex;
