@@ -5,12 +5,18 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ptBR } from 'date-fns/locale';
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 
-export default function PersonalDetails({ onSubmit, onNext, onBack }) {
+export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     //Verifica se existe um arquivo locar existente, ou cria um vazio. 
     const personalDetails = JSON.parse(localStorage.getItem("personal"))|| [];
     
+    // Progresso
+    const activeStep = 2;
+
     //Formulário de informações básicas do usuário
     const [form, setForm] = useState({
         nome: "",
@@ -41,6 +47,16 @@ export default function PersonalDetails({ onSubmit, onNext, onBack }) {
         if (onNext) onNext();
     }
     return (
+        <>
+        <div style={{ width: "100%", margin: "32px 0" }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map((label) => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+        </div>
         <form className="personal-details-form" onSubmit={handleSubmit}>
             <h2>Dados Pessoais</h2>
             <div style={{display: "flex", gap: 12}}>
@@ -208,5 +224,6 @@ export default function PersonalDetails({ onSubmit, onNext, onBack }) {
                 </button>
             </div>
         </form>
+        </>
     );
 }

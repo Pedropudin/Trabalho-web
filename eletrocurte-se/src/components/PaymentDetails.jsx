@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "../styles/PaymentDetails.css"
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 
-export default function PaymentDetails({ onSubmit, onNext, onBack }) {
+export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     const [form, setForm] = useState({
         numero_cartao: "",
         nome_cartao: "",
@@ -10,7 +13,8 @@ export default function PaymentDetails({ onSubmit, onNext, onBack }) {
         cpf: "",
     });
 
-    const card = JSON.parse(localStorage.getItem("card"))|| [];
+    // Progresso
+    const activeStep = 1;
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,10 +27,20 @@ export default function PaymentDetails({ onSubmit, onNext, onBack }) {
     }
 
     return (
-
+       <>
+        <div style={{ width: "100%", margin: "32px 0" }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map((label) => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+        </div>
         <form className="personal-details-form" onSubmit={handleSubmit} style={{maxWidth: 480, margin: "80px auto"}}>
             <h2>Dados de Pagamento</h2>
             <input
+                id="numero_cartao"
                 type="text"
                 name="numero_cartao"
                 placeholder="Número do cartão"
@@ -94,5 +108,6 @@ export default function PaymentDetails({ onSubmit, onNext, onBack }) {
                 </button>
             </div>
         </form>
+    </>
     );
 }

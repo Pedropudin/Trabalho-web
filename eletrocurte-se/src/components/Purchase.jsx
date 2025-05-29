@@ -1,8 +1,11 @@
 import React from "react";
 import "../styles/Purchase.css";
 import Products from "../Products.json";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 
-export default function Purchase({ onBack, onNext }) {
+export default function Purchase({ onBack, onNext, steps }) {
     // Recupera todos os dados que nós temos, então: carrinho, dados pessoais e dados de pagamento (que podem diferir)
     const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products;
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -27,14 +30,27 @@ export default function Purchase({ onBack, onNext }) {
             }
             return prod;
         });
-        //Grava mudanças no JSON
+        //Grava mudanças no JSON local
         localStorage.setItem("products", JSON.stringify(updatedProducts));
         localStorage.setItem("cart", JSON.stringify([]));
 
         if (onNext) onNext();
     }
 
+    // Etapas do checkout
+    const activeStep = 3;
+
     return (
+        <>
+        <div style={{ width: "100%", margin: "32px 0" }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map((label) => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+        </div>
         <div className="purchase-summary-container" style={{
             maxWidth: 650,
             margin: "40px auto",
@@ -125,13 +141,13 @@ export default function Purchase({ onBack, onNext }) {
                             <li key={item.id} style={{
                                 display: "flex",
                                 justifyContent: "space-between",
-                                alignItems: "center",
+                                alignItems: "start",
                                 marginBottom: 10,
                                 padding: "8px 0",
                                 borderBottom: "1px dashed #e0f7fa"
                             }}>
                                 <span>
-                                    <span style={{ fontWeight: 600 }}>{prod.name}</span>
+                                    <span style={{ fontWeight: 600, alignText: "start" }}>{prod.name}</span>
                                     <span style={{ color: "#007b99", fontWeight: 700, marginLeft: 8 }}>x{item.quantity}</span>
                                 </span>
                                 <span style={{ color: "#005f73", fontWeight: 700 }}>
@@ -205,5 +221,6 @@ export default function Purchase({ onBack, onNext }) {
                 </button>
             </div>
         </div>
+     </>
     );
 }
