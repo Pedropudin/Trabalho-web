@@ -148,8 +148,8 @@ const PaginaInicial = () => {
                 </Paper>
                 {/* Produtos em destaque */}
                 <Box className="produtos-destaque" sx={{ maxWidth: 1200, mx: 'auto', px: 2, mb: 6 }}>
-                    <Typography variant="h5" sx={{ color: '#004d66', mb: 2 }}>Produtos em destaque</Typography>
-                    <Grid 
+                    <Typography variant="h4" sx={{ color: '#004d66', mb: 5, }}>Produtos em destaque</Typography>
+                    <Grid
                         container
                         columns={{ xs: 1, sm: 2, md: 3 }}
                         columnSpacing={3}
@@ -158,7 +158,7 @@ const PaginaInicial = () => {
                         alignItems="stretch"
                         sx={{ margin: 0, width: '100%', flexWrap: 'wrap' }}
                     >
-                        {produtosHistorico.slice(0, 6).length === 0 ? (
+                        {produtosHistorico.slice(0, 12).length === 0 ? (
                             <Grid sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                                 <Paper elevation={2} sx={{ p: 4, borderRadius: 2, textAlign: 'center', width: '100%', maxWidth: 320 }}>
                                     <Typography variant="subtitle1" sx={{ color: '#888' }}>
@@ -167,7 +167,7 @@ const PaginaInicial = () => {
                                 </Paper>
                             </Grid>
                         ) : (
-                            produtosHistorico.slice(0, 6).map((produto, idx) => (
+                            produtosHistorico.slice(0, 12).map((produto, idx) => (
                                 <Grid key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <ProductCard 
                                         product={produto} 
