@@ -76,6 +76,7 @@ const Pendencias = () => {
     const handleModalClose = () => {
         setModalOpen(false);
         setSelectedProduct(null);
+    }
 
     // Calculate the questions to display for the current page
     const offset = currentPage * questionsPerPage;
