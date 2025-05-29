@@ -52,17 +52,32 @@ const AdminSidebar = ({ collapsed, style }) => {
         <Sidebar
             collapsed={collapsed}
             collapsedWidth="0px"
-            width="140px"
-            style={{
-                height: "100%",
-                backgroundColor: "transparent",
-                ...style
+            width="fit-content"
+            backgroundColor="white"
+            transitionDuration={1000}
+            rootStyles={{
+                border: "none"
             }}
         >
-            <Menu className="menu">
-                <MenuItem>Dashboard</MenuItem>
+            <Menu menuItemStyles={{
+                button: ({level, active, disabled}) => {
+                    if(active)
+                        return {
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            borderRadius: "10px"
+                        };
+                    else   
+                        return {
+                            fontSize: "18px",
+                            borderRadius: "10px"
+                        }
+                }
+            }}>
+                <MenuItem active>Dashboard</MenuItem>
                 <MenuItem>Empregados</MenuItem>
                 <MenuItem>Vendas</MenuItem>
+                <MenuItem>Estoque</MenuItem>
             </Menu>
         </Sidebar>
     );
@@ -72,6 +87,13 @@ const Desempenho = () => {
     const navigate = useNavigate();
     const [data, setData] = useState(null);
     const [showSidebar, setShowSidebar] = useState(false);
+    let s;
+
+    if(!showSidebar) {
+        s = { display: "flex", flexDirection: "column", marginBottom: '-40px', backgroundColor:"white"};
+    } else {
+        s = { display: "flex", flexDirection: "column"}
+    }
 
     /* Provisory local data */
     useEffect(() => {
@@ -87,15 +109,15 @@ const Desempenho = () => {
     return(
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
             <AdminHeader categoryIndex={0} />
-            <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
-                <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+            <div style={{ display: "flex", flex: 1}}>
+                <div style={s}>
                     <IconButton
                         onClick={() => setShowSidebar(!showSidebar)}
                         style={{
                             backgroundColor: "#003d52",
                             color: "#fff",
                             margin: "8px",
-                            borderRadius: "8px"
+                            borderRadius: "30px"
                         }}
                     >
                         <MenuIcon fontSize="large"/>
