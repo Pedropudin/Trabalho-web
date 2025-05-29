@@ -171,7 +171,7 @@ export default function Login() {
       <HeaderLogs />
       {/* Container centralizado com formulário responsivo */}
       <Box sx={{ minHeight: '100vh', background: '#f5fafd', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 6 }}>
-        <Paper elevation={4} sx={{ maxWidth: 400, width: '100%', p: { xs: 2, md: 4 }, borderRadius: 4, mt: 6 }}>
+        <Paper elevation={4} sx={{ maxWidth: 400, width: '100%', p: { xs: 2, md: 4 }, borderRadius: 4, mt: 2 }}>
           <Typography variant="h4" align="center" sx={{ fontWeight: 700, color: '#004d66', mb: 2 }}>
             {aba === 'login' ? 'Login' : 'Cadastro'}
           </Typography>
@@ -215,6 +215,13 @@ export default function Login() {
                   <Button type="submit" variant="contained" sx={{ background: '#007b99', color: '#fff', fontWeight: 600, borderRadius: 2, mt: 1, '&:hover': { background: '#004d66' } }}>
                     Entrar
                   </Button>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={() => navigate(ROUTES.PAGINA_INICIAL, { replace: true })}
+                  >
+                    Voltar
+                  </Button>
                 </Box>
               )}
               {/* Formulário de login do administrador */}
@@ -223,9 +230,33 @@ export default function Login() {
                   <TextField label="Nome" id="nome-admin" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
                   <TextField label="E-mail" id="email-admin" name="email" required fullWidth size="small" type="email" placeholder="Ex: admin@empresa.com" />
                   <TextField label="Senha" id="senha-admin" name="senha" required fullWidth size="small" type="password" placeholder="Ex: @Eletrocurte-se-100%" />
-                  <TextField label="Token de segurança" id="token" name="token" required fullWidth size="small" placeholder="Ex: 123456" />
+                  <TextField
+                    label="Token de segurança"
+                    id="token"
+                    name="token"
+                    required
+                    fullWidth
+                    size="small"
+                    placeholder="Ex: 123456"
+                    inputProps={{
+                      inputMode: 'numeric',
+                      pattern: '[0-9]*',
+                      maxLength: 6,
+                    }}
+                    onInput={e => {
+                      // Permite apenas números e limita a 6 dígitos
+                      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                    }}
+                  />
                   <Button type="submit" variant="contained" sx={{ background: '#007b99', color: '#fff', fontWeight: 600, borderRadius: 2, mt: 1, '&:hover': { background: '#004d66' } }}>
                     Entrar
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={() => navigate(ROUTES.PAGINA_INICIAL, { replace: true })}
+                  >
+                    Voltar
                   </Button>
                 </Box>
               )}

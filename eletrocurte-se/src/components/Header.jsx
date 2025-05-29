@@ -185,6 +185,13 @@ function Header({
     navigate(ROUTES.PAGINA_INICIAL);
   };
 
+  // Logout interno, utilizado se onLogout não for passado como prop
+  const handleLogoutInternal = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userType');
+    navigate(ROUTES.LOGOUT, { replace: true });
+  };
+
   return (
     <>
       {/* Animação pulse para badge do carrinho */}
@@ -279,7 +286,7 @@ function Header({
             </IconButton>}
             { useElementsMenu[2] && <IconButton
               color="inherit"
-              onClick={onLogout}
+              onClick={onLogout || handleLogoutInternal}
               sx={{
                 transition: 'background 0.2s',
                 '&:hover': { background: 'rgba(0,123,153,0.15)' },
