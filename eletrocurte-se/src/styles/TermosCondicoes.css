@@ -52,18 +52,6 @@ h3 {
     color: #003b5c; /* Azul escuro institucional */
     font-size: 24px;
     margin-bottom: 10px;
-    animation: aparecer 1s ease-out forwards; /* Animação de entrada */
-}
-
-@keyframes aparecer {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Parágrafo descritivo e listas */
