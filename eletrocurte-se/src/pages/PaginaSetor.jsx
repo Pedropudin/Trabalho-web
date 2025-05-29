@@ -1,5 +1,5 @@
 import "../styles/PaginaSetor.css";
-import Products from '../Products'; 
+import Products from '../Products.jsx'; 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";

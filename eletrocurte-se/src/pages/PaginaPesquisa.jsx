@@ -1,6 +1,6 @@
 import '../styles/PaginaPesquisa.css';
 import React, { useState } from 'react';
-import Products from '../Products'; 
+import Products from '../Products.jsx'; 
 import { navigate, useNavigate } from "react-router-dom";
 import ROUTES from '../routes';
 import Header from '../components/Header';

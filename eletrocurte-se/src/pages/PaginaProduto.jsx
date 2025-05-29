@@ -1,6 +1,6 @@
 import '../styles/PaginaProduto.css';
 import React, { useState } from 'react';
-import Products from '../Products'; 
+import Products from '../Products.jsx'; 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom'; 
