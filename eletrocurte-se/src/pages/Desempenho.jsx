@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import MenuIcon from '@mui/icons-material/Menu';
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import ROUTES from '../routes';
 import Footer from "../components/Footer";
 import AdminHeader from "../components/admin/AdminHeader";
 import Reputation from "../components/Dashboard/Reputation";
 import Card from "../components/Card";
-import "../styles/Dashboard.css"
+import "../styles/Desempenho.css"
 import "../styles/TextStyles.css"
+import { IconButton } from "@mui/material";
 
 const PopularProduct = ({
     name,
@@ -15,7 +18,6 @@ const PopularProduct = ({
     sold,
     stock
 }) => {
-
     const priceStyle = {
         backgroundColor: '#C8FACE',
         borderRadius: '50px',
@@ -45,10 +47,31 @@ const PopularProduct = ({
     );
 };
 
+const AdminSidebar = ({ collapsed, style }) => {
+    return(
+        <Sidebar
+            collapsed={collapsed}
+            collapsedWidth="0px"
+            width="140px"
+            style={{
+                height: "100%",
+                backgroundColor: "transparent",
+                ...style
+            }}
+        >
+            <Menu className="menu">
+                <MenuItem>Dashboard</MenuItem>
+                <MenuItem>Empregados</MenuItem>
+                <MenuItem>Vendas</MenuItem>
+            </Menu>
+        </Sidebar>
+    );
+};
+
 const Desempenho = () => {
     const navigate = useNavigate();
     const [data, setData] = useState(null);
-    const categories = ["Desempenho", "Produtos", "Pendências"];
+    const [showSidebar, setShowSidebar] = useState(false);
 
     /* Provisory local data */
     useEffect(() => {
@@ -62,23 +85,42 @@ const Desempenho = () => {
     }, []);
 
     return(
-        <div>
+        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
             <AdminHeader categoryIndex={0} />
-            <div className="content">
-                { data && <Reputation
-                    percentage={data.sales_percentage}
-                    complainings={data.complainings}
-                    late_send={data.late_send}
-                    new_users={data.new_users}
-                /> }        
-                { data && <PopularProduct
-                    name={data.product_popular.name}
-                    photo={data.product_popular.photo}
-                    price={data.product_popular.price}
-                    sold={data.product_popular.quantity_sold}
-                    stock={data.product_popular.stock}
-                /> }
-                
+            <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
+                <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                    <IconButton
+                        onClick={() => setShowSidebar(!showSidebar)}
+                        style={{
+                            backgroundColor: "#003d52",
+                            color: "#fff",
+                            margin: "8px",
+                            borderRadius: "8px"
+                        }}
+                    >
+                        <MenuIcon fontSize="large"/>
+                    </IconButton>
+                    <div style={{ flex: 1, minHeight: 0 }}>
+                        <AdminSidebar style={{height: "100%"}} collapsed={showSidebar}/>
+                    </div>
+                </div>
+                <div style={{ flex: 1, minHeight: 0 }}>
+                    <div className="content">
+                        { data && <Reputation
+                            percentage={data.sales_percentage}
+                            complainings={data.complainings}
+                            late_send={data.late_send}
+                            new_users={data.new_users}
+                        /> }        
+                        { data && <PopularProduct
+                            name={data.product_popular.name}
+                            photo={data.product_popular.photo}
+                            price={data.product_popular.price}
+                            sold={data.product_popular.quantity_sold}
+                            stock={data.product_popular.stock}
+                        /> }
+                    </div>
+                </div>
             </div>
             <Footer />
         </div>

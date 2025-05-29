@@ -26,3 +26,9 @@
     gap: 10px;
     width: 40%;
 }
+
+/* ==================== */
+.button-toggle-sidebar {
+    position: absolute;
+    background-color: transparent;
+}
