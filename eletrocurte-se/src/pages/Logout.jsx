@@ -7,8 +7,10 @@ import '../styles/Logout.css';
 import Footer from '../components/Footer';
 
 /*
-  Página de Logout adaptada do HTML antigo.
-  Exibe mensagem de sucesso, contagem regressiva e botão para voltar à Home.
+  Página de Logout do sistema.
+  - Exibe mensagem de sucesso, contagem regressiva e botão para voltar à Home.
+  - Remove flags de autenticação do localStorage e redireciona automaticamente.
+  - Layout centralizado e responsivo com Material-UI.
 */
 
 export default function Logout() {
@@ -18,10 +20,9 @@ export default function Logout() {
   const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
-    // Ao fazer logout, remove o flag de login e o tipo de usuário
+    // Remove flags de login ao sair e inicia contagem regressiva
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
-
     setCountdown(10);
     if (timerRef.current) timerRef.current.textContent = 10;
     intervalRef.current = setInterval(() => {
@@ -40,6 +41,7 @@ export default function Logout() {
     };
   }, [navigate]);
 
+  // Handler para botão de retorno imediato
   function handleHomeClick() {
     clearInterval(intervalRef.current);
     navigate(ROUTES.PAGINA_INICIAL);
@@ -50,7 +52,7 @@ export default function Logout() {
       {/* Cabeçalho com logo centralizado */}
       <HeaderLogs />
 
-      {/* Container principal do logout, centralizando conteúdo */}
+      {/* Container principal centralizado com mensagem e botão */}
       <Box sx={{ minHeight: '100vh', background: '#f5fafd', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 6 }}>
         <Paper elevation={6} sx={{ maxWidth: 420, width: '100%', p: { xs: 3, md: 5 }, borderRadius: 4, mt: 6, textAlign: 'center', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.10)' }}>
           <Typography variant="h4" sx={{ fontWeight: 700, color: '#004d66', mb: 2 }}>
@@ -71,7 +73,7 @@ export default function Logout() {
         </Paper>
       </Box>
 
-      {/* Rodapé com informações de contato e links externos */}
+      {/* Rodapé institucional */}
       <Footer />
     </>
   );

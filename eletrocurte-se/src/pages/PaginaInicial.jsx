@@ -12,6 +12,13 @@ import ROUTES from '../routes';
 import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 
+/*
+  Página inicial do portal Eletrocurte-se.
+  - Banner de boas-vindas, produtos em destaque e chamada para ação.
+  - Integração com autenticação, navegação e feedback visual.
+  - Layout responsivo com Material-UI e alinhamento ao padrão visual do projeto.
+*/
+
 const categorias = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'];
 
 const PaginaInicial = () => {
@@ -24,16 +31,18 @@ const PaginaInicial = () => {
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
+        // Verifica autenticação ao carregar a página
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, []);
 
     useEffect(() => {
+        // Busca produtos em destaque do histórico
         fetch(process.env.PUBLIC_URL + '/data/products.json')
             .then(res => res.json())
             .then(data => setProdutosHistorico(data.produtosHistorico || []));
     }, []);
 
-    // Handler para funcionalidades restritas
+    // Handlers para funcionalidades restritas e navegação
     function handleRestrito(e) {
         if (!isLoggedIn) {
             e.preventDefault();
@@ -41,8 +50,6 @@ const PaginaInicial = () => {
             setTimeout(() => setMensagem(''), 3500);
         }
     }
-
-    // Handler para botão "Comece agora"
     function handleComeceAgora(e) {
         e.preventDefault();
         if (isLoggedIn) {
@@ -51,8 +58,6 @@ const PaginaInicial = () => {
             navigate(ROUTES.LOGIN);
         }
     }
-
-    // Funções para Header
     function handleProfile() {
         if (isLoggedIn) {
             navigate(ROUTES.PERFIL);
@@ -60,7 +65,6 @@ const PaginaInicial = () => {
             navigate(ROUTES.LOGIN);
         }
     }
-
     function handleCart() {
         if (isLoggedIn) {
             setMensagem('Funcionalidade de carrinho em breve!');
@@ -69,9 +73,8 @@ const PaginaInicial = () => {
             navigate(ROUTES.LOGIN);
         }
     }
-
     function handleLogout() {
-        if (!isLoggedIn) return; // Não faz nada se não estiver logado
+        if (!isLoggedIn) return;
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userType');
         setIsLoggedIn(false);
@@ -79,27 +82,24 @@ const PaginaInicial = () => {
         setTimeout(() => setMensagem(''), 3500);
         navigate(ROUTES.LOGOUT);
     }
-
     function handleSearchChange(e) {
         if (!isLoggedIn) {
             setMensagem('Faça login para pesquisar produtos!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
-        // Aqui você pode implementar a lógica de pesquisa real
+        // Lógica de pesquisa real pode ser implementada aqui
     }
-
     function handleCategoryClick(cat) {
         if (!isLoggedIn) {
             setMensagem('Faça login para filtrar por categoria!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
-        // Aqui você pode implementar a lógica de filtro real
+        // Lógica de filtro real pode ser implementada aqui
     }
-
+    // Handlers para modal de detalhes do produto
     const handleProductClick = (product) => {
-        // Sempre mostra o botão de compra no modal da página inicial
         setSelectedProduct({ ...product, showBuyButton: true });
         setModalOpen(true);
     };
@@ -127,7 +127,7 @@ const PaginaInicial = () => {
                 <div className="mensagem show info" style={{ position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 999, background: '#2196F3', color: '#fff', padding: '12px 24px', borderRadius: 8, fontWeight: 'bold' }}>{mensagem}</div>
             )}
             <Box className="landing-container" sx={{ background: '#f5fafd', minHeight: '100vh', pb: 4 }}>
-                {/* Banner principal */}
+                {/* Banner principal com chamada para ação */}
                 <Paper elevation={3} className="banner" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #1565c0 80%, #5e92f3 100%)', color: '#fff', p: { xs: 2, md: 6 }, gap: 4, flexWrap: 'wrap', mb: 4 }}>
                     <Box className="banner-content" sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: { xs: 'center', md: 'flex-start' }, minWidth: 220 }}>
                         <Typography variant="h3" component="h1" sx={{ color: '#fff', fontWeight: 700, mb: 1, fontSize: { xs: '2rem', md: '2.5rem' } }}>
@@ -141,7 +141,6 @@ const PaginaInicial = () => {
                         </Button>
                     </Box>
                 </Paper>
-
                 {/* Produtos em destaque */}
                 <Box className="produtos-destaque" sx={{ maxWidth: 1200, mx: 'auto', px: 2, mb: 6 }}>
                     <Typography variant="h5" sx={{ color: '#004d66', mb: 2 }}>Produtos em destaque</Typography>
@@ -175,8 +174,7 @@ const PaginaInicial = () => {
                         )}
                     </Grid>
                 </Box>
-
-                {/* Chamada para ação extra: só para logados */}
+                {/* Chamada para ação extra: newsletter para logados */}
                 {isLoggedIn && (
                     <Box className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
                         <Typography variant="h6" sx={{ color: '#004d66', mb: 2 }}>Receba ofertas exclusivas!</Typography>
@@ -189,6 +187,7 @@ const PaginaInicial = () => {
                     </Box>
                 )}
             </Box>
+            {/* Modal de detalhes do produto */}
             <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
             <Footer />
         </>

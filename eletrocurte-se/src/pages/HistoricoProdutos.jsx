@@ -5,6 +5,12 @@ import Footer from '../components/Footer';
 import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 
+/*
+  Página de histórico de produtos visualizados pelo usuário.
+  - Exibe produtos agrupados por mês/ano de visualização.
+  - Modal de detalhes sempre com botão de compra.
+*/
+
 function getProdutosByRoute(route, data) {
   switch (route) {
     case '/historico-compras':
@@ -91,8 +97,8 @@ export default function HistoricoProdutos() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Handlers para abrir/fechar modal de detalhes
   const handleCardClick = (product) => {
-    // Sempre mostra o botão de compra no modal do histórico de produtos visualizados
     setSelectedProduct({ ...product, showBuyButton: true });
     setModalOpen(true);
   };
@@ -104,6 +110,7 @@ export default function HistoricoProdutos() {
   return (
     <>
       <Header />
+      {/* Produtos agrupados por mês/ano de visualização */}
       <section className="produtos">
         {Object.entries(produtosPorAnoMes)
           .sort((a, b) => {
@@ -124,6 +131,7 @@ export default function HistoricoProdutos() {
             </div>
           ))}
       </section>
+      {/* Modal de detalhes do produto */}
       <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <Footer />
     </>

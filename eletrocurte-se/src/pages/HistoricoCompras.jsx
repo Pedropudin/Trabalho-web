@@ -9,6 +9,13 @@ import '../styles/UserRating.css';
 import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 
+/*
+  Página de histórico de compras do usuário.
+  - Exibe produtos agrupados por mês/ano de compra.
+  - Permite avaliar produtos ainda não avaliados.
+  - Modal de detalhes sem botão de compra.
+*/
+
 function getProdutosByRoute(route, data) {
   switch (route) {
     case '/historico-compras':
@@ -126,7 +133,7 @@ export default function HistoricoCompras() {
   return (
     <>
       <Header />
-      {/* Seção de avaliação destacada no topo */}
+      {/* Seção de avaliação destacada no topo, se houver produtos aguardando avaliação */}
       {produtosAguardando.length > 0 && (
         <section className="avaliacao">
           <img
@@ -149,6 +156,7 @@ export default function HistoricoCompras() {
           />
         </section>
       )}
+      {/* Produtos agrupados por mês/ano de compra */}
       <section className="produtos">
         {Object.entries(produtosPorAnoMes)
           .sort((a, b) => {
@@ -169,6 +177,7 @@ export default function HistoricoCompras() {
             </div>
           ))}
       </section>
+      {/* Modal de detalhes do produto */}
       <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <Footer />
     </>
