@@ -27,22 +27,6 @@ nav {
     gap: 10px;
 }
 
-/* LOGO PRINCIPAL */
-#logo {
-    width: 85px;
-    height: 85px;
-    border-radius: 50%; /* Formato circular */
-    margin-right: 5px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
-    cursor: pointer;
-}
-
-/* EFEITO HOVER DA LOGO */
-#logo:hover {
-    transform: rotate(10deg) scale(1.05); /* Rotaciona e aumenta levemente */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Sombra branca ao redor */
-}
-
 /* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
 .compras {
     display: flex;
@@ -52,58 +36,6 @@ nav {
     margin: 20px;
     border-radius: 10px;
     font-weight: bold;
-}
-
-/* CARTÃO DE AVALIAÇÃO (clientes, estrelas, etc) */
-.avaliacao {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #007b99;
-    color: white;
-    padding: 15px;
-    margin: 20px;
-    border-radius: 10px;
-}
-
-/* IMAGEM DENTRO DA AVALIAÇÃO */
-.avaliacao img {
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    border-radius: 5px;
-    background: white;
-    padding: 3px;
-}
-
-/* TEXTO DA AVALIAÇÃO */
-.avaliacao p {
-    flex: 1;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-/* BOTÃO NA AVALIAÇÃO */
-.avaliacao button {
-    padding: 8px 15px;
-    background: #005d73;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    display: flex; /* Flexbox para alinhar o ícone e o texto */
-    align-items: center;
-    gap: 10px; /* Espaçamento entre ícone e texto */
-}
-
-.avaliacao button:hover {
-    background: #003d52;
-}
-
-/* Estilo do ícone dentro do botão */
-.avaliacao button i {
-    font-size: 1.2rem; /* Tamanho do ícone */
 }
 
 /* ÁREA DE PRODUTOS (galeria) */
@@ -149,20 +81,6 @@ nav {
         gap: 10px;
     }
 
-    .avaliacao {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .avaliacao p {
-        margin: 10px 0;
-    }
-
-    .avaliacao img {
-        margin-bottom: 10px;
-    }
-
     .compras {
         flex-direction: column;
         gap: 10px;
@@ -177,11 +95,6 @@ nav {
     .produto {
         width: 100%;
         max-width: 250px;
-    }
-
-    .avaliacao button {
-        width: 90%; /* Aumenta a largura do botão */
-        max-width: 250px; /* Limita o tamanho máximo */
     }
 }
 
@@ -204,14 +117,5 @@ nav {
 
     .produto img {
         max-width: 100px; /* Ajusta o tamanho da imagem do produto */
-    }
-
-    .avaliacao {
-        padding: 15px;
-    }
-
-    .avaliacao button {
-        width: 80%; /* Ajusta o tamanho do botão */
-        max-width: 200px;
     }
 }

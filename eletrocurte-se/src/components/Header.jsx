@@ -102,9 +102,11 @@ const CategoryLink = styled('a', {
   fontSize: 16,
   padding: '8px 16px',
   borderRadius: 5,
+  cursor: 'pointer',
   fontWeight: active ? 'bold' : 'normal',
   backgroundColor: 'transparent',
   boxShadow: 'none',
+  cursor: 'pointer',
   transition: 'background-color 0.3s, font-weight 0.3s, box-shadow 0.2s',
   '&:hover': {
     backgroundColor: '#007b99',
@@ -121,14 +123,16 @@ function Header({
   onLogoClick,
   onSearchChange,
   categories = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'],
+  selectedCategoryIndex = 0,
   onCategoryClick,
+  useElementsMenu = [true, true, true],
   onProfile,
   onCart,
   onLogout,
   cartCount = 3,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0] || '');
+  const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -184,7 +188,7 @@ function Header({
               minWidth: 0,
             }}
           >
-            <IconButton
+            { useElementsMenu[0] && <IconButton
               color="inherit"
               onClick={onProfile}
               sx={{
@@ -193,8 +197,8 @@ function Header({
               }}
             >
               <AccountCircle />
-            </IconButton>
-            <IconButton
+            </IconButton>}
+            { useElementsMenu[1] && <IconButton
               color="inherit"
               onClick={onCart}
               sx={{
@@ -217,8 +221,8 @@ function Header({
               >
                 <ShoppingCartIcon />
               </Badge>
-            </IconButton>
-            <IconButton
+            </IconButton>}
+            { useElementsMenu[2] && <IconButton
               color="inherit"
               onClick={onLogout}
               sx={{
@@ -227,7 +231,7 @@ function Header({
               }}
             >
               <LogoutIcon />
-            </IconButton>
+            </IconButton>}
           </Box>
           {/* Menu mobile */}
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

@@ -1,0 +1,13 @@
+{
+    "sales_percentage": "+23%",
+    "complainings": 56,
+    "late_send": 4,
+    "new_users": 123,
+    "product_popular": {
+        "name": "Playstation 2",
+        "photo": "https://images.tcdn.com.br/img/img_prod/621461/console_playstation_2_slim_seminovo_1687_1_8a424b2161f5cac6f0af5e91db136669.jpg",
+        "price": 189.90,
+        "quantity_sold": 1289,
+        "stock": 989
+    }
+}

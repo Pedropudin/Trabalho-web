@@ -51,13 +51,9 @@ footer a:hover {
 }
 
 .social-icons a {
-  color: #555;
+  color: #99ccff; /* Azul por padrão */
   font-size: 20px;
   transition: color 0.3s;
-}
-
-.social-icons a:hover {
-  color: #0077ff;
 }
 
 @media (max-width: 768px) {

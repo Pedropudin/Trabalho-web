@@ -29,22 +29,6 @@ nav {
   gap: 10px; /* Espaço entre os elementos filhos */
 }
 
-
-/* === LOGO (circular com animação) === */
-#logo {
-  width: 85px;
-  height: 85px;
-  border-radius: 50%; /* Deixa a imagem completamente circular */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animações suaves */
-  cursor: pointer; /* Indica que é clicável */
-}
-
-#logo:hover {
-  transform: rotate(10deg) scale(1.05); /* Animação ao passar o mouse: gira e aumenta */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Destaque com sombra suave */
-}
-
-
 /* === TÍTULO PRINCIPAL DA PÁGINA === */
 .body-content h2 {
   text-align: center; /* Centraliza o título */

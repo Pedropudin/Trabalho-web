@@ -11,9 +11,9 @@ import TermosCondicoes from './pages/TermosCondicoes';
 import Checkout from './pages/Checkout';
 import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
-import PaginaPesquisa from './pages/PaginaPesquisa';
-import PaginaProduto from './pages/PaginaProduto';
-import PaginaSetor from './pages/PaginaSetor';
+import Desempenho from './pages/Desempenho';
+import Pendencias from './pages/Pendencias';
+import PaginaInicial from './pages/PaginaInicial';
 
 // Rotas centralizadas
 import ROUTES from './routes';
@@ -36,6 +36,9 @@ function AppRoutes() {
         <Route path={ROUTES.HIST_PRODUTOS} element={<HistoricoProdutos />} />
         <Route path={ROUTES.TERMOS} element={<TermosCondicoes />} />
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
+        <Route path={ROUTES.DESEMPENHO} element={<Desempenho />} />
+        <Route path={ROUTES.PENDENCIAS} element={<Pendencias />} />
+        <Route path={ROUTES.PAGINA_INICIAL} element={<PaginaInicial />} />
       </Routes>
     </>
   );
