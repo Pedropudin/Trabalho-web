@@ -1,3 +1,14 @@
+/*
+  CSS de EditarPerfil e Carteira
+  - Reset e base: garante visual consistente e limpa margens/paddings
+  - Layout principal: centraliza e limita largura do conteúdo do perfil
+  - Formulários: campos, botões e mensagens com visual limpo e acessível
+  - Modal Carteira: fundo escurecido, centralização, responsividade e destaque visual
+  - Responsividade: ajustes para telas pequenas (mobile)
+  - Animações: fade-in para modais
+  - Inputs: foco destacado para melhor usabilidade
+*/
+
 /* RESET E BASE */
 * {
   margin: 0;
@@ -7,13 +18,13 @@
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #f4f4f4; /* fundo neutro para toda a área */
 }
 
 /* CONTEÚDO PRINCIPAL */
 .editarperfil-body-content {
-  max-width: 600px;
-  margin: 40px auto 0 auto;
+  max-width: 600px; /* limita largura do conteúdo */
+  margin: 40px auto 0 auto; /* centraliza na tela */
   padding: 0 16px 40px 16px;
 }
 

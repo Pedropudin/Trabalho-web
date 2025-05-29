@@ -10,6 +10,11 @@ import Alert from '@mui/material/Alert';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import valid from 'card-validator';
 
+// Formulário para cadastro de novo cartão
+// - Valida número do cartão (inclui validação Luhn e detecção de bandeira)
+// - Passos: número e confirmação
+// - Exibe erros de validação e mensagens de feedback
+
 const steps = ['Número', 'Confirmação'];
 
 const cardLogos = {
