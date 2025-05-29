@@ -6,8 +6,8 @@ import AdminHeader from "../components/admin/AdminHeader";
 import Card from "../components/Card";
 import Question from "../components/Pendencias/Question";
 import GenericInfoRedirect from "../components/Pendencias/GenericInfoRedirect";
-import ProductCard from '../components/ProductCard';
-import ProductDetailsModal from '../components/ProductDetailsModal';
+import ProductCard from '../components/Produtos/ProductCard';
+import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 
 const Pendencias = () => {
     const [questionsData, setQuestionsData] = useState(null);
@@ -103,6 +103,7 @@ const Pendencias = () => {
                                         estado: s.delivery_state
                                     }}
                                     onClick={handleProductClick}
+                                    showBuyButton={false}
                                 />
                             </div>
                         ))}

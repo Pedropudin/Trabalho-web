@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import '../styles/PaginaInicial.css';
 import ROUTES from '../routes';
-import ProductCard from '../components/ProductCard';
-import ProductDetailsModal from '../components/ProductDetailsModal';
+import ProductCard from '../components/Produtos/ProductCard';
+import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 
 const categorias = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'];
 
@@ -99,7 +99,8 @@ const PaginaInicial = () => {
     }
 
     const handleProductClick = (product) => {
-        setSelectedProduct(product);
+        // Sempre mostra o botão de compra no modal da página inicial
+        setSelectedProduct({ ...product, showBuyButton: true });
         setModalOpen(true);
     };
     const handleModalClose = () => {
@@ -162,7 +163,13 @@ const PaginaInicial = () => {
                         ) : (
                             produtosHistorico.slice(0, 6).map((produto, idx) => (
                                 <Grid item xs={12} sm={6} md={4} key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <ProductCard product={produto} onClick={handleProductClick} />
+                                    <ProductCard 
+                                        product={produto} 
+                                        onClick={handleProductClick} 
+                                        isLoggedIn={isLoggedIn}
+                                        pageType="home"
+                                        showBuyButton={true}
+                                    />
                                 </Grid>
                             ))
                         )}

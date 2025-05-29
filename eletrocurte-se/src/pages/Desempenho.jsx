@@ -4,8 +4,8 @@ import ROUTES from '../routes';
 import Footer from "../components/Footer";
 import AdminHeader from "../components/admin/AdminHeader";
 import Reputation from "../components/Dashboard/Reputation";
-import ProductCard from '../components/ProductCard';
-import ProductDetailsModal from '../components/ProductDetailsModal';
+import ProductCard from '../components/Produtos/ProductCard';
+import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 import "../styles/Dashboard.css"
 import "../styles/TextStyles.css"
 
@@ -57,6 +57,7 @@ const Desempenho = () => {
                                 estoque: data.product_popular.stock
                             }}
                             onClick={handleProductClick}
+                            showBuyButton={false}
                         />
                     </div>
                 )}

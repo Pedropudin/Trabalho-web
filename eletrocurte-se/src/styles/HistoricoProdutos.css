@@ -59,17 +59,7 @@ nav {
 
 /* Cada cartão de produto */
 .produto {
-  background: white;
-  padding: 10px;
   text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra leve */
-  width: 180px;
-  transition: transform 0.3s ease;
-}
-
-.produto:hover {
-  transform: scale(1.05);
 }
 
 /* Imagem dentro do produto */

@@ -2,8 +2,8 @@ import React, { useMemo, useEffect, useState } from 'react';
 import Header from '../components/Header';
 import '../styles/HistoricoProdutos.css';
 import Footer from '../components/Footer';
-import ProductCard from '../components/ProductCard';
-import ProductDetailsModal from '../components/ProductDetailsModal';
+import ProductCard from '../components/Produtos/ProductCard';
+import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 
 function getProdutosByRoute(route, data) {
   switch (route) {
@@ -79,8 +79,8 @@ export default function HistoricoProdutos() {
   function renderCabecalhoMesAno(mes, ano) {
     const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
     return (
-      <section className="compras" style={{ width: '100%', flexBasis: '100%' }}>
-        <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0, width: '100%', textAlign: 'center' }}>
+      <section className="compras">
+        <p>
           Produtos visualizados em {meses[parseInt(mes, 10) - 1]} de {ano}
         </p>
       </section>
@@ -92,7 +92,8 @@ export default function HistoricoProdutos() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleCardClick = (product) => {
-    setSelectedProduct(product);
+    // Sempre mostra o botão de compra no modal do histórico de produtos visualizados
+    setSelectedProduct({ ...product, showBuyButton: true });
     setModalOpen(true);
   };
   const handleModalClose = () => {
@@ -113,13 +114,11 @@ export default function HistoricoProdutos() {
             return mesB - mesA;
           })
           .map(([chave, { ano, mes, produtos }], idx) => (
-            <div key={chave} style={{ marginBottom: 32 }}>
+            <div key={chave}>
               {renderCabecalhoMesAno(mes, ano)}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center' }}>
+              <div className="produtos">
                 {produtos.map((produto, idx) => (
-                  <div className="produto" key={(produto.id || produto.nome) + '-' + idx}>
-                    <ProductCard product={produto} onClick={handleCardClick} />
-                  </div>
+                  <ProductCard product={produto} onClick={handleCardClick} key={(produto.id || produto.nome) + '-' + idx} showBuyButton={true} />
                 ))}
               </div>
             </div>

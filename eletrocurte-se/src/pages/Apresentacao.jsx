@@ -16,7 +16,7 @@ export default function Apresentacao() {
   return (
     <>
       {/* Container principal alinhando itens ao centro */}
-      <main className="container">
+      <main className="container-apresentacao">
         {/* Logo do website (link relativo para a imagem) */}
         <img src="/logo-com-escrita.png" alt="Logo do website" className="logo" />
 

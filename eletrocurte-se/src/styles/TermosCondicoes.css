@@ -16,7 +16,7 @@ body {
 }
 
 /* Container principal do conteúdo */
-.container {
+.container-termos {
     max-width: 900px; /* Largura máxima */
     margin: auto; /* Centraliza horizontalmente */
     padding: 30px; /* Espaçamento interno */
@@ -25,9 +25,13 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra ao redor */
 }
 
-.container img {
-    height: 200px;
-    width: 550px;
+.container-termos img, .logo {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Estilo da logo */
@@ -95,16 +99,17 @@ h3 {
 
 /* Responsividade para telas menores que 768px */
 @media (max-width: 768px) {
-    .container {
-        width: 95%;
-        padding: 20px;
+    .container-termos {
+        width: 100%;
+        min-width: 0;
+        max-width: 100vw;
+        box-sizing: border-box;
+        padding: 16px;
     }
-
-    .logo {
-        width: 100px;
-        max-width: 400px;
+    .container-termos img, .logo {
+        max-width: 100%;
         height: auto;
-        margin-bottom: 15px;
+        width: auto;
     }
 
     h2 {
@@ -118,10 +123,18 @@ h3 {
 
 /* Responsividade para telas menores que 480px */
 @media (max-width: 480px) {
-    .container {
-        width: 95%;
-        padding: 8px;
-      }
+    .container-termos {
+        width: 100%;
+        min-width: 0;
+        max-width: 100vw;
+        box-sizing: border-box;
+        padding: 6px;
+    }
+    .container-termos img, .logo {
+        max-width: 100%;
+        height: auto;
+        width: auto;
+    }
 
     h2 {
         font-size: 20px;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EfeitoEletrico from './EfeitoEletrico';
+import '../styles/ScrollToTop.css';
 
 const ScrollToTop = () => {
   const [visible, setVisible] = useState(false);

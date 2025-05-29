@@ -12,7 +12,7 @@ import ScrollToTop from '../components/ScrollToTop';
 export default function TermosCondicoes() {
   return (
     <>
-      <main className="container">
+      <main className="container-termos">
         {/* Logo para reforçar identidade visual */}
         <img src="/logo-com-escrita.png" alt="Logo do website" className="logo" />
 
