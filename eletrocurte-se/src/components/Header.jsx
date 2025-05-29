@@ -298,24 +298,31 @@ function Header({
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={onProfile}>
-                <ListItemIcon>
-                  <AccountCircle fontSize="small" />
-                </ListItemIcon>
-                Perfil
-              </MenuItem>
-              <MenuItem onClick={onCart}>
-                <ListItemIcon>
-                  <ShoppingCartIcon fontSize="small" />
-                </ListItemIcon>
-                Carrinho
-              </MenuItem>
-              <MenuItem onClick={onLogout}>
-                <ListItemIcon>
-                  <LogoutIcon fontSize="small" />
-                </ListItemIcon>
-                Sair
-              </MenuItem>
+              {/* Exibe apenas as opções ativas conforme useElementsMenu */}
+              {useElementsMenu[0] && (
+                <MenuItem onClick={onProfile}>
+                  <ListItemIcon>
+                    <AccountCircle fontSize="small" />
+                  </ListItemIcon>
+                  Perfil
+                </MenuItem>
+              )}
+              {useElementsMenu[1] && (
+                <MenuItem onClick={onCart}>
+                  <ListItemIcon>
+                    <ShoppingCartIcon fontSize="small" />
+                  </ListItemIcon>
+                  Carrinho
+                </MenuItem>
+              )}
+              {useElementsMenu[2] && (
+                <MenuItem onClick={onLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon fontSize="small" />
+                  </ListItemIcon>
+                  Sair
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
