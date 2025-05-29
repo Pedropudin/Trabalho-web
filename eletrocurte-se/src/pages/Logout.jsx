@@ -29,7 +29,6 @@ export default function Logout() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(intervalRef.current);
-          navigate(ROUTES.PAGINA_INICIAL);
           return 0;
         }
         if (timerRef.current) timerRef.current.textContent = prev - 1;
@@ -40,6 +39,13 @@ export default function Logout() {
       clearInterval(intervalRef.current);
     };
   }, [navigate]);
+
+  // useEffect para redirecionar quando countdown chega a 0
+  React.useEffect(() => {
+    if (countdown === 0) {
+      navigate(ROUTES.PAGINA_INICIAL);
+    }
+  }, [countdown, navigate]);
 
   // Handler para botão de retorno imediato
   function handleHomeClick() {

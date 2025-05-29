@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
 import { styled, alpha } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -297,9 +298,24 @@ function Header({
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={onProfile}>Perfil</MenuItem>
-              <MenuItem onClick={onCart}>Carrinho</MenuItem>
-              <MenuItem onClick={onLogout}>Sair</MenuItem>
+              <MenuItem onClick={onProfile}>
+                <ListItemIcon>
+                  <AccountCircle fontSize="small" />
+                </ListItemIcon>
+                Perfil
+              </MenuItem>
+              <MenuItem onClick={onCart}>
+                <ListItemIcon>
+                  <ShoppingCartIcon fontSize="small" />
+                </ListItemIcon>
+                Carrinho
+              </MenuItem>
+              <MenuItem onClick={onLogout}>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                Sair
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
