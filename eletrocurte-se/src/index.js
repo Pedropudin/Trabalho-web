@@ -9,10 +9,14 @@ import './styles/EditarPerfil.css';
 import './styles/HistoricoCompras.css';
 import './styles/HistoricoProdutos.css';
 import './styles/Perfil.css';
+import './styles/Checkout.css'
 import './styles/TermosCondicoes.css';
 import './styles/Header.css';
 import './styles/HeaderLogs.css';
 import './styles/EfeitoEletrico.css';
+import './styles/PaginaPesquisa.css';
+import './styles/PaginaProduto.css';
+import './styles/CompraFinalizada.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

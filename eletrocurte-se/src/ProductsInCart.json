@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "HyperX Cloud II",
+    "price": 111.0,
+    "quantity": 1,
+    "img": "https://cdn.awsli.com.br/954/954868/produto/68626025/5d150286dc.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Placa De Vídeo Galax, Geforce RTX 3050",
+    "price": 111.0,
+    "quantity": 2,
+    "img": "https://images.kabum.com.br/produtos/fotos/322427/placa-de-video-galax-geforce-rtx-3050-1-click-oc-8gb-gddr6-128bit-35nsl8md6ocv_1642699047_g.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Notebook Dell Inspiron 15",
+    "price": 120.0,
+    "quantity": 1,
+    "img": "https://images.kabum.com.br/produtos/fotos/112047/notebook-dell-inspiron-i15-3501-m20p-intel-core-i5-8gb-256gb-ssd-15-6-windows-10-pro-cinza_1609858302_g.jpg"
+  }
+]

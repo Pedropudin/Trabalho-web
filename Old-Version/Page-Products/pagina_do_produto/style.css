@@ -134,11 +134,14 @@ header {
     flex-flow: row nowrap;
     border-color: #004d66;
     background-color: white;
-    padding: 80px;
+    padding: 40px 32px;
     border-radius: 10px;
     width: 100%;
+    max-width: 1000px;    /* aumenta o tamanho máximo */
+    margin: 0 auto 40px auto; /* centraliza */
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
     align-items: center;
+    gap: 32px;
 }
 .items button{
     align-items: center;

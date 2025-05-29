@@ -1,0 +1,94 @@
+.personal-details-form {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,123,153,0.09);
+    padding: 32px 28px 24px 28px;
+    max-width: 480px;
+    margin: 32px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.personal-details-form h2 {
+    color: #007b99;
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e0f7fa;
+    padding-bottom: 8px;
+    background: none;
+}
+
+.personal-details-form h3 {
+    color: #005f73;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 22px 0 8px 0;
+    letter-spacing: 0.2px;
+    border-bottom: none;
+    text-align: left;
+    background: none;
+    padding: 0;
+}
+
+.personal-details-form input {
+    border: 1.5px solid #e0f7fa;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 1rem;
+    margin-bottom: 0;
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+    background: #f7fafc;
+    color: #222;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.personal-details-form input:focus {
+    border-color: #007b99;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.08);
+    background: #fff;
+}
+
+.personal-details-form button[type="submit"] {
+    margin-top: 28px;
+    width: 100%;
+    padding: 13px 0;
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.13rem;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 2px 12px rgba(0,123,153,0.10);
+    letter-spacing: 0.5px;
+}
+
+.personal-details-form button[type="submit"]:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    box-shadow: 0 6px 24px rgba(0,123,153,0.18);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.personal-details-form > div {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+    .personal-details-form {
+        padding: 18px 6px 12px 6px;
+        max-width: 98vw;
+    }
+    .personal-details-form > div {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
