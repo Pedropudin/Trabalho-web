@@ -8,11 +8,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import '../../../styles/EditarPerfil.css';
 
+// Componente principal da Carteira do usuário
+// - Gerencia saldo e cartões usando localStorage
+// - Permite adicionar saldo e excluir cartões
+// - Usa ModalCarteira para adicionar saldo e CartoesList para listar cartões
+// - Exibe botões para adicionar saldo e voltar ao perfil
+// - Utiliza Material UI para layout e diálogos
+// - Atualiza localStorage sempre que saldo ou cartões mudam
+// - Confirma exclusão de cartão com diálogo
+
 export default function Carteira({ onVoltar }) {
-  // Inicializa saldo com localStorage, ou 150 se vazio
+  // Inicializa saldo com localStorage, ou 0 se vazio
   const [saldo, setSaldo] = useState(() => {
     const saldoArmazenado = localStorage.getItem('carteiraSaldo');
-    return saldoArmazenado ? parseFloat(saldoArmazenado) : 150.0;
+    return saldoArmazenado ? parseFloat(saldoArmazenado) : 0;
   });
 
   // Inicializa cartões com localStorage, ou com um cartão padrão
@@ -63,9 +72,12 @@ export default function Carteira({ onVoltar }) {
   return (
     <Paper elevation={4} sx={{ p: 4, maxWidth: 400, mx: 'auto', borderRadius: 3 }}>
       <Typography variant="h4" align="center" fontWeight={700} color="primary" mb={2}>
+        {/* variant="h4": título grande */}
+        {/* fontWeight={700}: deixa o texto em negrito */}
+        {/* color="primary": usa a cor principal do tema */}
+        {/* mb={2}: adiciona margem inferior (margin-bottom) para espaçamento */}
         Carteira
       </Typography>
-
       <Button
         variant="contained"
         color="primary"

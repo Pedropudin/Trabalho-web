@@ -13,7 +13,7 @@ body {
 
 /* === CABEÇALHO === */
 header {
-  background-color: #004d66; /* Azul escuro para destaque visual */
+  background-color: #004d66; /* Azul escuro institucional para destaque visual */
   color: white; /* Contraste com o fundo escuro */
   padding: 10px; /* Espaçamento interno para não colar nas bordas */
 }
@@ -68,7 +68,6 @@ nav {
   }
 }
 
-
 /* === ESTILO INDIVIDUAL DOS CARDS === */
 .card {
   background-color: #fff;
@@ -101,7 +100,6 @@ nav {
   transform: translateY(-4px); /* Elevação ao passar o mouse */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Aumenta sombra */
 }
-
 
 /* === CARD DESTACADO (ocupando coluna específica) === */
 .wide-card {

@@ -1,3 +1,8 @@
+// -----------------------------------------------------------------------------
+// HeaderLogs.jsx
+// Cabeçalho simples para páginas de Login e Logout.
+// Exibe apenas a logo centralizada, com possibilidade de customização.
+// -----------------------------------------------------------------------------
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/HeaderLogs.css';
@@ -10,6 +15,7 @@ import '../styles/HeaderLogs.css';
 export default function HeaderLogs({ logoSrc = "/logo-com-escrita.png", alt = "Logo", style = {} }) {
   return (
     <header className="header-logs" style={{ textAlign: 'center', background: '#004d66', padding: 20, ...style }}>
+      {/* Logo centralizada, customizável via props */}
       <img
         src={logoSrc}
         alt={alt}
