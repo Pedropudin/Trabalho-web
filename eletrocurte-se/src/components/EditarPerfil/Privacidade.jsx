@@ -64,6 +64,7 @@ export default function Privacidade({ onVoltar }) {
           <Switch
             checked={notificacoesEmail}
             onChange={() => setNotificacoesEmail((prev) => !prev)}
+            sx={{mt:2}}
           />
         }
         label="Permitir notificações por e-mail"
@@ -73,6 +74,7 @@ export default function Privacidade({ onVoltar }) {
           <Switch
             checked={compartilharDados}
             onChange={() => setCompartilharDados((prev) => !prev)}
+            sx={{mt:2}}
           />
         }
         label="Compartilhamento de dados com parceiros"

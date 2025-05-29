@@ -19,7 +19,15 @@ export default function Logout() {
   const intervalRef = useRef(null);
   const [countdown, setCountdown] = useState(10);
 
+  // Protege a tela de logout: se não está deslogando, redireciona para home
   useEffect(() => {
+    // Se não acabou de sair, não deixa acessar esta página
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+    }
+    // Substitui o histórico para evitar voltar para logout
+    window.history.replaceState({}, document.title, window.location.pathname);
+
     // Remove flags de login ao sair e inicia contagem regressiva
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
@@ -29,7 +37,6 @@ export default function Logout() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(intervalRef.current);
-          navigate(ROUTES.PAGINA_INICIAL);
           return 0;
         }
         if (timerRef.current) timerRef.current.textContent = prev - 1;
@@ -41,10 +48,17 @@ export default function Logout() {
     };
   }, [navigate]);
 
+  // useEffect para redirecionar quando countdown chega a 0
+  React.useEffect(() => {
+    if (countdown === 0) {
+      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+    }
+  }, [countdown, navigate]);
+
   // Handler para botão de retorno imediato
   function handleHomeClick() {
     clearInterval(intervalRef.current);
-    navigate(ROUTES.PAGINA_INICIAL);
+    navigate(ROUTES.PAGINA_INICIAL, { replace: true });
   }
 
   return (

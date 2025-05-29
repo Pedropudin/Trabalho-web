@@ -14,8 +14,8 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 
 const CARD_WIDTH = 260;
-const CARD_HEIGHT = 370;
-const IMG_HEIGHT = 160;
+const CARD_HEIGHT = 420; // Aumenta altura para mais espaço para texto
+const IMG_HEIGHT = 90;   // Diminui altura da imagem para liberar espaço
 
 const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
   // Estado para controlar erro de carregamento da imagem
@@ -107,21 +107,62 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
         tabIndex={0}
       >
         {/* Imagem do produto ou mensagem de indisponível */}
-        <Box sx={{ height: IMG_HEIGHT, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+        <Box sx={{
+          height: IMG_HEIGHT,
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#fff',
+          mb: 1
+        }}>
           {imageSrc ? (
             <img
               src={imageSrc}
               alt={product.nome || product.name}
-              style={{ maxHeight: IMG_HEIGHT, maxWidth: '90%', objectFit: 'contain', margin: '0 auto', display: 'block', borderRadius: 8 }}
+              style={{
+                maxHeight: IMG_HEIGHT,
+                maxWidth: '80%',
+                objectFit: 'contain',
+                margin: '0 auto',
+                display: 'block',
+                borderRadius: 8,
+                background: '#fff'
+              }}
               onError={() => setImgError(true)}
             />
           ) : (
             <Typography variant="caption" color="text.secondary">Imagem indisponível</Typography>
           )}
         </Box>
-        <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', p: 2, gap: 0.5 }}>
+        <CardContent sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          p: 2,
+          gap: 0.5
+        }}>
           {/* Nome do produto */}
-          <Typography gutterBottom variant="h6" component="div" noWrap sx={{ fontSize: '1.1rem', textAlign: 'center', minHeight: 28 }}>
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            sx={{
+              fontSize: '1.08rem',
+              textAlign: 'center',
+              minHeight: 44,
+              fontWeight: 600,
+              lineHeight: 1.2,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              wordBreak: 'break-word',
+              mb: 1
+            }}
+          >
             {product.nome || product.name}
           </Typography>
           {/* Preço e parcelamento */}
@@ -157,14 +198,20 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
             )}
           </Box>
           {/* Detalhes adicionais: marca, modelo, cor, voltagem, garantia */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
-            <Typography variant="caption" color="text.secondary">
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 0.5,
+            width: '100%'
+          }}>
+            <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
               {product.marca && `Marca: ${product.marca}`} {product.modelo && `| Modelo: ${product.modelo}`}
             </Typography>
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
               {product.cor && `Cor: ${product.cor}`} {product.voltagem && `| Voltagem: ${product.voltagem}`}
             </Typography>
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
               {product.garantia && `Garantia: ${product.garantia}`}
             </Typography>
           </Box>

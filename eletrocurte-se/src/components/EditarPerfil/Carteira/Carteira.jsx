@@ -78,6 +78,24 @@ export default function Carteira({ onVoltar }) {
         {/* mb={2}: adiciona margem inferior (margin-bottom) para espaçamento */}
         Carteira
       </Typography>
+
+      {/* Novo componente de cartões */}
+      <CartoesList cartoes={cartoesValidados} onExcluir={handleExcluirCartao} />
+
+      {modalAberto && (
+        <ModalCarteira
+          saldo={saldo}
+          setSaldo={setSaldo}
+          cartoes={cartoes}
+          setCartoes={setCartoes}
+          cartoesValidados={cartoesValidados}
+          onClose={() => setModalAberto(false)}
+        />
+      )}
+
+      {/* Espaço extra antes dos botões */}
+      <div style={{ height: 24 }} />
+
       <Button
         variant="contained"
         color="primary"
@@ -96,20 +114,6 @@ export default function Carteira({ onVoltar }) {
       >
         Voltar ao Perfil
       </Button>
-
-      {/* Novo componente de cartões */}
-      <CartoesList cartoes={cartoesValidados} onExcluir={handleExcluirCartao} />
-
-      {modalAberto && (
-        <ModalCarteira
-          saldo={saldo}
-          setSaldo={setSaldo}
-          cartoes={cartoes}
-          setCartoes={setCartoes}
-          cartoesValidados={cartoesValidados}
-          onClose={() => setModalAberto(false)}
-        />
-      )}
 
       <Dialog open={dialogOpen} onClose={cancelarExclusao}>
         <DialogTitle>Confirmação</DialogTitle>

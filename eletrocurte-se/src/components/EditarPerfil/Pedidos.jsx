@@ -60,7 +60,7 @@ export default function Pedidos({ onVoltar }) {
     <TableContainer component={Paper} sx={{ maxWidth: 600, margin: 'auto', mt: 4, mb: 4 }}>
       {/* TableContainer: container para tabela, usa Paper para destaque visual
           sx: largura máxima, centralização, margens superior/inferior */}
-      <Typography variant="h5" align="center" sx={{ mt: 2 }}>Meus Pedidos</Typography>
+      <Typography variant="h5" align="center" sx={{ mt: 2, mb: 2 }}>Meus Pedidos</Typography>
       {loading ? (
         <>
           <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
