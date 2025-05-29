@@ -1,15 +1,16 @@
 /*
-  CSS de EditarPerfil e Carteira
-  - Reset e base: garante visual consistente e limpa margens/paddings
-  - Layout principal: centraliza e limita largura do conteúdo do perfil
-  - Formulários: campos, botões e mensagens com visual limpo e acessível
-  - Modal Carteira: fundo escurecido, centralização, responsividade e destaque visual
-  - Responsividade: ajustes para telas pequenas (mobile)
-  - Animações: fade-in para modais
-  - Inputs: foco destacado para melhor usabilidade
+  EditarPerfil.css
+  - CSS para telas de edição de perfil e carteira do Eletrocurte-se.
+  - Reset e base: remove margens/paddings padrão e define fonte global.
+  - Layout principal: centraliza e limita largura do conteúdo do perfil.
+  - Formulários: campos, botões e mensagens com visual limpo, acessível e responsivo.
+  - Modal Carteira/Endereço: fundo escurecido, centralização, responsividade e destaque visual.
+  - Responsividade: media queries para telas pequenas (mobile).
+  - Animações: fade-in para modais.
+  - Inputs: foco destacado para melhor usabilidade.
 */
 
-/* RESET E BASE */
+/* RESET E BASE: garante visual consistente em todos os navegadores */
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +22,7 @@ body {
   background-color: #f4f4f4; /* fundo neutro para toda a área */
 }
 
-/* CONTEÚDO PRINCIPAL */
+/* CONTEÚDO PRINCIPAL: centraliza e limita largura do conteúdo do perfil */
 .editarperfil-body-content {
   max-width: 600px; /* limita largura do conteúdo */
   margin: 40px auto 0 auto; /* centraliza na tela */
@@ -33,6 +34,7 @@ body {
   justify-content: center;
 }
 
+/* CARD DE FORMULÁRIO: visual limpo, sombra e espaçamento */
 .editarperfil-card-form {
   background: #fff;
   border-radius: 12px;
@@ -103,6 +105,7 @@ body {
   color: #3949ab;
 }
 
+/* BOTÕES: estilos para salvar e voltar, com hover e acessibilidade */
 .editarperfil-btn-salvar,
 .editarperfil-btn-voltar {
   padding: 10px 0;
@@ -134,6 +137,7 @@ body {
   background: #ccc;
 }
 
+/* MENSAGEM DE FEEDBACK */
 .editarperfil-mensagem-editar {
   margin: 10px 0 0 0;
   padding: 8px 0;
@@ -144,13 +148,13 @@ body {
   font-size: 1rem;
 }
 
-/* ESTILOS DO MODAL CARTEIRA */
+/* MODAL CARTEIRA: overlay escurecido e modal centralizado */
 .modal-carteira-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(30, 34, 60, 0.55); /* Mais escuro para congelar */
+  background: rgba(30, 34, 60, 0.55); /* escurece fundo */
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -232,7 +236,7 @@ body.modal-carteira-open {
   background: #fff;
 }
 
-/* MODAL ENDERECO (ajuste visual para seguir padrão do modal-carteira) */
+/* MODAL ENDERECO: segue padrão visual do modal-carteira */
 .modal-endereco-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -295,7 +299,7 @@ body.modal-endereco-open {
   border-radius: 1px;
 }
 
-
+/* RESPONSIVIDADE: ajustes para telas pequenas */
 @media (max-width: 600px) {
   .editarperfil-body-content {
     max-width: 100%;
@@ -324,7 +328,6 @@ body.modal-endereco-open {
   }
 }
 
-/* Corrige linha do Stepper cortada */
 .modal-endereco .MuiStepper-root .MuiStepConnector-line {
   min-height: 2px;
   border-top-width: 2px;

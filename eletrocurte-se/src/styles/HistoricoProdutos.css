@@ -8,24 +8,24 @@
 
 /* Fundo da página */
 body {
-  background-color: #f4f4f4; /* Cor clara de fundo */
+  background-color: #f4f4f4; /* Cor clara de fundo para toda a página */
 }
 
-/* Cabeçalho superior (sem padding nesse trecho) */
+/* Cabeçalho superior */
 header {
-  background-color: #004d66; /* Azul escuro */
-  color: white; /* Texto branco */
+  background-color: #004d66; /* Azul escuro institucional */
+  color: white; /* Texto branco para contraste */
   padding: 10px; /* Espaçamento interno */
 }
 
 /* Barra de navegação principal */
 nav {
-  display: flex; /* Layout em linha */
-  justify-content: space-between; /* Itens espaçados */
+  display: flex; /* Layout horizontal dos itens */
+  justify-content: space-between; /* Espaça itens nas extremidades */
   align-items: center; /* Centraliza verticalmente */
   padding: 10px;
-  flex-wrap: wrap; /* Permite quebra de linha */
-  gap: 10px;
+  flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+  gap: 10px; /* Espaço entre itens */
 }
 
 /* Seção de compras, tipo uma chamada ou destaque */
@@ -48,7 +48,7 @@ nav {
   width: 100%;
 }
 
-/* Galeria de produtos */
+/* Galeria de produtos visualizados */
 .produtos {
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +59,7 @@ nav {
 
 /* Cada cartão de produto */
 .produto {
-  text-align: center;
+  text-align: center; /* Centraliza conteúdo do cartão */
 }
 
 /* Imagem dentro do produto */
@@ -77,7 +77,7 @@ nav {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
-    /* Mantém a busca responsiva e o layout geral */
+    /* Ajusta navegação e layout para tablets/celulares */
     nav {
         flex-direction: column;
         gap: 10px;

@@ -7,27 +7,27 @@
 }
 
 body {
-    background-color: #f4f4f4; /* Cor de fundo suave */
+    background-color: #f4f4f4; /* Cor de fundo suave para toda a página */
 }
 
-/* CABEÇALHO */
+/* CABEÇALHO PRINCIPAL */
 header {
-    background-color: #004d66; /* Fundo azul escuro */
-    color: white; /* Texto branco */
+    background-color: #004d66; /* Fundo azul escuro institucional */
+    color: white; /* Texto branco para contraste */
     padding: 10px; /* Espaçamento interno */
 }
 
-/* BARRA DE NAVEGAÇÃO */
+/* BARRA DE NAVEGAÇÃO SUPERIOR */
 nav {
-    display: flex; /* Layout em linha */
-    justify-content: space-between; /* Itens espaçados */
+    display: flex; /* Layout horizontal dos itens */
+    justify-content: space-between; /* Espaça itens nas extremidades */
     align-items: center; /* Centraliza verticalmente */
     padding: 10px;
-    flex-wrap: wrap; /* Permite quebra de linha */
-    gap: 10px;
+    flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+    gap: 10px; /* Espaço entre itens */
 }
 
-/* SEÇÃO DE COMPRAS (tipo um resumo ou promoção) */
+/* SEÇÃO DE RESUMO DE COMPRAS OU PROMOÇÃO */
 .compras {
     display: flex;
     align-items: center;
@@ -38,7 +38,7 @@ nav {
     font-weight: bold;
 }
 
-/* ÁREA DE PRODUTOS (galeria) */
+/* GALERIA DE PRODUTOS COMPRADOS */
 .produtos {
     display: flex;
     flex-wrap: wrap; /* Quebra linha quando necessário */
@@ -50,7 +50,7 @@ nav {
 /* CARTÃO DE PRODUTO INDIVIDUAL */
 .produto {
   /* Removido: background, box-shadow, border-radius, padding, width, transition */
-  text-align: center;
+  text-align: center; /* Centraliza conteúdo do cartão */
 }
 
 .produto img {
@@ -66,7 +66,7 @@ nav {
 
 /* --- RESPONSIVIDADE PARA TELAS ATÉ 768PX --- */
 @media (max-width: 768px) {
-    /* Mantém a busca responsiva e o layout geral */
+    /* Ajusta navegação e layout para tablets/celulares */
     nav {
         flex-direction: column;
         gap: 10px;
