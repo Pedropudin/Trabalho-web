@@ -7,6 +7,13 @@ import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
 import ProductDisplay from '../components/ProductDisplay'; 
 
+/*
+  Página de pesquisa do portal Eletrocurte-se.
+  - Display de todos os produtos em ordem aleatória quando acessado como "/PaginaPesquisa"
+  - Display de produtos que contenham aquilo que foi colocado na URL ou pesquisado atráves da barra de pesquisa.
+  - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
+*/
+
 function PaginaPesquisa() {
     //Variáveis de estado
     const { name } = useParams();  //Faz a identificação do nome da url  
@@ -23,11 +30,13 @@ function PaginaPesquisa() {
         } else {
             fetch('/data/produtos.json')
                 .then(res => res.json())
-                .then(data => setProdutosLocais(data))
+                .then(data => {
+                    setProdutosLocais(data);
+                })
                 .catch(() => setProdutosLocais([]));
         }
     }, []);
-
+    //Lida com as marcas dos produtos
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
@@ -37,7 +46,7 @@ function PaginaPesquisa() {
     }
     //Utilização do useMemo para organizar, sempre que alterada, a nova ordem de nossos produtos
     const orderedProducts = React.useMemo(() => {
-        produtosLocais.sort((a, b) => {
+        const produtosOrdenados = [...produtosLocais].sort((a, b) => {
             if (a.inStock > 0  && b.inStock === 0) return -1; 
             if (a.inStock === 0  && b.inStock > 0) return 1; 
             if (order === "alphabetical-asc") {
@@ -51,18 +60,17 @@ function PaginaPesquisa() {
             }
             return 0;
         });
-        return produtosLocais;
-    }, [order]);
+        return produtosOrdenados;
+    }, [order, produtosLocais]);
 
-    // Filtra produtos pela marca selecionada
-    const filteredProducts = orderedProducts.filter(Products => {
-        // Só filtra por nome se searchName existir
-        const matchesName = !name || Products.name.toLowerCase().includes(name.toLowerCase());
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(Products.marca.toLowerCase());
-        const matchesMin = minPrice === '' || Products.price >= Number(minPrice);
-        const matchesMax = maxPrice === '' || Products.price <= Number(maxPrice);
+    const filteredProducts = orderedProducts.filter(product => {
+        const matchesName = !name || product.name.toLowerCase().includes(name.toLowerCase());
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.marca.toLowerCase());
+        const matchesMin = minPrice === '' || product.price >= Number(minPrice);
+        const matchesMax = maxPrice === '' || product.price <= Number(maxPrice);
         return matchesBrand && matchesMin && matchesMax && matchesName;
     });
+    
 
     return(
         <>

@@ -8,6 +8,17 @@ import PaymentDetails from '../components/PaymentDetails';
 import PersonalDetails from '../components/PersonalDetails';
 import Purchase from '../components/Purchase';
 
+
+/*
+  Página de carrinho + compra
+  - Exibida quando entramos em carrinho, ou ao continuar rumo à confirmação de compra
+  - Alterna entre os passos essenciais para que uma compra seja efeturada. Fazendo isso atráves da substituição dos componentes criados.  
+*/
+
+
+
+
+
 export default function Checkout() {
 
     //Atualização de checkout em uma mesma página, a fim de facilitar e componentizar o máximo possível

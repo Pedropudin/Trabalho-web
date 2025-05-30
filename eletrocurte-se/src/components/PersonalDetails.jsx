@@ -5,6 +5,13 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
+/*
+  Página de dados do comprador.
+  - Exibida durante processo de conclusão de compra.
+  - Recolhe os dados de um cliente, como data de nascimento, email, nome, endereço.
+  - Botões de redirecionamento para tela anterior ou para a próxima etapa da conclusão do pedido.
+*/
+
 export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     //Verifica se existe um arquivo locar existente, ou cria um vazio. 
