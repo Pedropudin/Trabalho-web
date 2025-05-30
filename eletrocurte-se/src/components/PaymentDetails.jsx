@@ -21,7 +21,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     ];
 
     // Progresso
-    const activeStep = 1;
+    const activeStep = 2;
 
     //Formatação de CPF
     function formatCPF(value) {
