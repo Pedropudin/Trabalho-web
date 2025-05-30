@@ -1,3 +1,4 @@
+/* Reset e layout principal */
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +13,7 @@ body {
     flex-direction: column;
 }
 
+/* Conteúdo principal da página do produto */
 .main-content {
     flex: 1;
     text-align: center;
@@ -28,6 +30,7 @@ body {
     height: auto;
 }
 
+/* Card do produto */
 .item {
     display: flex;
     flex-flow: row nowrap;
@@ -59,6 +62,7 @@ body {
     background-color: #007b99;
 }
 
+/* Imagem e informações do produto */
 .product-information {
     justify-content: space-between; 
     justify-content: flex-start;
@@ -83,6 +87,7 @@ body {
     padding-right: 40px; 
 }
 
+/* Miniaturas e navegação de imagens */
 .IconArrowCarousel{
     color: black;
     width: 20px;
@@ -113,6 +118,8 @@ body {
     box-sizing: border-box;
     transition: border 0.2s;
 }
+
+/* Nome, preço e disponibilidade */
 .product-name-product-page{
     margin: 10px 0;
     justify-content: center;
@@ -151,6 +158,8 @@ body {
     margin-right: auto;
     display: block;
 }
+
+/* Botões de ação */
 .product-buttons {
     display: flex;
     flex-flow: row wrap;
@@ -180,6 +189,8 @@ body {
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
     transform: translateY(-2px) scale(1.04);
 }
+
+/* Especificações e descrição */
 .text-specifications, .text-description {
     text-align: start;
     background-color: #f9f9f9; 
@@ -220,6 +231,7 @@ body {
     margin-bottom: 5px;
 }
 
+/* Responsivo para mobile */
 @media (max-width: 768px) {
     *{
         max-width: 100%;
