@@ -1,26 +1,33 @@
 import '../styles/PaginaPesquisa.css';
-import React, { useState } from 'react';
-import Products from '../Products.json'; 
-import { navigate, useNavigate, useParams } from "react-router-dom";
-import ROUTES from '../routes';
+import React, { useState, useEffect } from 'react';
+import {useParams } from "react-router-dom";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
 import ProductDisplay from '../components/ProductDisplay'; 
 
-function PaginaPesquisa({searchName = "HyperX"}) {
+function PaginaPesquisa() {
     //Variáveis de estado
-    const { name } = useParams();  //Faz a identificação do nome da url 
-    searchName = name; 
+    const { name } = useParams();  //Faz a identificação do nome da url  
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [produtosLocais, setProdutosLocais] = React.useState([]);
+    //Lê dados dos produtos diretamento do JSON
+    useEffect(() => {
+        const localProducts = localStorage.getItem("products");
+        if (localProducts) {
+            setProdutosLocais(JSON.parse(localProducts));
+        } else {
+            fetch('/data/Produtos.json')
+                .then(res => res.json())
+                .then(data => setProdutosLocais(data))
+                .catch(() => setProdutosLocais([]));
+        }
+    }, []);
 
-    
-    //Confere se existe algum item no localStorage, caso não exista, cria um 
-    const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products;
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
@@ -49,7 +56,8 @@ function PaginaPesquisa({searchName = "HyperX"}) {
 
     // Filtra produtos pela marca selecionada
     const filteredProducts = orderedProducts.filter(Products => {
-        const matchesName = Products.name.toLowerCase().includes(searchName.toLowerCase());
+        // Só filtra por nome se searchName existir
+        const matchesName = !name || Products.name.toLowerCase().includes(name.toLowerCase());
         const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(Products.marca.toLowerCase());
         const matchesMin = minPrice === '' || Products.price >= Number(minPrice);
         const matchesMax = maxPrice === '' || Products.price <= Number(maxPrice);
@@ -72,7 +80,7 @@ function PaginaPesquisa({searchName = "HyperX"}) {
                 />
                 <div className="results">
                     <div className="results-header-row">
-                        <h4>Resultados para "{searchName}"</h4>
+                        <h4>Resultados para "{!name ? "Geral" : name}"</h4>
                         <select
                             id="order-criteria"
                             value={order}
