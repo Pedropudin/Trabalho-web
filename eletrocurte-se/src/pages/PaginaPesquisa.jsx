@@ -1,6 +1,5 @@
 import '../styles/PaginaPesquisa.css';
-import React, { useState } from 'react';
-import Products from '../Products.json'; 
+import React, { useState, useEffect } from 'react';
 import {useParams } from "react-router-dom";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -15,9 +14,20 @@ function PaginaPesquisa() {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [produtosLocais, setProdutosLocais] = React.useState([]);
+    //Lê dados dos produtos diretamento do JSON
+    useEffect(() => {
+        const localProducts = localStorage.getItem("products");
+        if (localProducts) {
+            setProdutosLocais(JSON.parse(localProducts));
+        } else {
+            fetch('/data/produtos.json')
+                .then(res => res.json())
+                .then(data => setProdutosLocais(data))
+                .catch(() => setProdutosLocais([]));
+        }
+    }, []);
 
-    //Confere se existe algum item no localStorage, caso não exista, cria um 
-    const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products;
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 

@@ -1,12 +1,11 @@
 import "../styles/PaginaSetor.css";
-import Products from '../Products.json'; 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
 import ScrollToTop from "../components/ScrollToTop";
 import ProductDisplay from "../components/ProductDisplay";
 import { useParams, useNavigate } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 export default function PaginaSetor() {
     const { name } = useParams(); 
@@ -14,8 +13,21 @@ export default function PaginaSetor() {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [produtosLocais, setProdutosLocais] = React.useState([]);
     
-    const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products; //Inicializa o localStorage ou copia dos produtos
+    //Lê dados dos produtos diretamento do JSON
+    useEffect(() => {
+        const localProducts = localStorage.getItem("products");
+        if (localProducts) {
+            setProdutosLocais(JSON.parse(localProducts));
+        } else {
+            fetch('/data/produtos.json')
+                .then(res => res.json())
+                .then(data => setProdutosLocais(data))
+                .catch(() => setProdutosLocais([]));
+        }
+    }, []);
+
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]//Pega todas as marcas disponíves
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 

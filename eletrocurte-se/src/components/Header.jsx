@@ -167,6 +167,7 @@ function Header({
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
 
   // Abre menu mobile
@@ -179,7 +180,26 @@ function Header({
     setSelectedCategory(cat);
     if (onCategoryClick) onCategoryClick(cat);
   };
-  
+
+  // Handler para mudança no campo de pesquisa
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+    if (onSearchChange) onSearchChange(e);
+  };
+
+  //Envio de conteúdo da barra de pesquisa
+  const handleSearchKeyDown = (e) => {
+    const searchRealValue = searchValue.trim()
+    if (searchDisabled) {
+      if (onSearchDenied) onSearchDenied();
+      e.preventDefault();
+      return;
+    }
+    if (e.key === 'Enter' && searchRealValue) {
+      navigate(`/PaginaPesquisa/${encodeURIComponent(searchRealValue)}`);
+    }
+  };
+
   const handleCartClick = () => {
     if (onCart) onCart();
     navigate(ROUTES.CHECKOUT);
@@ -227,14 +247,8 @@ function Header({
               <InputBase
                 placeholder="Pesquisar…"
                 inputProps={{ 'aria-label': 'search' }}
-                onChange={searchDisabled ? (e) => {
-                  if (onSearchDenied) onSearchDenied();
-                  e.target.value = '';
-                } : onSearchChange}
-                onKeyDown={searchDisabled ? (e) => {
-                  if (onSearchDenied) onSearchDenied();
-                  e.preventDefault();
-                } : undefined}
+                onChange={handleSearchChange}
+                onKeyDown={handleSearchKeyDown}
                 sx={{
                   width: '100%', // Ocupa toda a largura do Search
                   fontSize: { xs: 16, sm: 18 }, // Tamanho responsivo da fonte

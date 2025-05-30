@@ -11,7 +11,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
     const personalDetails = JSON.parse(localStorage.getItem("personal"))|| [];
     
     // Progresso
-    const activeStep = 2;
+    const activeStep = 1;
 
     //Formulário de informações básicas do usuário
     const [form, setForm] = useState({

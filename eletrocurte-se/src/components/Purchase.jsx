@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Purchase.css";
-import Products from "../Products.json";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -8,10 +7,23 @@ import StepLabel from "@mui/material/StepLabel";
 export default function Purchase({ onBack, onNext, steps }) {
 
     // Recupera todos os dados que nós temos, então: carrinho, dados pessoais e dados de pagamento (que podem diferir)
-    const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products;
+    const [produtosLocais, setProdutosLocais] = React.useState([]); 
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const personal = JSON.parse(localStorage.getItem("personal")) || {};
     const card = JSON.parse(localStorage.getItem("card")) || {};
+
+    //Lê dados dos produtos diretamento do JSON
+    useEffect(() => {
+        const localProducts = localStorage.getItem("products");
+        if (localProducts) {
+            setProdutosLocais(JSON.parse(localProducts));
+        } else {
+            fetch('/data/Produtos.json')
+                .then(res => res.json())
+                .then(data => setProdutosLocais(data))
+                .catch(() => setProdutosLocais([]));
+        }
+    }, []);
 
     //Calcula o valor total do pedido, se baseando naquilo que está no carrinho
     const total = cart.reduce((sum, item) => {
@@ -72,7 +84,7 @@ export default function Purchase({ onBack, onNext, steps }) {
                     <div><b>CVV:</b> {card.cvv}</div>
                     <div><b>CPF:</b> {card.cpf}</div>
                     <div><b>Data de Validade:</b> {card.validade}</div>
-                    <div><b>Parcelamento:</b> Em {card.parcelamento}x vezes de {(total/card.parcelamento).toFixed(2)}</div>
+                    <div><b>Parcelamento:</b> Em {card.parcelamento}x vezes de R${(total/card.parcelamento).toFixed(2).replace('.',',')}</div>
                 </div>
                 <h3 className="purchase-section-title address">Endereço</h3>
                 <div className="purchase-section-content">
