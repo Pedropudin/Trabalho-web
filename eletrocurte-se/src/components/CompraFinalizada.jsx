@@ -3,6 +3,12 @@ import '../styles/CompraFinalizada.css'
 import { navigate, useNavigate } from "react-router-dom";
 import ROUTES from "../routes";
 
+/*
+  Tela de confirmação de compra.
+  - Exibida ao final da compra.
+  - Botão de redirecionamento para tela inicial.
+*/
+
 export default function CompraFinalizada(){
     const navigate = useNavigate(); 
     return(

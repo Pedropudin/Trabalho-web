@@ -7,6 +7,16 @@ import ProductDisplay from "../components/ProductDisplay";
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useState,useEffect } from 'react';
 
+
+/*
+  Página de setores do portal Eletrocurte-se.
+  - Display de todos os produtos separados em setor quando acessado como "/PaginaSetor"
+  - Display de todos os produtos pertencentes a uma categoria geral, como Hardware ou Periféricos.
+  - Para chegar a esta página é necessário alterar a URL '/PaginaSetor/NomeDoSetor' ou apenas interagir com os botões e clicáveis da interface.
+  - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
+*/
+
+
 export default function PaginaSetor() {
     const { name } = useParams(); 
     const [order, setOrder] = useState("");

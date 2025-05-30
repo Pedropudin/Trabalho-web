@@ -3,6 +3,15 @@ import { useNavigate } from "react-router-dom";
 import '../styles/Cart.css';
 import toast, { Toaster } from 'react-hot-toast';
 
+/*
+  Página do carrinho.
+  - Exibe produtos no carrinho de compra.
+  - Permite adição e deleção de produtos do carrinho.
+  - Botões de redirecionamento para tela inicial ou para a próxima etapa da conclusão do pedido.
+*/
+
+
+
 export default function Cart({onNext}) {
     const navigate = useNavigate();
 

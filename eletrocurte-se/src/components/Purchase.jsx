@@ -4,6 +4,14 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
+/*
+  Tela de confirmação da compra
+  - Exibida como útlima etapa do processo de compra.
+  - Contém o botão para que o pagamento seja feito e outro para que retorne a tela anterior
+  - Quanto às informações, faz um resumo geral do produto: Total do pedido (qntidade de itens e preço), Endereço, Cartão e Dados pessoais -- todos inseridos nas etapas anteriores  
+*/
+
+
 export default function Purchase({ onBack, onNext, steps }) {
 
     // Recupera todos os dados que nós temos, então: carrinho, dados pessoais e dados de pagamento (que podem diferir)

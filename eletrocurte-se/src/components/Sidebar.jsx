@@ -3,6 +3,11 @@ import '../styles/Sidebar.css'
 import { Link } from "react-router-dom";
 import ROUTES from "../routes";
 
+/*
+  Sidebar da tela de Pesquisa e Setor
+  - Contém setores e filtros de preço e marca
+*/
+
 //Recebe dados da página como parâmetro, já que dependemos daquilo que foi renderizado para deifnir características de filtro
 export default function Sidebar({
     items = [],

@@ -5,6 +5,13 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
+/*
+  Página de dados de pagamento.
+  - Exibida durante processo de conclusão de compra.
+  - Recolhe os dados de um cartão de crédito, como número, nome, cvv.
+  - Botões de redirecionamento para tela anterior ou para a próxima etapa da conclusão do pedido.
+*/
+
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     const [form, setForm] = useState({
         numero_cartao: "",
