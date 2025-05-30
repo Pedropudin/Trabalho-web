@@ -139,7 +139,6 @@ const Desempenho = () => {
             </div>
             {/*<ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />*/}
             {/*<Footer />*/}
-            <Footer />
         </div>
     );
 };
