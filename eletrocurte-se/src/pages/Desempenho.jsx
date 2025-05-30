@@ -8,6 +8,7 @@ import Card from "../components/Card";
 import "../styles/Desempenho.css"
 import "../styles/TextStyles.css"
 import AdminSidebar from "../components/admin/AdminSidebar";
+import Graph from "../components/Dashboard/Graph";
 
 const PopularProduct = ({
     name,
@@ -41,6 +42,19 @@ const PopularProduct = ({
                     <span className="description-text">Unidades em estoque</span>
                 </div>
             </div>
+        </Card>
+    );
+};
+
+const SalesGraph = () => {
+    return(
+        <Card
+            title={"Vendas"}
+            type={"card-horizontal"}
+            description="Vendas nos últimos 30 dias"
+            style={{width: "70%"}}
+        >
+            <Graph />
         </Card>
     );
 };
@@ -80,6 +94,7 @@ const Desempenho = () => {
                             sold={data.product_popular.quantity_sold}
                             stock={data.product_popular.stock}
                         /> }
+                        <SalesGraph />
                     </div>
                 </div>
             </div>
