@@ -21,7 +21,7 @@ function PaginaPesquisa() {
         if (localProducts) {
             setProdutosLocais(JSON.parse(localProducts));
         } else {
-            fetch('/data/Produtos.json')
+            fetch('/data/produtos.json')
                 .then(res => res.json())
                 .then(data => setProdutosLocais(data))
                 .catch(() => setProdutosLocais([]));
