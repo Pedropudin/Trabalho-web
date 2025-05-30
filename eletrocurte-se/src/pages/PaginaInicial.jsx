@@ -3,7 +3,7 @@ import { ScrollRestoration, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
-import Button from '@mui/material/Button';
+import Button from '../components/Button';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -129,7 +129,7 @@ const PaginaInicial = () => {
                     setMensagem('Faça login para pesquisar produtos!');
                     setTimeout(() => setMensagem(''), 3500);
                 }}
-                onLogoClick={undefined} // Desabilita o redirecionamento na página inicial
+                onLogoClick={undefined}
             />
             {/* Mensagem amigável para funcionalidades restritas */}
             {mensagem && (
@@ -146,9 +146,22 @@ const PaginaInicial = () => {
                           <Typography variant="subtitle1" sx={{ color: '#e3f2fd', mb: 2 }}>
                               Os melhores eletrônicos, ofertas e novidades para você!
                           </Typography>
-                          <Button onClick={handleComeceAgora} variant="contained" sx={{ background: '#ffb300', color: '#222', fontWeight: 700, borderRadius: 2, px: 4, py: 1.5, '&:hover': { background: '#ffd54f', color: '#004d66' } }}>
-                              Comece agora
-                          </Button>
+                          <Button
+                              text="Comece agora"
+                              onClick={handleComeceAgora}
+                              type={1}
+                              style={{
+                                  background: '#ffb300',
+                                  color: '#222',
+                                  fontWeight: 700,
+                                  borderRadius: 8,
+                                  padding: '12px 32px',
+                                  fontSize: '1.1rem',
+                                  marginTop: 8,
+                                  boxShadow: '0 2px 8px #0002',
+                                  border: 'none'
+                              }}
+                          />
                       </Box>
                   </Paper>
                 )}
@@ -189,15 +202,25 @@ const PaginaInicial = () => {
                 </Box>
                 {/* Chamada para ação extra: newsletter para logados */}
                 {isLoggedIn && (
-                    <Box className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
+                    <Paper elevation={2} className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
                         <Typography variant="h6" sx={{ color: '#004d66', mb: 2 }}>Receba ofertas exclusivas!</Typography>
-                        <Box component="form" className="newsletter-form" sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <form className="newsletter-form" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 8 }}>
                             <input type="email" placeholder="Seu e-mail" required style={{ padding: '10px 16px', borderRadius: 6, border: '1px solid #b0bec5', fontSize: '1rem', flex: 1, minWidth: 0 }} />
-                            <Button type="submit" variant="contained" sx={{ background: '#ffb300', color: '#222', borderRadius: 1, px: 3, fontWeight: 500, '&:hover': { background: '#ffd54f' } }}>
-                                Quero receber
-                            </Button>
-                        </Box>
-                    </Box>
+                            <Button
+                                text="Quero receber"
+                                type={1}
+                                style={{
+                                    background: '#ffb300',
+                                    color: '#222',
+                                    borderRadius: 6,
+                                    padding: '10px 24px',
+                                    fontSize: '1rem',
+                                    fontWeight: 500,
+                                    border: 'none'
+                                }}
+                            />
+                        </form>
+                    </Paper>
                 )}
             </Box>
             {/* Modal de detalhes do produto */}
