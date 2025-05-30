@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/Cart.css';
-import Products from '../Products.json'; 
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function Cart({onNext}) {
     const navigate = useNavigate();
 
-    const [cart, setCart] = React.useState(JSON.parse(localStorage.getItem("cart")) || []);//Vê se existe um arquivo local de carrinho, caso contrário cria uma vazio
-    const productsLocal = JSON.parse(localStorage.getItem("products")) || Products;//Vê se existe um arquivo local de produtos, caso contrário cria uma vazio
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
+    const [productsLocal, setProductsLocal] = useState([]);
+
+    // Buscar produtos do JSON ao montar o componente
+    useEffect(() => {
+        const localProducts = localStorage.getItem("products");
+        if (localProducts) {
+            setProductsLocal(JSON.parse(localProducts));
+        } else {
+            fetch('/data/Produtos.json')
+                .then(res => res.json())
+                .then(data => setProductsLocal(data))
+                .catch(() => setProductsLocal([]));
+        }
+    }, []);
 
     //Pega o estoque do produto
     function getProductStock(productId) {
