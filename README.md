@@ -58,7 +58,9 @@ Mesmo que a estrutura básica não seja mais a mesma necessariamente, a lógica 
 
 # Comentários do código
 
-O aplicativo web usou o ambiente do React para desenvolver os arquivos e as funcionalidades. Os comentários dos códigos se encontram neles mesmos, na [pasta do projeto](eletrocurte-se), onde ela contém os [dados "públicos" utilizados](eletrocurte-se/public), os [componentes desenvolvidos](eletrocurte-se/src/components), as [páginas de layout](eletrocurte-se/src/styles) e as [páginas em si]
+O aplicativo web usou o ambiente do React para desenvolver os arquivos e as funcionalidades. Os comentários dos códigos se encontram neles mesmos, na [pasta do projeto](eletrocurte-se), onde ela contém os [dados "públicos" utilizados](eletrocurte-se/public), os [componentes desenvolvidos](eletrocurte-se/src/components), as [páginas de layout](eletrocurte-se/src/styles) e as [páginas em si].
+
+Lá, cada página terá a sua explicação das funcionalidades associadas, o seu uso, a sua estruturação e o seu funcionamento adequados para o site
 
 # Resultados de testes
 
