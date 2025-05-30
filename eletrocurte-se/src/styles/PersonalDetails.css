@@ -34,6 +34,7 @@
     padding: 0;
 }
 
+/* Campos de input */
 .personal-details-form input {
     border: 1.5px solid #e0f7fa;
     border-radius: 8px;
@@ -54,6 +55,7 @@
     background: #fff;
 }
 
+/* Botão de envio */
 .personal-details-form button[type="submit"] {
     width: 100%;
     padding: 13px 0;
@@ -75,6 +77,7 @@
     transform: translateY(-2px) scale(1.03);
 }
 
+/* Layout dos campos e botões */
 .personal-details-form > div {
     display: flex;
     gap: 12px;

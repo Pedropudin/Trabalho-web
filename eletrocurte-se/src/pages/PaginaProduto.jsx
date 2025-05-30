@@ -13,6 +13,7 @@ export default function PaginaProduto() {
   const navigate = useNavigate();
   const { id } = useParams();  //Faz a identificação do id da url 
   const product = produtosLocais.find(p => String(p.id) === String(id));  //Procura o produto que tenha mesma URL que a do site
+  
   //Variáveis de estado, para atualização da interação com as fotos dos produtos
   const [mainImg, setMainImg] = useState(product?.img);
   const [thumbs, setThumbs] = useState(product?.thumbs || []);

@@ -1,12 +1,13 @@
+/* Container principal do carrinho */
 .review-container {
     min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f4f4f4;
 }
 
+/* Título */
 .title {
     font-size: 2rem;
     color: #007b99;
@@ -23,6 +24,7 @@
     border-radius: 0;
 }
 
+/* Lista de produtos */
 .products-list {
     display: flex;
     flex-direction: column;
@@ -33,6 +35,7 @@
     margin: 0;
 }
 
+/* Fundo da lista de produtos */
 .products-list-bg {
     background: #fff;
     border-radius: 18px;
@@ -46,6 +49,7 @@
     align-items: center;
 }
 
+/* Total do carrinho */
 .products-list-total {
     font-size: 1rem;
     margin-top: 28px;
@@ -78,6 +82,7 @@
     display: inline-block;
 }
 
+/* Item da lista de produtos */
 .products-list li {
     background: #fff;
     border: 1.5px solid #e0f7fa;
@@ -101,6 +106,7 @@
     transform: translateY(-2px) scale(1.01);
 }
 
+/* Detalhes do produto */
 .product-list-item {
     display: flex;
     align-items: center;
@@ -211,6 +217,7 @@
     color: #005f73;
 }
 
+/* Botões do carrinho */
 .review-buttons {
     display: flex;
     gap: 24px;
@@ -252,6 +259,7 @@
     background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
 }
 
+/* Botão de esvaziar carrinho */
 .empty-cart-btn {
     margin-top: 24px;
     padding: 12px 32px;
@@ -272,6 +280,7 @@
     transform: translateY(-2px) scale(1.03);
 }
 
+/* Responsivo para mobile */
 @media (max-width: 768px) {
     .product-list-item {
         display: flex;
