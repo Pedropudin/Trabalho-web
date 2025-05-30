@@ -61,13 +61,21 @@ A página dos administradores é onde os donos da loja podem não apenas control
 
 Esse projeto foi inicializado com [Create React App](https://github.com/facebook/create-react-app).
 
+## Clonagem de repositório
+
+Para utilizar suas dependências, é necessário cloná-lo do GitHub (comando: "git clone https://github.com/Pedropudin/Trabalho-web.git")
+
 ## Comandos disponíveis
 
 No diretório do projeto você pode rodar: 
 
+### `npm install`
+
+Instala todas as dependências do aplicativo, para torná-lo utilizável
+
 ### `npm start`
 
-Roda a aplicação no modo de desenvolvimento
+Roda a aplicação no modo de desenvolvimento, com todas as bibliotecas presentes e suportadas pelo React (documentadas no package-lock.json)
 Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ve-la.
 
 <!--
