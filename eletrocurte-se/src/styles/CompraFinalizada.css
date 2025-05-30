@@ -6,11 +6,12 @@
     align-items: center;
     justify-content: center;
     padding: 24px 6px;
+    margin-top: 50px;
     background: #f7fafc;
 }
 
 /* Texto de confirmação */
-.textos-confirmacao {
+.textos-confirmacao-cima, .textos-confirmacao-baixo {
     color: #007b99;
     text-align: center;
     margin: 18px;
@@ -53,6 +54,7 @@
     margin-left: auto;
     margin-right: auto;
     letter-spacing: 0.5px;
+    margin-bottom: 200px;
 }
 
 .botao-inicio:hover {
