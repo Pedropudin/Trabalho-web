@@ -3,6 +3,7 @@ import { IconButton } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from "@mui/material";
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import Card from "../Card";
 
 const TeamManager = () => {
@@ -35,6 +36,10 @@ const TeamManager = () => {
         setIsAdding(false);
         setOpen(true);
     };
+
+    const handleRemove = (emp) => {
+        setData(data.filter(e => e.id !== emp.id));
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -69,6 +74,7 @@ const TeamManager = () => {
                         <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Cargo</th>
                         <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Contato</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,6 +86,11 @@ const TeamManager = () => {
                             <td>
                                 <IconButton onClick={() => handleEdit(emp)}>
                                     <EditSquareIcon style={{color:"#193E52"}}/>
+                                </IconButton>
+                            </td>
+                            <td>
+                                <IconButton onClick={() => handleRemove(emp)}>
+                                    <DisabledByDefaultIcon style={{color:"red"}}/>
                                 </IconButton>
                             </td>
                         </tr>
