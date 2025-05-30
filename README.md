@@ -24,32 +24,29 @@ Segue também [nosso link do figma](https://www.figma.com/design/8Pk9ykizcWYiU7R
 Dividindo o programa na parte do cliente e do administrador da loja precisamos que cada um tenha as seguintes funcionalidades:
 
 ### Parte do Cliente
-Uma [página de recepção](Page-Initial/página_de_apresentação/index.html) para recepcionar o usuário com algumas informações básicas sobre o site e alguns dos associados
 
-A [página de login](Page-Initial/página_de_login), onde o usuário utilizando um login e uma senha pode entrar na sua conta
+A [página inicial](eletrocurte-se/src/pages/PaginaInicial.jsx), onde o usuário se depara com alguns produtos e o layout de e-commerce de produtos eletrônicos, sendo necessário um login acompanhado de senha, de username e de email para entrar na sua conta ou para se cadastrar
 
-Após entrar no site, o usuário pode entrar na página do seu perfil, de onde ele pode alterar informações, acessar as últimas compras, ver os últimos produtos entre outras funções.
+Após o cadastro, o usuário pode entrar na página do seu perfil, de onde ele pode alterar informações, acessar as últimas compras, ver os últimos produtos entre outras funções (exemplo, adicionar saldo na carteira, para cada cartão associado), pode acessar o modal dos produtos, contendo algumas descrições dele, comprar produtos, adicionar no carrinho de compras e executar compras.
 
-Além disso, obviamente o usuário pode procurar por um produto para comprar, tendo então algumas opções para procurar esse produto, ele pode [procurar pelo nome](Page-Products/pagina_de_pesquisa/index.html) ou pelo [setor](Page-Products/pagina_de_setor/index.html).
+Além disso, o usuário pode procurar por um produto para comprar, tendo então algumas opções para procurar esse produto, ele pode procurar pelo nome ou pelo setor específico associado, como forma de busca dinâmica.
 
-Ao escolher um produto o usuário consegue acessar a [página específica desse produto](Page-Products/pagina_do_produto/index.html) e pode ainda prosseguir para a compra na página de compra.
+Ao escolher um produto o usuário consegue acessar a [página específica desse produto](eletrocurte-se/src/pages/PaginaSetor.jsx) e pode ainda prosseguir para a compra na [página de compra](eletrocurte-se/src/pages/PaginaProduto.jsx).
 
 ### Parte do Administrador
-Caso o usuário entre como um administrador ele será levado para a [página incial da administração](Page-Adm/main.html), onde ele tem acesso a informações gerais sobre as vendas.
+Caso o usuário entre como um administrador ele será levado para a [página incial da administração](eletrocurte-se/src/pages/Desempenho.jsx), onde ele tem acesso a informações gerais sobre as vendas.
 
 Na página incial o administrador também pode acessar os produtos onde ele consegue adicionar, remover e alterar os produtos anunciados.
 
-Por fim, o administrador pode entrar nas [pendências](Page-Adm/edit-product.html) onde ele consegue ver perguntas, reclamações, envios pendentes e outras atividades que devem ser feitas.
+Por fim, o administrador pode entrar nas [pendências](eletrocurte-se/src/pages/Pendencias.jsx) onde ele consegue ver perguntas, reclamações, envios pendentes e outras atividades que devem ser feitas.
 
-## Estruturação do HTML e CSS
-A estruturação das páginas foi feita com HTML para compor os elementos básicos, usando diversos `div` e `span` para estruturar a página.
-
-Com a estrutura feita, bastou se basear nos mockups para adicionar as regras de CSS aos elementos.
+## Estruturação do HTML, do CSS e do JS (React imbutido)
+A estruturação das páginas foi feita com HTML5 para compor os elementos básicos. Com a estrutura feita, bastou se basear nos mockups para adicionar as regras de CSS aos elementos. Em seguida, foi adaptada a [primeira versão do projeto](Old-Version) para compor a estrutura geral componentizada do React, a partir do uso de arquivos .jsx, além da inserção das propriedades associadas (como bibliotecas React e props) para dar responsividade ao site, além de embasar a futura robustez no tratamento dos dados via banco de dados NoSQL (MongoDB), para o Milestone 3.
 
 # Descrição do Projeto
 O projeto consiste de um website para a venda de produtos eletrônicos de uma loja fictícia chamada **Eletrocurte-se**.
 
-O website possui três partes, uma de acesso geral, uma do perfil e uma de acesso apenas para administradores da loja.
+Há três partes gerais ([legado do Milestone 1](Old-Version)), uma de acesso geral, uma do perfil e uma de acesso apenas para administradores da loja.
 
 A página de acesso geral é onde os usuários procuram por produtos para comprar.
 
@@ -57,17 +54,26 @@ A página do perfil é onde os usuários podem verificar os históricos relacion
 
 A página dos administradores é onde os donos da loja podem não apenas controlar os produtos disponíveis para venda (adicionar, remover ou alterar) como também ver estatísticas sobre as vendas, responder perguntas e reclamações de usuários, verificar quais produtos esperam para serem enviados entre outras funcionalidades.
 
+Mesmo que a estrutura básica não seja mais a mesma necessariamente, a lógica de divisão utilizada para o desenvolvimento, assim como para a divisão do trabalho a das partes gerais é parecida. Entretanto, a partir do Milestone 2, houve a necessidade de enriquecer a aplicação com componentes e bibliotecas de framework para adequar as páginas aos critérios de desenvolvimento da disciplina de Introdução ao Desenvolvimento Web.
+
+# Comentários do código
+
+O aplicativo web usou o ambiente do React para desenvolver os arquivos e as funcionalidades. Os comentários dos códigos se encontram neles mesmos, na [pasta do projeto](eletrocurte-se), onde ela contém os [dados "públicos" utilizados](eletrocurte-se/public), os [componentes desenvolvidos](eletrocurte-se/src/components), as [páginas de layout](eletrocurte-se/src/styles) e as [páginas em si]
+
+# Resultados de testes
+
 # Usando React
 
 Esse projeto foi inicializado com [Create React App](https://github.com/facebook/create-react-app).
 
 ## Clonagem de repositório
 
-Para utilizar suas dependências, é necessário cloná-lo do GitHub (comando: "git clone https://github.com/Pedropudin/Trabalho-web.git")
+Para utilizar suas dependências, é necessário cloná-lo do GitHub:
+### `git clone https://github.com/Pedropudin/Trabalho-web.git`
 
 ## Comandos disponíveis
 
-No diretório do projeto você pode rodar: 
+Primeiro, no terminal, execute "cd eletrocurte-se". Daí, no diretório do projeto, você pode rodar: 
 
 ### `npm install`
 
@@ -75,8 +81,16 @@ Instala todas as dependências do aplicativo, para torná-lo utilizável
 
 ### `npm start`
 
-Roda a aplicação no modo de desenvolvimento, com todas as bibliotecas presentes e suportadas pelo React (documentadas no package-lock.json)
-Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ve-la.
+Roda a aplicação no modo de desenvolvimento, com todas as bibliotecas presentes e suportadas pelo React e que foram utilizadas para este trabalho.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ve-la, após a compilação do App no terminal.
+
+
+# Problemas
+
+Apesar de termos mantido a política de desenvolvimento de muitos arquivos e de priorizar componentização ao máximo, como é possível ver na [pasta de componentes do projeto](eletrocurte-se/src/components/), acabamos por lidar com uma certa dificuldade em migrar muitas das ideias originais presentes no Mockup do Figma, assim como manter, de certa forma, o layout original do site, considerando as adaptações existentes para o modelo React. Além disso, encontramos certa dificuldade em modularizar 100% os estilos CSS utilizados no [Milestone 1](Old-Version/), já que foram bastantes arquivos, assim como o projeto nos exigiu criar diversos estilos CSS para as várias dependências do projeto ([acesso](eletrocurte-se/src/styles/)). Dessa forma, o tempo de desenvolvimento para o projeto foi bem mais elevado do que o esperado, já que se tinha uma grande árvore de dependências entre arquivos para se desenvolver em um prazo mais curto, comparado ao primeiro Milestone.
+
+# Comentários
+O Milestone 3 servirá para sacramentar o trabalho, a fim de alinhá-lo à lógica imbutida com banco de dados para a robustez do site e, por fim, do aprendizado prático da disciplina. Ademais, a migração de certas lógicas para o back-end poderá nos servir para verificar se há a possibilidade de, também, melhorar a lógica do front-end, para aprimorar o desempenho do site.
 
 <!--
 
