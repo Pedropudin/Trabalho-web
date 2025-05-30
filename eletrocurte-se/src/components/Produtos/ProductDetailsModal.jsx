@@ -14,8 +14,12 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const ProductDetailsModal = ({ open, onClose, product }) => {
+  const navigate = useNavigate();
+
   // Se não houver produto, não renderiza nada
   if (!product) return null;
 
@@ -27,6 +31,46 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
     if (avaliacoes[product.id] && avaliacoes[product.id].comentario) {
       comentarioUsuario = avaliacoes[product.id].comentario;
     }
+  }
+
+  // Função para adicionar ao carrinho e ir para o checkout
+  function handleComprar() {
+    if (!product) return;
+    // Adiciona ao carrinho (se já existir, incrementa quantidade)
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const id = product.id || product.ID || product.Id;
+    const name = product.nome || product.name;
+    const price = parseFloat(product.preco?.replace(',', '.') || product.price);
+    const image = product.img || product.imagem || product.image;
+    const estoque = product.estoque ?? product.inStock ?? 1;
+    let updatedCart;
+    const existing = cart.find(item => String(item.id) === String(id));
+    if (existing) {
+      if ((existing.quantity + 1) > estoque) {
+        toast.error("Número máximo de produtos atingido. Erro: Falta de estoque!");
+        return;
+      }
+      updatedCart = cart.map(item =>
+        String(item.id) === String(id)
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedCart = [
+        ...cart,
+        {
+          id,
+          name,
+          price,
+          image,
+          quantity: 1
+        }
+      ];
+    }
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    toast.success('Produto colocado no carrinho com sucesso!');
+    onClose && onClose();
+    navigate('/Checkout');
   }
 
   return (
@@ -46,7 +90,13 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
               />
               {/* Botão Comprar aparece apenas se showBuyButton for true */}
               {product.showBuyButton === true && (
-                <Button color="primary" variant="contained" sx={{ mt: 2 }} startIcon={<ShoppingCartIcon />}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                  startIcon={<ShoppingCartIcon />}
+                  onClick={handleComprar}
+                >
                   Comprar
                 </Button>
               )}

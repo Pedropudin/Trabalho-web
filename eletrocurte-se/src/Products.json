@@ -159,5 +159,247 @@
       "Tela 15,6'' Full HD",
       "Windows 11 Pro"
     ]
+  },
+  {
+    "id": 1,
+    "name": "SSD Kingston A400 480GB",
+    "setorEspecifico": "Armazenamento",
+    "setorGeral": "Hardware",
+    "marca": "Kingston",
+    "price": 199.9,
+    "inStock": 12,
+    "img": "https://m.media-amazon.com/images/I/61rJkQYb8PL._AC_SL1500_.jpg",
+    "description": "SSD SATA III 2.5'' para upgrade de desempenho."
+  },
+  {
+    "id": 2,
+    "name": "Teclado Mecânico Redragon Kumara RGB",
+    "setorEspecifico": "Teclado",
+    "setorGeral": "Periféricos",
+    "marca": "Redragon",
+    "price": 249.9,
+    "inStock": 8,
+    "img": "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e2e2e.jpg",
+    "description": "Teclado mecânico compacto com iluminação RGB."
+  },
+  {
+    "id": 3,
+    "name": "Mouse Logitech G203 Lightsync",
+    "setorEspecifico": "Mouse",
+    "setorGeral": "Periféricos",
+    "marca": "Logitech",
+    "price": 139.9,
+    "inStock": 20,
+    "img": "https://m.media-amazon.com/images/I/61LtuGzXeaL._AC_SL1500_.jpg",
+    "description": "Mouse gamer RGB de alta precisão."
+  },
+  {
+    "id": 4,
+    "name": "Notebook Dell Inspiron 15",
+    "setorEspecifico": "Notebooks",
+    "setorGeral": "Computadores",
+    "marca": "Dell",
+    "price": 3499.0,
+    "inStock": 5,
+    "img": "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Notebook com Intel i5, 8GB RAM, SSD 256GB."
+  },
+  {
+    "id": 5,
+    "name": "Smartphone Samsung Galaxy S23",
+    "setorEspecifico": "Celulares",
+    "setorGeral": "Celulares",
+    "marca": "Samsung",
+    "price": 4299.0,
+    "inStock": 7,
+    "img": "https://m.media-amazon.com/images/I/71qZy8P6nGL._AC_SL1500_.jpg",
+    "description": "Smartphone topo de linha com câmera tripla."
+  },
+  {
+    "id": 6,
+    "name": "Fone de Ouvido Bluetooth JBL Tune 510BT",
+    "setorEspecifico": "Fone de Ouvido",
+    "setorGeral": "Periféricos",
+    "marca": "JBL",
+    "price": 229.9,
+    "inStock": 15,
+    "img": "https://m.media-amazon.com/images/I/61pJ+Q4UqGL._AC_SL1500_.jpg",
+    "description": "Fone de ouvido sem fio com bateria de longa duração."
+  },
+  {
+    "id": 7,
+    "name": "Notebook Samsung Book4",
+    "setorEspecifico": "Notebooks",
+    "setorGeral": "Computadores",
+    "marca": "Samsung",
+    "price": 4100.0,
+    "inStock": 9,
+    "img": "https://m.media-amazon.com/images/I/51wL6OabtxL._AC_SX679_.jpg",
+    "description": "Notebook leve, rápido e ideal para o dia a dia com bateria de longa duração."
+  },
+  {
+    "id": 13,
+    "name": "Gabinete Gamer NZXT H510",
+    "setorEspecifico": "Gabinete",
+    "setorGeral": "Hardware",
+    "marca": "NZXT",
+    "price": 499.0,
+    "inStock": 9,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Gabinete mid tower com painel lateral em vidro temperado."
+  },
+  {
+    "id": 14,
+    "name": "Webcam Logitech C920 HD Pro",
+    "setorEspecifico": "Webcam",
+    "setorGeral": "Periféricos",
+    "marca": "Logitech",
+    "price": 349.9,
+    "inStock": 14,
+    "img": "https://m.media-amazon.com/images/I/61pZy8P6nGL._AC_SL1500_.jpg",
+    "description": "Webcam Full HD 1080p com microfone estéreo."
+  },
+  {
+    "id": 15,
+    "name": "Celular Motorola Moto G84",
+    "setorEspecifico": "Celulares",
+    "setorGeral": "Celulares",
+    "marca": "Motorola",
+    "price": 1899.0,
+    "inStock": 10,
+    "img": "https://m.media-amazon.com/images/I/61h5b6QwQwL._AC_SL1500_.jpg",
+    "description": "Celular com 256GB, câmera dupla e tela OLED."
+  },
+  {
+    "id": 16,
+    "name": "Memória RAM Corsair Vengeance 16GB DDR4",
+    "setorEspecifico": "Memória",
+    "setorGeral": "Hardware",
+    "marca": "Corsair",
+    "price": 299.9,
+    "inStock": 18,
+    "img": "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Módulo de memória DDR4 3200MHz para desktop."
+  },
+  {
+    "id": 20,
+    "name": "Roteador TP-Link Archer C6",
+    "setorEspecifico": "Roteador",
+    "setorGeral": "Hardware",
+    "marca": "TP-Link",
+    "price": 229.0,
+    "inStock": 13,
+    "img": "https://m.media-amazon.com/images/I/51wF7YDIQkL._AC_SL1000_.jpg",
+    "description": "Roteador Gigabit Dual Band AC1200 com 4 antenas."
+  },
+  {
+    "id": 21,
+    "name": "Impressora HP DeskJet Ink Advantage 2774",
+    "setorEspecifico": "Impressora",
+    "setorGeral": "Periféricos",
+    "marca": "HP",
+    "price": 399.0,
+    "inStock": 8,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Impressora multifuncional Wi-Fi colorida."
+  },
+  {
+    "id": 22,
+    "name": "Celular Apple iPhone 13",
+    "setorEspecifico": "Celulares",
+    "setorGeral": "Celulares",
+    "marca": "Apple",
+    "price": 4999.0,
+    "inStock": 6,
+    "img": "https://m.media-amazon.com/images/I/71h5b6QwQwL._AC_SL1500_.jpg",
+    "description": "iPhone 13 128GB, tela 6.1'' Super Retina XDR."
+  },
+  {
+    "id": 23,
+    "name": "Placa-mãe ASUS Prime B450M-GAMING/BR",
+    "setorEspecifico": "Placa-mãe",
+    "setorGeral": "Hardware",
+    "marca": "ASUS",
+    "price": 599.0,
+    "inStock": 10,
+    "img": "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Placa-mãe AM4 mATX DDR4 HDMI USB 3.1."
+  },
+  {
+    "id": 24,
+    "name": "Caixa de Som JBL Flip 6",
+    "setorEspecifico": "Caixa de Som",
+    "setorGeral": "Periféricos",
+    "marca": "JBL",
+    "price": 599.9,
+    "inStock": 11,
+    "img": "https://m.media-amazon.com/images/I/61pJ+Q4UqGL._AC_SL1500_.jpg",
+    "description": "Caixa de som Bluetooth portátil à prova d'água."
+  },
+  {
+    "id": 25,
+    "name": "Pen Drive Kingston 64GB USB 3.2",
+    "setorEspecifico": "Pen Drive",
+    "setorGeral": "Periféricos",
+    "marca": "Kingston",
+    "price": 59.9,
+    "inStock": 40,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Pen drive compacto de alta velocidade."
+  },
+  {
+    "id": 26,
+    "name": "Cadeira Gamer ThunderX3 EC3",
+    "setorEspecifico": "Cadeira Gamer",
+    "setorGeral": "Periféricos",
+    "marca": "ThunderX3",
+    "price": 999.0,
+    "inStock": 6,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Cadeira ergonômica com apoio lombar e ajuste de altura."
+  },
+  {
+    "id": 27,
+    "name": "Fonte Corsair CV550 550W",
+    "setorEspecifico": "Fonte",
+    "setorGeral": "Hardware",
+    "marca": "Corsair",
+    "price": 349.9,
+    "inStock": 10,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Fonte de alimentação 80 Plus Bronze para PC."
+  },
+  {
+    "id": 28,
+    "name": "Cooler Master Hyper 212",
+    "setorEspecifico": "Cooler",
+    "setorGeral": "Hardware",
+    "marca": "Cooler Master",
+    "price": 199.9,
+    "inStock": 8,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Cooler para processador com 4 heatpipes."
+  },
+  {
+    "id": 29,
+    "name": "Estabilizador SMS Revolution Speedy 300VA",
+    "setorEspecifico": "Estabilizador",
+    "setorGeral": "Hardware",
+    "marca": "SMS",
+    "price": 159.9,
+    "inStock": 12,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Estabilizador bivolt para proteção de equipamentos."
+  },
+  {
+    "id": 30,
+    "name": "Impressora Epson EcoTank L3250",
+    "setorEspecifico": "Impressora",
+    "setorGeral": "Periféricos",
+    "marca": "Epson",
+    "price": 1299.0,
+    "inStock": 7,
+    "img": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
+    "description": "Impressora multifuncional tanque de tinta Wi-Fi."
   }
 ]

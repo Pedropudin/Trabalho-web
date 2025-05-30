@@ -178,8 +178,12 @@ function Header({
   useEffect(() => {
     function updateCartCount() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      // Soma todas as quantidades dos produtos no carrinho
-      const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      const products = JSON.parse(localStorage.getItem('products')) || require('../Products.json');
+      const validIds = new Set(products.map(p => String(p.id)));
+      // Soma apenas quantidades de produtos válidos
+      const total = cart
+        .filter(item => validIds.has(String(item.id)))
+        .reduce((sum, item) => sum + (item.quantity || 1), 0);
       setCartItemsCount(total);
     }
     updateCartCount();

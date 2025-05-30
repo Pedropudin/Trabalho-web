@@ -15,7 +15,25 @@ export default function Checkout() {
     const steps = ["Carrinho", "Pagamento", "Dados Pessoais", "Revisão"];
     const [step, setStep] = useState(1);
 
-    const nextStep = () => setStep(prev => prev + 1);
+    // Checagem rápida ao avançar etapas
+    function nextStep() {
+        // Checa se dados obrigatórios existem antes de avançar
+        if (step === 1) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (!cart.length) return; // Não avança se carrinho vazio
+        }
+
+        if (step === 2) {
+            const card = JSON.parse(localStorage.getItem("card")) || {};
+            if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade) return;
+        }
+        
+        if (step === 3) {
+            const personal = JSON.parse(localStorage.getItem("personal")) || {};
+            if (!personal.nome || !personal.sobrenome || !personal.email || !personal.cpf || !personal.telefone) return;
+        }
+        setStep(prev => prev + 1);
+    }
     const prevStep = () => setStep(prev => prev - 1);
 
     return (

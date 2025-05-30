@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Purchase.css";
 import Products from "../Products.json";
 import Stepper from "@mui/material/Stepper";
@@ -13,13 +13,46 @@ export default function Purchase({ onBack, onNext, steps }) {
     const card = JSON.parse(localStorage.getItem("card"))|| [];
 
     //Calcula o valor total do pedido, se baseando naquilo que está no carrinho
-    const total = cart.reduce((sum, item) => {
-        const prod = produtosLocais.find(p => p.id === item.id);
-        return sum + (prod ? prod.price * item.quantity : 0);
-    }, 0);
+    const cartProducts = cart
+        .map(item => {
+            const prod = produtosLocais.find(p => String(p.id) === String(item.id));
+            if (!prod) return null;
+            return {
+                ...item,
+                name: prod.name || prod.nome,
+                price: prod.price || prod.preco,
+                image: prod.img || prod.imagem || prod.image,
+                inStock: prod.inStock !== undefined ? prod.inStock : prod.estoque
+            };
+        })
+        .filter(Boolean);
+
+    const total = cartProducts.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
+
+    const [erro, setErro] = useState('');
+
+    // Checagem de dados obrigatórios
+    function dadosValidos() {
+        if (!cart.length) return "O carrinho está vazio.";
+        if (!personal.nome || !personal.sobrenome || !personal.email || !personal.cpf || !personal.telefone) return "Preencha todos os dados pessoais.";
+        if (!personal.endereco || !personal.numero || !personal.bairro || !personal.cidade || !personal.estado || !personal.cep) return "Preencha todos os campos do endereço.";
+        if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade) return "Preencha todos os dados do cartão.";
+        // Checagem de estoque
+        for (const item of cart) {
+            const prod = produtosLocais.find(p => p.id === item.id);
+            if (!prod || prod.inStock < item.quantity) return `Estoque insuficiente para o produto: ${item.name}`;
+        }
+        return "";
+    }
 
     //Assim que o botão de finalizar compra é apertado, os itens que estvam no carrinho são retirados do estoque e o carrinho é esvaziado
     function handlePurchase() {
+        const erroMsg = dadosValidos();
+        if (erroMsg) {
+            setErro(erroMsg);
+            return;
+        }
+
         const updatedProducts = produtosLocais.map(prod => {
             const cartItem = cart.find(p => p.id === prod.id);
             if (cartItem) {
@@ -30,10 +63,11 @@ export default function Purchase({ onBack, onNext, steps }) {
             }
             return prod;
         });
+        
         //Grava mudanças no JSON local
         localStorage.setItem("products", JSON.stringify(updatedProducts));
         localStorage.setItem("cart", JSON.stringify([]));
-
+        setErro('');
         if (onNext) onNext();
     }
 
@@ -69,6 +103,11 @@ export default function Purchase({ onBack, onNext, steps }) {
             }}>
                 Resumo do Pedido
             </h2>
+            {erro && (
+                <div style={{ color: "#e53935", fontWeight: 700, marginBottom: 18, textAlign: "center" }}>
+                    {erro}
+                </div>
+            )}
             <section style={{
                 background: "#fff",
                 borderRadius: 14,
@@ -134,28 +173,24 @@ export default function Purchase({ onBack, onNext, steps }) {
                     fontSize: "1.08rem"
                 }}>Produtos</h3>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                    {cart.map(item => {
-                        const prod = produtosLocais.find(p => p.id === item.id);
-                        if (!prod) return null;
-                        return (
-                            <li key={item.id} style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "start",
-                                marginBottom: 10,
-                                padding: "8px 0",
-                                borderBottom: "1px dashed #e0f7fa"
-                            }}>
-                                <span>
-                                    <span style={{ fontWeight: 600, alignText: "start" }}>{prod.name}</span>
-                                    <span style={{ color: "#007b99", fontWeight: 700, marginLeft: 8 }}>x{item.quantity}</span>
-                                </span>
-                                <span style={{ color: "#005f73", fontWeight: 700 }}>
-                                    {(prod.price * item.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                                </span>
-                            </li>
-                        );
-                    })}
+                    {cartProducts.map(item => (
+                        <li key={item.id} style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "start",
+                            marginBottom: 10,
+                            padding: "8px 0",
+                            borderBottom: "1px dashed #e0f7fa"
+                        }}>
+                            <span>
+                                <span style={{ fontWeight: 600, alignText: "start" }}>{item.name}</span>
+                                <span style={{ color: "#007b99", fontWeight: 700, marginLeft: 8 }}>x{item.quantity}</span>
+                            </span>
+                            <span style={{ color: "#005f73", fontWeight: 700 }}>
+                                {(Number(item.price) * item.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                            </span>
+                        </li>
+                    ))}
                 </ul>
                 <div style={{
                     borderTop: "1.5px solid #e0f7fa",
