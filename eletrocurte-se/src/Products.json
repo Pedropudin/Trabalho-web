@@ -159,5 +159,28 @@
       "Tela 15,6'' Full HD",
       "Windows 11 Pro"
     ]
+  },
+    {
+    "id": 8,
+    "name": "HyperX Cloud III",
+    "setorEspecifico": "Headset/Fone de Ouvido",
+    "setorGeral": "Perifericos",
+    "marca": "HyperX",
+    "price": 721.0,
+    "inStock": 12,
+    "img": "https://m.media-amazon.com/images/I/71pz2njkNRL._AC_SY450_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/81iEg46f+yL._AC_SY450_.jpg",
+      "https://m.media-amazon.com/images/I/818aW-ERYRL._AC_SY450_.jpg",
+      "https://m.media-amazon.com/images/I/71co80g6NCL._AC_SY450_.jpg"
+    ],
+    "description": "Headset gamer confortável com som surround virtual 7.1 e microfone removível.",
+    "fullDescription": "O HyperX Cloud III é um headset gamer renomado, oferecendo conforto superior, som surround virtual 7.1 e microfone removível com cancelamento de ruído. Ideal para longas sessões de jogos e comunicação clara.",
+    "specifications": [
+      "Drivers de 53mm",
+      "Som Surround 7.1 virtual",
+      "Microfone removível com cancelamento de ruído",
+      "Compatível com PC, PS4, Xbox One e dispositivos móveis"
+    ]
   }
 ]

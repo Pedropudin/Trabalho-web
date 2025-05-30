@@ -7,7 +7,7 @@ const ROUTES = {
   HIST_PRODUTOS: '/HistoricoProdutos',
   TERMOS: '/TermosCondicoes',
   PAG_PRODUTO: '/PaginaProduto/:id',
-  PAG_PESQUISA: '/PaginaPesquisa',
+  PAG_PESQUISA: '/PaginaPesquisa/:name',
   CHECKOUT: '/Checkout',
   PAG_SETOR: '/PaginaSetor/:name',
   LOGOUT: '/Logout',

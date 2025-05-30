@@ -1,3 +1,4 @@
+/* Sidebar principal */
 .product-sidebar {
     display: flex;
     flex-direction: column;
@@ -7,10 +8,14 @@
     border-right: 2px solid #ccc;
     box-sizing: border-box;
 }
+
+/* Links do menu */
 .product-sidebar a {
     color: black;
     text-decoration: none;
 }
+
+/* Lista de categorias/marcas */
 .product-sidebar ul {
     list-style: none;
     padding: 0;
@@ -36,18 +41,15 @@
     background: #f0f4fa;
     color: #0d47a1;
 }
+
+/* Título do menu */
 .product-sidebar h4 {
     margin: 0 0 8px 0;
     font-size: 18px;
     font-weight: bold;
 }
-.product-sidebar{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-    box-sizing: border-box;
-}
+
+/* Filtros de marca */
 .brand-filter {
     display: flex;
     align-items: center;
@@ -85,6 +87,8 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+
+/* Filtros de preço */
 .price-filter {
     display: flex;
     align-items: flex-start;
@@ -110,6 +114,8 @@
     border-radius: 5px;
     text-align: center;
 }
+
+/* Layout dos filtros */
 .filter-row {
     display: flex;
     flex-direction: row;
@@ -136,6 +142,7 @@
     padding: 0;
 }
 
+/* Responsivo para mobile */
 @media(max-width: 768px){
     .product-sidebar{
         background-color: white;

@@ -22,8 +22,8 @@ export default function Checkout() {
         <>
             <Header />
             {step === 1 && <Cart onNext={nextStep} onBack={prevStep} />}
-            {step === 2 && <PaymentDetails onNext={nextStep} onBack={prevStep} steps={steps} />}
-            {step === 3 && <PersonalDetails onNext={nextStep} onBack={prevStep} steps={steps}/>}
+            {step === 2 && <PersonalDetails onNext={nextStep} onBack={prevStep} steps={steps}/>}
+            {step === 3 && <PaymentDetails onNext={nextStep} onBack={prevStep} steps={steps} />}
             {step === 4 && <Purchase onNext={nextStep} onBack={prevStep} steps={steps}/>}
             {step === 5 && <CompraFinalizada />}
             <Footer />

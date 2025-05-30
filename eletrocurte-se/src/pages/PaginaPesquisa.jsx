@@ -1,7 +1,7 @@
 import '../styles/PaginaPesquisa.css';
 import React, { useState } from 'react';
 import Products from '../Products.json'; 
-import { navigate, useNavigate } from "react-router-dom";
+import { navigate, useNavigate, useParams } from "react-router-dom";
 import ROUTES from '../routes';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -9,9 +9,10 @@ import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
 import ProductDisplay from '../components/ProductDisplay'; 
 
-
-function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
+function PaginaPesquisa({searchName = "HyperX"}) {
     //Variáveis de estado
+    const { name } = useParams();  //Faz a identificação do nome da url 
+    searchName = name; 
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
@@ -48,10 +49,11 @@ function PaginaPesquisa({searchName = "HyperX Cloud II"}) {
 
     // Filtra produtos pela marca selecionada
     const filteredProducts = orderedProducts.filter(Products => {
+        const matchesName = Products.name.toLowerCase().includes(searchName.toLowerCase());
         const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(Products.marca.toLowerCase());
         const matchesMin = minPrice === '' || Products.price >= Number(minPrice);
         const matchesMax = maxPrice === '' || Products.price <= Number(maxPrice);
-        return matchesBrand && matchesMin && matchesMax;
+        return matchesBrand && matchesMin && matchesMax && matchesName;
     });
 
     return(
