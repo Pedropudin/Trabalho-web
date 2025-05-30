@@ -12,6 +12,7 @@ const ROUTES = {
   PAG_SETOR: '/PaginaSetor/:name',
   LOGOUT: '/Logout',
   DESEMPENHO: '/admin/Desempenho',
+  TIME: '/admin/Time',
   PENDENCIAS: '/admin/Pendencias',
   PAGINA_INICIAL: '/',
 };
