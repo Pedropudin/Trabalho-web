@@ -6,6 +6,8 @@ import AdminHeader from "../components/admin/AdminHeader";
 import Reputation from "../components/Dashboard/Reputation";
 import Card from "../components/Card";
 import "../styles/Desempenho.css"
+//import ProductCard from '../components/Produtos/ProductCard';
+//import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 import "../styles/TextStyles.css"
 import AdminSidebar from "../components/admin/AdminSidebar";
 import Graph from "../components/Dashboard/Graph";
@@ -62,6 +64,19 @@ const SalesGraph = () => {
 const Desempenho = () => {
     const navigate = useNavigate();
     const [data, setData] = useState(null);
+    /* Changes still to be tested
+    // Estado para modal de detalhes do produto
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleProductClick = (product) => {
+        setSelectedProduct(product);
+        setModalOpen(true);
+    };
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setSelectedProduct(null);
+    }; */
 
     /* Provisory local data */
     useEffect(() => {
@@ -97,7 +112,32 @@ const Desempenho = () => {
                         <SalesGraph />
                     </div>
                 </div>
+{/* Changes Still to be reviewed
+            <div className="content">
+                { data && <Reputation
+                    percentage={data.sales_percentage}
+                    complainings={data.complainings}
+                    late_send={data.late_send}
+                    new_users={data.new_users}
+                /> }
+                { data && (
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 32 }}>
+                        <ProductCard 
+                            product={{
+                                nome: data.product_popular.name,
+                                preco: data.product_popular.price,
+                                imagem: data.product_popular.photo,
+                                vendidos: data.product_popular.quantity_sold,
+                                estoque: data.product_popular.stock
+                            }}
+                            onClick={handleProductClick}
+                            showBuyButton={false}
+                        />
+                    </div>
+                )}
+*/ }
             </div>
+            <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
             <Footer />
         </div>
     );

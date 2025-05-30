@@ -7,13 +7,13 @@
 }
 
 body {
-  background-color: #f4f4f4; /* Cinza claro de fundo */
+  background-color: #f4f4f4; /* Cinza claro de fundo para toda a página */
   text-align: center; /* Centraliza textos por padrão */
 }
 
 /* --- HEADER COM LOGO ESTILIZADA --- */
 header {
-  background-color: #004d66; /* Azul escuro */
+  background-color: #004d66; /* Azul escuro institucional */
   padding: 20px; /* Espaçamento interno */
 }
 
@@ -25,7 +25,7 @@ header {
 }
 
 #logo:hover {
-  transform: scale(1.2); /* Foco em hover */
+  transform: scale(1.2); /* Destaque visual ao passar o mouse */
 }
 
 /* --- CONTAINER DE LOGOUT --- */
@@ -42,10 +42,10 @@ header {
   background-color: white;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra sutil */
+  box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra sutil para destaque */
   max-width: 400px;
   width: 90%;
-  animation: fadeIn 1s ease-in; /* Animação ao entrar */
+  animation: fadeIn 1s ease-in; /* Animação de entrada suave */
 }
 
 .logout-box h2 {
@@ -78,22 +78,20 @@ header {
 }
 
 /* ----------- Responsividade ----------- */
-/* Ajustes para telas médias (tablets e celulares) - 768px */
+/* Ajustes para tablets e celulares (até 768px) */
 @media (max-width: 768px) {
   .logout-container {
     width: 90%;
-    margin: 0 auto;   /* faz o bloco de 90% ficar centrado */
+    margin: 0 auto;   /* Centraliza o bloco de 90% */
     padding: 10px;
   }
 }
 
-/* Ajustes para telas pequenas (celulares) - 480px */
+/* Ajustes para celulares (até 480px) */
 @media (max-width: 480px) {
-  /* Ajustes de largura e fonte para uma tela ainda menor */
   .logout-container {
     width: 95%;
-    margin: 0 auto;   /* faz o bloco de 95% ficar centrado */
+    margin: 0 auto;   /* Centraliza o bloco de 95% */
     padding: 8px;
   }
-
 }

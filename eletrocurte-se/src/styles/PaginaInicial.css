@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  background: #f5fafd;
+  background: #f5fafd; /* Fundo azul claro institucional */
   color: #333;
 }
 h1, h2, h3 {
@@ -15,12 +15,12 @@ a {
   color: inherit;
 }
 
-/* Banner principal */
+/* Banner principal com logo e chamada */
 .banner {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #004d66 80%, #007b99 100%);
+  background: linear-gradient(90deg, #004d66 80%, #007b99 100%); /* Gradiente institucional */
   color: #fff;
   padding: 48px 16px 32px 16px;
   gap: 32px;
@@ -66,7 +66,7 @@ a {
   color: #004d66;
 }
 
-/* Categorias */
+/* Categorias em destaque */
 .categorias-destaque {
   margin: 40px auto 0 auto;
   max-width: 1200px;
@@ -217,7 +217,7 @@ a {
   background: #ffd54f;
 }
 
-/* Responsividade */
+/* Responsividade: ajustes para tablets e celulares */
 @media (max-width: 900px) {
   .banner {
     flex-direction: column;
