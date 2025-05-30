@@ -54,7 +54,7 @@ const AdminSidebar = ({ activeIndex=0, onClickList }) => {
     const elementsFunctions = [
         () => navigate(ROUTES.DESEMPENHO),
         () => navigate(ROUTES.TIME),
-        () => console.log("B"),
+        () => navigate(ROUTES.VENDAS),
         () => console.log("C")
     ]
     let s;
