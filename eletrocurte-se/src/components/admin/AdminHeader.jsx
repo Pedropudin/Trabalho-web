@@ -34,7 +34,6 @@ const AdminHeader = ({ categoryIndex }) => {
     function handleLogout() {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userType');
-        // Protege o histórico e impede voltar para logout
         window.history.replaceState({}, document.title, window.location.pathname);
         navigate(ROUTES.LOGOUT, { replace: true });
     }

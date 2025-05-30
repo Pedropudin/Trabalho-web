@@ -4,6 +4,7 @@ import '../styles/HistoricoProdutos.css';
 import Footer from '../components/Footer';
 import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+import ScrollToTop from '../components/ScrollToTop';
 
 /*
   Página de histórico de produtos visualizados pelo usuário.
@@ -133,6 +134,7 @@ export default function HistoricoProdutos() {
       </section>
       {/* Modal de detalhes do produto */}
       <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
+      <ScrollToTop />
       <Footer />
     </>
   );

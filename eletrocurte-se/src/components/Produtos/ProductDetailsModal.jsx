@@ -19,6 +19,16 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
   // Se não houver produto, não renderiza nada
   if (!product) return null;
 
+  // Busca comentário do usuário logado, se houver
+  let comentarioUsuario = undefined;
+  if (product.id && localStorage.getItem('nomeUsuario')) {
+    const nomeUsuario = localStorage.getItem('nomeUsuario');
+    const avaliacoes = JSON.parse(localStorage.getItem(`avaliacoes_${nomeUsuario}`) || '{}');
+    if (avaliacoes[product.id] && avaliacoes[product.id].comentario) {
+      comentarioUsuario = avaliacoes[product.id].comentario;
+    }
+  }
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       {/* Título do modal com nome do produto */}
@@ -57,6 +67,12 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
                 {product.detalhes || product.details}
               </Typography>
             ) : null}
+            {/* Comentário do usuário logado, se houver */}
+            {comentarioUsuario && (
+              <Typography variant="body2" color="secondary" gutterBottom sx={{ fontStyle: 'italic', mt: 1 }}>
+                “{comentarioUsuario}”
+              </Typography>
+            )}
             <Typography variant="subtitle1" color="primary" gutterBottom>
                 R$ {product.preco || product.price}
             </Typography>

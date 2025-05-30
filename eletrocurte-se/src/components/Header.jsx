@@ -6,7 +6,7 @@
 // Integração com badge animado, menu mobile e props customizáveis.
 // -----------------------------------------------------------------------------
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ROUTES from '../routes';
 import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -158,7 +158,7 @@ function Header({
   onProfile,
   onCart,
   onLogout,
-  cartCount = 3,
+  cartCount, // será ignorado, pois vamos calcular dinamicamente
   searchDisabled = false,
   onSearchDenied,
 }) {
@@ -170,37 +170,108 @@ function Header({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
 
+  // Calcula o número de itens no carrinho a partir do localStorage
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [mensagemCategoria, setMensagemCategoria] = useState('');
+  const mensagemTimeoutRef = React.useRef(null);
+
+  useEffect(() => {
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      // Soma todas as quantidades dos produtos no carrinho
+      const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      setCartItemsCount(total);
+    }
+    updateCartCount();
+    // Atualiza ao receber evento de storage (outras abas/janelas)
+    window.addEventListener('storage', updateCartCount);
+    // Atualiza ao focar a aba (caso o carrinho mude em outra aba)
+    window.addEventListener('focus', updateCartCount);
+    // Atualiza ao clicar no ícone do carrinho (garantia extra)
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener('focus', updateCartCount);
+    };
+  }, []);
+
   // Abre menu mobile
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
   // Fecha menu mobile
   const handleClose = () => setAnchorEl(null);
+
+  // Centraliza a lógica de autenticação
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   // Seleciona categoria e dispara callback
   const handleCategoryClick = (cat) => {
     setSelectedCategory(cat);
     if (onCategoryClick) onCategoryClick(cat);
   };
-  
+
+  // Perfil: se logado vai para perfil, senão para login
+  const handleProfileClick = () => {
+    if (onProfile) {
+      onProfile();
+    } else {
+      if (isLoggedIn) {
+        navigate(ROUTES.PERFIL);
+      } else {
+        navigate(ROUTES.LOGIN);
+      }
+    }
+  };
+
+  // Carrinho: só permite se logado, senão vai para login
   const handleCartClick = () => {
-    if (onCart) onCart();
-    navigate(ROUTES.CHECKOUT);
+    if (onCart) {
+      onCart();
+    } else {
+      if (isLoggedIn) {
+        navigate(ROUTES.CHECKOUT);
+      } else {
+        navigate(ROUTES.LOGIN);
+      }
+    }
   };
 
+  // Logo: usa prop ou padrão para home
   const handleLogoClick = () => {
-    navigate(ROUTES.PAGINA_INICIAL);
+    if (onLogoClick) {
+      onLogoClick();
+    } else {
+      navigate(ROUTES.PAGINA_INICIAL);
+    }
   };
 
-  // Logout interno, utilizado se onLogout não for passado como prop
+  // Logout: usa prop ou padrão
   const handleLogoutInternal = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
     navigate(ROUTES.LOGOUT, { replace: true });
   };
 
+  // Função para exibir mensagem e garantir que só uma aparece por vez
+  function showMensagemCategoria(msg) {
+    setMensagemCategoria(msg);
+    if (mensagemTimeoutRef.current) {
+      clearTimeout(mensagemTimeoutRef.current);
+    }
+    mensagemTimeoutRef.current = setTimeout(() => {
+      setMensagemCategoria('');
+      mensagemTimeoutRef.current = null;
+    }, 3500);
+  }
+
   return (
     <>
       {/* Animação pulse para badge do carrinho */}
       <style>{pulseKeyframes}</style>
+      {/* Mensagem de aviso para categorias */}
+      {mensagemCategoria && (
+        <div className="mensagem show info" style={{ position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 999, background: '#2196F3', color: '#fff', padding: '12px 24px', borderRadius: 8, fontWeight: 'bold' }}>
+          {mensagemCategoria}
+        </div>
+      )}
       <AppBar
         position="static"
         sx={{
@@ -257,7 +328,7 @@ function Header({
           >
             { useElementsMenu[0] && <IconButton
               color="inherit"
-              onClick={onProfile}
+              onClick={handleProfileClick}
               sx={{
                 transition: 'background 0.2s',
                 '&:hover': { background: 'rgba(0,123,153,0.15)' }, // Hover azul claro
@@ -273,21 +344,25 @@ function Header({
                 '&:hover': { background: 'rgba(0,123,153,0.15)' },
               }}
             >
-              <Badge
-                badgeContent={normalizeCartCount(cartCount)}
-                color="secondary"
-                sx={{
-                  '& .MuiBadge-badge': {
-                    animation: 'pulse 1s infinite alternate', // Animação do badge
-                    minWidth: 22, // Largura mínima do badge
-                    fontSize: 14, // Tamanho da fonte do badge
-                    right: -3, // Ajuste de posição
-                    top: 6,
-                  },
-                }}
-              >
+              {cartItemsCount > 0 ? (
+                <Badge
+                  badgeContent={normalizeCartCount(cartItemsCount)}
+                  color="secondary"
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      animation: 'pulse 1s infinite alternate', // Animação do badge
+                      minWidth: 22, // Largura mínima do badge
+                      fontSize: 14, // Tamanho da fonte do badge
+                      right: -3, // Ajuste de posição
+                      top: 6,
+                    },
+                  }}
+                >
+                  <ShoppingCartIcon />
+                </Badge>
+              ) : (
                 <ShoppingCartIcon />
-              </Badge>
+              )}
             </IconButton>}
             { useElementsMenu[2] && <IconButton
               color="inherit"
@@ -312,7 +387,7 @@ function Header({
             >
               {/* Exibe apenas as opções ativas conforme useElementsMenu */}
               {useElementsMenu[0] && (
-                <MenuItem onClick={onProfile}>
+                <MenuItem onClick={handleProfileClick}>
                   <ListItemIcon>
                     <AccountCircle fontSize="small" />
                   </ListItemIcon>
@@ -320,7 +395,7 @@ function Header({
                 </MenuItem>
               )}
               {useElementsMenu[1] && (
-                <MenuItem onClick={onCart}>
+                <MenuItem onClick={handleCartClick}>
                   <ListItemIcon>
                     <ShoppingCartIcon fontSize="small" />
                   </ListItemIcon>
@@ -328,7 +403,7 @@ function Header({
                 </MenuItem>
               )}
               {useElementsMenu[2] && (
-                <MenuItem onClick={onLogout}>
+                <MenuItem onClick={onLogout || handleLogoutInternal}>
                   <ListItemIcon>
                     <LogoutIcon fontSize="small" />
                   </ListItemIcon>
@@ -344,10 +419,29 @@ function Header({
             <CategoryLink
               key={cat}
               active={selectedCategory === cat ? 1 : 0}
-              onClick={() => handleCategoryClick(cat)}
+              onClick={e => {
+                if (!isLoggedIn) {
+                  e.preventDefault();
+                  showMensagemCategoria('Faça login para filtrar por categoria!');
+                } else {
+                  handleCategoryClick(cat);
+                }
+              }}
+              style={!isLoggedIn ? { color: '#aaa', cursor: 'pointer' } : {}}
             >
-               <Link to={ROUTES.PAG_SETOR.replace(":name",cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())}
-               style={{color:'inherit'}}>{cat}</Link>
+              <Link
+                to={ROUTES.PAG_SETOR.replace(":name",cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())}
+                style={{color:'inherit'}}
+                tabIndex={0}
+                onClick={e => {
+                  if (!isLoggedIn) {
+                    e.preventDefault();
+                    showMensagemCategoria('Faça login para filtrar por categoria!');
+                  }
+                }}
+              >
+                {cat}
+              </Link>
             </CategoryLink>
           ))}
         </CategoryBar>
