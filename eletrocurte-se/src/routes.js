@@ -13,6 +13,7 @@ const ROUTES = {
   LOGOUT: '/Logout',
   DESEMPENHO: '/admin/Desempenho',
   TIME: '/admin/Time',
+  VENDAS: '/admin/Vendas',
   PENDENCIAS: '/admin/Pendencias',
   PAGINA_INICIAL: '/',
 };
