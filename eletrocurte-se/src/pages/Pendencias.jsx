@@ -164,7 +164,7 @@ const Pendencias = () => {
                 /> }
                 <div style={{
                     display: 'flex',
-                    gap: '20px'
+                    gap: '20px',
                     flexWrap: 'wrap'
                 }} >
                     <Card
