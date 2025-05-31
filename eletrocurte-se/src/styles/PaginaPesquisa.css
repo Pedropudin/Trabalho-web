@@ -1,0 +1,183 @@
+/* Reset e layout principal */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+}
+.main-content {
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+    flex-direction: row;
+    gap: 50px;
+    margin: 40px auto;
+    padding: 12px;
+    max-width: 1200px;
+    min-height: 500px;
+}
+
+/* Área de resultados e filtros */
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    width: 100%;
+}
+.results select, .results h4 {
+    display: inherit;
+    flex-direction: row;
+}
+.search-results {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+/* Grid de produtos */
+.product-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    margin: 20px auto;
+    padding: 10px;
+    width: 100%;
+}
+.product-display .items img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* Card de produto */
+.items {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: 200px;
+    height: 340px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.items img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+.items:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.item-name {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Botão de compra e produto indisponível */
+.product-unavailable {
+    margin-top: 16px;
+    cursor: default;
+    padding: 6px 0;
+    border-radius: 5px;
+    width: 100px;
+    text-align: center;
+}
+.product-display-purchase-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    padding: 10px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 16px;
+    width: 120px;
+    text-align: center;
+    font-size: 15px;
+    min-height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.product-display-purchase-button:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* Ordenação e cabeçalho dos resultados */
+.order-criterion {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+.results-header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 16px;
+    gap: 20px;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        gap: 20px;
+        margin: 16px auto;
+        padding: 8px;
+        min-height: unset;
+        justify-content: center;
+        align-items: center;
+    }
+    .product-display {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        justify-items: center;
+        margin: 10px 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .items {
+        width: 95vw;
+        max-width: 340px;
+        min-width: 220px;
+        height: auto;
+        gap: 12px;
+    }
+    .results {
+        width: 100%;
+        padding: 8px;
+    }
+    .results-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .product-sidebar {
+        min-width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ccc;
+        border-radius: 0 0 12px 12px;
+        padding: 12px 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+}

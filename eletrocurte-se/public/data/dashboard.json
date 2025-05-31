@@ -9,5 +9,38 @@
         "price": 189.90,
         "quantity_sold": 1289,
         "stock": 989
+    },
+    "sales": {
+        "hardware": [
+            { "day": "1", "sold": 15 },
+            { "day": "2", "sold": 20 },
+            { "day": "3", "sold": 18 },
+            { "day": "4", "sold": 22 },
+            { "day": "5", "sold": 17 },
+            { "day": "6", "sold": 25 },
+            { "day": "7", "sold": 19 },
+            { "day": "8", "sold": 23 },
+            { "day": "9", "sold": 16 },
+            { "day": "10", "sold": 21 },
+            { "day": "11", "sold": 43 },
+            { "day": "12", "sold": 32 },
+            { "day": "13", "sold": 12 },
+            { "day": "14", "sold": 18 },
+            { "day": "15", "sold": 68},
+            { "day": "16", "sold": 56 },
+            { "day": "17", "sold": 47 },
+            { "day": "18", "sold": 42 },
+            { "day": "19", "sold": 25 },
+            { "day": "20", "sold": 47 },
+            { "day": "21", "sold": 12 },
+            { "day": "22", "sold": 8 },
+            { "day": "23", "sold": 78 },
+            { "day": "24", "sold": 58 },
+            { "day": "25", "sold": 35 },
+            { "day": "26", "sold": 47 },
+            { "day": "27", "sold": 65 },
+            { "day": "28", "sold": 7 },
+            { "day": "29", "sold": 9 }
+        ]
     }
 }

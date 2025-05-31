@@ -6,6 +6,8 @@ import AdminHeader from "../components/admin/AdminHeader";
 import Card from "../components/Card";
 import Question from "../components/Pendencias/Question";
 import GenericInfoRedirect from "../components/Pendencias/GenericInfoRedirect";
+import ProductCard from '../components/Produtos/ProductCard';
+import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 import ReactPaginate from 'react-paginate';
 
 import "../styles/Pagination.css";
@@ -17,6 +19,8 @@ const Pendencias = () => {
     const [complainingsData, setComplainingsData] = useState(null);
     const [soldData, setSoldData] = useState(null);
     const [serviceData, setServiceData] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const [usePagination,setUsePagination] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
@@ -73,6 +77,15 @@ const Pendencias = () => {
             setServiceData(respData.services);
         })
     }, []);
+
+    const handleProductClick = (product) => {
+        setSelectedProduct(product);
+        setModalOpen(true);
+    };
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setSelectedProduct(null);
+    }
 
     // Calculate the questions to display for the current page
     const offset = currentPage * questionsPerPage;
@@ -152,40 +165,50 @@ const Pendencias = () => {
                 <div style={{
                     display: 'flex',
                     gap: '20px'
+                    flexWrap: 'wrap'
                 }} >
                     <Card
                         title={"Envios pendentes"}
                         description="Produtos que esperam para serem despachados"
                         type={"card-vertical"}
                     >
-                        {soldData && soldData.map((s) => {
-                            return <GenericInfoRedirect 
-                                photo={s.product_photo}
-                                name={s.product_name} 
-                                description={s.delivery_city + " - " + s.delivery_state}
-                                buttonText="Ver detalhes"
-                                buttonOnClick={() => {console.log("Viu só")}}
-                                style={{width: '350px'}}
-                            />
-                        })}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                        {soldData && soldData.map((s, idx) => (
+                            <div key={s.product_name + idx} style={{ minWidth: 220, maxWidth: 300 }}>
+                                <ProductCard 
+                                    product={{
+                                        nome: s.product_name,
+                                        preco: s.product_price,
+                                        imagem: s.product_photo,
+                                        cidade: s.delivery_city,
+                                        estado: s.delivery_state
+                                    }}
+                                    onClick={handleProductClick}
+                                    showBuyButton={false}
+                                />
+                            </div>
+                        ))}
+                        </div>
                     </Card>
                     <Card
                         title={"Atendimentos"}
                         description="Conversas com clientes não finalizadas"
                         type={"card-vertical"}
                     >
-                        {serviceData && serviceData.map((s) => {
+                        {serviceData && serviceData.map((s, idx) => {
                             return <GenericInfoRedirect 
                                 photo={s.person_photo}
                                 name={s.name} 
                                 description={s.person_name}
                                 buttonText="Abrir email"
                                 style={{width: '400px'}}
+                                key={s.id || idx}
                             />
                         })}
                     </Card>
                 </div>
             </div>
+            <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
             <Footer />
         </div>
     );

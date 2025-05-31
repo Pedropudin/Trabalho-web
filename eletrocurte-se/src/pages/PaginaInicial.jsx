@@ -2,15 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { produtosHistorico } from '../products';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import '../styles/PaginaInicial.css';
-import ScrollToTop from '../components/ScrollToTop';
 import ROUTES from '../routes';
+import ProductCard from '../components/Produtos/ProductCard';
+import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+
+/*
+  Página inicial do portal Eletrocurte-se.
+  - Banner de boas-vindas, produtos em destaque e chamada para ação.
+  - Integração com autenticação, navegação e feedback visual.
+  - Layout responsivo com Material-UI e alinhamento ao padrão visual do projeto.
+*/
 
 const categorias = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'];
 
@@ -18,12 +25,24 @@ const PaginaInicial = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [mensagem, setMensagem] = useState('');
+    const [produtosHistorico, setProdutosHistorico] = useState([]);
+    // Estado para modal de detalhes do produto
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
+        // Verifica autenticação ao carregar a página
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, []);
 
-    // Handler para funcionalidades restritas
+    useEffect(() => {
+        // Busca produtos em destaque do histórico
+        fetch(process.env.PUBLIC_URL + '/data/products.json')
+            .then(res => res.json())
+            .then(data => setProdutosHistorico(data.produtosHistorico || []));
+    }, []);
+
+    // Handlers para funcionalidades restritas e navegação
     function handleRestrito(e) {
         if (!isLoggedIn) {
             e.preventDefault();
@@ -31,8 +50,6 @@ const PaginaInicial = () => {
             setTimeout(() => setMensagem(''), 3500);
         }
     }
-
-    // Handler para botão "Comece agora"
     function handleComeceAgora(e) {
         e.preventDefault();
         if (isLoggedIn) {
@@ -41,8 +58,6 @@ const PaginaInicial = () => {
             navigate(ROUTES.LOGIN);
         }
     }
-
-    // Funções para Header
     function handleProfile() {
         if (isLoggedIn) {
             navigate(ROUTES.PERFIL);
@@ -50,7 +65,6 @@ const PaginaInicial = () => {
             navigate(ROUTES.LOGIN);
         }
     }
-
     function handleCart() {
         if (isLoggedIn) {
             setMensagem('Funcionalidade de carrinho em breve!');
@@ -59,33 +73,44 @@ const PaginaInicial = () => {
             navigate(ROUTES.LOGIN);
         }
     }
-
     function handleLogout() {
-        if (!isLoggedIn) return; // Não faz nada se não estiver logado
+        if (!isLoggedIn) {
+            setMensagem('Você já está deslogado!');
+            setTimeout(() => setMensagem(''), 3500);
+            return;
+        }
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userType');
         setIsLoggedIn(false);
         setMensagem('Logout realizado com sucesso!');
         setTimeout(() => setMensagem(''), 3500);
         navigate(ROUTES.LOGOUT);
     }
-
     function handleSearchChange(e) {
         if (!isLoggedIn) {
             setMensagem('Faça login para pesquisar produtos!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
-        // Aqui você pode implementar a lógica de pesquisa real
+        // Lógica de pesquisa real pode ser implementada aqui
     }
-
     function handleCategoryClick(cat) {
         if (!isLoggedIn) {
             setMensagem('Faça login para filtrar por categoria!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
-        // Aqui você pode implementar a lógica de filtro real
+        // Lógica de filtro real pode ser implementada aqui
     }
+    // Handlers para modal de detalhes do produto
+    const handleProductClick = (product) => {
+        setSelectedProduct({ ...product, showBuyButton: true });
+        setModalOpen(true);
+    };
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setSelectedProduct(null);
+    };
 
     return (
         <>
@@ -95,13 +120,19 @@ const PaginaInicial = () => {
                 onLogout={handleLogout}
                 onSearchChange={handleSearchChange}
                 onCategoryClick={handleCategoryClick}
+                searchDisabled={!isLoggedIn}
+                onSearchDenied={() => {
+                    setMensagem('Faça login para pesquisar produtos!');
+                    setTimeout(() => setMensagem(''), 3500);
+                }}
+                onLogoClick={undefined} // Desabilita o redirecionamento na página inicial
             />
             {/* Mensagem amigável para funcionalidades restritas */}
             {mensagem && (
                 <div className="mensagem show info" style={{ position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 999, background: '#2196F3', color: '#fff', padding: '12px 24px', borderRadius: 8, fontWeight: 'bold' }}>{mensagem}</div>
             )}
             <Box className="landing-container" sx={{ background: '#f5fafd', minHeight: '100vh', pb: 4 }}>
-                {/* Banner principal */}
+                {/* Banner principal com chamada para ação */}
                 <Paper elevation={3} className="banner" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #1565c0 80%, #5e92f3 100%)', color: '#fff', p: { xs: 2, md: 6 }, gap: 4, flexWrap: 'wrap', mb: 4 }}>
                     <Box className="banner-content" sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: { xs: 'center', md: 'flex-start' }, minWidth: 220 }}>
                         <Typography variant="h3" component="h1" sx={{ color: '#fff', fontWeight: 700, mb: 1, fontSize: { xs: '2rem', md: '2.5rem' } }}>
@@ -115,23 +146,20 @@ const PaginaInicial = () => {
                         </Button>
                     </Box>
                 </Paper>
-
                 {/* Produtos em destaque */}
                 <Box className="produtos-destaque" sx={{ maxWidth: 1200, mx: 'auto', px: 2, mb: 6 }}>
-                    <Typography variant="h5" sx={{ color: '#004d66', mb: 2 }}>Produtos em destaque</Typography>
-                    <Grid 
-                        container 
-                        spacing={3} 
-                        justifyContent="center" 
+                    <Typography variant="h4" sx={{ color: '#004d66', mb: 5, }}>Produtos em destaque</Typography>
+                    <Grid
+                        container
+                        columns={{ xs: 1, sm: 2, md: 3 }}
+                        columnSpacing={3}
+                        rowSpacing={3}
+                        justifyContent="center"
                         alignItems="stretch"
-                        sx={{
-                            margin: 0,
-                            width: '100%',
-                            flexWrap: 'wrap',
-                        }}
+                        sx={{ margin: 0, width: '100%', flexWrap: 'wrap' }}
                     >
-                        {produtosHistorico.slice(0, 6).length === 0 ? (
-                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                        {produtosHistorico.slice(0, 12).length === 0 ? (
+                            <Grid sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                                 <Paper elevation={2} sx={{ p: 4, borderRadius: 2, textAlign: 'center', width: '100%', maxWidth: 320 }}>
                                     <Typography variant="subtitle1" sx={{ color: '#888' }}>
                                         Nenhum produto disponível no momento.
@@ -139,28 +167,21 @@ const PaginaInicial = () => {
                                 </Paper>
                             </Grid>
                         ) : (
-                            produtosHistorico.slice(0, 6).map((produto, idx) => (
-                                <Grid 
-                                    item 
-                                    xs={12} sm={6} md={4} 
-                                    key={produto.nome + idx}
-                                    sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                    <Paper elevation={2} className="produto-card" sx={{ p: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', transition: '0.2s', '&:hover': { boxShadow: 8, transform: 'scale(1.03)' }, width: '100%', maxWidth: 320 }}>
-                                        <Box component="img" src={produto.img} alt={produto.nome} sx={{ width: 100, height: 100, objectFit: 'contain', mb: 2, borderRadius: 1, background: '#f5f5f5' }} />
-                                        <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1, textAlign: 'center' }}>{produto.nome}</Typography>
-                                        <Typography className="preco" sx={{ color: '#007b99', fontWeight: 700, mb: 2 }}>{produto.preco}</Typography>
-                                        <Button variant="contained" sx={{ background: '#007b99', color: '#fff', borderRadius: 1, px: 3, py: 1, fontWeight: 500, '&:hover': { background: '#004d66' } }} onClick={handleRestrito}>
-                                            Comprar
-                                        </Button>
-                                    </Paper>
+                            produtosHistorico.slice(0, 12).map((produto, idx) => (
+                                <Grid key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <ProductCard 
+                                        product={produto} 
+                                        onClick={handleProductClick} 
+                                        isLoggedIn={isLoggedIn}
+                                        pageType="home"
+                                        showBuyButton={true}
+                                    />
                                 </Grid>
                             ))
                         )}
                     </Grid>
                 </Box>
-
-                {/* Chamada para ação extra: só para logados */}
+                {/* Chamada para ação extra: newsletter para logados */}
                 {isLoggedIn && (
                     <Box className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
                         <Typography variant="h6" sx={{ color: '#004d66', mb: 2 }}>Receba ofertas exclusivas!</Typography>
@@ -173,6 +194,8 @@ const PaginaInicial = () => {
                     </Box>
                 )}
             </Box>
+            {/* Modal de detalhes do produto */}
+            <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
             <Footer />
         </>
     );

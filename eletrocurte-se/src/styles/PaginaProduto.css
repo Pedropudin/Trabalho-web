@@ -1,0 +1,267 @@
+/* Reset e layout principal */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+}
+
+body {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Conteúdo principal da página do produto */
+.main-content {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 50px;
+    justify-content: center;
+    margin: 50px auto;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+}
+
+/* Card do produto */
+.item {
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: white;
+    justify-content: center;
+    padding: 32px;
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+.item button{
+    align-items: center;
+    border: #004d66;
+    background-color: #004d66;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 30px 10px 10px 0;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.item button:hover {
+    background-color: #007b99;
+}
+
+/* Imagem e informações do produto */
+.product-information {
+    justify-content: space-between; 
+    justify-content: flex-start;
+    padding-right: 20px;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    padding: 20px;
+    margin: 4px auto;
+    border-radius: 5px;
+}
+
+.item-images{
+    margin: 20px 50px 20px 0; 
+    gap: 10px;
+    border-right: 1px solid #007b99;
+    padding-right: 40px; 
+}
+
+/* Miniaturas e navegação de imagens */
+.IconArrowCarousel{
+    color: black;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0 10px;
+    rotate: 90deg;
+    cursor: pointer
+}
+.thumbs{
+    display: flex;
+    align-items: center;
+    position: static;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbs img,
+.thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 0.5px solid lightgray;
+    cursor: pointer;
+    padding: 4px;
+    background: #fff;
+    box-sizing: border-box;
+    transition: border 0.2s;
+}
+
+/* Nome, preço e disponibilidade */
+.product-name-product-page{
+    margin: 10px 0;
+    justify-content: center;
+    font-weight: bold;
+}
+.product-price {
+    margin-top: 40px;
+    font-size: 30px;
+    color: #333;
+}
+.product-in-stock{
+    text-align: center;
+    background-color: green;
+    color: white; 
+    font-size: 1em;
+    padding: 10px;
+    width: 200px;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.product-unavailable-product-page{
+    text-align: center;
+    background-color: red;
+    color: white; 
+    font-size: 1em;
+    padding: 10px;
+    width: 200px;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+/* Botões de ação */
+.product-buttons {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.product-purchase-button, .product-cart-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    margin: 0 10px 0 0;
+}
+
+.product-purchase-button:hover, .product-cart-button:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* Especificações e descrição */
+.text-specifications, .text-description {
+    text-align: start;
+    background-color: #f9f9f9; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    margin-top: 50px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.text-specifications h2, .text-description h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007b99;
+    padding-bottom: 5px;
+}
+
+.text-specifications ul, .text-description ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.text-specifications ul > li, .text-description ul > li {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.text-specifications ul ul, .text-description ul ul {
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+.text-specifications ul ul li,  .text-description ul ul li {
+    font-weight: normal;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 768px) {
+    *{
+        max-width: 100%;
+    }
+    
+    .main-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .item-images{
+        border: none;
+        text-align: center;
+        padding-right: 0;
+        margin: 16px 0 20px 0;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        max-width: 100vw;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+    .product-buttons {
+        display: column; 
+        justify-content: center;
+    }
+
+}

@@ -1,8 +1,17 @@
+// -----------------------------------------------------------------------------
+// ScrollToTop.jsx
+// Botão flutuante para rolar a página ao topo com efeito visual.
+// Integra EfeitoEletrico para feedback animado ao clicar.
+// Exibe apenas quando o scroll passa de 200px.
+// -----------------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
 import EfeitoEletrico from './EfeitoEletrico';
+import '../styles/ScrollToTop.css';
 
 const ScrollToTop = () => {
+  // Controla visibilidade do botão
   const [visible, setVisible] = useState(false);
+  // Estado para trigger do efeito elétrico
   const [efeito, setEfeito] = useState(null);
 
   // Mostra o botão quando o scroll passa de 200px
@@ -16,16 +25,15 @@ const ScrollToTop = () => {
 
   // Função para rolar ao topo e disparar o efeito elétrico
   const handleRetornoClick = (e) => {
-  const btn = e.currentTarget;
-  const rect = btn.getBoundingClientRect();
-  
-  // Coordenadas relativas ao botão
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  setEfeito({ x, y });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(() => setEfeito(null), 500);
-};
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    // Coordenadas relativas ao botão para posicionar o efeito
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setEfeito({ x, y });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => setEfeito(null), 500);
+  };
 
   if (!visible) return null;
 
@@ -38,6 +46,7 @@ const ScrollToTop = () => {
       aria-label="Voltar ao topo"
     >
       <span style={{ position: 'relative', display: 'inline-block' }}>
+        {/* Efeito visual animado ao clicar */}
         <EfeitoEletrico trigger={efeito} />
         <i className="fas fa-arrow-up"></i>
       </span>

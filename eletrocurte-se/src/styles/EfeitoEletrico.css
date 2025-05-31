@@ -1,3 +1,11 @@
+/*
+  EfeitoEletrico.css
+  - CSS para efeito visual de partículas elétricas.
+  - Define estilos para partículas animadas (círculo, quadrado, faísca).
+  - Animação de escala e opacidade para simular eletricidade.
+  - Integração visual com botão de retorno ao topo.
+*/
+
 .efeito-eletrico {
   position: absolute;
   width: 10px;
@@ -13,6 +21,7 @@
   display: inline-block;
 }
 
+/* Formatos das partículas */
 .circulo {
   border-radius: 50%;
   background-color: cyan;
@@ -29,6 +38,7 @@
   height: 12px;
 }
 
+/* Animação de eletricidade: escala e desaparecimento */
 @keyframes eletricidade {
   0% { transform: scale(0.5); opacity: 1; }
   100% { transform: scale(1.5); opacity: 0; }

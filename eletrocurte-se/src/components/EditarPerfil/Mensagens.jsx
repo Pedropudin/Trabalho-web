@@ -17,7 +17,33 @@ import {
   Skeleton
 } from '@mui/material';
 
+// Componente Mensagens
+// Exibe mensagens do sistema/administrador para o usuário, com agrupamento por data e filtros
+// Props:
+// - onVoltar: função chamada ao clicar em voltar ao perfil
+//
+// Estados:
+// - mensagens: lista de mensagens do usuário
+// - novaMensagem: texto do input para nova mensagem
+// - filtro: filtro de exibição (todas, importantes, não lidas)
+// - mensagemEmDestaque: destaca mensagem recém-chegada
+// - snackbar: controla feedback visual
+// - loading: simula carregamento inicial
+//
+// Funções:
+// - agruparMensagensPorData: agrupa mensagens por "Hoje", "Ontem" e "Anteriores"
+// - adicionarMensagem: adiciona nova mensagem à lista
+// - marcarComoLida: marca mensagem como lida ao clicar
+//
+// Lógica:
+// - Mensagens podem ser filtradas e agrupadas
+// - Mensagem automática do admin é simulada após 10s
+// - Feedback visual com Snackbar/Alert
+// - Layout com Box, Card, Paper, Typography, ToggleButtonGroup, Chip, Skeleton, etc.
+// - CSS inline (sx) para espaçamento, cor, destaque, responsividade
+
 const agruparMensagensPorData = (mensagens) => {
+  // Agrupa mensagens em "Hoje", "Ontem" e "Anteriores" para facilitar visualização
   const hoje = new Date().toDateString();
   const ontem = new Date(Date.now() - 86400000).toDateString();
 
@@ -35,6 +61,7 @@ const agruparMensagensPorData = (mensagens) => {
 };
 
 export default function Mensagens({ onVoltar }) {
+  // Estado com lista de mensagens do usuário
   const [mensagens, setMensagens] = useState([
     {
       id: 1,
@@ -59,18 +86,20 @@ export default function Mensagens({ onVoltar }) {
     },
   ]);
 
-  const [novaMensagem, setNovaMensagem] = useState('');
-  const [filtro, setFiltro] = useState('todas');
-  const [mensagemEmDestaque, setMensagemEmDestaque] = useState(null);
-  const [snackbar, setSnackbar] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [novaMensagem, setNovaMensagem] = useState(''); // Estado do input de nova mensagem
+  const [filtro, setFiltro] = useState('todas'); // Estado do filtro de exibição
+  const [mensagemEmDestaque, setMensagemEmDestaque] = useState(null); // Destaca mensagem recém-chegada
+  const [snackbar, setSnackbar] = useState(false); // Controla feedback visual
+  const [loading, setLoading] = useState(true); // Simula carregamento inicial
 
   useEffect(() => {
+    // Simula carregamento inicial (ex: busca em API)
     const timer = setTimeout(() => setLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
+    // Simula chegada automática de mensagem do admin após 10s
     const timer = setTimeout(() => {
       const nova = {
         id: Date.now(),
@@ -82,6 +111,7 @@ export default function Mensagens({ onVoltar }) {
       setMensagens((prev) => [nova, ...prev]);
       setMensagemEmDestaque(nova.id);
 
+      // Toca som de notificação
       const audio = new Audio('/notification.ogg');
       audio.play().catch((error) => {
         console.error('Erro ao reproduzir o áudio:', error);
@@ -91,6 +121,7 @@ export default function Mensagens({ onVoltar }) {
     return () => clearTimeout(timer);
   }, []);
 
+  // Adiciona nova mensagem manualmente
   const adicionarMensagem = () => {
     if (!novaMensagem.trim()) return;
     const nova = {
@@ -105,30 +136,41 @@ export default function Mensagens({ onVoltar }) {
     setSnackbar(true);
   };
 
+  // Marca mensagem como lida ao clicar
   const marcarComoLida = (id) => {
     setMensagens((prev) =>
       prev.map((msg) => (msg.id === id ? { ...msg, lida: true } : msg))
     );
   };
 
+  // Filtra mensagens conforme o filtro selecionado
   const mensagensFiltradas = mensagens.filter((msg) => {
     if (filtro === 'todas') return true;
     if (filtro === 'importantes') return msg.importante;
     if (filtro === 'naoLidas') return !msg.lida;
   });
 
+  // Agrupa mensagens filtradas por data
   const agrupadas = agruparMensagensPorData(mensagensFiltradas);
 
   return (
     <Box maxWidth="md" mx="auto" mt={4}>
+      {/* Box: container flexível
+          maxWidth="md": largura máxima média
+          mx="auto": centraliza horizontalmente
+          mt={4}: margem superior */}
       <Card>
+        {/* Card: destaca o conteúdo das mensagens */}
         <CardContent>
-          <Typography variant="h5" gutterBottom>
+          {/* CardContent: área interna do Card */}
+          <Typography variant="h5" gutterBottom sx={{mb: 3}}>
+            {/* Typography: título grande */}
             Mensagens do Administrador
           </Typography>
           {loading ? (
             <>
               <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+              {/* Skeleton: placeholder de carregamento */}
               <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
               <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
             </>
@@ -140,6 +182,7 @@ export default function Mensagens({ onVoltar }) {
                 onChange={(e, value) => value && setFiltro(value)}
                 sx={{ mb: 2 }}
               >
+                {/* ToggleButtonGroup: grupo de botões de filtro */}
                 <ToggleButton value="todas">Todas</ToggleButton>
                 <ToggleButton value="importantes">Importantes</ToggleButton>
                 <ToggleButton value="naoLidas">Não Lidas</ToggleButton>
@@ -147,6 +190,7 @@ export default function Mensagens({ onVoltar }) {
               {Object.entries(agrupadas).map(([grupo, msgs]) => (
                 <Box key={grupo} mb={3}>
                   <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                    {/* Typography: subtítulo para grupo de mensagens */}
                     {grupo}
                   </Typography>
                   <Divider />
@@ -166,7 +210,9 @@ export default function Mensagens({ onVoltar }) {
                       }}
                       onClick={() => marcarComoLida(msg.id)}
                     >
+                      {/* Paper: destaca cada mensagem */}
                       <Avatar sx={{ bgcolor: msg.importante ? 'error.main' : 'primary.main', width: 32, height: 32, fontSize: 18 }}>
+                        {/* Avatar: ícone do remetente */}
                         A
                       </Avatar>
                       <Box flex={1}>
@@ -182,20 +228,53 @@ export default function Mensagens({ onVoltar }) {
                   ))}
                 </Box>
               ))}
-              <Box display="flex" gap={2} mt={4}>
+              <Box display="flex" gap={2} mt={4} flexDirection={{ xs: 'column', sm: 'row' }}>
                 <TextField
                   label="Nova mensagem"
                   fullWidth
                   value={novaMensagem}
                   onChange={(e) => setNovaMensagem(e.target.value)}
                   variant="outlined"
+                  multiline
+                  minRows={3}
+                  maxRows={6}
+                  sx={{ flex: 1 }}
+                  InputProps={{
+                    style: { resize: 'vertical' }
+                  }}
                 />
-                <Button variant="contained" onClick={adicionarMensagem}>
+                <Button
+                  variant="contained"
+                  onClick={adicionarMensagem}
+                  sx={{
+                    minWidth: 120,
+                    height: { xs: 48, sm: 'auto' },
+                    alignSelf: { xs: 'flex-end', sm: 'unset' }
+                  }}
+                >
                   Enviar
                 </Button>
               </Box>
-              <Box mt={4} textAlign="right">
-                <Button onClick={onVoltar} variant="outlined">
+              <Box mt={4} display="flex" justifyContent="center">
+                <Button
+                  onClick={onVoltar}
+                  variant="outlined"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: 16,
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: 2,
+                    background: '#fff',
+                    borderColor: '#007b99',
+                    color: '#007b99',
+                    '&:hover': {
+                      background: '#e3f2fd',
+                      borderColor: '#004d66',
+                      color: '#004d66'
+                    }
+                  }}
+                >
                   Voltar ao Perfil
                 </Button>
               </Box>

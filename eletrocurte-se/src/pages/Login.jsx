@@ -4,11 +4,14 @@ import { Box, Paper, Typography, Button, TextField, Tabs, Tab } from '@mui/mater
 import HeaderLogs from '../components/HeaderLogs';
 import ROUTES from '../routes';
 import Footer from '../components/Footer';
+import '../styles/Login.css';
 
 /*
-  Página de Login adaptada do HTML antigo.
-  Permite alternar entre login de Cliente e Administrador.
-  Validações básicas e navegação programática.
+  Página de Login do sistema.
+  - Permite alternar entre login de Cliente e Administrador, além de cadastro.
+  - Validações robustas de nome, e-mail, senha e token (admin).
+  - Mensagens de feedback e navegação programática.
+  - Uso de Material-UI para layout e formulários responsivos.
 */
 
 export default function Login() {
@@ -18,12 +21,12 @@ export default function Login() {
   const [mensagemTipo, setMensagemTipo] = useState('info');
   const navigate = useNavigate();
 
-  // Expressões regulares para validação
+  // Expressões regulares para validação de nome, senha e e-mail
   const nomeRegex = /^(?=.*[\W_]).{6,}$/;
   const senhaSegura = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
   const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-  // Validação do domínio do e-mail usando a API pública do Google DNS
+  // Validação do domínio do e-mail usando API pública do Google DNS
   async function validarEmailGoogle(email) {
     const dominio = email.split('@')[1];
     if (!dominio) return false;
@@ -110,12 +113,14 @@ export default function Login() {
     return true;
   }
 
+  // Função utilitária para exibir mensagens temporárias
   function exibirMensagem(msg, tipo = "info") {
     setMensagem(msg);
     setMensagemTipo(tipo);
     setTimeout(() => setMensagem(''), 4000);
   }
 
+  // Handlers de submissão dos formulários
   // Submissão do formulário do cliente
   async function handleCliente(e) {
     e.preventDefault();
@@ -125,6 +130,8 @@ export default function Login() {
 
     if (await validarCliente({ nome, email, senha })) {
       localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userType', 'cliente');
+      localStorage.setItem('nomeUsuario', nome); // Salva nome do cliente
       exibirMensagem("Login do cliente efetuado com sucesso!", "sucesso");
       setTimeout(() => navigate(ROUTES.PAGINA_INICIAL), 1500);
     }
@@ -140,8 +147,10 @@ export default function Login() {
 
     if (await validarAdmin({ nome, email, senha, token })) {
       localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userType', 'admin');
+      localStorage.setItem('nomeUsuario', nome); // Salva nome do admin
       exibirMensagem("Login do administrador efetuado com sucesso!", "sucesso");
-      setTimeout(() => navigate(ROUTES.PAGINA_INICIAL), 1500);
+      setTimeout(() => navigate(ROUTES.DESEMPENHO), 1500);
     }
   }
 
@@ -160,12 +169,15 @@ export default function Login() {
 
   return (
     <>
+      {/* Cabeçalho simples para login/logout */}
       <HeaderLogs />
+      {/* Container centralizado com formulário responsivo */}
       <Box sx={{ minHeight: '100vh', background: '#f5fafd', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 6 }}>
-        <Paper elevation={4} sx={{ maxWidth: 400, width: '100%', p: { xs: 2, md: 4 }, borderRadius: 4, mt: 6 }}>
+        <Paper elevation={4} sx={{ maxWidth: 400, width: '100%', p: { xs: 2, md: 4 }, borderRadius: 4, mt: 2 }}>
           <Typography variant="h4" align="center" sx={{ fontWeight: 700, color: '#004d66', mb: 2 }}>
             {aba === 'login' ? 'Login' : 'Cadastro'}
           </Typography>
+          {/* Tabs para alternar entre login e cadastro */}
           <Tabs
             value={aba}
             onChange={(_, v) => setAba(v)}
@@ -177,11 +189,15 @@ export default function Login() {
             <Tab label="Login" value="login" />
             <Tab label="Cadastro" value="cadastro" />
           </Tabs>
-          {/* Formulário de login */}
+          {/* Formulário de login: alterna entre cliente e admin */}
           {aba === 'login' && (
             <>
               <Tabs
                 value={tipo}
+                // onChange recebe (evento, valorSelecionado).
+                // O primeiro argumento (evento) não é usado, por isso o underline (_).
+                // O segundo argumento (v) é o valor da aba selecionada ('cliente' ou 'admin').
+                // setTipo(v) atualiza o estado para exibir o formulário correspondente.
                 onChange={(_, v) => setTipo(v)}
                 variant="fullWidth"
                 sx={{ mb: 2 }}
@@ -191,30 +207,64 @@ export default function Login() {
                 <Tab label="Cliente" value="cliente" />
                 <Tab label="Administrador" value="admin" />
               </Tabs>
+              {/* Formulário de login do cliente */}
               {tipo === 'cliente' && (
                 <Box component="form" onSubmit={handleCliente} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {/* Campos de nome, e-mail e senha */}
                   <TextField label="Nome" id="nome-cliente" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
                   <TextField label="E-mail" id="email-cliente" name="email" required fullWidth size="small" type="email" placeholder="Ex: usuario@gmail.com" />
                   <TextField label="Senha" id="senha-cliente" name="senha" required fullWidth size="small" type="password" placeholder="Ex: @Eletrocurte-se-100%" />
                   <Button type="submit" variant="contained" sx={{ background: '#007b99', color: '#fff', fontWeight: 600, borderRadius: 2, mt: 1, '&:hover': { background: '#004d66' } }}>
                     Entrar
                   </Button>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={() => navigate(ROUTES.PAGINA_INICIAL, { replace: true })}
+                  >
+                    Voltar
+                  </Button>
                 </Box>
               )}
+              {/* Formulário de login do administrador */}
               {tipo === 'admin' && (
                 <Box component="form" onSubmit={handleAdmin} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <TextField label="Nome" id="nome-admin" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
                   <TextField label="E-mail" id="email-admin" name="email" required fullWidth size="small" type="email" placeholder="Ex: admin@empresa.com" />
                   <TextField label="Senha" id="senha-admin" name="senha" required fullWidth size="small" type="password" placeholder="Ex: @Eletrocurte-se-100%" />
-                  <TextField label="Token de segurança" id="token" name="token" required fullWidth size="small" placeholder="Ex: 123456" />
+                  <TextField
+                    label="Token de segurança"
+                    id="token"
+                    name="token"
+                    required
+                    fullWidth
+                    size="small"
+                    placeholder="Ex: 123456"
+                    inputProps={{
+                      inputMode: 'numeric',
+                      pattern: '[0-9]*',
+                      maxLength: 6,
+                    }}
+                    onInput={e => {
+                      // Permite apenas números e limita a 6 dígitos
+                      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                    }}
+                  />
                   <Button type="submit" variant="contained" sx={{ background: '#007b99', color: '#fff', fontWeight: 600, borderRadius: 2, mt: 1, '&:hover': { background: '#004d66' } }}>
                     Entrar
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={() => navigate(ROUTES.PAGINA_INICIAL, { replace: true })}
+                  >
+                    Voltar
                   </Button>
                 </Box>
               )}
             </>
           )}
-          {/* Formulário de cadastro */}
+          {/* Formulário de cadastro de novo usuário */}
           {aba === 'cadastro' && (
             <Box component="form" onSubmit={handleCadastro} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField label="Nome completo" id="nome-cadastro" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
@@ -226,6 +276,7 @@ export default function Login() {
               </Button>
             </Box>
           )}
+          {/* Mensagem de feedback ao usuário */}
           {mensagem && (
             <Box className={`mensagem show ${mensagemTipo}`} sx={{ mt: 2, textAlign: 'center', background: mensagemTipo === 'sucesso' ? '#4CAF50' : mensagemTipo === 'erro' ? '#F44336' : '#2196F3', color: '#fff', p: 1.5, borderRadius: 2, fontWeight: 600 }}>{mensagem}</Box>
           )}

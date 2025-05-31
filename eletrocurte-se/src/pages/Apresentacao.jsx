@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes';
-import '../styles/Apresentacao.css';
 import ScrollToTop from '../components/ScrollToTop';
 import Footer from '../components/Footer';
+import '../styles/Apresentacao.css';
 
 /*
-  Esta é a página documental "sobre nós" do site, que apresenta uma visão geral do portal de e-commerce,
-  incluindo logo, descrição e fornecedores.
-  - Estrutura semântica, layout responsivo e integração com React Router.
-  - Comentários originais do HTML foram mantidos/adaptados para JSX.
+  Página "Sobre nós" do portal Eletrocurte-se.
+  - Apresenta visão geral do projeto, logo, descrição técnica e contexto acadêmico.
+  - Estrutura semântica, responsiva e com integração ao React Router.
+  - Comentários explicam cada bloco principal e reforçam a proposta documental.
 */
 
 export default function Apresentacao() {
   return (
     <>
-      {/* Container principal alinhando itens ao centro */}
-      <main className="container">
-        {/* Logo do website (link relativo para a imagem) */}
+      {/* Container principal centralizado */}
+      <main className="container-apresentacao">
+        {/* Logo institucional do portal */}
         <img src="/logo-com-escrita.png" alt="Logo do website" className="logo" />
 
-        {/* Título de destaque explicando proposta do portal */}
+        {/* Título de destaque */}
         <h2>Encontre os melhores produtos e fornecedores em um só lugar!</h2>
         <br />
 
-        {/* Seção de descrição com explicação técnica e direta sobre o trabalho */}
+        {/* Seção descritiva: contexto acadêmico, técnicas e tecnologias */}
         <section className="descricao">
           <p>
             <strong>Projeto Integrador: </strong>
@@ -36,44 +36,39 @@ export default function Apresentacao() {
           <p>
             <strong>Estrutura Semântica: </strong>
             Utilizamos HTML5 semântico, estruturando conteúdo em cabeçalhos
-            (<code>&lt;h2&gt;, &lt;h3&gt;</code>) e seções, correspondendo o conteúdos ao contexto de interação
-            do usuário com o site.
+            (<code>&lt;h2&gt;, &lt;h3&gt;</code>) e seções, para melhor acessibilidade e SEO.
           </p>
           <br />
 
           <p>
             <strong>Layout Responsivo: </strong>
-            Aplicamos CSS3 com Flexbox e Grid para garantir fluidez em diversas
-            resoluções (desktop, tablet e mobile), com media queries para ajustes finos de tipografia e espaçamento.
+            CSS3 com Flexbox e Grid garante fluidez em desktop, tablet e mobile, com media queries para ajustes finos.
           </p>
           <br />
 
           <p>
             <strong>Interatividade: </strong>
-            A lógica de front-end foi implementada em JavaScript, manipulando o DOM
-            para validação de formulários, navegação suave (smooth scroll) e animações via
-            <code>@keyframes</code> e transições CSS. Além disso, foi feito o uso de framework
-            e banco de dados não relacional (NoSQL - MongoDB).
+            O front-end utiliza JavaScript para validação, navegação suave e animações CSS. Integração com framework e banco NoSQL (MongoDB).
           </p>
           <br />
 
           <p>
             <strong>Fluxo de trabalho: </strong>
-            Adotamos Git/GitHub para controle de versão e revisão de código.
+            Controle de versão e revisão de código via Git/GitHub.
           </p>
           <br />
 
           <p>
-            Para dúvidas ou contribuições, abra uma issue ou pull request em nosso
-            repositório no GitHub. Bom proveito e <em>&ldquo;eletrocurte-se&rdquo;</em>!
+            Para dúvidas ou contribuições, utilize o repositório no GitHub. Bom proveito e <em>&ldquo;eletrocurte-se&rdquo;</em>!
           </p>
           <br />
         </section>
       </main>
 
+      {/* Botão flutuante para rolar ao topo */}
       <ScrollToTop />
 
-      {/* Rodapé com informações de contato e redes sociais */}
+      {/* Rodapé institucional */}
       <Footer />
     </>
   );

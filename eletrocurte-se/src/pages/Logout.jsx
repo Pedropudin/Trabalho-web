@@ -7,8 +7,10 @@ import '../styles/Logout.css';
 import Footer from '../components/Footer';
 
 /*
-  Página de Logout adaptada do HTML antigo.
-  Exibe mensagem de sucesso, contagem regressiva e botão para voltar à Home.
+  Página de Logout do sistema.
+  - Exibe mensagem de sucesso, contagem regressiva e botão para voltar à Home.
+  - Remove flags de autenticação do localStorage e redireciona automaticamente.
+  - Layout centralizado e responsivo com Material-UI.
 */
 
 export default function Logout() {
@@ -17,29 +19,46 @@ export default function Logout() {
   const intervalRef = useRef(null);
   const [countdown, setCountdown] = useState(10);
 
+  // Protege a tela de logout: se não está deslogando, redireciona para home
   useEffect(() => {
-    // Ao fazer logout, remove o flag de login
-    localStorage.removeItem('isLoggedIn');
+    // Se não acabou de sair, não deixa acessar esta página
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+    }
+    // Substitui o histórico para evitar voltar para logout
+    window.history.replaceState({}, document.title, window.location.pathname);
 
+    // Remove flags de login ao sair e inicia contagem regressiva
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userType');
     setCountdown(10);
     if (timerRef.current) timerRef.current.textContent = 10;
     intervalRef.current = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(intervalRef.current);
-          navigate(ROUTES.PAGINA_INICIAL);
           return 0;
         }
         if (timerRef.current) timerRef.current.textContent = prev - 1;
         return prev - 1;
       });
     }, 1000);
-    return () => clearInterval(intervalRef.current);
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, [navigate]);
 
+  // useEffect para redirecionar quando countdown chega a 0
+  React.useEffect(() => {
+    if (countdown === 0) {
+      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+    }
+  }, [countdown, navigate]);
+
+  // Handler para botão de retorno imediato
   function handleHomeClick() {
     clearInterval(intervalRef.current);
-    navigate(ROUTES.PAGINA_INICIAL);
+    navigate(ROUTES.PAGINA_INICIAL, { replace: true });
   }
 
   return (
@@ -47,7 +66,7 @@ export default function Logout() {
       {/* Cabeçalho com logo centralizado */}
       <HeaderLogs />
 
-      {/* Container principal do logout, centralizando conteúdo */}
+      {/* Container principal centralizado com mensagem e botão */}
       <Box sx={{ minHeight: '100vh', background: '#f5fafd', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 6 }}>
         <Paper elevation={6} sx={{ maxWidth: 420, width: '100%', p: { xs: 3, md: 5 }, borderRadius: 4, mt: 6, textAlign: 'center', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.10)' }}>
           <Typography variant="h4" sx={{ fontWeight: 700, color: '#004d66', mb: 2 }}>
@@ -68,7 +87,7 @@ export default function Logout() {
         </Paper>
       </Box>
 
-      {/* Rodapé com informações de contato e links externos */}
+      {/* Rodapé institucional */}
       <Footer />
     </>
   );

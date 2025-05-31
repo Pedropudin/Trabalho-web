@@ -1,0 +1,64 @@
+{
+    "employees": [
+        {
+            "id": 1,
+            "name": "Pedro Martins Oliveira",
+            "role": "Técnico de Sonhar Acordado",
+            "email": "pedrom.oliveira@usp.br"
+        },
+        {
+            "id": 2,
+            "name": "Ana Clara Souza",
+            "role": "Especialista em Café e Código",
+            "email": "ana.souza@usp.br"
+        },
+        {
+            "id": 3,
+            "name": "Lucas Henrique Silva",
+            "role": "Engenheiro de Pensamentos Abstratos",
+            "email": "lucas.silva@usp.br"
+        },
+        {
+            "id": 4,
+            "name": "Mariana Costa Almeida",
+            "role": "Analista de Fluxo Criativo",
+            "email": "mariana.almeida@usp.br"
+        },
+        {
+            "id": 5,
+            "name": "Gabriel Santos Lima",
+            "role": "Supervisor de Ideias Improváveis",
+            "email": "gabriel.lima@usp.br"
+        },
+        {
+            "id": 6,
+            "name": "Fernanda Rocha Vieira",
+            "role": "Coordenadora de Inspiração",
+            "email": "fernanda.vieira@usp.br"
+        },
+        {
+            "id": 7,
+            "name": "Rafael Pereira Gomes",
+            "role": "Consultor de Imaginação",
+            "email": "rafael.gomes@usp.br"
+        },
+        {
+            "id": 8,
+            "name": "Beatriz Faria Nunes",
+            "role": "Gestora de Sonhos Lúcidos",
+            "email": "beatriz.nunes@usp.br"
+        },
+        {
+            "id": 9,
+            "name": "Thiago Mendes Barbosa",
+            "role": "Arquiteto de Mundos Paralelos",
+            "email": "thiago.barbosa@usp.br"
+        },
+        {
+            "id": 10,
+            "name": "Camila Ribeiro Lopes",
+            "role": "Especialista em Realidade Alternativa",
+            "email": "camila.lopes@usp.br"
+        }
+    ]
+}
