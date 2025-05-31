@@ -170,9 +170,9 @@ export default function HistoricoCompras() {
             <div key={chave}>
               {renderCabecalhoMesAno(mes, ano)}
               <div className="produtos">
-                {produtos.map((produto, idx) => (
+                {Array.isArray(produtos) ? produtos.map((produto, idx) => (
                   <ProductCard product={produto} onClick={handleProductClick} key={produto.nome + idx} showBuyButton={false} />
-                ))}
+                )) : null}
               </div>
             </div>
           ))}
