@@ -43,6 +43,10 @@ const SellList = () => {
         return
     };
 
+    const filteredProducts = data
+        ? data.filter(product => startDate <= product.date && product.date <= endDate)
+        : [];
+
     return (
         <div style={{
             width: "95%",
@@ -70,7 +74,7 @@ const SellList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data && data.map(product => {
+                            {data && filteredProducts.map(product => {
                                 if(startDate <= product.date && product.date <= endDate) {
                                     return(
                                         <tr key={product.id} style={{ borderRadius: 12 }}>
@@ -126,7 +130,7 @@ const SellList = () => {
                             })}
                         </tbody>
                     </table>
-                    {noProducts && (
+                    {data && filteredProducts.length === 0 && (
                         <div style={{textAlign:"center", color:"#888", fontSize:"20px", margin:"40px 0px"}}>
                             Não foi vendido nenhum produto no período escolhido.
                         </div>
