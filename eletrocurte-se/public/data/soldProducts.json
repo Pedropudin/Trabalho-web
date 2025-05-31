@@ -1,10 +1,11 @@
 {
     "soldProducts": [
         {
+            "id": 1,
             "product_name": "Genérico 1",
             "product_photo": "https://m.media-amazon.com/images/I/514n0rnHIgL.jpg",
             "price": 99.99,
-            "date": "25/11/2003",
+            "date": "2025-03-05",
             "person_name": "Pedro MO",
             "person_photo": "https://cdn-icons-png.freepik.com/512/7235/7235968.png",
             "delivery_city": "Xique Xique",
@@ -12,15 +13,76 @@
             "fiscal_info": "NF-e 198932"
         },
         {
+            "id": 2,
             "product_name": "Caixa de som",
             "product_photo": "https://s2magazine.cdn.magazord.com.br/img/2021/10/produto/9141/alto-falante-subwoofer-12-polegadas-swrms350-jbl.jpg?ims=fit-in/800x800/filters:fill(white)",
             "price": 245.00,
-            "date": "28/01/2005",
+            "date": "2025-03-18",
             "person_name": "Matheus",
             "person_photo": "https://i.fbcd.co/products/resized/resized-750-500/l010e-6-e02-mainpreview-3720591835ee8456a0067e9828c79295abd5810e798a532e1c013a3114580b44.jpg",
             "delivery_city": "São Paulo",
             "delivery_state": "São Paulo",
             "fiscal_info": "NF-e 0982341"
+        },
+        {
+            "id": 3,
+            "product_name": "Notebook Gamer",
+            "product_photo": "https://netshopinformatica.com.br/uploads/product_commerce/products/3398/image/w235-282241.jpg",
+            "price": 4999.99,
+            "date": "2025-04-02",
+            "person_name": "Lucas Silva",
+            "person_photo": "https://randomuser.me/api/portraits/men/32.jpg",
+            "delivery_city": "Belo Horizonte",
+            "delivery_state": "Minas Gerais",
+            "fiscal_info": "NF-e 453221"
+        },
+        {
+            "id": 4,
+            "product_name": "Smartphone",
+            "product_photo": "https://imgs.casasbahia.com.br/55067264/1g.jpg",
+            "price": 1999.00,
+            "date": "2025-04-15",
+            "person_name": "Ana Paula",
+            "person_photo": "https://randomuser.me/api/portraits/women/44.jpg",
+            "delivery_city": "Curitiba",
+            "delivery_state": "Paraná",
+            "fiscal_info": "NF-e 782143"
+        },
+        {
+            "id": 5,
+            "product_name": "Fone de Ouvido Bluetooth",
+            "product_photo": "https://m.media-amazon.com/images/I/61ZRU9gnbxL._AC_SL1500_.jpg",
+            "price": 150.75,
+            "date": "2025-05-01",
+            "person_name": "João Pedro",
+            "person_photo": "https://randomuser.me/api/portraits/men/76.jpg",
+            "delivery_city": "Fortaleza",
+            "delivery_state": "Ceará",
+            "fiscal_info": "NF-e 912837"
+        },
+        {
+            "id": 6,
+            "product_name": "Câmera Fotográfica",
+            "product_photo": "https://www.fujioka.com.br/arquivos/ids/170588-1000-1000/a_227171_alta_1.jpg?v=637366257446530000",
+            "price": 3200.00,
+            "date": "2025-05-18",
+            "person_name": "Mariana Costa",
+            "person_photo": "https://randomuser.me/api/portraits/women/65.jpg",
+            "delivery_city": "Recife",
+            "delivery_state": "Pernambuco",
+            "fiscal_info": "NF-e 563829"
+        },
+        {
+            "id": 7,
+            "product_name": "Teclado Mecânico",
+            "product_photo": "https://cdn.awsli.com.br/2500x2500/1318/1318167/produto/169306870/be605c959c.jpg",
+            "price": 399.90,
+            "date": "2025-05-29",
+            "person_name": "Carlos Eduardo",
+            "person_photo": "https://randomuser.me/api/portraits/men/90.jpg",
+            "delivery_city": "Florianópolis",
+            "delivery_state": "Santa Catarina",
+            "fiscal_info": "NF-e 672014"
         }
     ]
 }
