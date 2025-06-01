@@ -20,13 +20,14 @@ const AdminHeader = ({ categoryIndex }) => {
                 navigate(ROUTES.DESEMPENHO);
                 break;
             case categories[1]:
-                console.log("Ainda não"); 
+                navigate(ROUTES.PAGINA_INICIAL)
                 break;
             case categories[2]:
                 navigate(ROUTES.PENDENCIAS);
                 break;
             default:
-                console.warn("Invalid category");
+                navigate(ROUTES.PAG_SETOR.replace(":name", category.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()));
+                break;
         }
         return;
     };
@@ -44,6 +45,7 @@ const AdminHeader = ({ categoryIndex }) => {
             categories={categories}
             selectedCategoryIndex={categoryIndex}
             useElementsMenu={[true, false, true]}
+            adminContext={true}
             onCategoryClick={categoryNavigation}
             onLogout={handleLogout}
         />

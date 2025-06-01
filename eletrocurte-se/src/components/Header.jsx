@@ -153,6 +153,7 @@ function Header({
   categories = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'],
   selectedCategoryIndex = 0,
   onCategoryClick,
+  adminContext = false,
   useElementsMenu = [true, true, true],
   onProfile,
   onCart,
@@ -358,7 +359,12 @@ function Header({
               key={cat}
               active={selectedCategory === cat ? 1 : 0}
               to={ROUTES.PAG_SETOR.replace(":name", cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())}
-              onClick={() => handleCategoryClick(cat)}
+              onClick={e => {
+                if(adminContext) {
+                  e.preventDefault();
+                }
+                handleCategoryClick(cat);
+              }}
               style={{ color: 'inherit' }}
             >
               {cat}
