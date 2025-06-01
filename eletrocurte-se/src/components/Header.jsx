@@ -6,7 +6,7 @@
 // Integração com badge animado, menu mobile e props customizáveis.
 // -----------------------------------------------------------------------------
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ROUTES from '../routes';
 import {useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -153,6 +153,7 @@ function Header({
   categories = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'],
   selectedCategoryIndex = 0,
   onCategoryClick,
+  adminContext = false,
   useElementsMenu = [true, true, true],
   onProfile,
   onCart,
@@ -169,6 +170,10 @@ function Header({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSelectedCategory(categories[selectedCategoryIndex] || '');
+  }, [selectedCategoryIndex]);
 
   // Abre menu mobile
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
@@ -358,7 +363,12 @@ function Header({
               key={cat}
               active={selectedCategory === cat ? 1 : 0}
               to={ROUTES.PAG_SETOR.replace(":name", cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())}
-              onClick={() => handleCategoryClick(cat)}
+              onClick={e => {
+                if(adminContext) {
+                  e.preventDefault();
+                }
+                handleCategoryClick(cat);
+              }}
               style={{ color: 'inherit' }}
             >
               {cat}
