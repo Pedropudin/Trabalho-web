@@ -124,9 +124,9 @@ export default function HistoricoProdutos() {
             <div key={chave}>
               {renderCabecalhoMesAno(mes, ano)}
               <div className="produtos">
-                {produtos.map((produto, idx) => (
+                {Array.isArray(produtos) ? produtos.map((produto, idx) => (
                   <ProductCard product={produto} onClick={handleCardClick} key={(produto.id || produto.nome) + '-' + idx} showBuyButton={true} />
-                ))}
+                )) : null}
               </div>
             </div>
           ))}
