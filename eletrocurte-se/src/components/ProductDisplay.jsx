@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 export default function ProductCard({product}) {
     const navigate = useNavigate();
 
+    console.log(product);
+
     return (
         <div className={`items${product.inStock > 0 ? '' : ' unavailable'}`}>
             <img
@@ -23,6 +25,9 @@ export default function ProductCard({product}) {
             <p className="item-price">
                 {product.inStock > 0 ? "R$" + product.price.toFixed(2) : "Produto indisponível."}
             </p>
+            {localStorage.userType === "admin" && <p className="item-stock">
+                Em estoque: {product.inStock}    
+            </p>}
             {product.inStock > 0 ? (
                 <button
                     className="product-display-purchase-button"
