@@ -26,7 +26,7 @@ export default function ProductCard({product}) {
                 {product.inStock > 0 ? "R$" + product.price.toFixed(2) : "Produto indisponível."}
             </p>
             {localStorage.userType === "admin" && <p className="item-stock">
-                Em estoque: {product.inStock}    
+                Em estoque: <span style={{fontWeight:"bold"}}>{product.inStock}</span>
             </p>}
             {localStorage.userType !== "admin" ? (product.inStock > 0 ? (
                 <button
