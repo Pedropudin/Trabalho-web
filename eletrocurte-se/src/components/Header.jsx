@@ -6,7 +6,7 @@
 // Integração com badge animado, menu mobile e props customizáveis.
 // -----------------------------------------------------------------------------
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ROUTES from '../routes';
 import {useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -170,6 +170,10 @@ function Header({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSelectedCategory(categories[selectedCategoryIndex] || '');
+  }, [selectedCategoryIndex]);
 
   // Abre menu mobile
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
