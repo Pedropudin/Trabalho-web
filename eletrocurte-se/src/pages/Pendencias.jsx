@@ -126,7 +126,19 @@ const Pendencias = () => {
                         return <Question data={c} style={{backgroundColor: '#FFEDED', width: '1000px'}}/>
                     })}
                 </Card>
-                <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }} >
+                {complainingsData && usePaginationComp && <ReactPaginate
+                    pageCount={Math.ceil(complainingsData.length / questionsPerPageComp)}    
+                    onPageChange={handlePageChangeComp}
+                    previousLabel="Anterior"
+                    nextLabel="Próxima"
+                    containerClassName="questions-pagination"
+                    activeClassName="active"
+                /> }
+                <div style={{
+                    display: 'flex',
+                    gap: '20px',
+                    flexWrap: 'wrap'
+                }} >
                     <Card
                         title={"Envios pendentes"}
                         description="Produtos que esperam para serem despachados"
