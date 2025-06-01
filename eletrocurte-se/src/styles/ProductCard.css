@@ -12,7 +12,7 @@
     min-width: 210px;
     max-width: 260px;
     min-height: 340px;
-    height: 370px; 
+    height: fit-content; 
     border: 1.5px solid #e0f7fa;
 }
 
@@ -90,4 +90,34 @@
 .product-display-purchase-button:hover {
     background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
     transform: scale(1.04);
+}
+
+.product-display-edit-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.10);
+    transition: background 0.2s, transform 0.2s;
+    margin-top: auto;
+    width: 100%;
+}
+
+.product-display-delete-button {
+    background: linear-gradient(90deg, #990000 0%, #730000 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.10);
+    transition: background 0.2s, transform 0.2s;
+    margin-top: auto;
+    width: 100%;
 }

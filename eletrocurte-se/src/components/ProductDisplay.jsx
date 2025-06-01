@@ -28,7 +28,7 @@ export default function ProductCard({product}) {
             {localStorage.userType === "admin" && <p className="item-stock">
                 Em estoque: {product.inStock}    
             </p>}
-            {product.inStock > 0 ? (
+            {localStorage.userType !== "admin" ? (product.inStock > 0 ? (
                 <button
                     className="product-display-purchase-button"
                     onClick={() => navigate(`/PaginaProduto/${product.id}`)}
@@ -42,6 +42,20 @@ export default function ProductCard({product}) {
                 >
                     Ver produto
                 </button>
+            )) : (
+                <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
+                    <button
+                        className="product-display-edit-button"
+                        onClick={() => console.log("AAAAAAAAA")} 
+                    >
+                        Editar
+                    </button>
+                    <button
+                        className="product-display-delete-button"
+                    >
+                        Excluir
+                    </button>
+                </div>
             )}
         </div>
     );
