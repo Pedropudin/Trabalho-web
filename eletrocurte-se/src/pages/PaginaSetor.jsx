@@ -1,4 +1,5 @@
 import "../styles/PaginaSetor.css";
+import AdminHeader from "../components/admin/AdminHeader";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
@@ -86,7 +87,7 @@ export default function PaginaSetor() {
 
     return (
         <>
-            <Header />
+            {localStorage.userType === "admin" ? <AdminHeader /> : <Header />}
             <div className="main-content">
                 <Sidebar
                     items={sectorProducts}

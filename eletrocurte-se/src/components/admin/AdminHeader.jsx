@@ -5,7 +5,7 @@ import Header from "../Header";
 
 const AdminHeader = ({ categoryIndex }) => {
     const navigate = useNavigate();
-    const categories = ["Desempenho", "Produtos", "Pendências"];
+    const categories = ["Desempenho", "Pendências", "Hardware", "Periféricos", "Computadores", "Celulares"];
 
     // Protege rotas de admin: se não está logado como admin, redireciona para home
     useEffect(() => {
@@ -20,9 +20,6 @@ const AdminHeader = ({ categoryIndex }) => {
                 navigate(ROUTES.DESEMPENHO);
                 break;
             case categories[1]:
-                navigate(ROUTES.PAGINA_INICIAL)
-                break;
-            case categories[2]:
                 navigate(ROUTES.PENDENCIAS);
                 break;
             default:
@@ -32,7 +29,7 @@ const AdminHeader = ({ categoryIndex }) => {
         return;
     };
 
-    function handleLogout() {
+    const handleLogout = () => {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userType');
         // Protege o histórico e impede voltar para logout
@@ -47,6 +44,8 @@ const AdminHeader = ({ categoryIndex }) => {
             useElementsMenu={[true, false, true]}
             adminContext={true}
             onCategoryClick={categoryNavigation}
+            onLogoClick={() => navigate(ROUTES.DESEMPENHO)}
+            onProfile={() => navigate(ROUTES.TIME)}
             onLogout={handleLogout}
         />
     );
