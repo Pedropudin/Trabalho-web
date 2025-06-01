@@ -8,11 +8,12 @@ import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 import ReactPaginate from 'react-paginate';
 
-import "../styles/Pendencias.css";
+import "../styles/Pagination.css";
 
 const Pendencias = () => {
     const [questionsData, setQuestionsData] = useState(null);
     const [answersData, setAnswersData] = useState({});
+    const [answersCompData, setAnswersCompData] = useState({});
     const [complainingsData, setComplainingsData] = useState(null);
     const [soldData, setSoldData] = useState(null);
     const [serviceData, setServiceData] = useState(null);
@@ -22,6 +23,10 @@ const Pendencias = () => {
     const [usePagination,setUsePagination] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const questionsPerPage = 5;
+
+    const [usePaginationComp, setUsePaginationComp] = useState(false);
+    const [currentPageComp, setCurrentPageComp] = useState(0);
+    const questionsPerPageComp = 5;
 
     useEffect(() => {
         fetch("/data/questions.json")
@@ -44,6 +49,10 @@ const Pendencias = () => {
         })
         .then(respData => {
             setComplainingsData(respData.reviews);
+            setAnswersCompData(Array(respData.reviews.length));
+            if(respData.reviews.length > questionsPerPageComp) {
+                setUsePaginationComp(true);
+            }
         })
     }, []);
 
@@ -80,13 +89,27 @@ const Pendencias = () => {
     const offset = currentPage * questionsPerPage;
     const currentQuestions = questionsData ? questionsData.slice(offset, offset + questionsPerPage) : [];
 
+    const offsetComp = currentPageComp * questionsPerPageComp;
+    const currentQuestionsComp = complainingsData ? complainingsData.slice(offsetComp, offsetComp + questionsPerPageComp) : [];
+
     // Handle page change
     const handlePageChange = ({ selected }) => {
         setCurrentPage(selected);
     };
 
+    const handlePageChangeComp = ({ selected }) => {
+        setCurrentPageComp(selected);
+    };
+
     const handleAnswerChange = (questionId, value) => {
         setAnswersData(prev => ({
+            ...prev,
+            [questionId]: value
+        }));
+    };
+
+    const handleAnswerChangeComp = (questionId, value) => {
+        setAnswersCompData(prev => ({
             ...prev,
             [questionId]: value
         }));
@@ -120,8 +143,13 @@ const Pendencias = () => {
                     type={"card-vertical"}
                     description="Avaliações com 3 estrelas ou menos" 
                 >
-                    {complainingsData && complainingsData.map((c) => {
-                        return <Question data={c} style={{backgroundColor: '#FFEDED', width: '1000px'}}/>
+                    {currentQuestionsComp.map((q) => {
+                        return <Question 
+                            data={q}
+                            style={{backgroundColor: '#FFEDED', width: '1000px'}}
+                            answer={answersCompData[q.id] || ""}
+                            onAnswerChange={value => handleAnswerChangeComp(q.id, value)}
+                        />
                     })}
                 </Card>
                 {complainingsData && usePaginationComp && <ReactPaginate
