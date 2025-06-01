@@ -1,6 +1,4 @@
 import React, { useState, useEffect, use } from "react";
-import { useNavigate } from "react-router-dom";
-import ROUTES from '../routes';
 import Footer from "../components/Footer";
 import AdminHeader from "../components/admin/AdminHeader";
 import Card from "../components/Card";
