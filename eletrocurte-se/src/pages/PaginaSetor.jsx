@@ -1,4 +1,5 @@
 import "../styles/PaginaSetor.css";
+import AdminHeader from "../components/admin/AdminHeader";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
@@ -16,6 +17,12 @@ import React, { useState,useEffect } from 'react';
   - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
 */
 
+const categoryIndexRel = {
+    "hardware": 0,
+    "perifericos": 1,
+    "computadores": 2,
+    "celulares": 3,
+}
 
 export default function PaginaSetor() {
     const { name } = useParams(); 
@@ -24,6 +31,7 @@ export default function PaginaSetor() {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [produtosLocais, setProdutosLocais] = React.useState([]);
+    const [categoryIndex, setCategoryIndex] = useState(0);
     
     //Lê dados dos produtos diretamento do JSON
     useEffect(() => {
@@ -37,6 +45,15 @@ export default function PaginaSetor() {
                 .catch(() => setProdutosLocais([]));
         }
     }, []);
+
+    useEffect(() => {
+        const cat = window.location.href.split('/')[4];
+        if(localStorage.userType === "admin") {
+            setCategoryIndex(categoryIndexRel[cat] + 2);
+        } else {
+            setCategoryIndex(categoryIndexRel[cat]);
+        }
+    }, [window.location.href]);
 
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]//Pega todas as marcas disponíves
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
@@ -86,7 +103,10 @@ export default function PaginaSetor() {
 
     return (
         <>
-            <Header />
+            {console.log(categoryIndex)}
+            {localStorage.userType === "admin" 
+                ? <AdminHeader categoryIndex={categoryIndex} /> 
+                : <Header />}
             <div className="main-content">
                 <Sidebar
                     items={sectorProducts}

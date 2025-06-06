@@ -117,7 +117,7 @@ const Pendencias = () => {
 
     return(
         <div>
-            <AdminHeader categoryIndex={2} />
+            <AdminHeader categoryIndex={1} />
             <div className="content">
                 <Card title={"Perguntas"} type={"card-vertical"} >
                     {currentQuestions.map((q) => {
