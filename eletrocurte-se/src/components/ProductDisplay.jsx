@@ -1,6 +1,12 @@
 import '../styles/ProductCard.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 /*
   Card dos produtos
@@ -8,10 +14,38 @@ import { useNavigate } from "react-router-dom";
   - Contém foto, nome, preço e botão de compra para um produto. 
 */
 
+function ConfirmationWindow({ open, onClose, handleDelete }) {
+    return(
+        <Dialog
+            open={open}
+            onClose={onClose}
+        >
+            <DialogTitle>Confirmar exclusão</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Tem certeza que deseja excluir este produto?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose} color="primary">
+                    Cancelar
+                </Button>
+                <Button onClick={handleDelete} color="error">
+                    Excluir
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
+
 export default function ProductCard({product}) {
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
 
-    console.log(product);
+    const handleDelete = () => {
+        setOpen(false);
+        console.log("Produto excluído:", product.id);
+    };
 
     return (
         <div className={`items${product.inStock > 0 ? '' : ' unavailable'}`}>
@@ -52,9 +86,11 @@ export default function ProductCard({product}) {
                     </button>
                     <button
                         className="product-display-delete-button"
+                        onClick={() => setOpen(true)}
                     >
                         Excluir
                     </button>
+                    <ConfirmationWindow open={open} onClose={() => setOpen(false)} handleDelete={handleDelete} />
                 </div>
             )}
         </div>
