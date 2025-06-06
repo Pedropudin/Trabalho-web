@@ -9,6 +9,7 @@ import "../styles/Desempenho.css"
 import "../styles/TextStyles.css"
 import AdminSidebar from "../components/admin/AdminSidebar";
 import Graph from "../components/Dashboard/Graph";
+import Footer from "../components/Footer";
 
 const PopularProduct = ({
     name,

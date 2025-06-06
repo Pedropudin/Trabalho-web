@@ -53,7 +53,7 @@ export default function PaginaSetor() {
         } else {
             setCategoryIndex(categoryIndexRel[cat]);
         }
-    }, [window.location.href]);
+    }, []);
 
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]//Pega todas as marcas disponíves
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));

@@ -173,7 +173,7 @@ function Header({
 
   useEffect(() => {
     setSelectedCategory(categories[selectedCategoryIndex] || '');
-  }, [selectedCategoryIndex]);
+  }, [categories, selectedCategoryIndex]);
 
   // Abre menu mobile
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
