@@ -180,21 +180,26 @@ function Header({
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const products = JSON.parse(localStorage.getItem('products')) || require('../Products.json');
       const validIds = new Set(products.map(p => String(p.id)));
-      // Soma apenas quantidades de produtos válidos
       const total = cart
         .filter(item => validIds.has(String(item.id)))
         .reduce((sum, item) => sum + (item.quantity || 1), 0);
       setCartItemsCount(total);
     }
     updateCartCount();
+
     // Atualiza ao receber evento de storage (outras abas/janelas)
-    window.addEventListener('storage', updateCartCount);
-    // Atualiza ao focar a aba (caso o carrinho mude em outra aba)
+    function handleStorage(e) {
+      if (e.key === 'cart') updateCartCount();
+    }
+    window.addEventListener('storage', handleStorage);
     window.addEventListener('focus', updateCartCount);
-    // Atualiza ao clicar no ícone do carrinho (garantia extra)
+    // Atualiza ao receber evento customizado de atualização do carrinho
+    window.addEventListener('cartUpdated', updateCartCount);
+
     return () => {
-      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener('storage', handleStorage);
       window.removeEventListener('focus', updateCartCount);
+      window.removeEventListener('cartUpdated', updateCartCount);
     };
   }, []);
 

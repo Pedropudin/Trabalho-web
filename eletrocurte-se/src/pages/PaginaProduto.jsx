@@ -23,12 +23,11 @@ export default function PaginaProduto() {
     const existing = cart.find(item => item.id === productId);
     const stock = product.inStock;
 
-    if (existing) {//Produto já existente no carrinho 
-      if (existing.quantity + 1 > stock) {//Se quantidade de itens + 1 for maior que o estoque, ao clicar no botão ele irá gerar um aviso
+    if (existing) {
+      if (existing.quantity + 1 > stock) {
         toast.error("Número máximo de produtos atingido. Erro: Falta de estoque!");
         return;
       }
-      //Caso contrrário, damos início ao processo de adição do item ao carrinho
       const updatedCart = cart.map(item =>
         item.id === productId
           ? { ...item, quantity: item.quantity + 1 }
@@ -36,11 +35,11 @@ export default function PaginaProduto() {
       );
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       toast.success('Produto colocado no carrinho com sucesso!');
+      window.dispatchEvent(new Event('cartUpdated'));
     } else {
-      // Adiciona novo produto ao carrinho ao final do arquivo
       const updatedCart = [
         ...cart,
-        {//Adição de uma unidade do produto 
+        {
           id: product.id,
           name: product.name,
           price: product.price,
@@ -50,6 +49,7 @@ export default function PaginaProduto() {
       ];
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       toast.success('Produto colocado no carrinho com sucesso!');
+      window.dispatchEvent(new Event('cartUpdated'));
     }
   }
   if (!product) {//Caso não achar nenhum produto com esse id, mostra que produto não foi encontrado.
