@@ -12,7 +12,6 @@ const SellList = () => {
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
     const [showAlert, setShowAlert] = useState(false);
-    const [noProducts, setNoProducts] = useState(true);
 
     useEffect(() => {
         fetch('/data/soldProducts.json')
@@ -127,6 +126,7 @@ const SellList = () => {
                                         </tr>
                                     )
                                 }
+                                return null;
                             })}
                         </tbody>
                     </table>

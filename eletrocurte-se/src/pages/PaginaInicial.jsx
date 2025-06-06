@@ -19,8 +19,6 @@ import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
   - Layout responsivo com Material-UI e alinhamento ao padrão visual do projeto.
 */
 
-const categorias = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'];
-
 const PaginaInicial = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,13 +41,6 @@ const PaginaInicial = () => {
     }, []);
 
     // Handlers para funcionalidades restritas e navegação
-    function handleRestrito(e) {
-        if (!isLoggedIn) {
-            e.preventDefault();
-            setMensagem('Faça login para acessar esta funcionalidade!');
-            setTimeout(() => setMensagem(''), 3500);
-        }
-    }
     function handleComeceAgora(e) {
         e.preventDefault();
         if (isLoggedIn) {

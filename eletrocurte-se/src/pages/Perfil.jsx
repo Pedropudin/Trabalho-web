@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ROUTES from '../routes';
 import '../styles/Perfil.css';
@@ -27,7 +27,7 @@ export default function Perfil() {
       <main className="body-content">
         <br />
         {/* Saudação personalizada */}
-        <h2>Olá, <span id="nome-usuario">{nomeUsuario}</span></h2>
+        <h2>Olá, <span id="nome-usuario" data-testid="nome-usuario">{nomeUsuario}</span></h2>
 
         {/* Grade de cartões de funcionalidades do perfil */}
         <div className="cards-grid">

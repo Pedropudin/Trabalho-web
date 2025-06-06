@@ -14,9 +14,6 @@ import StepLabel from "@mui/material/StepLabel";
 
 export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
-    //Verifica se existe um arquivo locar existente, ou cria um vazio. 
-    const personalDetails = JSON.parse(localStorage.getItem("personal"))|| [];
-    
     // Progresso
     const activeStep = 1;
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import ROUTES from '../routes';
-import Footer from "../components/Footer";
+// import { useNavigate } from "react-router-dom";
+// import ROUTES from '../routes';
+// import Footer from "../components/Footer";
 import AdminHeader from "../components/admin/AdminHeader";
 import Reputation from "../components/Dashboard/Reputation";
 import Card from "../components/Card";
@@ -33,7 +33,7 @@ const PopularProduct = ({
             type={"card-horizontal"}
         >
             <div className="popular-container" >
-                <img src={photo} style={{width: '20%'}} />
+                <img src={photo} alt={name} style={{width: '20%'}} />
                 <div className="popular-text">
                     <span className="title-text">{name}</span>
                     <span style={priceStyle} >R$ {price}</span>
@@ -62,7 +62,6 @@ const SalesGraph = () => {
 };
 
 const Desempenho = () => {
-    const navigate = useNavigate();
     const [data, setData] = useState(null);
     /* Changes still to be tested
     // Estado para modal de detalhes do produto

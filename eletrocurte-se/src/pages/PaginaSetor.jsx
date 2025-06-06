@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
 import ScrollToTop from "../components/ScrollToTop";
 import ProductDisplay from "../components/ProductDisplay";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useState,useEffect } from 'react';
 
 

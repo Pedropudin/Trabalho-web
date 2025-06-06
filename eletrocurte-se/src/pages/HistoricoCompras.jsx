@@ -1,7 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import ROUTES from '../routes';
 import '../styles/HistoricoCompras.css';
 import Footer from '../components/Footer';
 import UserRating from '../components/UserRating';
@@ -30,7 +28,6 @@ function getProdutosByRoute(route, data) {
 export default function HistoricoCompras() {
   // Obtém produtos do histórico via products.js
   const [produtos, setProdutos] = useState([]);
-  const [jsonData, setJsonData] = useState({});
   // Estado para modal de detalhes do produto
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -41,13 +38,12 @@ export default function HistoricoCompras() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        setJsonData(data);
         setProdutos(getProdutosByRoute('/historico-compras', data));
       });
   }, []);
 
-  // Produtos aguardando avaliação: não possuem campo 'avaliacao'
-  const produtosAguardando = produtos.filter(p => p.avaliacao === undefined);
+  // Produtos aguardando avaliação: possuem avaliacao null ou undefined
+  const produtosAguardando = produtos.filter(p => p.avaliacao == null);
 
   // Função chamada ao avaliar um produto
   const handleAvaliar = (nota, comentario, idx) => {
@@ -63,12 +59,13 @@ export default function HistoricoCompras() {
   };
 
   // Data dinâmica e agrupamento por ano/mês
-  const { dataCompra, produtosPorAnoMes, anoMesAtual } = useMemo(() => {
+  const { produtosPorAnoMes } = useMemo(() => {
     // Agrupa produtos por ano e mês
     function agruparPorAnoMes(produtos) {
       return produtos.reduce((acc, produto) => {
         if (!produto.data) return acc;
-        const [dia, mes, ano] = produto.data.split('/');
+        // const [dia, mes, ano] = produto.data.split('/');
+        const [, mes, ano] = produto.data.split('/');
         const chave = `${ano}-${mes}`;
         if (!acc[chave]) acc[chave] = { ano, mes, produtos: [] };
         acc[chave].produtos.push(produto);
@@ -76,28 +73,7 @@ export default function HistoricoCompras() {
       }, {});
     }
     const agrupados = agruparPorAnoMes(produtos);
-    // Descobre o mês/ano mais recente (considerando produtos ordenados por data)
-    let anoMesAtual = null;
-    if (produtos.length > 0) {
-      const datas = produtos.map(p => {
-        const [d, m, a] = p.data.split('/');
-        return new Date(`${a}-${m}-${d}`);
-      });
-      const maisRecente = new Date(Math.max.apply(null, datas));
-      const mes = String(maisRecente.getMonth() + 1).padStart(2, '0');
-      const ano = String(maisRecente.getFullYear());
-      anoMesAtual = { ano, mes };
-    }
-    // Nome do mês/ano atual
-    function nomeMes(mes) {
-      const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-      return meses[parseInt(mes, 10) - 1] || mes;
-    }
-    let dataCompra = '';
-    if (anoMesAtual) {
-      dataCompra = `Compras realizadas em ${nomeMes(anoMesAtual.mes)} de ${anoMesAtual.ano}`;
-    }
-    return { dataCompra, produtosPorAnoMes: agrupados, anoMesAtual };
+    return { produtosPorAnoMes: agrupados };
   }, [produtos]);
 
   // Função utilitária para renderizar o cabeçalho de mês/ano
@@ -110,13 +86,6 @@ export default function HistoricoCompras() {
         </p>
       </section>
     );
-  }
-
-  // Função para calcular o valor da parcela
-  function valorParcela(preco) {
-    const valor = parseFloat(preco.replace(/[^\d,]/g, '').replace(',', '.'));
-    if (isNaN(valor)) return '';
-    return (valor / 12).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 });
   }
 
   // Função para abrir detalhes do produto avaliado

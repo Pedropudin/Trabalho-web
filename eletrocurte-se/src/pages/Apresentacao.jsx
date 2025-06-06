@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes';
+import React from 'react';
 import ScrollToTop from '../components/ScrollToTop';
 import Footer from '../components/Footer';
 import '../styles/Apresentacao.css';
