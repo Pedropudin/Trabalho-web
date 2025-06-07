@@ -25,7 +25,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Link } from 'react-router-dom';
 import '../styles/Header.css';
 
 // Animação pulse para o badge do carrinho
@@ -179,7 +179,7 @@ function Header({
   useEffect(() => {
     function updateCartCount() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const products = JSON.parse(localStorage.getItem('products')) || require('../Products.json');
+      const products = JSON.parse(localStorage.getItem('products')) || [];
       const validIds = new Set(products.map(p => String(p.id)));
       const total = cart
         .filter(item => validIds.has(String(item.id)))

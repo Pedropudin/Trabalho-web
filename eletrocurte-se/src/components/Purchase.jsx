@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Purchase.css";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
