@@ -16,6 +16,7 @@ import Box from '@mui/material/Box';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import ROUTES from '../../routes';
 
 const ProductDetailsModal = ({ open, onClose, product }) => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
     setCartCountPopup(totalCount);
     setTimeout(() => setCartCountPopup(null), 2000);
     onClose && onClose();
-    navigate('/Checkout');
+    navigate(ROUTES.CHECKOUT);
   }
 
   return (
