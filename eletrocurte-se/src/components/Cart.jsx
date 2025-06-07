@@ -31,6 +31,18 @@ export default function Cart({onNext}) {
         }
     }, []);
 
+    // Limpa o carrinho de produtos que não existem mais
+    React.useEffect(() => {
+        const validIds = new Set(productsLocal.map(p => String(p.id)));
+        const filteredCart = cart.filter(item => validIds.has(String(item.id)));
+        if (filteredCart.length !== cart.length) {
+            setCart(filteredCart);
+            localStorage.setItem("cart", JSON.stringify(filteredCart));
+        }
+    // Só roda na montagem e se productsLocal mudar
+    // eslint-disable-next-line
+    }, [productsLocal]);
+
     //Pega o estoque do produto
     function getProductStock(productId) {
         const prod = productsLocal.find(p => p.id === productId);
@@ -80,11 +92,25 @@ export default function Cart({onNext}) {
     }, [cart]);
 
     //Calculo do total de itens e do total de preços 
-    const totalItems = cart.reduce((sum, p) => sum + p.quantity, 0);
-    const totalPrice = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+    const cartProducts = cart
+        .map(item => {
+            const prod = productsLocal.find(p => String(p.id) === String(item.id));
+            if (!prod) return null;
+            return {
+                ...item,
+                name: prod.name || prod.nome,
+                price: prod.price || prod.preco,
+                image: prod.img || prod.imagem || prod.image,
+                inStock: prod.inStock !== undefined ? prod.inStock : prod.estoque
+            };
+        })
+        .filter(Boolean);
+
+    const totalItems = cartProducts.reduce((sum, p) => sum + p.quantity, 0);
+    const totalPrice = cartProducts.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
     // Se o carrinho estiver vazio
-    if (!cart.length) {
+    if (!cartProducts.length) {
         return (
             <div className="review-container" style={{ minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                 <div className="products-list-bg" style={{ padding: 40, textAlign: "center" }}>
@@ -109,7 +135,7 @@ export default function Cart({onNext}) {
             <div className="products-list-bg">
                 <h2 className="title">Resumo do Carrinho</h2>
                 <ul className="products-list">
-                    {cart.map(product => (
+                    {cartProducts.map(product => (
                         <li key={product.id} className="product-list-item">
                             <span className="product-qty">{product.quantity}x</span>
                             <img
@@ -120,10 +146,10 @@ export default function Cart({onNext}) {
                             <div className="product-info">
                                 <span className="product-name">{product.name}</span>
                                 <span className="product-qty-price">
-                                    Preço do produto: R${product.price.toFixed(2).replace('.', ',')}
+                                    Preço do produto: R${Number(product.price).toFixed(2).replace('.', ',')}
                                 </span>
                                 <span className="product-stock-info">
-                                    Estoque: {getProductStock(product.id)}
+                                    Estoque: {product.inStock}
                                 </span>
                             </div>
                             <div className="product-actions">
@@ -138,7 +164,7 @@ export default function Cart({onNext}) {
                                 <button className="remove-btn" onClick={() => handleRemove(product.id)} title="Remover">Excluir</button>
                             </div>
                             <span className="product-total">
-                                R${(product.price * product.quantity).toFixed(2).replace('.', ',')}
+                                R${(Number(product.price) * product.quantity).toFixed(2).replace('.', ',')}
                             </span>
                         </li>
                     ))}

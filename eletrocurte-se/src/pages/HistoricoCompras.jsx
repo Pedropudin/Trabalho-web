@@ -6,6 +6,7 @@ import UserRating from '../components/UserRating';
 import '../styles/UserRating.css';
 import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+import ScrollToTop from '../components/ScrollToTop';
 
 /*
   Página de histórico de compras do usuário.
@@ -38,7 +39,34 @@ export default function HistoricoCompras() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        setProdutos(getProdutosByRoute('/historico-compras', data));
+        setJsonData(data);
+        let produtos = getProdutosByRoute('/historico-compras', data);
+        // Adiciona até 4 produtos reais do JSON sem avaliação, com datas recentes (intenção de teste de funcionalidade)
+        const produtosSemAvaliacao = [];
+        for (let i = 0; i < 4 && i < produtos.length; i++) {
+          const novoProduto = { ...produtos[i] };
+          delete novoProduto.avaliacao;
+          // Datas diferentes para cada produto
+          const dia = 10 + i;
+          novoProduto.data = `${dia.toString().padStart(2, '0')}/06/2024`;
+          produtosSemAvaliacao.push(novoProduto);
+        }
+        produtos = [...produtosSemAvaliacao, ...produtos];
+
+        // Aplica avaliações do usuário logado, se houver
+        const nomeUsuario = localStorage.getItem('nomeUsuario');
+        let avaliacoes = {};
+        if (nomeUsuario) {
+          avaliacoes = JSON.parse(localStorage.getItem(`avaliacoes_${nomeUsuario}`) || '{}');
+        }
+        produtos = produtos.map(prod => {
+          if (avaliacoes[prod.id]) {
+            return { ...prod, avaliacao: avaliacoes[prod.id].nota, comentario: avaliacoes[prod.id].comentario };
+          }
+          return { ...prod, avaliacao: prod.avaliacao, comentario: undefined };
+        });
+
+        setProdutos(produtos);
       });
   }, []);
 
@@ -48,10 +76,22 @@ export default function HistoricoCompras() {
   // Função chamada ao avaliar um produto
   const handleAvaliar = (nota, comentario, idx) => {
     setProdutos(produtosAntigos => {
-      // Atualiza o produto avaliado com a nota
+      // Atualiza o produto avaliado com a nota e comentário
+      const nomeUsuario = localStorage.getItem('nomeUsuario');
+      let avaliacoes = {};
+      if (nomeUsuario) {
+        avaliacoes = JSON.parse(localStorage.getItem(`avaliacoes_${nomeUsuario}`) || '{}');
+      }
+      const produtoAvaliado = produtosAguardando[idx];
+      if (produtoAvaliado) {
+        avaliacoes[produtoAvaliado.id] = { nota, comentario };
+        if (nomeUsuario) {
+          localStorage.setItem(`avaliacoes_${nomeUsuario}`, JSON.stringify(avaliacoes));
+        }
+      }
       return produtosAntigos.map((p, i) => {
-        if (produtosAguardando[idx] && p === produtosAguardando[idx]) {
-          return { ...p, avaliacao: nota };
+        if (produtoAvaliado && p.id === produtoAvaliado.id) {
+          return { ...p, avaliacao: nota, comentario };
         }
         return p;
       });
@@ -148,6 +188,7 @@ export default function HistoricoCompras() {
       </section>
       {/* Modal de detalhes do produto */}
       <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
+      <ScrollToTop />
       <Footer />
     </>
   );

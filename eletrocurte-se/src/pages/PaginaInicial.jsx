@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Button from '@mui/material/Button';
+import ScrollToTop from '../components/ScrollToTop';
+import Button from '../components/Button';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -40,7 +41,6 @@ const PaginaInicial = () => {
             .then(data => setProdutosHistorico(data.produtosHistorico || []));
     }, []);
 
-    // Handlers para funcionalidades restritas e navegação
     function handleComeceAgora(e) {
         e.preventDefault();
         if (isLoggedIn) {
@@ -49,23 +49,25 @@ const PaginaInicial = () => {
             navigate(ROUTES.LOGIN);
         }
     }
+
     function handleProfile() {
-        if (isLoggedIn) {
+        if (localStorage.getItem('isLoggedIn') === 'true') {
             navigate(ROUTES.PERFIL);
         } else {
             navigate(ROUTES.LOGIN);
         }
     }
+
     function handleCart() {
-        if (isLoggedIn) {
-            setMensagem('Funcionalidade de carrinho em breve!');
-            setTimeout(() => setMensagem(''), 3500);
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            navigate(ROUTES.CHECKOUT);
         } else {
-            navigate(ROUTES.LOGIN);
+        navigate(ROUTES.LOGIN);
         }
     }
+
     function handleLogout() {
-        if (!isLoggedIn) {
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
             setMensagem('Você já está deslogado!');
             setTimeout(() => setMensagem(''), 3500);
             return;
@@ -75,29 +77,31 @@ const PaginaInicial = () => {
         setIsLoggedIn(false);
         setMensagem('Logout realizado com sucesso!');
         setTimeout(() => setMensagem(''), 3500);
-        navigate(ROUTES.LOGOUT);
+        navigate(ROUTES.LOGOUT, { replace: true });
     }
+
     function handleSearchChange(e) {
         if (!isLoggedIn) {
             setMensagem('Faça login para pesquisar produtos!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
-        // Lógica de pesquisa real pode ser implementada aqui
     }
+
     function handleCategoryClick(cat) {
         if (!isLoggedIn) {
             setMensagem('Faça login para filtrar por categoria!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
-        // Lógica de filtro real pode ser implementada aqui
     }
+
     // Handlers para modal de detalhes do produto
     const handleProductClick = (product) => {
         setSelectedProduct({ ...product, showBuyButton: true });
         setModalOpen(true);
     };
+    
     const handleModalClose = () => {
         setModalOpen(false);
         setSelectedProduct(null);
@@ -116,7 +120,7 @@ const PaginaInicial = () => {
                     setMensagem('Faça login para pesquisar produtos!');
                     setTimeout(() => setMensagem(''), 3500);
                 }}
-                onLogoClick={undefined} // Desabilita o redirecionamento na página inicial
+                onLogoClick={undefined}
             />
             {/* Mensagem amigável para funcionalidades restritas */}
             {mensagem && (
@@ -124,19 +128,34 @@ const PaginaInicial = () => {
             )}
             <Box className="landing-container" sx={{ background: '#f5fafd', minHeight: '100vh', pb: 4 }}>
                 {/* Banner principal com chamada para ação */}
-                <Paper elevation={3} className="banner" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #1565c0 80%, #5e92f3 100%)', color: '#fff', p: { xs: 2, md: 6 }, gap: 4, flexWrap: 'wrap', mb: 4 }}>
-                    <Box className="banner-content" sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: { xs: 'center', md: 'flex-start' }, minWidth: 220 }}>
-                        <Typography variant="h3" component="h1" sx={{ color: '#fff', fontWeight: 700, mb: 1, fontSize: { xs: '2rem', md: '2.5rem' } }}>
-                            Bem-vindo ao Eletrocurte-se
-                        </Typography>
-                        <Typography variant="subtitle1" sx={{ color: '#e3f2fd', mb: 2 }}>
-                            Os melhores eletrônicos, ofertas e novidades para você!
-                        </Typography>
-                        <Button onClick={handleComeceAgora} variant="contained" sx={{ background: '#ffb300', color: '#222', fontWeight: 700, borderRadius: 2, px: 4, py: 1.5, '&:hover': { background: '#ffd54f', color: '#004d66' } }}>
-                            Comece agora
-                        </Button>
-                    </Box>
-                </Paper>
+                {!isLoggedIn && (
+                  <Paper elevation={3} className="banner" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #1565c0 80%, #5e92f3 100%)', color: '#fff', p: { xs: 2, md: 6 }, gap: 4, flexWrap: 'wrap', mb: 4 }}>
+                      <Box className="banner-content" sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: { xs: 'center', md: 'flex-start' }, minWidth: 220 }}>
+                          <Typography variant="h3" component="h1" sx={{ color: '#fff', fontWeight: 700, mb: 1, fontSize: { xs: '2rem', md: '2.5rem' } }}>
+                              Bem-vindo ao Eletrocurte-se
+                          </Typography>
+                          <Typography variant="subtitle1" sx={{ color: '#e3f2fd', mb: 2 }}>
+                              Os melhores eletrônicos, ofertas e novidades para você!
+                          </Typography>
+                          <Button
+                              text="Comece agora"
+                              onClick={handleComeceAgora}
+                              type={1}
+                              style={{
+                                  background: '#ffb300',
+                                  color: '#222',
+                                  fontWeight: 700,
+                                  borderRadius: 8,
+                                  padding: '12px 32px',
+                                  fontSize: '1.1rem',
+                                  marginTop: 8,
+                                  boxShadow: '0 2px 8px #0002',
+                                  border: 'none'
+                              }}
+                          />
+                      </Box>
+                  </Paper>
+                )}
                 {/* Produtos em destaque */}
                 <Box className="produtos-destaque" sx={{ maxWidth: 1200, mx: 'auto', px: 2, mb: 6 }}>
                     <Typography variant="h4" sx={{ color: '#004d66', mb: 5, }}>Produtos em destaque</Typography>
@@ -174,19 +193,30 @@ const PaginaInicial = () => {
                 </Box>
                 {/* Chamada para ação extra: newsletter para logados */}
                 {isLoggedIn && (
-                    <Box className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
+                    <Paper elevation={2} className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
                         <Typography variant="h6" sx={{ color: '#004d66', mb: 2 }}>Receba ofertas exclusivas!</Typography>
-                        <Box component="form" className="newsletter-form" sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <form className="newsletter-form" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 8 }}>
                             <input type="email" placeholder="Seu e-mail" required style={{ padding: '10px 16px', borderRadius: 6, border: '1px solid #b0bec5', fontSize: '1rem', flex: 1, minWidth: 0 }} />
-                            <Button type="submit" variant="contained" sx={{ background: '#ffb300', color: '#222', borderRadius: 1, px: 3, fontWeight: 500, '&:hover': { background: '#ffd54f' } }}>
-                                Quero receber
-                            </Button>
-                        </Box>
-                    </Box>
+                            <Button
+                                text="Quero receber"
+                                type={1}
+                                style={{
+                                    background: '#ffb300',
+                                    color: '#222',
+                                    borderRadius: 6,
+                                    padding: '10px 24px',
+                                    fontSize: '1rem',
+                                    fontWeight: 500,
+                                    border: 'none'
+                                }}
+                            />
+                        </form>
+                    </Paper>
                 )}
             </Box>
             {/* Modal de detalhes do produto */}
             <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
+            <ScrollToTop />
             <Footer />
         </>
     );

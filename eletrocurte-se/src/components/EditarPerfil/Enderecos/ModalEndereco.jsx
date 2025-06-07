@@ -96,6 +96,7 @@ export default function ModalEndereco({ onSalvar }) {
           </Step>
         ))}
       </Stepper>
+      {/* Unifica todos os campos e botões em um só form/container */}
       <form onSubmit={handleSubmit}>
         {/* Etapa 0: Entrada do CEP */}
         {activeStep === 0 && (
@@ -132,13 +133,39 @@ export default function ModalEndereco({ onSalvar }) {
         )}
         {/* Exibe mensagem de erro, se houver */}
         {erro && <Typography color="error" sx={{ mt: 1 }}>{erro}</Typography>}
-        {/* Botões de navegação do Stepper */}
+        {/* Botões de navegação do Stepper, todos juntos e lógica refinada */}
         <Box display="flex" justifyContent="space-between" mt={3}>
-          <Button onClick={handleBack} color="inherit" variant="outlined" disabled={activeStep === 0}>Voltar</Button>
+          <Button
+            onClick={handleBack}
+            color="inherit"
+            variant="outlined"
+            disabled={activeStep === 0}
+            type="button"
+          >
+            Voltar
+          </Button>
           {activeStep < steps.length - 1 ? (
-            <Button onClick={handleNext} color="primary" variant="contained" disabled={carregando}>Avançar</Button>
+            <Button
+              onClick={handleNext}
+              color="primary"
+              variant="contained"
+              disabled={
+                (activeStep === 0 && (carregando || !cep || !/^\d{8}$/.test(cep))) ||
+                (activeStep === 1 && (!numero || !endereco))
+              }
+              type="button"
+            >
+              Avançar
+            </Button>
           ) : (
-            <Button type="submit" color="primary" variant="contained">Salvar Endereço</Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={!endereco || !numero}
+            >
+              Salvar Endereço
+            </Button>
           )}
         </Box>
       </form>

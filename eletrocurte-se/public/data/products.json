@@ -15,6 +15,7 @@
       "parcelamento": "12x 16,66",
       "data": "10/05/2024",
       "avaliacao": 5,
+      "comentario": "Ótimo desempenho para notebooks antigos.",
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -31,7 +32,8 @@
       "estoque": 8,
       "parcelamento": "12x 20,83",
       "data": "12/05/2024",
-      "avaliacao": 4,
+      "avaliacao": 5,
+      "comentario": "Switches macios e iluminação incrível.",
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -48,7 +50,8 @@
       "estoque": 20,
       "parcelamento": "12x 11,66",
       "data": "15/05/2024",
-      "avaliacao": null,
+      "avaliacao": 4,
+      "comentario": "Muito confortável para uso prolongado.",
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -65,7 +68,8 @@
       "estoque": 5,
       "parcelamento": "12x 291,58",
       "data": "20/05/2024",
-      "avaliacao": 3,
+      "avaliacao": 4,
+      "comentario": "Bom custo-benefício para trabalho e estudo.",
       "categorias": ["Computadores", "Hardware"]
     },
     {
@@ -82,7 +86,8 @@
       "estoque": 7,
       "parcelamento": "12x 358,25",
       "data": "22/05/2024",
-      "avaliacao": null,
+      "avaliacao": 5,
+      "comentario": "Câmera excelente e bateria dura o dia todo.",
       "categorias": ["Celulares"]
     },
     {
@@ -150,7 +155,8 @@
       "estoque": 10,
       "parcelamento": "12x 158,25",
       "data": "05/06/2024",
-      "avaliacao": null,
+      "avaliacao": 4.6,
+      "comentario": "Desempenho sólido e câmeras versáteis.",
       "categorias": ["Celulares"]
     },
     {
@@ -218,7 +224,8 @@
       "estoque": 6,
       "parcelamento": "12x 416,58",
       "data": "18/09/2023",
-      "avaliacao": null,
+      "avaliacao": 4.9,
+      "comentario": "Desempenho excepcional e câmeras incríveis.",
       "categorias": ["Celulares"]
     },
     {
@@ -252,7 +259,8 @@
       "estoque": 11,
       "parcelamento": "12x 49,99",
       "data": "05/12/2021",
-      "avaliacao": null,
+      "avaliacao": 4.8,
+      "comentario": "Som potente e ótima duração de bateria.",
       "categorias": ["Periféricos", "Celulares"]
     },
     {
@@ -354,7 +362,8 @@
       "estoque": 7,
       "parcelamento": "12x 108,25",
       "data": "16/06/2024",
-      "avaliacao": null,
+      "avaliacao": 4,
+      "comentario": "Economiza tinta e imprime rápido.",
       "categorias": ["Periféricos", "Computadores"]
     }
   ],
@@ -373,7 +382,8 @@
       "estoque": 3,
       "parcelamento": "12x 249,91",
       "data": "28/05/2024",
-      "avaliacao": 4.8,
+      "avaliacao": 5,
+      "comentario": "Desempenho excelente em jogos modernos.",
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -391,6 +401,7 @@
       "parcelamento": "12x 74,91",
       "data": "29/05/2024",
       "avaliacao": 4.6,
+      "comentario": "Ótima qualidade de imagem e cores vibrantes.",
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -408,6 +419,7 @@
       "parcelamento": "12x 91,58",
       "data": "30/05/2024",
       "avaliacao": 4.9,
+      "comentario": "Excelente desempenho para jogos e multitarefas.",
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -425,6 +437,7 @@
       "parcelamento": "12x 124,91",
       "data": "01/06/2024",
       "avaliacao": 4.7,
+      "comentario": "Tela incrível e desempenho rápido.",
       "categorias": ["Celulares"]
     },
     {
@@ -442,6 +455,7 @@
       "parcelamento": "12x 23,33",
       "data": "03/06/2024",
       "avaliacao": 4.8,
+      "comentario": "Ótima qualidade de som e conforto.",
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -459,6 +473,7 @@
       "parcelamento": "12x 108,25",
       "data": "05/06/2024",
       "avaliacao": 4.5,
+      "comentario": "Bom desempenho para um tablet dessa faixa.",
       "categorias": ["Computadores", "Celulares"]
     },
     {
@@ -476,6 +491,7 @@
       "parcelamento": "12x 8,33",
       "data": "10/06/2024",
       "avaliacao": 4.7,
+      "comentario": "Iluminação bonita e superfície suave.",
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -493,6 +509,7 @@
       "parcelamento": "12x 4,99",
       "data": "12/06/2024",
       "avaliacao": 4.5,
+      "comentario": "Prático e funcional para expandir portas USB.",
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -509,7 +526,8 @@
       "estoque": 13,
       "parcelamento": "12x 29,08",
       "data": "14/06/2024",
-      "avaliacao": 4.6,
+      "avaliacao": 4,
+      "comentario": "Leve, confortável e com ótimos recursos.",
       "categorias": ["Celulares", "Periféricos"]
     }
   ]

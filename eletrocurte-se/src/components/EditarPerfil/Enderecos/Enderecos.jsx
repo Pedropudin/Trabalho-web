@@ -18,10 +18,12 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
+  Snackbar
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModalEndereco from './ModalEndereco';
+import Alert from '@mui/material/Alert';
 
 export default function Enderecos({ onVoltar }) {
   // Lista de endereços do usuário, persistida em localStorage.
@@ -49,6 +51,8 @@ export default function Enderecos({ onVoltar }) {
   const [modalAberto, setModalAberto] = useState(false);
   // Controle do diálogo de confirmação de remoção de endereço.
   const [dialogRemover, setDialogRemover] = useState({ open: false, id: null });
+  // Estado para mensagem de confirmação ao trocar endereço
+  const [snackbar, setSnackbar] = useState({ open: false, message: '' });
 
   // Atualiza localStorage sempre que endereços mudam.
   useEffect(() => {
@@ -59,6 +63,12 @@ export default function Enderecos({ onVoltar }) {
   useEffect(() => {
     localStorage.setItem('enderecoSelecionado', enderecoSelecionado);
   }, [enderecoSelecionado]);
+
+  // Ao trocar o endereço selecionado, mostra mensagem de confirmação
+  const handleChangeEndereco = (e) => {
+    setEnderecoSelecionado(e.target.value);
+    setSnackbar({ open: true, message: 'Local de entrega alterado com sucesso!' });
+  };
 
   // Adiciona um novo endereço à lista e o seleciona.
   const adicionarEndereco = (enderecoCompleto) => {
@@ -107,7 +117,7 @@ export default function Enderecos({ onVoltar }) {
         <FormLabel component="legend">Escolha o endereço para entrega</FormLabel>
         <RadioGroup
           value={enderecoSelecionado}
-          onChange={(e) => setEnderecoSelecionado(e.target.value)}
+          onChange={handleChangeEndereco}
         >
           {/* Lista de endereços com opção de remoção */}
           {enderecos.map((endereco) => (
@@ -157,6 +167,18 @@ export default function Enderecos({ onVoltar }) {
           <Button onClick={confirmarRemover} color="error" variant="contained">Remover</Button>
         </DialogActions>
       </Dialog>
+
+      {/* Snackbar de confirmação ao trocar endereço */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={2500}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="success" sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
 
       {/* Botão para confirmar seleção e voltar ao perfil */}
       <div style={{ marginTop: '1rem' }}>

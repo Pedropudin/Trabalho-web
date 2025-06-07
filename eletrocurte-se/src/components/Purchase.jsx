@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Purchase.css";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -34,13 +34,46 @@ export default function Purchase({ onBack, onNext, steps }) {
     }, []);
 
     //Calcula o valor total do pedido, se baseando naquilo que está no carrinho
-    const total = cart.reduce((sum, item) => {
-        const prod = produtosLocais.find(p => p.id === item.id);
-        return sum + (prod ? prod.price * item.quantity : 0);
-    }, 0);
+    const cartProducts = cart
+        .map(item => {
+            const prod = produtosLocais.find(p => String(p.id) === String(item.id));
+            if (!prod) return null;
+            return {
+                ...item,
+                name: prod.name || prod.nome,
+                price: prod.price || prod.preco,
+                image: prod.img || prod.imagem || prod.image,
+                inStock: prod.inStock !== undefined ? prod.inStock : prod.estoque
+            };
+        })
+        .filter(Boolean);
+
+    const total = cartProducts.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
+
+    const [erro, setErro] = useState('');
+
+    // Checagem de dados obrigatórios
+    function dadosValidos() {
+        if (!cart.length) return "O carrinho está vazio.";
+        if (!personal.nome || !personal.sobrenome || !personal.email || !personal.cpf || !personal.telefone) return "Preencha todos os dados pessoais.";
+        if (!personal.endereco || !personal.numero || !personal.bairro || !personal.cidade || !personal.estado || !personal.cep) return "Preencha todos os campos do endereço.";
+        if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade) return "Preencha todos os dados do cartão.";
+        // Checagem de estoque
+        for (const item of cart) {
+            const prod = produtosLocais.find(p => p.id === item.id);
+            if (!prod || prod.inStock < item.quantity) return `Estoque insuficiente para o produto: ${item.name}`;
+        }
+        return "";
+    }
 
     //Assim que o botão de finalizar compra é apertado, os itens que estvam no carrinho são retirados do estoque e o carrinho é esvaziado
     function handlePurchase() {
+        const erroMsg = dadosValidos();
+        if (erroMsg) {
+            setErro(erroMsg);
+            return;
+        }
+
         const updatedProducts = produtosLocais.map(prod => {
             const cartItem = cart.find(p => p.id === prod.id);
             if (cartItem) {
@@ -51,9 +84,12 @@ export default function Purchase({ onBack, onNext, steps }) {
             }
             return prod;
         });
+        
         //Grava mudanças no JSON local
+
         localStorage.setItem("products", JSON.stringify(updatedProducts));//Atualiza estoque após a finalização da compra
         localStorage.setItem("cart", JSON.stringify([]));//Limpa cart após a finalização da compra
+        setErro('');
 
         if (onNext) onNext();
     }
