@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ROUTES from "../routes";
 import { faInstagram, faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
@@ -23,13 +23,13 @@ const Footer = () => {
                     </p>
                     <p>Endereço</p>
                     <div className="social-icons">
-                        <a href="https://www.instagram.com/" target="_blank">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faInstagram} />
                         </a>
-                        <a href="https://www.twitter.com/" target="_blank">
+                        <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faTwitter} />
                         </a>
-                        <a href="https://www.facebook.com/" target="_blank">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faFacebook} />
                         </a>
                     </div>
@@ -50,13 +50,13 @@ const Footer = () => {
                     </p>
                     <p>Endereço</p>
                     <div className="social-icons">
-                        <a href="https://www.instagram.com/" target="_blank">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faInstagram} />
                         </a>
-                        <a href="https://www.twitter.com/" target="_blank">
+                        <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faTwitter} />
                         </a>
-                        <a href="https://www.facebook.com/" target="_blank">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faFacebook} />
                         </a>
                     </div>

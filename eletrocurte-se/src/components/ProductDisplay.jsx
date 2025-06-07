@@ -2,6 +2,12 @@ import '../styles/ProductCard.css';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
+/*
+  Card dos produtos
+  - Exibida na tela de Pesquisa e Setor.
+  - Contém foto, nome, preço e botão de compra para um produto. 
+*/
+
 export default function ProductCard({product}) {
     const navigate = useNavigate();
 

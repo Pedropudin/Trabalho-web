@@ -1,0 +1,186 @@
+[
+  {
+    "id": 1,
+    "name": "HyperX Cloud II",
+    "setorEspecifico": "Headset/Fone de Ouvido",
+    "setorGeral": "Perifericos",
+    "marca": "HyperX",
+    "price": 771.0,
+    "inStock": 0,
+    "img": "https://m.media-amazon.com/images/I/71ltsViEA8L._AC_UF894,1000_QL80_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/71QluCNBFrL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/715R4ymL7yL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/71geLXmUXcL._AC_SL1500_.jpg"
+    ],
+    "description": "Headset gamer confortável com som surround virtual 7.1 e microfone removível.",
+    "fullDescription": "O HyperX Cloud II é um headset gamer renomado, oferecendo conforto superior, som surround virtual 7.1 e microfone removível com cancelamento de ruído. Ideal para longas sessões de jogos e comunicação clara.",
+    "specifications": [
+      "Drivers de 53mm",
+      "Som Surround 7.1 virtual",
+      "Microfone removível com cancelamento de ruído",
+      "Compatível com PC, PS4, Xbox One e dispositivos móveis"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Razer Kraken",
+    "setorEspecifico": "Headset/Fone de Ouvido",
+    "setorGeral": "Perifericos",
+    "marca": "Razer",
+    "price": 611.0,
+    "inStock": 10,
+    "img": "https://m.media-amazon.com/images/I/51TzGmowjSL.__AC_SX300_SY300_QL70_ML2_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/61cvh6-fjvL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/71EmzHb4IAL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/711TqnAHE-L._AC_SX679_.jpg"
+    ],
+    "description": "Headset com almofadas em gel refrigerante e áudio potente para gamers.",
+    "fullDescription": "O Razer Kraken é conhecido pelo conforto das almofadas em gel refrigerante e pelo áudio potente. Perfeito para longas sessões de jogo, oferece microfone retrátil e estrutura reforçada.",
+    "specifications": [
+      "Drivers de 50mm",
+      "Almofadas com gel refrigerante",
+      "Microfone retrátil",
+      "Compatível com PC, consoles e mobile"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Steelseries Arctis Prime",
+    "setorEspecifico": "Headset/Fone de Ouvido",
+    "setorGeral": "Perifericos",
+    "marca": "Steelseries",
+    "price": 811.0,
+    "inStock": 10,
+    "img": "https://m.media-amazon.com/images/I/51AE70y3STL.__AC_SY300_SX300_QL70_ML2_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/51MbXKlzKUL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/41+7qx-ze9L._AC_SL1200_.jpg",
+      "https://m.media-amazon.com/images/I/51aDqufOljL._AC_SL1200_.jpg"
+    ],
+    "description": "Headset profissional com áudio de alta fidelidade e construção robusta.",
+    "fullDescription": "O Arctis Prime entrega áudio de alta fidelidade, conforto premium e construção robusta em aço. Ideal para eSports e gamers que buscam desempenho profissional.",
+    "specifications": [
+      "Drivers de alta fidelidade",
+      "Estrutura em aço e alumínio",
+      "Microfone ClearCast com cancelamento de ruído",
+      "Compatível com múltiplas plataformas"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Placa De Vídeo Galax, Geforce RTX 3050",
+    "setorEspecifico": "Placa de vídeo",
+    "setorGeral": "Hardware",
+    "marca": "Galax",
+    "price": 1110.0,
+    "inStock": 9,
+    "img": "https://m.media-amazon.com/images/I/61Y3Ad4LaKL.__AC_SX300_SY300_QL70_ML2_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/617yllusZ9L._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61HxcdofigL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61GYaYakDfL._AC_SX679_.jpg"
+    ],
+    "description": "Placa de vídeo potente para jogos em Full HD com Ray Tracing e DLSS.",
+    "fullDescription": "A RTX 3050 da Galax oferece desempenho gráfico avançado para jogos em Full HD, com suporte a Ray Tracing e DLSS. Ideal para quem busca custo-benefício e tecnologia de ponta.",
+    "specifications": [
+      "8GB GDDR6",
+      "Ray Tracing e DLSS",
+      "Saídas HDMI e DisplayPort",
+      "Refrigeração eficiente"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Memória RAM Corsair DDR4 2400MHz",
+    "setorEspecifico": "Memória",
+    "setorGeral": "Hardware",
+    "marca": "Corsair",
+    "price": 220.0,
+    "inStock": 10,
+    "img": "https://m.media-amazon.com/images/I/61pY4lSLOtL.__AC_SX300_SY300_QL70_ML2_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/71YigYwIIcL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/71fFXHe5+LL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/71OVw2pKtGL._AC_SX679_.jpg"
+    ],
+    "description": "Módulo de memória DDR4 de alta performance para desktops.",
+    "fullDescription": "A memória Corsair DDR4 2400MHz garante mais velocidade e estabilidade para seu computador, sendo ideal para upgrades e montagem de PCs de alta performance.",
+    "specifications": [
+      "Capacidade: 8GB",
+      "Frequência: 2400MHz",
+      "Padrão DDR4",
+      "Compatível com Intel e AMD"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Notebook Dell Inspiron 15",
+    "setorEspecifico": "Notebooks",
+    "setorGeral": "Computadores",
+    "marca": "Dell",
+    "price": 5220.0,
+    "inStock": 4,
+    "img": "https://m.media-amazon.com/images/I/71epkJC5SxL.__AC_SX300_SY300_QL70_ML2_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/61LBrovmY0L._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61F-bnSPksL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/51Gq+Fe6RlL._AC_SX679_.jpg"
+    ],
+    "description": "Notebook versátil com tela Full HD, SSD rápido e ótimo desempenho.",
+    "fullDescription": "O Dell Inspiron 15 é um notebook versátil, com ótimo desempenho para trabalho e estudos. Conta com tela Full HD, SSD rápido e design elegante.",
+    "specifications": [
+      "Processador Intel Core i5",
+      "8GB RAM, 256GB SSD",
+      "Tela 15,6'' Full HD",
+      "Windows 10 Pro"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Notebook Samsung Book4",
+    "setorEspecifico": "Notebooks",
+    "setorGeral": "Computadores",
+    "marca": "Samsung",
+    "price": 4100.0,
+    "inStock": 9,
+    "img": "https://m.media-amazon.com/images/I/51wL6OabtxL._AC_SX679_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/518I0PfbBRL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/415M1qyLRML._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/31aPCMmzCSL._AC_SX679_.jpg"
+    ],
+    "description": "Notebook leve, rápido e ideal para o dia a dia com bateria de longa duração.",
+    "fullDescription": "O Notebook Samsung Book alia desempenho e portabilidade, sendo ideal para o dia a dia. Possui SSD, tela ampla e bateria de longa duração.",
+    "specifications": [
+      "Processador Intel Core i3",
+      "8GB RAM, 256GB SSD",
+      "Tela 15,6'' Full HD",
+      "Windows 11 Pro"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "HyperX Cloud III",
+    "setorEspecifico": "Headset/Fone de Ouvido",
+    "setorGeral": "Perifericos",
+    "marca": "HyperX",
+    "price": 721.0,
+    "inStock": 12,
+    "img": "https://m.media-amazon.com/images/I/71ltsViEA8L._AC_UF894,1000_QL80_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/71QluCNBFrL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/715R4ymL7yL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/71geLXmUXcL._AC_SL1500_.jpg"
+    ],
+    "description": "Headset gamer aconfortável com som surround virtual 7.1 e microfone removível.",
+    "fullDescription": "O HypearX Cloud III é um headset gamer renomado, oferecendo conforto superior, som surround virtual 7.1 e microfone removível com cancelamento de ruído. Ideal para longas sessões de jogos e comunicação clara.",
+    "specifications": [
+      "Drivers de 53mm",
+      "Som Surround 7.1 virtual",
+      "Microfoane removível com cancelamento de ruído",
+      "Compatível com PC, PS4, Xbox One e dispositivos móveis"
+    ]
+  }
+]

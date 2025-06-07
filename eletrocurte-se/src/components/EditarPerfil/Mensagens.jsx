@@ -148,6 +148,7 @@ export default function Mensagens({ onVoltar }) {
     if (filtro === 'todas') return true;
     if (filtro === 'importantes') return msg.importante;
     if (filtro === 'naoLidas') return !msg.lida;
+    return true;
   });
 
   // Agrupa mensagens filtradas por data

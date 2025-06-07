@@ -1,6 +1,5 @@
 import '../styles/PaginaProduto.css';
-import React, { useState } from 'react';
-import Products from '../Products.json'; 
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
@@ -8,14 +7,37 @@ import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function PaginaProduto() {
-  
-  const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products; //Lê arquivo local, caso for vazio, lê nosso arquivo JSON pré definido
+  //Variáveis
   const navigate = useNavigate();
   const { id } = useParams();  //Faz a identificação do id da url 
-  const product = produtosLocais.find(p => String(p.id) === String(id));  //Procura o produto que tenha mesma URL que a do site
-  //Variáveis de estado, para atualização da interação com as fotos dos produtos
-  const [mainImg, setMainImg] = useState(product?.img);
-  const [thumbs, setThumbs] = useState(product?.thumbs || []);
+  const [produtosLocais, setProdutosLocais] = React.useState([]);
+
+  //Lê dados dos produtos diretamento do JSON
+  useEffect(() => {
+      const localProducts = localStorage.getItem("products");
+      if (localProducts) {
+          setProdutosLocais(JSON.parse(localProducts));
+      } else {
+          fetch('/data/produtos.json')
+              .then(res => res.json())
+              .then(data => setProdutosLocais(data))
+              .catch(() => setProdutosLocais([]));
+      }
+  }, []);
+  //Variáveis
+  const product = produtosLocais.find(p => String(p.id) === String(id));
+
+  //Atualização de imagens, após o recebimento de ados
+  const [mainImg, setMainImg] = useState();
+  const [thumbs, setThumbs] = useState([]);
+
+  useEffect(() => {
+    if (product) {
+      setMainImg(product.img);
+      setThumbs(product.thumbs || []);
+    }
+  }, [product]);
+
 
   //Ao clicar em "adicionar ao carrinho"
   function handleAdicionarCarrinho(productId) {
@@ -87,7 +109,6 @@ export default function PaginaProduto() {
                   src={mainImg}
                   alt={product.name}
                   style={{ width: "100%", height: "100%", objectFit: "contain", cursor: "pointer" }}
-                  onClick={() => window.open(mainImg, '_blank')}
                 />
               </Paper>
               <Stack direction="row" spacing={2}>

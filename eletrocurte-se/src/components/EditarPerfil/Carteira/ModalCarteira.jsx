@@ -5,7 +5,7 @@ import {
   FormControl, IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-//import CadastrarCartao from './CadastrarCartao';
+import CadastrarCartao from './CadastrarCartao';
 
 // Objeto de estilo inline para o Box principal do modal
 // Define centralização, largura máxima, cor de fundo, borda, sombra, padding e layout flexível
@@ -246,18 +246,18 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
 
         {/* Passo de cadastro de novo cartão */}
         {step === 'novoCartao' && (
-          {/* <CadastrarCartao
-            onSalvar={(cartaoSalvo) => {
-              // Ao salvar, adiciona o novo cartão à lista, seleciona ele e mostra mensagem
-              const final = cartaoSalvo.numero.slice(-4);
-              setCartoes(cs => [...cs, { ...cartaoSalvo, final, saldo: 0 }]);
-              setCartaoSelecionado(final);
-              setMensagem('Cartão cadastrado!');
-              setStep('adicionar');
-              setTimeout(() => setMensagem(''), 1200);
-            }}
-            onCancelar={() => setStep('adicionar')}
-          /> */}
+           <CadastrarCartao
+             onSalvar={(cartaoSalvo) => {
+               // Ao salvar, adiciona o novo cartão à lista, seleciona ele e mostra mensagem
+               const final = cartaoSalvo.numero.slice(-4);
+               setCartoes(cs => [...cs, { ...cartaoSalvo, final, saldo: 0 }]);
+               setCartaoSelecionado(final);
+               setMensagem('Cartão cadastrado!');
+               setStep('adicionar');
+               setTimeout(() => setMensagem(''), 1200);
+             }}
+             onCancelar={() => setStep('adicionar')}
+           />
         )}
 
         {/* Mensagem de feedback (sucesso) exibida no rodapé do modal */}

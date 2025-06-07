@@ -8,6 +8,17 @@ import PaymentDetails from '../components/PaymentDetails';
 import PersonalDetails from '../components/PersonalDetails';
 import Purchase from '../components/Purchase';
 
+
+/*
+  Página de carrinho + compra
+  - Exibida quando entramos em carrinho, ou ao continuar rumo à confirmação de compra
+  - Alterna entre os passos essenciais para que uma compra seja efeturada. Fazendo isso atráves da substituição dos componentes criados.  
+*/
+
+
+
+
+
 export default function Checkout() {
 
     //Atualização de checkout em uma mesma página, a fim de facilitar e componentizar o máximo possível
@@ -40,8 +51,8 @@ export default function Checkout() {
         <>
             <Header />
             {step === 1 && <Cart onNext={nextStep} onBack={prevStep} />}
-            {step === 2 && <PaymentDetails onNext={nextStep} onBack={prevStep} steps={steps} />}
-            {step === 3 && <PersonalDetails onNext={nextStep} onBack={prevStep} steps={steps}/>}
+            {step === 2 && <PersonalDetails onNext={nextStep} onBack={prevStep} steps={steps}/>}
+            {step === 3 && <PaymentDetails onNext={nextStep} onBack={prevStep} steps={steps} />}
             {step === 4 && <Purchase onNext={nextStep} onBack={prevStep} steps={steps}/>}
             {step === 5 && <CompraFinalizada />}
             <Footer />

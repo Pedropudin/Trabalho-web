@@ -4,10 +4,11 @@
     box-shadow: 0 4px 24px rgba(0,123,153,0.09);
     padding: 32px 28px 24px 28px;
     max-width: 480px;
-    margin: 50px auto 50px auto;
+    margin: 80px auto;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    justify-content: center;
+    min-height: 480px;
 }
 
 .payment-details-form h2 {
@@ -18,9 +19,19 @@
     letter-spacing: 1px;
 }
 
-.payment-details-form input {
+/* Labels e campos do formulário */
+.payment-details-form label {
     font-size: 1rem;
-    margin: 14px;
+    color: #007b99;
+    font-weight: 600;
+    margin: 0 14px 2px 14px;
+    display: block;
+    letter-spacing: 0.5px;
+}
+.payment-details-form input,
+.payment-details-form select {
+    font-size: 1rem;
+    margin: 14px 0;
     outline: none;
     transition: border 0.2s, box-shadow 0.2s;
     background: #f7fafc;
@@ -28,24 +39,34 @@
     border: 1.5px solid #e0f7fa;
     border-radius: 5px;
     width: 100%;
+    padding: 10px;
+    justify-content: center;
+    box-sizing: border-box;
+    display: block;
 }
-
-.payment-details-form input:focus {
+.payment-details-form input:focus,
+.payment-details-form select:focus {
     border-color: #007b99;
     box-shadow: 0 2px 8px rgba(0,123,153,0.08);
     background: #fff;
 }
 
-.payment-details-form > div {
+/* Inputs lado a lado */
+.payment-details-form .input-row {
     display: flex;
     gap: 12px;
     margin-bottom: 14px;
 }
-
-.payment-details-form > div input {
+.payment-details-form .input-row > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.payment-details-form .input-row input {
     margin-bottom: 0;
 }
 
+/* Botões do formulário */
 .payment-details-form .button-row {
     display: flex;
     gap: 16px;
@@ -53,7 +74,6 @@
     margin-bottom: 0;
     justify-content: stretch;
 }
-
 .payment-details-form .button-row button {
     flex: 1 1 0;
     width: 100%;
@@ -67,38 +87,22 @@
     border: none;
     box-shadow: 0 2px 12px rgba(0,123,153,0.10);
 }
-
 .payment-details-form .button-row .back-button {
     background: #fff;
     color: #007b99;
     border: 2px solid #007b99;
     box-shadow: none;
 }
-
 .payment-details-form .button-row .back-button:hover {
     background: #e0f7fa;
     border-color: #009fcf;
 }
-
 .payment-details-form .button-row .submit-button {
     background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
     color: #fff;
 }
-
 .payment-details-form .button-row .submit-button:hover {
     background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
     box-shadow: 0 6px 24px rgba(0,123,153,0.18);
     transform: translateY(-2px) scale(1.03);
-}
-
-
-.payment-details-form {
-   min-height: 480px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.payment-details-form .button-row {
-    margin-top: auto;
 }

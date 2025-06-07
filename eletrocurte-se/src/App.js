@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Páginas
 import Apresentacao from './pages/Apresentacao';
@@ -15,6 +15,8 @@ import Checkout from './pages/Checkout';
 import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
 import Desempenho from './pages/Desempenho';
+import Time from './pages/Time';
+import Vendas from './pages/Vendas';
 import Pendencias from './pages/Pendencias';
 import PaginaInicial from './pages/PaginaInicial';
 
@@ -40,6 +42,8 @@ function AppRoutes() {
         <Route path={ROUTES.TERMOS} element={<TermosCondicoes />} />
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
         <Route path={ROUTES.DESEMPENHO} element={<Desempenho />} />
+        <Route path={ROUTES.TIME} element={<Time />} />
+        <Route path={ROUTES.VENDAS} element={<Vendas />} />
         <Route path={ROUTES.PENDENCIAS} element={<Pendencias />} />
         <Route path={ROUTES.PAGINA_INICIAL} element={<PaginaInicial />} />
       </Routes>

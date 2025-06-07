@@ -52,26 +52,10 @@ export default function CadastrarCartao({ onSalvar, onCancelar }) {
   const [erroNumero, setErroNumero] = useState('');
   const [erroForm, setErroForm] = useState('');
 
-  function validarLuhn(numero) {
-    let soma = 0;
-    let alternar = false;
-    for (let i = numero.length - 1; i >= 0; i--) {
-      let digito = parseInt(numero[i], 10);
-      if (alternar) {
-        digito *= 2;
-        if (digito > 9) digito -= 9;
-      }
-      soma += digito;
-      alternar = !alternar;
-    }
-    return soma % 10 === 0;
-  }
-
   const handleNext = () => {
     if (activeStep === 0) {
       const numeroLimpo = novoCartao.numero.replace(/\D/g, '');
       const numberValidation = valid.number(numeroLimpo);
-      const cardType = numberValidation.card && numberValidation.card.type;
       const expectedLengths = (numberValidation.card && numberValidation.card.lengths) || [16];
       if (!expectedLengths.includes(numeroLimpo.length)) {
         setErroNumero(`Número inválido. Digite ${expectedLengths.join(' ou ')} dígitos para ${numberValidation.card ? numberValidation.card.niceType : 'o cartão selecionado'}.`);
@@ -101,7 +85,7 @@ export default function CadastrarCartao({ onSalvar, onCancelar }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (activeStep === 1) {
-      // Exemplo de validação extra: impedir salvar se número não está preenchido
+      // Validação extra: impedir salvar se número não está preenchido
       if (!novoCartao.numero) {
         setErroForm('Preencha o número do cartão antes de salvar.');
         return;

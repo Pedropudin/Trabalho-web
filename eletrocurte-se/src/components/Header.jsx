@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect } from 'react';
 import ROUTES from '../routes';
-import { Link, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -25,7 +25,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import { Link as RouterLink } from 'react-router-dom';
 import '../styles/Header.css';
 
 // Animação pulse para o badge do carrinho
@@ -111,7 +111,7 @@ const CategoryBar = styled(Box)(({ theme }) => ({
 }));
 
 // Link de categoria customizado, sem destaque azul
-const CategoryLink = styled('a', {
+const CategoryLink = styled(RouterLink, {
   shouldForwardProp: (prop) => prop !== 'active',
 })(({ theme, active }) => ({
   color: 'white',
@@ -123,7 +123,6 @@ const CategoryLink = styled('a', {
   fontWeight: active ? 'bold' : 'normal',
   backgroundColor: 'transparent',
   boxShadow: 'none',
-  cursor: 'pointer',
   transition: 'background-color 0.3s, font-weight 0.3s, box-shadow 0.2s',
   '&:hover': {
     backgroundColor: '#007b99',
@@ -154,6 +153,7 @@ function Header({
   categories = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'],
   selectedCategoryIndex = 0,
   onCategoryClick,
+  adminContext = false,
   useElementsMenu = [true, true, true],
   onProfile,
   onCart,
@@ -168,6 +168,7 @@ function Header({
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
 
   // Calcula o número de itens no carrinho a partir do localStorage
@@ -231,6 +232,25 @@ function Header({
   };
 
   // Carrinho: só permite se logado, senão vai para login
+  // Handler para mudança no campo de pesquisa
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+    if (onSearchChange) onSearchChange(e);
+  };
+
+  //Envio de conteúdo da barra de pesquisa
+  const handleSearchKeyDown = (e) => {
+    const searchRealValue = searchValue.trim()
+    if (searchDisabled) {
+      if (onSearchDenied) onSearchDenied();
+      e.preventDefault();
+      return;
+    }
+    if (e.key === 'Enter' && searchRealValue) {
+      navigate(`/PaginaPesquisa/${encodeURIComponent(searchRealValue)}`);
+    }
+  };
+
   const handleCartClick = () => {
     if (onCart) {
       onCart();
@@ -308,14 +328,8 @@ function Header({
               <InputBase
                 placeholder="Pesquisar…"
                 inputProps={{ 'aria-label': 'search' }}
-                onChange={searchDisabled ? (e) => {
-                  if (onSearchDenied) onSearchDenied();
-                  e.target.value = '';
-                } : onSearchChange}
-                onKeyDown={searchDisabled ? (e) => {
-                  if (onSearchDenied) onSearchDenied();
-                  e.preventDefault();
-                } : undefined}
+                onChange={handleSearchChange}
+                onKeyDown={handleSearchKeyDown}
                 sx={{
                   width: '100%', // Ocupa toda a largura do Search
                   fontSize: { xs: 16, sm: 18 }, // Tamanho responsivo da fonte

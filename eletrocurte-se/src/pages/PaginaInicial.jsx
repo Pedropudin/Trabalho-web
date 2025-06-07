@@ -41,15 +41,6 @@ const PaginaInicial = () => {
             .then(data => setProdutosHistorico(data.produtosHistorico || []));
     }, []);
 
-    // Handlers para funcionalidades restritas e navegação
-    function handleRestrito(e) {
-        if (!isLoggedIn) {
-            e.preventDefault();
-            setMensagem('Faça login para acessar esta funcionalidade!');
-            setTimeout(() => setMensagem(''), 3500);
-        }
-    }
-
     function handleComeceAgora(e) {
         e.preventDefault();
         if (isLoggedIn) {

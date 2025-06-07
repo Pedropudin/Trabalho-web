@@ -23,7 +23,7 @@
       "nome": "Teclado Mecânico Redragon Kumara RGB",
       "descricao": "Teclado mecânico compacto com iluminação RGB.",
       "preco": "249,90",
-      "img": "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e2e2e.jpg",
+      "img": "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e2e.jpg",
       "marca": "Redragon",
       "modelo": "Kumara",
       "voltagem": "Bivolt",
@@ -104,7 +104,7 @@
       "estoque": 15,
       "parcelamento": "12x 19,16",
       "data": "25/05/2024",
-      "avaliacao": 4.7,
+      "avaliacao": 5,
       "categorias": ["Periféricos", "Celulares"]
     },
     {
@@ -121,7 +121,7 @@
       "estoque": 9,
       "parcelamento": "12x 41,58",
       "data": "01/06/2024",
-      "avaliacao": 4.8,
+      "avaliacao": null,
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -138,7 +138,7 @@
       "estoque": 14,
       "parcelamento": "12x 29,16",
       "data": "03/06/2024",
-      "avaliacao": 4.7,
+      "avaliacao": 4,
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -173,7 +173,7 @@
       "estoque": 18,
       "parcelamento": "12x 24,99",
       "data": "07/06/2024",
-      "avaliacao": 4.9,
+      "avaliacao": 5,
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -190,7 +190,7 @@
       "estoque": 13,
       "parcelamento": "12x 19,08",
       "data": "10/04/2023",
-      "avaliacao": 4.6,
+      "avaliacao": null,
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -207,7 +207,7 @@
       "estoque": 8,
       "parcelamento": "12x 33,25",
       "data": "15/03/2022",
-      "avaliacao": 4.5,
+      "avaliacao": 2,
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -242,7 +242,7 @@
       "estoque": 10,
       "parcelamento": "12x 49,91",
       "data": "22/01/2022",
-      "avaliacao": 4.7,
+      "avaliacao": 4,
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -277,7 +277,7 @@
       "estoque": 40,
       "parcelamento": "12x 4,99",
       "data": "17/08/2020",
-      "avaliacao": 4.5,
+      "avaliacao": 5,
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -294,7 +294,7 @@
       "estoque": 6,
       "parcelamento": "12x 83,25",
       "data": "10/06/2024",
-      "avaliacao": 4.7,
+      "avaliacao": null,
       "categorias": ["Periféricos", "Computadores"]
     },
     {
@@ -311,7 +311,7 @@
       "estoque": 10,
       "parcelamento": "12x 29,16",
       "data": "12/06/2024",
-      "avaliacao": 4.6,
+      "avaliacao": 3,
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -328,7 +328,7 @@
       "estoque": 8,
       "parcelamento": "12x 16,66",
       "data": "14/06/2024",
-      "avaliacao": 4.8,
+      "avaliacao": null,
       "categorias": ["Hardware", "Computadores"]
     },
     {
@@ -345,7 +345,7 @@
       "estoque": 12,
       "parcelamento": "12x 13,33",
       "data": "15/06/2024",
-      "avaliacao": 4.5,
+      "avaliacao": 4,
       "categorias": ["Hardware"]
     },
     {

@@ -1,12 +1,28 @@
 import "../styles/PaginaSetor.css";
-import Products from '../Products.json'; 
+import AdminHeader from "../components/admin/AdminHeader";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
 import ScrollToTop from "../components/ScrollToTop";
 import ProductDisplay from "../components/ProductDisplay";
-import { useParams, useNavigate } from "react-router-dom";
-import React, { useState } from 'react';
+import { useParams } from "react-router-dom";
+import React, { useState,useEffect } from 'react';
+
+
+/*
+  Página de setores do portal Eletrocurte-se.
+  - Display de todos os produtos separados em setor quando acessado como "/PaginaSetor"
+  - Display de todos os produtos pertencentes a uma categoria geral, como Hardware ou Periféricos.
+  - Para chegar a esta página é necessário alterar a URL '/PaginaSetor/NomeDoSetor' ou apenas interagir com os botões e clicáveis da interface.
+  - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
+*/
+
+const categoryIndexRel = {
+    "hardware": 0,
+    "perifericos": 1,
+    "computadores": 2,
+    "celulares": 3,
+}
 
 export default function PaginaSetor() {
     const { name } = useParams(); 
@@ -14,8 +30,31 @@ export default function PaginaSetor() {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [produtosLocais, setProdutosLocais] = React.useState([]);
+    const [categoryIndex, setCategoryIndex] = useState(0);
     
-    const produtosLocais = JSON.parse(localStorage.getItem("products")) || Products; //Inicializa o localStorage ou copia dos produtos
+    //Lê dados dos produtos diretamento do JSON
+    useEffect(() => {
+        const localProducts = localStorage.getItem("products");
+        if (localProducts) {
+            setProdutosLocais(JSON.parse(localProducts));
+        } else {
+            fetch('/data/produtos.json')
+                .then(res => res.json())
+                .then(data => setProdutosLocais(data))
+                .catch(() => setProdutosLocais([]));
+        }
+    }, []);
+
+    useEffect(() => {
+        const cat = window.location.href.split('/')[4];
+        if(localStorage.userType === "admin") {
+            setCategoryIndex(categoryIndexRel[cat] + 2);
+        } else {
+            setCategoryIndex(categoryIndexRel[cat]);
+        }
+    }, []);
+
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]//Pega todas as marcas disponíves
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
@@ -23,10 +62,11 @@ export default function PaginaSetor() {
     const normalize = (str) =>
         str?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    //Obtém a origem do "clique"
-    const sectorProducts = produtosLocais.filter(
-        (p) => normalize(p.setorGeral) === normalize(name)
-    );
+    // Se não houver name, mostra todos os produtos
+    const sectorProducts = name
+        ? produtosLocais.filter((p) => normalize(p.setorGeral) === normalize(name))
+        : produtosLocais;
+    
 
     // Ordenação de produtos a partir da ordem escolhida
     const orderedProducts = React.useMemo(() => {
@@ -63,7 +103,10 @@ export default function PaginaSetor() {
 
     return (
         <>
-            <Header />
+            {console.log(categoryIndex)}
+            {localStorage.userType === "admin" 
+                ? <AdminHeader categoryIndex={categoryIndex} /> 
+                : <Header />}
             <div className="main-content">
                 <Sidebar
                     items={sectorProducts}
@@ -77,7 +120,7 @@ export default function PaginaSetor() {
                 />
                 <div className="results">
                     <div className="results-header-row">
-                        <h4>Resultados para "{name}"</h4>
+                        <h4>Resultados para "{!name ? "Geral" : name}"</h4>
                         <select
                             id="order-criteria"
                             value={order}
