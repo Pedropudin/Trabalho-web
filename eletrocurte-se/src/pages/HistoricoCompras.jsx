@@ -7,6 +7,7 @@ import '../styles/UserRating.css';
 import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 import ScrollToTop from '../components/ScrollToTop';
+import ROUTES from '../routes';
 
 /*
   Página de histórico de compras do usuário.
@@ -17,9 +18,9 @@ import ScrollToTop from '../components/ScrollToTop';
 
 function getProdutosByRoute(route, data) {
   switch (route) {
-    case '/historico-compras':
+    case ROUTES.HIST_COMPRAS:
       return data.produtosHistorico || [];
-    case '/historico-produtos':
+    case ROUTES.HIST_PRODUTOS:
       return data.produtosVisualizados || [];
     default:
       return [];
@@ -39,8 +40,7 @@ export default function HistoricoCompras() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        setJsonData(data);
-        let produtos = getProdutosByRoute('/historico-compras', data);
+        let produtos = getProdutosByRoute(ROUTES.HIST_COMPRAS, data);
         // Adiciona até 4 produtos reais do JSON sem avaliação, com datas recentes (intenção de teste de funcionalidade)
         const produtosSemAvaliacao = [];
         for (let i = 0; i < 4 && i < produtos.length; i++) {

@@ -25,7 +25,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Link as RouterLink, Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import '../styles/Header.css';
 
 // Animação pulse para o badge do carrinho
@@ -442,6 +442,10 @@ function Header({
             <CategoryLink
               key={cat}
               active={selectedCategory === cat ? 1 : 0}
+              to={ROUTES.PAG_SETOR.replace(
+                ":name",
+                cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+              )}
               onClick={e => {
                 if (!isLoggedIn) {
                   e.preventDefault();
@@ -451,20 +455,9 @@ function Header({
                 }
               }}
               style={!isLoggedIn ? { color: '#aaa', cursor: 'pointer' } : {}}
+              tabIndex={0}
             >
-              <Link
-                to={ROUTES.PAG_SETOR.replace(":name",cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())}
-                style={{color:'inherit'}}
-                tabIndex={0}
-                onClick={e => {
-                  if (!isLoggedIn) {
-                    e.preventDefault();
-                    showMensagemCategoria('Faça login para filtrar por categoria!');
-                  }
-                }}
-              >
-                {cat}
-              </Link>
+              {cat}
             </CategoryLink>
           ))}
         </CategoryBar>
