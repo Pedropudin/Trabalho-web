@@ -80,7 +80,7 @@ export default function ProductCard({product}) {
                 <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
                     <button
                         className="product-display-edit-button"
-                        onClick={() => console.log("AAAAAAAAA")} 
+                        onClick={() => navigate(`/admin/PaginaProduto/${product.id}`)} 
                     >
                         Editar
                     </button>
