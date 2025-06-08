@@ -91,7 +91,7 @@ export default function PaginaProdutoAdmin() {
   if (loading) {
     return (
       <>
-        <AdminHeader />
+        <AdminHeader categoryIndex={99} />
         <main className="main-content">
           <h2 style={{ margin: '2rem', textAlign: 'center' }}>Carregando...</h2>
         </main>
@@ -103,7 +103,7 @@ export default function PaginaProdutoAdmin() {
   if (!editProduct) {
     return (
       <>
-        <AdminHeader />
+        <AdminHeader categoryIndex={99} />
         <main className="main-content">
           <h2 style={{ margin: '2rem', textAlign: 'center' }}>Produto não encontrado.</h2>
         </main>

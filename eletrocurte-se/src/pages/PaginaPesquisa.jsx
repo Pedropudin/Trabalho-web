@@ -75,7 +75,7 @@ function PaginaPesquisa() {
 
     return(
         <>
-            {localStorage.userType === "admin" ? <AdminHeader /> : <Header/>}
+            {localStorage.userType === "admin" ? <AdminHeader categoryIndex={99} /> : <Header/>}
             <div className="main-content">
                 <Sidebar
                     items={produtosLocais}
