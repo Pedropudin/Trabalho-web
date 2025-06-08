@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Alert, AlertTitle, Button, Typography, Paper, TextField, Snackbar } from '@mui/material';
 
 // Componente FormSeguranca
-// Permite ao usuário alterar e validar e-mail, senha e CPF
+// Permite ao usuário alterar e validar e-mail, senha, CPF e telefone
 // Props:
 // - onVoltar: função chamada ao clicar em voltar ao perfil
 //
 // Estados:
-// - form: objeto com campos email, senha, cpf
+// - form: objeto com campos email, senha, cpf, telefone
 // - mensagem: mensagem de feedback
 // - tipoMensagem: tipo do feedback (info, error, success)
 // - validando: controla estado de validação assíncrona
@@ -20,7 +20,7 @@ import { Alert, AlertTitle, Button, Typography, Paper, TextField, Snackbar } fro
 // - handleSubmit: executa validação e feedback
 //
 // Lógica:
-// - Validação de formato de e-mail, CPF e senha forte
+// - Validação de formato de e-mail, CPF, telefone e senha forte
 // - Validação de domínio de e-mail via API DNS
 // - Feedback visual com Snackbar/Alert
 // - Layout com Paper, Typography, TextField, Button
@@ -35,8 +35,8 @@ function extrairDominio(email) {
 }
 
 export default function FormSeguranca({ onVoltar }) {
-  // Estado do formulário (email, senha, cpf)
-  const [form, setForm] = useState({ email: '', senha: '', cpf: '' });
+  // Estado do formulário (email, senha, cpf, telefone)
+  const [form, setForm] = useState({ email: '', senha: '', cpf: '', telefone: '' });
   const [mensagem, setMensagem] = useState(''); // Mensagem de feedback
   const [tipoMensagem, setTipoMensagem] = useState('info'); // Tipo do feedback
   const [validando, setValidando] = useState(false); // Indica se está validando domínio
@@ -66,7 +66,7 @@ export default function FormSeguranca({ onVoltar }) {
 
   // Valida todos os campos do formulário
   const validarCamposCompletos = () => {
-    if (!form.cpf || !form.email || !form.senha) {
+    if (!form.cpf || !form.email || !form.senha || !form.telefone) {
       return { valido: false, mensagem: 'Preencha todos os campos.' };
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
@@ -81,6 +81,10 @@ export default function FormSeguranca({ onVoltar }) {
         mensagem:
           'Senha insegura. Deve conter no mínimo 8 caracteres, incluindo maiúsculas, minúsculas, números e caracteres especiais.',
       };
+    }
+    // Validação simples para telefone brasileiro (formato (00) 00000-0000 ou (00) 0000-0000)
+    if (!/^(\(\d{2}\)\s?)?\d{4,5}-\d{4}$/.test(form.telefone)) {
+      return { valido: false, mensagem: 'Telefone inválido. Use o formato (00) 00000-0000.' };
     }
     return { valido: true };
   };
@@ -116,6 +120,7 @@ export default function FormSeguranca({ onVoltar }) {
           email: form.email,
           senha: form.senha,
           CPF: form.cpf,
+          telefone: form.telefone,
         }),
       });
       setMensagem('Alterações salvas com sucesso!');
@@ -201,6 +206,27 @@ export default function FormSeguranca({ onVoltar }) {
           placeholder="000.000.000-00"
         />
         {/* TextField: campo de CPF com máscara e placeholder */}
+        <TextField
+          label="Telefone"
+          type="text"
+          name="telefone"
+          value={form.telefone}
+          onChange={e => {
+            // Máscara para telefone brasileiro (00) 00000-0000 ou (00) 0000-0000
+            let raw = e.target.value.replace(/\D/g, '').slice(0, 11);
+            if (raw.length > 6) {
+              raw = raw.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+            } else if (raw.length > 2) {
+              raw = raw.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            }
+            handleChange({ target: { name: 'telefone', value: raw.trim() } });
+          }}
+          fullWidth
+          margin="normal"
+          disabled={validando}
+          placeholder="(00) 00000-0000"
+        />
+        {/* TextField: campo de telefone com máscara e placeholder */}
         <Button type="submit" variant="contained" color="primary" fullWidth disabled={validando} sx={{ mt: 2 }}>
           {/* Button: botão de ação principal
               variant="contained": fundo preenchido
