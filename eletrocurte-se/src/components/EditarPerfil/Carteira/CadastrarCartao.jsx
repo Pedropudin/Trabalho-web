@@ -145,7 +145,17 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        paddingRight: 1,
+        minWidth: { xs: '90vw', sm: 380 },
+        background: 'inherit',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 3 }}>
         {steps.map((label) => (
           <Step key={label}>
@@ -153,7 +163,7 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
           </Step>
         ))}
       </Stepper>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {erroForm && (
           <Alert severity="error" icon={<ErrorOutlineIcon fontSize="inherit" />} sx={{ mb: 2 }}>
             {erroForm}
@@ -255,7 +265,7 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
             </Box>
           </Box>
         )}
-        <Box display="flex" justifyContent="space-between" mt={3} gap={3}>
+        <Box display="flex" justifyContent="space-between" mt={3} gap={3} sx={{ mt: 3, mb: 1 }}>
           <Button onClick={onCancelar} color="secondary" variant="outlined">
             Cancelar
           </Button>
@@ -279,6 +289,8 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
             </Button>
           )}
         </Box>
+        {/* Garante espaço extra para o scroll mostrar todo o conteúdo */}
+        <Box sx={{ minHeight: 16 }} />
       </form>
     </Box>
   );
