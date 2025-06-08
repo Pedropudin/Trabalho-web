@@ -27,15 +27,8 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
   // Verifica se está na home e usuário não está logado
   const isHomeNotLogged = pageType === 'home' && !isLoggedIn;
 
-  // Lida com clique no card: exige login na home, senão chama onClick
+  // Lida com clique no card: sempre chama onClick (deixa o modal abrir para todos)
   const handleCardClick = (e) => {
-    if (isHomeNotLogged) {
-      e.preventDefault();
-      e.stopPropagation();
-      setShowLoginMsg(true);
-      setTimeout(() => setShowLoginMsg(false), 2500);
-      return;
-    }
     if (onClick) onClick(product);
   };
 
