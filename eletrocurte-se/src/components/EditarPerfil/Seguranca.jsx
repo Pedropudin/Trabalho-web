@@ -105,9 +105,27 @@ export default function FormSeguranca({ onVoltar }) {
       setSnackbar(true);
       return;
     }
-    setMensagem('Alterações salvas com sucesso!');
-    setTipoMensagem('success');
-    setSnackbar(true);
+
+    // Envia atualização para o backend
+    try {
+      const userId = localStorage.getItem('userId');
+      await fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email,
+          senha: form.senha,
+          CPF: form.cpf,
+        }),
+      });
+      setMensagem('Alterações salvas com sucesso!');
+      setTipoMensagem('success');
+      setSnackbar(true);
+    } catch {
+      setMensagem('Erro ao salvar alterações no servidor.');
+      setTipoMensagem('error');
+      setSnackbar(true);
+    }
   };
 
   useEffect(() => {

@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const userController = require('../controllers/userController');
 
 // GET /api/usuarios
-router.get('/', async (req, res) => {
-  const usuarios = await User.find();
-  res.json(usuarios);
-});
+router.get('/', userController.getAllUsers);
 
-// outros endpoints conforme necessário
+// PATCH /api/usuarios/:id
+router.patch('/:id', userController.updateUser);
 
 module.exports = router;

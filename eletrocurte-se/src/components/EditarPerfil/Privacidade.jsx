@@ -43,7 +43,21 @@ export default function Privacidade({ onVoltar }) {
   }, [notificacoesEmail, compartilharDados]);
 
   // Exibe feedback ao salvar preferências
-  const handleSalvar = () => {
+  const handleSalvar = async () => {
+    // Salva no backend também
+    try {
+      const userId = localStorage.getItem('userId');
+      await fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          privacidade: {
+            notificacao: notificacoesEmail,
+            dadosCompartilhados: compartilharDados
+          }
+        })
+      });
+    } catch {}
     setSnackbar(true);
   };
 

@@ -20,4 +20,19 @@ adminSchema.methods.compararSenha = function (senha) {
   return bcrypt.compare(senha, this.senha);
 };
 
+// Cria admin padrão se não existir
+adminSchema.statics.ensureDefaultAdmin = async function () {
+  const Admin = this;
+  const exists = await Admin.findOne({ email: 'admin@eletrocurte-se.com' });
+  if (!exists) {
+    const senhaHash = await bcrypt.hash('admin123', 10);
+    await Admin.create({
+      nome: '#admin',
+      email: 'admin@eletrocurte-se.com',
+      senha: senhaHash,
+      token: 123456
+    });
+  }
+};
+
 module.exports = mongoose.model('Admin', adminSchema);

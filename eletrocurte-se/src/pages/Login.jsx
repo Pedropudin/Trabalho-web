@@ -269,6 +269,28 @@ export default function Login() {
             <Box component="form" onSubmit={handleCadastro} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField label="Nome completo" id="nome-cadastro" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
               <TextField label="E-mail" id="email-cadastro" name="email" required fullWidth size="small" type="email" placeholder="Ex: usuario@gmail.com" />
+              <TextField label="Telefone" id="telefone-cadastro" name="telefone" required fullWidth size="small" placeholder="(00) 00000-0000" />
+              <TextField label="CPF" id="cpf-cadastro" name="cpf" required fullWidth size="small" placeholder="000.000.000-00"
+                inputProps={{ maxLength: 14 }}
+                onInput={e => {
+                  // Máscara simples de CPF
+                  let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+                  v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                  v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                  v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                  e.target.value = v;
+                }}
+              />
+              <TextField
+                label="Data de nascimento"
+                id="data-nascimento-cadastro"
+                name="dataNascimento"
+                required
+                fullWidth
+                size="small"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+              />
               <TextField label="Senha" id="senha-cadastro" name="senha" required fullWidth size="small" type="password" placeholder="Ex: @Eletrocurte-se-100%" />
               <TextField label="Confirmar senha" id="confirmar-senha-cadastro" name="confirmarSenha" required fullWidth size="small" type="password" placeholder="Repita a senha" />
               <Button type="submit" variant="contained" sx={{ background: '#007b99', color: '#fff', fontWeight: 600, borderRadius: 2, mt: 1, '&:hover': { background: '#004d66' } }}>

@@ -54,14 +54,28 @@ export default function Enderecos({ onVoltar }) {
   // Estado para mensagem de confirmação ao trocar endereço
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
 
-  // Atualiza localStorage sempre que endereços mudam.
+  // Atualiza localStorage e backend sempre que endereços mudam.
   useEffect(() => {
     localStorage.setItem('enderecos', JSON.stringify(enderecos));
+    // Atualiza backend
+    const userId = localStorage.getItem('userId');
+    fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enderecos })
+    });
   }, [enderecos]);
 
-  // Atualiza localStorage sempre que o endereço selecionado muda.
+  // Atualiza localStorage e backend sempre que o endereço selecionado muda.
   useEffect(() => {
     localStorage.setItem('enderecoSelecionado', enderecoSelecionado);
+    // Atualiza backend
+    const userId = localStorage.getItem('userId');
+    fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enderecoSelecionado })
+    });
   }, [enderecoSelecionado]);
 
   // Ao trocar o endereço selecionado, mostra mensagem de confirmação

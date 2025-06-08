@@ -248,8 +248,14 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
         {step === 'novoCartao' && (
            <CadastrarCartao
              onSalvar={(cartaoSalvo) => {
-               // Ao salvar, adiciona o novo cartão à lista, seleciona ele e mostra mensagem
                const final = cartaoSalvo.numero.slice(-4);
+               // Evita cartões duplicados pelo número (final)
+               if (cartoes.some(c => c.final === final)) {
+                 setMensagem('Já existe um cartão cadastrado com esses dígitos finais.');
+                 setTimeout(() => setMensagem(''), 1800);
+                 setStep('adicionar');
+                 return;
+               }
                setCartoes(cs => [...cs, { ...cartaoSalvo, final, saldo: 0 }]);
                setCartaoSelecionado(final);
                setMensagem('Cartão cadastrado!');
