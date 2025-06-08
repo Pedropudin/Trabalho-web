@@ -8,22 +8,16 @@ import PaymentDetails from '../components/PaymentDetails';
 import PersonalDetails from '../components/PersonalDetails';
 import Purchase from '../components/Purchase';
 
-
 /*
   Página de carrinho + compra
   - Exibida quando entramos em carrinho, ou ao continuar rumo à confirmação de compra
   - Alterna entre os passos essenciais para que uma compra seja efeturada. Fazendo isso atráves da substituição dos componentes criados.  
 */
 
-
-
-
-
 export default function Checkout() {
-
     //Atualização de checkout em uma mesma página, a fim de facilitar e componentizar o máximo possível
-    // Etapas do checkout
-    const steps = ["Carrinho", "Pagamento", "Dados Pessoais", "Revisão"];
+    // Etapas do checkout (corrigido: Carrinho, Dados Pessoais, Pagamento, Revisão)
+    const steps = ["Carrinho", "Dados Pessoais", "Pagamento", "Revisão"];
     const [step, setStep] = useState(1);
 
     // Checagem rápida ao avançar etapas
@@ -35,13 +29,25 @@ export default function Checkout() {
         }
 
         if (step === 2) {
-            const card = JSON.parse(localStorage.getItem("card")) || {};
-            if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade) return;
-        }
-        
-        if (step === 3) {
             const personal = JSON.parse(localStorage.getItem("personal")) || {};
-            if (!personal.nome || !personal.sobrenome || !personal.email || !personal.cpf || !personal.telefone) return;
+            if (
+                !personal.nome ||
+                !personal.sobrenome ||
+                !personal.email ||
+                !personal.cpf ||
+                !personal.telefone ||
+                !personal.endereco ||
+                !personal.numero ||
+                !personal.bairro ||
+                !personal.cidade ||
+                !personal.estado ||
+                !personal.cep
+            ) return;
+        }
+
+        if (step === 3) {
+            const card = JSON.parse(localStorage.getItem("card")) || {};
+            if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade || !card.parcelamento) return;
         }
         setStep(prev => prev + 1);
     }
