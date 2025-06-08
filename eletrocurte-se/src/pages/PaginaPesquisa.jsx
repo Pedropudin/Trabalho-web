@@ -24,17 +24,11 @@ function PaginaPesquisa() {
     const [produtosLocais, setProdutosLocais] = React.useState([]);
     //Lê dados dos produtos diretamento do JSON
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
-        if (localProducts) {
-            setProdutosLocais(JSON.parse(localProducts));
-        } else {
-            fetch('/data/produtos.json')
-                .then(res => res.json())
-                .then(data => {
-                    setProdutosLocais(data);
-                })
-                .catch(() => setProdutosLocais([]));
-        }
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/produtos')
+            .then(res => res.json())
+            .then(data => setProdutosLocais(data))
+            .catch(() => setProdutosLocais([]));
     }, []);
     //Lida com as marcas dos produtos
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]

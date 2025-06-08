@@ -20,15 +20,11 @@ export default function Cart({onNext}) {
 
     // Buscar produtos do JSON ao montar o componente
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
-        if (localProducts) {
-            setProductsLocal(JSON.parse(localProducts));
-        } else {
-            fetch('/data/Produtos.json')
-                .then(res => res.json())
-                .then(data => setProductsLocal(data))
-                .catch(() => setProductsLocal([]));
-        }
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/produtos')
+            .then(res => res.json())
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([]));
     }, []);
 
     // Limpa o carrinho de produtos que não existem mais
