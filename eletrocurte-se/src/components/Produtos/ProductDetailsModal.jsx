@@ -72,14 +72,17 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
     }
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     toast.success('Produto colocado no carrinho com sucesso!');
-    // Dispara evento customizado para atualização global do carrinho
     window.dispatchEvent(new Event('cartUpdated'));
-    // Mostra o pop-up com a contagem de produtos no carrinho
-    const totalCount = updatedCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    window.forceCartUpdate && window.forceCartUpdate();
+    
+    // Corrige a contagem: sempre soma Number(item.quantity) ou 1
+    const totalCount = updatedCart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
     setCartCountPopup(totalCount);
-    setTimeout(() => setCartCountPopup(null), 2000);
-    onClose && onClose();
-    navigate(ROUTES.CHECKOUT);
+    setTimeout(() => {
+      setCartCountPopup(null);
+      if (onClose) onClose();
+      navigate(ROUTES.CHECKOUT);
+    }, 900); // tempo suficiente para o usuário ver o pop-up
   }
 
   return (
