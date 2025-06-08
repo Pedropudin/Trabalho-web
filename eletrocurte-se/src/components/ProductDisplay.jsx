@@ -6,7 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import Button from '../components/Button';
 
 /*
   Card dos produtos
@@ -27,12 +28,8 @@ function ConfirmationWindow({ open, onClose, handleDelete }) {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color="primary">
-                    Cancelar
-                </Button>
-                <Button onClick={handleDelete} color="error">
-                    Excluir
-                </Button>
+                <Button onClick={onClose} text='Cancelar' style={{fontWeight: "bold"}}/>
+                <Button onClick={handleDelete} text='Excluir' style={{backgroundColor: "#990000", fontWeight: "bold"}}/>
             </DialogActions>
         </Dialog>
     );
