@@ -166,13 +166,21 @@ function Header({
   const [anchorEl, setAnchorEl] = useState(null);
   // Categoria atualmente selecionada
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
+  const [categoryClassName, setCategoryClassName] = useState('');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
 
+  // if(adminContext) {
+  //   setCategoryClassName("admin");
+  // }
+
   useEffect(() => {
     setSelectedCategory(categories[selectedCategoryIndex] || '');
+    if(adminContext) {
+      setCategoryClassName("admin");
+    }
   }, [selectedCategoryIndex]);
 
   // Abre menu mobile
@@ -357,7 +365,7 @@ function Header({
           </Box>
         </Toolbar>
         {/* Barra de categorias */}
-        <CategoryBar>
+        <CategoryBar className={categoryClassName}>
           {categories.map((cat) => (
             <CategoryLink
               key={cat}
