@@ -27,7 +27,7 @@ export default function Cart({onNext}) {
             .catch(() => setProductsLocal([]));
     }, []);
 
-    // Limpa o carrinho de produtos que não existem mais
+    /* // Limpa o carrinho de produtos que não existem mais
     React.useEffect(() => {
         const validIds = new Set(productsLocal.map(p => String(p.id)));
         const filteredCart = cart.filter(item => validIds.has(String(item.id)));
@@ -37,7 +37,7 @@ export default function Cart({onNext}) {
         }
     // Só roda na montagem e se productsLocal mudar
     // eslint-disable-next-line
-    }, [productsLocal]);
+    }, [productsLocal]); */
 
     //Pega o estoque do produto
     function getProductStock(productId) {
@@ -85,6 +85,8 @@ export default function Cart({onNext}) {
     // Salva o carrinho no localStorage sempre que mudar
     React.useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
+        window.dispatchEvent(new Event('cartUpdated'));
+        window.forceCartUpdate && window.forceCartUpdate();
     }, [cart]);
 
     //Calculo do total de itens e do total de preços 
