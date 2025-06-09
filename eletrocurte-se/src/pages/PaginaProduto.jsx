@@ -54,6 +54,7 @@ export default function PaginaProduto() {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       toast.success('Produto colocado no carrinho com sucesso!');
       window.dispatchEvent(new Event('cartUpdated'));
+      window.forceCartUpdate && window.forceCartUpdate();
     } else {
       const updatedCart = [
         ...cart,
@@ -68,6 +69,7 @@ export default function PaginaProduto() {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       toast.success('Produto colocado no carrinho com sucesso!');
       window.dispatchEvent(new Event('cartUpdated'));
+      window.forceCartUpdate && window.forceCartUpdate();
     }
   }
   if (!product) {//Caso não achar nenhum produto com esse id, mostra que produto não foi encontrado.

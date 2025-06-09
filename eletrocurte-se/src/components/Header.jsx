@@ -179,28 +179,26 @@ function Header({
   useEffect(() => {
     function updateCartCount() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const products = JSON.parse(localStorage.getItem('products')) || [];
-      const validIds = new Set(products.map(p => String(p.id)));
-      const total = cart
-        .filter(item => validIds.has(String(item.id)))
-        .reduce((sum, item) => sum + (item.quantity || 1), 0);
+      const total = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
       setCartItemsCount(total);
     }
     updateCartCount();
 
-    // Atualiza ao receber evento de storage (outras abas/janelas)
+    // Permite atualização instantânea via window.forceCartUpdate()
+    window.forceCartUpdate = updateCartCount;
+
     function handleStorage(e) {
       if (e.key === 'cart') updateCartCount();
     }
     window.addEventListener('storage', handleStorage);
     window.addEventListener('focus', updateCartCount);
-    // Atualiza ao receber evento customizado de atualização do carrinho
     window.addEventListener('cartUpdated', updateCartCount);
 
     return () => {
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('focus', updateCartCount);
       window.removeEventListener('cartUpdated', updateCartCount);
+      delete window.forceCartUpdate;
     };
   }, []);
 
