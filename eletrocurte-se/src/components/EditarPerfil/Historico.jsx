@@ -3,68 +3,68 @@ import { Button, Typography, Stack, Paper, Snackbar, Alert } from '@mui/material
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../routes';
 
-// Componente Historico
-// Exibe opções para o usuário acessar o histórico de compras e de produtos visualizados
+// Historico Component
+// Displays options for the user to access their purchase and viewed product history
 // Props:
-// - onVoltar: função chamada ao clicar em voltar ao perfil
+// - onVoltar: function called when clicking to return to the profile
 //
-// Usa useNavigate do react-router-dom para navegação entre rotas do app
-// Usa estado snackbar para feedback visual ao usuário ao navegar
-// Usa Paper, Typography, Stack, Button, Snackbar, Alert do Material UI para layout e feedback
-// Usa sx para espaçamento, centralização e bordas arredondadas
+// Uses useNavigate from react-router-dom for route navigation
+// Uses snackbar state for visual user feedback
+// Uses Paper, Typography, Stack, Button, Snackbar, Alert from Material UI for layout and feedback
+// Uses sx for spacing, centering, and rounded corners
 //
-// Lógica:
-// - handleClick: navega para a rota desejada e exibe mensagem no snackbar
-// - O Paper centraliza e destaca o conteúdo
-// - Stack organiza os botões verticalmente com espaçamento
-// - Snackbar/Alert mostra mensagem temporária ao usuário
+// Logic:
+// - handleClick: navigates to the desired route and displays a snackbar message
+// - Paper centers and highlights the content
+// - Stack arranges buttons vertically with spacing
+// - Snackbar/Alert shows temporary messages to the user
 
 export default function Historico({ onVoltar }) {
-  const navigate = useNavigate(); // Hook para navegação entre rotas
-  const [snackbar, setSnackbar] = useState({ open: false, message: '' }); // Estado para controlar o feedback visual
+  const navigate = useNavigate(); // Hook for route navigation
+  const [snackbar, setSnackbar] = useState({ open: false, message: '' }); // State to control visual feedback
 
-  // Função para navegar para uma rota e exibir mensagem no snackbar
-  const handleClick = (rota, msg) => {
-    navigate(rota);
+  // Function to navigate to a route and show a snackbar message
+  const handleClick = (route, msg) => {
+    navigate(route);
     setSnackbar({ open: true, message: msg });
   };
 
   return (
     <Paper elevation={4} sx={{ p: 4, maxWidth: 420, mx: 'auto', borderRadius: 3 }}>
-      {/* Paper: container visual com sombra e bordas arredondadas
-          elevation={4}: nível de sombra
-          sx: padding, largura máxima, centralização, borda arredondada */}
+      {/* Paper: visual container with shadow and rounded corners
+          elevation={4}: shadow level
+          sx: padding, max width, centering, rounded border */}
       <Typography variant="h5" gutterBottom align="center">
-        {/* Typography: título grande centralizado
-            variant="h5": tamanho grande
-            gutterBottom: margem inferior
-            align="center": centraliza texto */}
-        Histórico
+        {/* Typography: large centered title
+            variant="h5": large size
+            gutterBottom: bottom margin
+            align="center": center text */}
+        History
       </Typography>
       <Stack spacing={2} sx={{ mt: 2 }}>
-        {/* Stack: organiza botões em coluna com espaçamento
-            spacing={2}: espaço entre itens
-            sx: mt=2 (margem superior) */}
+        {/* Stack: arranges buttons in a vertical column with spacing
+            spacing={2}: space between items
+            sx: mt=2 (top margin) */}
         <Button
           variant="outlined"
-          onClick={() => handleClick(ROUTES.HIST_COMPRAS, 'Acessando histórico de compras...')}
+          onClick={() => handleClick(ROUTES.HIST_COMPRAS, 'Accessing purchase history...')}
         >
-          {/* Button: botão de ação
-              variant="outlined": borda visível, fundo transparente */}
-          Ver Histórico de Compras
+          {/* Button: action button
+              variant="outlined": visible border, transparent background */}
+          View Purchase History
         </Button>
         <Button
           variant="outlined"
-          onClick={() => handleClick(ROUTES.HIST_PRODUTOS, 'Acessando histórico de produtos visualizados...')}
+          onClick={() => handleClick(ROUTES.HIST_PRODUTOS, 'Accessing viewed products history...')}
         >
-          Ver Histórico de Produtos Visualizados
+          View Viewed Products History
         </Button>
         <Button
           variant="contained"
           onClick={onVoltar}
         >
-          {/* variant="contained": botão com fundo preenchido (destaque) */}
-          Voltar ao Perfil
+          {/* variant="contained": button with filled background (highlighted) */}
+          Back to Profile
         </Button>
       </Stack>
       <Snackbar
@@ -73,8 +73,8 @@ export default function Historico({ onVoltar }) {
         onClose={() => setSnackbar({ ...snackbar, open: false })}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        {/* Snackbar: feedback visual temporário
-            Alert: mensagem informativa */}
+        {/* Snackbar: temporary visual feedback
+            Alert: informational message */}
         <Alert severity="info" sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>

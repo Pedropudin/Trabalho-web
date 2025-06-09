@@ -3,18 +3,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-// Exibe informações de um cartão específico e seu saldo
-// - Mostra bandeira, final do cartão e saldo formatado
-// - Botão para adicionar saldo ao cartão
+// Displays information for a specific card and its balance
+// - Shows brand, last digits of the card, and formatted balance
+// - Button to add balance to the card
 
 export default function CartaoSaldo({ cartao, saldo, onAdicionarSaldo }) {
   return (
     <Box
       sx={{
-        // display: 'flex' — Usa o layout flexível do CSS para alinhar os elementos filhos.
-        // flexDirection: 'column' — Organiza os elementos (título, saldo, botão) em coluna, um embaixo do outro.
-        // border: '1px solid #ccc' — Adiciona uma borda cinza clara ao redor do cartão para destacá-lo visualmente.
-        // borderRadius: 2 — Bordas arredondadas (valor 2 = 16px no tema Material UI), deixando o visual mais amigável.
+        // display: 'flex' — Uses CSS flex layout to align child elements.
+        // flexDirection: 'column' — Arranges elements (title, balance, button) in a column, one below the other.
+        // border: '1px solid #ccc' — Adds a light gray border around the card for visual highlight.
+        // borderRadius: 2 — Rounded corners (value 2 = 16px in Material UI theme), for a friendlier look.
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -26,18 +26,18 @@ export default function CartaoSaldo({ cartao, saldo, onAdicionarSaldo }) {
     >
       <Typography variant="h6" gutterBottom>
         {/*
-          variant="h6" — Define o texto como um subtítulo grande (tamanho e peso do tema).
-          gutterBottom — Adiciona uma margem inferior automática para separar do próximo elemento.
+          variant="h6" — Sets the text as a large subtitle (theme size and weight).
+          gutterBottom — Adds automatic bottom margin to separate from the next element.
         */}
         {cartao.bandeira} **** {cartao.final}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        {/*variant="body1" — Tamanho de texto padrão para corpo de conteúdo.*/}
-        Saldo: {saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+        {/*variant="body1" — Standard text size for body content.*/}
+        Balance: {saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
       </Typography>
       <Button
-        variant="contained" // Botão com fundo preenchido (cor principal do tema)
-        color="primary"     // Usa a cor principal do tema
+        variant="contained" // Button with filled background (theme primary color)
+        color="primary"     // Uses the theme's primary color
         onClick={() => onAdicionarSaldo(cartao.final)}
       >
         Adicionar Saldo

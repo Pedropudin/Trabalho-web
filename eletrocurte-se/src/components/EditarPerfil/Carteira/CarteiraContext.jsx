@@ -1,9 +1,9 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// Contexto React para a Carteira
-// - Permite acesso global a cartões e saldos
-// - Funções para adicionar cartão e saldo
-// - Usado para compartilhar dados entre componentes relacionados à carteira
+// React Context for the Wallet
+// - Allows global access to cards and balances
+// - Functions to add card and balance
+// - Used to share data between wallet-related components
 
 const CarteiraContext = createContext();
 
@@ -11,13 +11,13 @@ export function CarteiraProvider({ children }) {
   const [cartoes, setCartoes] = useState([]);
   const [saldos, setSaldos] = useState({});
 
-  // Adiciona um novo cartão ao estado e inicializa seu saldo em 0
+  // Adds a new card to the state and initializes its balance to 0
   function adicionarCartao(cartao) {
     setCartoes((prev) => [...prev, cartao]);
     setSaldos((prev) => ({ ...prev, [cartao.final]: 0 }));
   }
 
-  // Soma o valor ao saldo do cartão informado
+  // Adds the value to the informed card's balance
   function adicionarSaldo(finalCartao, valor) {
     setSaldos((prev) => ({
       ...prev,
@@ -32,7 +32,7 @@ export function CarteiraProvider({ children }) {
   );
 }
 
-// Hook para acessar o contexto da carteira em outros componentes
+// Hook to access the wallet context in other components
 export function useCarteira() {
   return useContext(CarteiraContext);
 }

@@ -1,20 +1,20 @@
 // -----------------------------------------------------------------------------
 // EfeitoEletrico.jsx
-// Componente visual para efeito elétrico animado na tela.
-// Gera partículas animadas e toca som ao ser disparado por um trigger externo.
-// Usado para feedback visual em ações como ScrollToTop.
+// Visual component for animated electric effect on the screen.
+// Generates animated particles and plays sound when triggered externally.
+// Used for visual feedback in actions like ScrollToTop.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/EfeitoEletrico.css';
 
 export default function EfeitoEletrico({ trigger }) {
-  // Lista de partículas animadas na tela
+  // List of animated particles on the screen
   const [particulas, setParticulas] = useState([]);
-  // Guarda o último trigger para evitar repetição
+  // Stores the last trigger to avoid repetition
   const lastTrigger = useRef(null);
 
   useEffect(() => {
-    // Só executa se o trigger mudou de fato
+    // Only runs if the trigger actually changed
     if (
       trigger &&
       trigger.x !== undefined &&
@@ -23,12 +23,12 @@ export default function EfeitoEletrico({ trigger }) {
     ) {
       lastTrigger.current = trigger;
 
-      // Toca o som do efeito elétrico
+      // Plays the electric effect sound
       const som = new Audio('/electric_zap_001-6374.mp3');
       som.volume = 0.3;
       som.play().catch(() => {});
 
-      // Cria partículas animadas em posições aleatórias próximas ao trigger
+      // Creates animated particles in random positions near the trigger
       const novas = [];
       for (let i = 0; i < 6; i++) {
         const formatos = ['circulo', 'quadrado', 'faisca'];
@@ -44,7 +44,7 @@ export default function EfeitoEletrico({ trigger }) {
       }
       setParticulas(novas);
 
-      // Remove partículas após 0.5s
+      // Removes particles after 0.5s
       const timeout = setTimeout(() => setParticulas([]), 500);
       return () => clearTimeout(timeout);
     }
@@ -52,7 +52,7 @@ export default function EfeitoEletrico({ trigger }) {
 
   return (
     <>
-      {/* Renderiza partículas animadas na tela */}
+      {/* Renders animated particles on the screen */}
       {particulas.map(p => (
         <div
           key={p.id}

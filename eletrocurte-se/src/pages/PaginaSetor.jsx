@@ -10,11 +10,11 @@ import React, { useState,useEffect } from 'react';
 
 
 /*
-  Página de setores do portal Eletrocurte-se.
-  - Display de todos os produtos separados em setor quando acessado como "/PaginaSetor"
-  - Display de todos os produtos pertencentes a uma categoria geral, como Hardware ou Periféricos.
-  - Para chegar a esta página é necessário alterar a URL '/PaginaSetor/NomeDoSetor' ou apenas interagir com os botões e clicáveis da interface.
-  - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
+  Eletrocurte-se portal sector page.
+  - Displays all products separated by sector when accessed as "/PaginaSetor"
+  - Displays all products belonging to a general category, such as Hardware or Peripherals.
+  - To reach this page, change the URL '/PaginaSetor/SectorName' or interact with the interface buttons/clickables.
+  - Has brand and price filter features, as well as ascending/descending ordering by A-Z and price.
 */
 
 const categoryIndexRel = {
@@ -51,14 +51,14 @@ export default function PaginaSetor() {
         }
     }, []);
 
-    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]//Pega todas as marcas disponíves
+    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))] // Gets all available brands
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
-    //Função para desconsiderar os acentos, usada para tratar a origem do acesso
+    // Function to remove accents, used to handle access origin
     const normalize = (str) =>
         str?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    // Se não houver name, mostra todos os produtos
+    // If no name, show all products
     const sectorProducts = name
         ? produtosLocais.filter((p) => normalize(p.setorGeral) === normalize(name))
         : produtosLocais;

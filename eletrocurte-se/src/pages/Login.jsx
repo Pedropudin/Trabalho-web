@@ -7,11 +7,11 @@ import Footer from '../components/Footer';
 import '../styles/Login.css';
 
 /*
-  Página de Login do sistema.
-  - Permite alternar entre login de Cliente e Administrador, além de cadastro.
-  - Validações robustas de nome, e-mail, senha e token (admin).
-  - Mensagens de feedback e navegação programática.
-  - Uso de Material-UI para layout e formulários responsivos.
+  Login page for the system.
+  - Allows switching between Client and Admin login, as well as registration.
+  - Robust validations for name, email, password, and token (admin).
+  - Feedback messages and programmatic navigation.
+  - Uses Material-UI for responsive layout and forms.
 */
 
 export default function Login() {
@@ -21,12 +21,12 @@ export default function Login() {
   const [mensagemTipo, setMensagemTipo] = useState('info');
   const navigate = useNavigate();
 
-  // Expressões regulares para validação de nome, senha e e-mail
+  // Regular expressions for name, password, and email validation
   const nomeRegex = /^(?=.*[\W_]).{6,}$/;
   const senhaSegura = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
   const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-  // Validação do domínio do e-mail usando API pública do Google DNS
+  // Email domain validation using Google DNS public API
   async function validarEmailGoogle(email) {
     const dominio = email.split('@')[1];
     if (!dominio) return false;
@@ -39,89 +39,89 @@ export default function Login() {
     }
   }
 
-  // Validação do formulário do cliente
+  // Client form validation
   async function validarCliente({ nome, email, senha }) {
     if (!nomeRegex.test(nome)) {
-      exibirMensagem("O nome do cliente deve ter ao menos 6 caracteres e conter ao menos 1 caractere especial.", "erro");
+      exibirMensagem("Client name must have at least 6 characters and contain at least 1 special character.", "erro");
       return false;
     }
     if (!regexEmail.test(email)) {
-      exibirMensagem("Por favor, insira um e-mail válido.", "erro");
+      exibirMensagem("Please enter a valid email.", "erro");
       return false;
     }
     const emailValido = await validarEmailGoogle(email);
     if (!emailValido) {
-      exibirMensagem("O domínio do e-mail não existe ou não aceita e-mails.", "erro");
+      exibirMensagem("The email domain does not exist or does not accept emails.", "erro");
       return false;
     }
     if (!senhaSegura.test(senha)) {
-      exibirMensagem("A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.", "erro");
+      exibirMensagem("Password must be at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.", "erro");
       return false;
     }
     return true;
   }
 
-  // Validação do formulário do administrador
+  // Admin form validation
   async function validarAdmin({ nome, email, senha, token }) {
     if (!regexEmail.test(email)) {
-      exibirMensagem("Por favor, insira um e-mail válido.", "erro");
+      exibirMensagem("Please enter a valid email.", "erro");
       return false;
     }
     const emailValido = await validarEmailGoogle(email);
     if (!emailValido) {
-      exibirMensagem("O domínio do e-mail não existe ou não aceita e-mails.", "erro");
+      exibirMensagem("The email domain does not exist or does not accept emails.", "erro");
       return false;
     }
     if (!nomeRegex.test(nome)) {
-      exibirMensagem("O nome do administrador deve ter ao menos 6 caracteres e conter ao menos 1 caractere especial.", "erro");
+      exibirMensagem("Admin name must have at least 6 characters and contain at least 1 special character.", "erro");
       return false;
     }
     if (!senhaSegura.test(senha)) {
-      exibirMensagem("A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.", "erro");
+      exibirMensagem("Password must be at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.", "erro");
       return false;
     }
     if (!/^\d{6}$/.test(token)) {
-      exibirMensagem("O token deve conter exatamente 6 dígitos numéricos.", "erro");
+      exibirMensagem("Token must contain exactly 6 numeric digits.", "erro");
       return false;
     }
     return true;
   }
 
-  // Validação do formulário de cadastro
+  // Registration form validation
   async function validarCadastro({ nome, email, senha, confirmarSenha }) {
     if (!nomeRegex.test(nome)) {
-      exibirMensagem("O nome deve ter ao menos 6 caracteres e conter ao menos 1 caractere especial.", "erro");
+      exibirMensagem("Name must have at least 6 characters and contain at least 1 special character.", "erro");
       return false;
     }
     if (!regexEmail.test(email)) {
-      exibirMensagem("Por favor, insira um e-mail válido.", "erro");
+      exibirMensagem("Please enter a valid email.", "erro");
       return false;
     }
     const emailValido = await validarEmailGoogle(email);
     if (!emailValido) {
-      exibirMensagem("O domínio do e-mail não existe ou não aceita e-mails.", "erro");
+      exibirMensagem("The email domain does not exist or does not accept emails.", "erro");
       return false;
     }
     if (!senhaSegura.test(senha)) {
-      exibirMensagem("A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.", "erro");
+      exibirMensagem("Password must be at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.", "erro");
       return false;
     }
     if (senha !== confirmarSenha) {
-      exibirMensagem("As senhas não coincidem.", "erro");
+      exibirMensagem("Passwords do not match.", "erro");
       return false;
     }
     return true;
   }
 
-  // Função utilitária para exibir mensagens temporárias
+  // Utility function to display temporary messages
   function exibirMensagem(msg, tipo = "info") {
     setMensagem(msg);
     setMensagemTipo(tipo);
     setTimeout(() => setMensagem(''), 4000);
   }
 
-  // Handlers de submissão dos formulários
-  // Submissão do formulário do cliente
+  // Form submission handlers
+  // Client form submission
   async function handleCliente(e) {
     e.preventDefault();
     const nome = e.target['nome-cliente'].value.trim();
@@ -131,13 +131,13 @@ export default function Login() {
     if (await validarCliente({ nome, email, senha })) {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userType', 'cliente');
-      localStorage.setItem('nomeUsuario', nome); // Salva nome do cliente
-      exibirMensagem("Login do cliente efetuado com sucesso!", "sucesso");
+      localStorage.setItem('nomeUsuario', nome); // Save client name
+      exibirMensagem("Client login successful!", "sucesso");
       setTimeout(() => navigate(ROUTES.PAGINA_INICIAL), 1500);
     }
   }
 
-  // Submissão do formulário do administrador
+  // Admin form submission
   async function handleAdmin(e) {
     e.preventDefault();
     const nome = e.target['nome-admin'].value.trim();
@@ -148,13 +148,13 @@ export default function Login() {
     if (await validarAdmin({ nome, email, senha, token })) {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userType', 'admin');
-      localStorage.setItem('nomeUsuario', nome); // Salva nome do admin
-      exibirMensagem("Login do administrador efetuado com sucesso!", "sucesso");
+      localStorage.setItem('nomeUsuario', nome); // Save admin name
+      exibirMensagem("Admin login successful!", "sucesso");
       setTimeout(() => navigate(ROUTES.DESEMPENHO), 1500);
     }
   }
 
-  // Submissão do formulário de cadastro
+  // Registration form submission
   async function handleCadastro(e) {
     e.preventDefault();
     const nome = e.target['nome-cadastro'].value.trim();
@@ -162,7 +162,7 @@ export default function Login() {
     const senha = e.target['senha-cadastro'].value.trim();
     const confirmarSenha = e.target['confirmar-senha-cadastro'].value.trim();
     if (await validarCadastro({ nome, email, senha, confirmarSenha })) {
-      exibirMensagem("Cadastro realizado com sucesso! Faça login para continuar.", "sucesso");
+      exibirMensagem("Registration successful! Please log in to continue.", "sucesso");
       setAba('login');
     }
   }

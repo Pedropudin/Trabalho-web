@@ -4,63 +4,63 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-// Componente Pedidos
-// Exibe a lista de pedidos do usuário, com status, data e detalhes
+// Pedidos Component
+// Displays a list of the user's orders with status, date, and details
 // Props:
-// - onVoltar: função chamada ao clicar em voltar ao perfil
+// - onVoltar: function called when clicking to return to the profile
 //
-// Dados:
-// - pedidos: array estático simulando pedidos do usuário
-// - statusColor: mapeia status para cor do Chip
+// Data:
+// - pedidos: static array simulating user orders
+// - statusColor: maps order status to Chip color
 //
-// Estados:
-// - snackbar: controla feedback visual
-// - loading: simula carregamento inicial
+// States:
+// - snackbar: controls visual feedback
+// - loading: simulates initial loading
 //
-// Funções:
-// - handleShowDetails: exibe detalhes do pedido no snackbar
+// Functions:
+// - handleShowDetails: displays order details in the snackbar
 //
-// Lógica:
-// - Exibe Skeleton enquanto carrega
-// - Tabela mostra ID, status (com Chip colorido), data e detalhes (Accordion)
-// - Botão para voltar ao perfil
-// - Feedback visual com Snackbar/Alert
-// - CSS inline (sx) para espaçamento, largura, centralização
+// Logic:
+// - Shows Skeleton while loading
+// - Table displays ID, status (with colored Chip), date, and details (Accordion)
+// - Button to go back to the profile
+// - Visual feedback with Snackbar/Alert
+// - Inline CSS (sx) for spacing, width, and centering
 
 const pedidos = [
-  // Array estático simulando pedidos do usuário
-  { id: 12345, status: 'Entregue', data: '20/05/2025', detalhes: 'Pedido entregue com sucesso. Produto: Fone HyperX.' },
-  { id: 12344, status: 'Em transporte', data: null, detalhes: 'Seu pedido está a caminho. Produto: Mouse Logitech.' },
-  { id: 12343, status: 'Aguardando pagamento', data: null, detalhes: 'Aguardando confirmação do pagamento. Produto: Teclado Redragon.' },
+  // Static array simulating user orders
+  { id: 12345, status: 'Delivered', data: '20/05/2025', detalhes: 'Order delivered successfully. Product: Fone HyperX.' },
+  { id: 12344, status: 'In transit', data: null, detalhes: 'Your order is on the way. Product: Mouse Logitech.' },
+  { id: 12343, status: 'Awaiting payment', data: null, detalhes: 'Awaiting payment confirmation. Product: Teclado Redragon.' },
 ];
 
-// Mapeia status do pedido para cor do Chip
+// Maps order status to Chip color
 const statusColor = {
-  'Entregue': 'success',
-  'Em transporte': 'warning',
-  'Aguardando pagamento': 'info',
+  'Delivered': 'success',
+  'In transit': 'warning',
+  'Awaiting payment': 'info',
 };
 
 export default function Pedidos({ onVoltar }) {
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' }); // Estado para feedback visual
-  const [loading, setLoading] = useState(true); // Simula carregamento inicial
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' }); // State for visual feedback
+  const [loading, setLoading] = useState(true); // Simulates initial loading
 
   useEffect(() => {
-    // Simula carregamento inicial (ex: busca em API)
+    // Simulates initial loading (e.g., API request)
     const timer = setTimeout(() => setLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
-  // Exibe detalhes do pedido no snackbar
+  // Displays order details in the snackbar
   const handleShowDetails = (pedido) => {
-    setSnackbar({ open: true, message: `Detalhes do pedido #${pedido.id}: ${pedido.detalhes}`, severity: 'info' });
+    setSnackbar({ open: true, message: `Order details #${pedido.id}: ${pedido.detalhes}`, severity: 'info' });
   };
 
   return (
     <TableContainer component={Paper} sx={{ maxWidth: 600, margin: 'auto', mt: 4, mb: 4 }}>
-      {/* TableContainer: container para tabela, usa Paper para destaque visual
-          sx: largura máxima, centralização, margens superior/inferior */}
-      <Typography variant="h5" align="center" sx={{ mt: 2, mb: 2 }}>Meus Pedidos</Typography>
+      {/* TableContainer: container for the table, uses Paper for visual emphasis
+          sx: max width, centering, top/bottom margins */}
+      <Typography variant="h5" align="center" sx={{ mt: 2, mb: 2 }}>My Orders</Typography>
       {loading ? (
         <>
           <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
@@ -71,10 +71,10 @@ export default function Pedidos({ onVoltar }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID do Pedido</TableCell>
+            <TableCell>Order ID</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Data de Entrega</TableCell>
-            <TableCell>Detalhes</TableCell>
+            <TableCell>Delivery Date</TableCell>
+            <TableCell>Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -83,21 +83,21 @@ export default function Pedidos({ onVoltar }) {
               <TableCell>{pedido.id}</TableCell>
               <TableCell>
                 <Chip label={pedido.status} color={statusColor[pedido.status]} />
-                {/* Chip: exibe status do pedido com cor correspondente */}
+                {/* Chip: displays order status with corresponding color */}
               </TableCell>
               <TableCell>
                 {pedido.data ? pedido.data : '-'}
               </TableCell>
               <TableCell>
                 <Accordion sx={{ boxShadow: 'none' }}>
-                  {/* Accordion: expande para mostrar detalhes do pedido */}
+                  {/* Accordion: expands to show order details */}
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="body2">Ver detalhes</Typography>
+                    <Typography variant="body2">View details</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography variant="body2">{pedido.detalhes}</Typography>
                     <Button size="small" onClick={() => handleShowDetails(pedido)} sx={{ mt: 1 }}>
-                      Notificar
+                      Notify
                     </Button>
                   </AccordionDetails>
                 </Accordion>
@@ -108,11 +108,11 @@ export default function Pedidos({ onVoltar }) {
       </Table>
       )}
       <Button variant="contained" color="primary" onClick={onVoltar} sx={{ m: 2 }}>
-        {/* Button: botão de ação principal
-            variant="contained": fundo preenchido
-            color="primary": cor principal do tema
-            sx: m=2 (margem) */}
-        Voltar ao Perfil
+        {/* Button: main action button
+            variant="contained": filled background
+            color="primary": main theme color
+            sx: m=2 (margin) */}
+        Back to Profile
       </Button>
       <Snackbar
         open={snackbar.open}

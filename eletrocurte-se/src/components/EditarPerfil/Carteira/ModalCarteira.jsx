@@ -200,7 +200,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
                     <MenuItem key={c.final} value={c.final}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                         <Box>{c.bandeira} **** {c.final}</Box>
-                        {/* Botão para excluir cartão (ícone de lixeira) */}
+                        {/* Button to delete card (trash icon) */}
                         <IconButton
                           onClick={(e) => {
                             e.stopPropagation();
@@ -208,7 +208,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
                           }}
                           size="small"
                           edge="end"
-                          aria-label="Excluir cartão"
+                          aria-label="Delete card"
                         >
                         </IconButton>
                       </Box>
@@ -217,39 +217,39 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
                 </Select>
               </FormControl>
 
-              {/* Exibe mensagem de erro do formulário, se houver */}
+              {/* Displays form error message, if any */}
               {erroForm && (
                 <Typography color="error" align="center" fontSize={14} mt={1}>
                   {erroForm}
                 </Typography>
               )}
 
-              {/* Botão para submeter o formulário e adicionar saldo */}
+              {/* Button to submit the form and add balance */}
               <Button type="submit" variant="contained" color="primary" sx={{ mt: 1 }}>
-                {/* mt: margem superior */}
+                {/* mt: top margin */}
                 Adicionar saldo
               </Button>
             </Box>
 
-            {/* Botão para trocar para o passo de cadastro de novo cartão */}
+            {/* Button to switch to the new card registration step */}
             <Button
               variant="text"
               color="primary"
               sx={{ mt: 1, fontSize: 14, alignSelf: 'center' }}
               onClick={() => setStep('novoCartao')}
             >
-              {/* mt: margem superior, fontSize: tamanho, alignSelf: centraliza botão */}
-              + Cadastrar novo cartão
+              {/* mt: top margin, fontSize: size, alignSelf: centers button */}
+              Cadastrar novo cartão
             </Button>
           </>
         )}
 
-        {/* Passo de cadastro de novo cartão */}
+        {/* New card registration step */}
         {step === 'novoCartao' && (
            <CadastrarCartao
              onSalvar={(cartaoSalvo) => {
                const final = cartaoSalvo.numero.slice(-4);
-               // Evita cartões duplicados pelo número (final)
+               // Prevents duplicate cards by number (last digits)
                if (cartoes.some(c => c.final === final)) {
                  setMensagem('Já existe um cartão cadastrado com esses dígitos finais.');
                  setTimeout(() => setMensagem(''), 1800);
@@ -266,11 +266,11 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
            />
         )}
 
-        {/* Mensagem de feedback (sucesso) exibida no rodapé do modal */}
+        {/* Success feedback message displayed at the bottom of the modal */}
         {mensagem && (
           <Typography color="success.main" align="center" mt={2}>
-            {/* color: cor de sucesso do tema
-                mt: margem superior */}
+            {/* color: theme success color
+                mt: top margin */}
             {mensagem}
           </Typography>
         )}

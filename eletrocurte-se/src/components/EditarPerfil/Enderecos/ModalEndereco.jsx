@@ -1,31 +1,31 @@
 // -----------------------------------------------------------------------------
 // ModalEndereco.jsx
-// Componente modal para cadastro de novo endereço de entrega.
-// Utiliza Stepper do Material-UI para navegação por etapas (CEP, Endereço, Confirmação).
-// Realiza busca de dados via API do ViaCEP e validação dos campos.
+// Modal component for registering a new delivery address.
+// Uses Material-UI Stepper for step-by-step navigation (CEP, Address, Confirmation).
+// Fetches address data via ViaCEP API and validates fields.
 // -----------------------------------------------------------------------------
 import React, { useState } from 'react';
 import { TextField, Button, Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
 
-const steps = ['CEP', 'Endereço', 'Confirmar'];
+const steps = ['CEP', 'Address', 'Confirm'];
 
 export default function ModalEndereco({ onSalvar }) {
-  // Etapa atual do Stepper (0: CEP, 1: Endereço, 2: Confirmação)
+  // Current step in the Stepper (0: CEP, 1: Address, 2: Confirmation)
   const [activeStep, setActiveStep] = useState(0);
-  // Valor do campo CEP
+  // Value of the CEP field
   const [cep, setCep] = useState('');
-  // Indica se está buscando dados do CEP
+  // Indicates if the CEP data is being fetched
   const [carregando, setCarregando] = useState(false);
-  // Objeto com dados do endereço retornado pela API
+  // Address data returned from the API
   const [endereco, setEndereco] = useState(null);
-  // Número do endereço informado pelo usuário
+  // Address number provided by the user
   const [numero, setNumero] = useState('');
-  // Complemento do endereço
+  // Address complement
   const [complemento, setComplemento] = useState('');
-  // Mensagem de erro para feedback ao usuário
+  // Error message for user feedback
   const [erro, setErro] = useState('');
 
-  // Busca dados do endereço a partir do CEP usando a API ViaCEP
+  // Fetch address data from the CEP using the ViaCEP API
   const buscarCep = async () => {
     setCarregando(true);
     setErro('');
@@ -33,24 +33,24 @@ export default function ModalEndereco({ onSalvar }) {
       const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       const data = await res.json();
       if (data.erro) {
-        setErro('CEP não encontrado.');
+        setErro('CEP not found.');
         setEndereco(null);
       } else {
         setEndereco(data);
       }
     } catch {
-      setErro('Erro ao buscar CEP.');
+      setErro('Error fetching CEP.');
       setEndereco(null);
     }
     setCarregando(false);
   };
 
-  // Avança para a próxima etapa do Stepper, validando campos conforme necessário
+  // Move to the next step, validating fields as needed
   const handleNext = () => {
     if (activeStep === 0) {
-      // Validação do CEP (8 dígitos)
+      // CEP validation (8 digits)
       if (!/^\d{8}$/.test(cep)) {
-        setErro('Digite um CEP válido (8 dígitos).');
+        setErro('Enter a valid CEP (8 digits).');
         return;
       }
       buscarCep();
@@ -58,9 +58,9 @@ export default function ModalEndereco({ onSalvar }) {
       return;
     }
     if (activeStep === 1) {
-      // Validação do número do endereço
+      // Address number validation
       if (!numero) {
-        setErro('Informe o número do endereço.');
+        setErro('Please provide the address number.');
         return;
       }
       setErro('');
@@ -69,12 +69,12 @@ export default function ModalEndereco({ onSalvar }) {
     }
   };
 
-  // Volta para a etapa anterior do Stepper
+  // Go back to the previous step
   const handleBack = () => {
     setActiveStep((prev) => prev - 1);
   };
 
-  // Envia os dados do novo endereço para o componente pai
+  // Submit the new address data to the parent component
   const handleSubmit = (e) => {
     e.preventDefault();
     if (activeStep === 2 && endereco) {
@@ -88,7 +88,7 @@ export default function ModalEndereco({ onSalvar }) {
 
   return (
     <Box className="modal-endereco">
-      {/* Stepper do Material-UI para navegação entre etapas */}
+      {/* Material-UI Stepper for step navigation */}
       <Stepper activeStep={activeStep} sx={{ mb: 3 }}>
         {steps.map((label) => (
           <Step key={label}>
@@ -96,44 +96,44 @@ export default function ModalEndereco({ onSalvar }) {
           </Step>
         ))}
       </Stepper>
-      {/* Unifica todos os campos e botões em um só form/container */}
+      {/* Wraps all fields and buttons in a single form/container */}
       <form onSubmit={handleSubmit}>
-        {/* Etapa 0: Entrada do CEP */}
+        {/* Step 0: CEP input */}
         {activeStep === 0 && (
           <TextField
             label="CEP"
             value={cep}
             onChange={(e) => setCep(e.target.value.replace(/\D/g, '').slice(0, 8))}
-            placeholder="Digite o CEP"
+            placeholder="Enter CEP"
             fullWidth
             sx={{ mb: 2 }}
             disabled={carregando}
           />
         )}
-        {/* Etapa 1: Exibe dados do endereço e campos para número e complemento */}
+        {/* Step 1: Show address data and input fields for number and complement */}
         {activeStep === 1 && endereco && (
           <>
-            <TextField label="Rua" value={endereco.logradouro} disabled fullWidth sx={{ mb: 1 }} />
-            <TextField label="Número" value={numero} onChange={(e) => setNumero(e.target.value)} fullWidth sx={{ mb: 1 }} />
-            <TextField label="Complemento" value={complemento} onChange={(e) => setComplemento(e.target.value)} fullWidth sx={{ mb: 1 }} />
-            <TextField label="Bairro" value={endereco.bairro} disabled fullWidth sx={{ mb: 1 }} />
-            <TextField label="Cidade/UF" value={`${endereco.localidade}/${endereco.uf}`} disabled fullWidth sx={{ mb: 1 }} />
+            <TextField label="Street" value={endereco.logradouro} disabled fullWidth sx={{ mb: 1 }} />
+            <TextField label="Number" value={numero} onChange={(e) => setNumero(e.target.value)} fullWidth sx={{ mb: 1 }} />
+            <TextField label="Complement" value={complemento} onChange={(e) => setComplemento(e.target.value)} fullWidth sx={{ mb: 1 }} />
+            <TextField label="District" value={endereco.bairro} disabled fullWidth sx={{ mb: 1 }} />
+            <TextField label="City/State" value={`${endereco.localidade}/${endereco.uf}`} disabled fullWidth sx={{ mb: 1 }} />
           </>
         )}
-        {/* Etapa 2: Confirmação dos dados do endereço */}
+        {/* Step 2: Confirm address data */}
         {activeStep === 2 && endereco && (
           <Box>
-            <Typography variant="subtitle1" mb={2}>Confirme os dados do endereço:</Typography>
-            <Typography>Rua: <b>{endereco.logradouro}</b></Typography>
-            <Typography>Número: <b>{numero}</b></Typography>
-            <Typography>Complemento: <b>{complemento}</b></Typography>
-            <Typography>Bairro: <b>{endereco.bairro}</b></Typography>
-            <Typography>Cidade/UF: <b>{endereco.localidade}/{endereco.uf}</b></Typography>
+            <Typography variant="subtitle1" mb={2}>Please confirm the address details:</Typography>
+            <Typography>Street: <b>{endereco.logradouro}</b></Typography>
+            <Typography>Number: <b>{numero}</b></Typography>
+            <Typography>Complement: <b>{complemento}</b></Typography>
+            <Typography>District: <b>{endereco.bairro}</b></Typography>
+            <Typography>City/State: <b>{endereco.localidade}/{endereco.uf}</b></Typography>
           </Box>
         )}
-        {/* Exibe mensagem de erro, se houver */}
+        {/* Display error message, if any */}
         {erro && <Typography color="error" sx={{ mt: 1 }}>{erro}</Typography>}
-        {/* Botões de navegação do Stepper, todos juntos e lógica refinada */}
+        {/* Stepper navigation buttons, grouped with refined logic */}
         <Box display="flex" justifyContent="space-between" mt={3}>
           <Button
             onClick={handleBack}
@@ -142,7 +142,7 @@ export default function ModalEndereco({ onSalvar }) {
             disabled={activeStep === 0}
             type="button"
           >
-            Voltar
+            Back
           </Button>
           {activeStep < steps.length - 1 ? (
             <Button
@@ -155,7 +155,7 @@ export default function ModalEndereco({ onSalvar }) {
               }
               type="button"
             >
-              Avançar
+              Next
             </Button>
           ) : (
             <Button
@@ -164,7 +164,7 @@ export default function ModalEndereco({ onSalvar }) {
               variant="contained"
               disabled={!endereco || !numero}
             >
-              Salvar Endereço
+              Save Address
             </Button>
           )}
         </Box>

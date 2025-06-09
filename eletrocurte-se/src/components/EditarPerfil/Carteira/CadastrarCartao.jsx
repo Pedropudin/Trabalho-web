@@ -11,12 +11,12 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import valid from 'card-validator';
 import FormHelperText from '@mui/material/FormHelperText';
 
-// Formulário para cadastro de novo cartão
-// - Valida número do cartão (inclui validação Luhn e detecção de bandeira)
-// - Passos: número e confirmação
-// - Exibe erros de validação e mensagens de feedback
+// Form for registering a new card
+// - Validates card number (includes Luhn validation and brand detection)
+// - Steps: number and confirmation
+// - Displays validation errors and feedback messages
 
-const steps = ['Número', 'Confirmação'];
+const steps = ['Number', 'Confirmation'];
 
 const cardLogos = {
   visa: '/card-logos/visa.png',
@@ -60,7 +60,7 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
   const [erroForm, setErroForm] = useState('');
   const [touched, setTouched] = useState({ numero: false });
 
-  // Consistência: verifica duplicidade tanto ao avançar quanto ao salvar
+  // Consistency: checks for duplicates both when advancing and when saving
   function isDuplicado(numero) {
     const final = numero.replace(/\D/g, '').slice(-4);
     return cartoes.some(c => c.final === final);
@@ -108,12 +108,12 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
         setErroForm('Já existe um cartão cadastrado com esses dígitos finais.');
         return;
       }
-      // Validação do nome impresso: pelo menos 2 palavras, só letras e espaços, mínimo 5 caracteres
+      // Printed name validation: at least 2 words, only letters and spaces, minimum 5 characters
       if (!/^[A-Za-zÀ-ÿ\s]{5,}$/.test(novoCartao.nomeImpresso.trim()) || novoCartao.nomeImpresso.trim().split(' ').length < 2) {
         setErroForm('Nome impresso inválido. Use nome e sobrenome, apenas letras.');
         return;
       }
-      // Validação de validade: formato MM/AA, mês entre 01 e 12, ano >= ano atual
+      // Expiry validation: format MM/YY, month between 01 and 12, year >= current year
       const validadeMatch = novoCartao.validade.match(/^(\d{2})\/(\d{2})$/);
       if (!validadeMatch) {
         setErroForm('Validade inválida. Use o formato MM/AA.');
@@ -129,11 +129,11 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
         return;
       }
       if (ano < anoAtual || (ano === anoAtual && mes < mesAtual)) {
-        setErroForm('Cartão vencido. Use uma validade futura.');
+        setErroForm('Card expired. Use a future expiry.');
         return;
       }
       if (!/^\d{3,4}$/.test(novoCartao.CVV)) {
-        setErroForm('CVV inválido. Deve conter 3 ou 4 dígitos.');
+        setErroForm('Invalid CVV. Must be 3 or 4 digits.');
         return;
       }
       if (!novoCartao.numero) {
@@ -194,7 +194,7 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
               sx={{ mb: 2 }}
               onBlur={() => setTouched(t => ({ ...t, numero: true }))}
             />
-            {/* Consistência extra: helperText do Material-UI para duplicidade */}
+            {/* Extra consistency: Material-UI helperText for duplicate */}
             {touched.numero && isDuplicado(novoCartao.numero) && !erroNumero && (
               <FormHelperText error>
                 Já existe um cartão cadastrado com esses dígitos finais.
@@ -205,7 +205,7 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
         {activeStep === 1 && (
           <Box>
             <Typography variant="subtitle1" mb={2}>
-              Confirme os dados do cartão:
+              Confirm card details:
             </Typography>
             <Box display="flex" alignItems="center" mb={1}>
               <Typography>Bandeira detectada: <b>{novoCartao.bandeira}</b></Typography>
@@ -289,7 +289,7 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
             </Button>
           )}
         </Box>
-        {/* Garante espaço extra para o scroll mostrar todo o conteúdo */}
+        {/* Ensures extra space for scroll to show all content */}
         <Box sx={{ minHeight: 16 }} />
       </form>
     </Box>

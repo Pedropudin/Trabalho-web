@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, FormControlLabel, Typography, Button, Paper, Snackbar, Alert } from '@mui/material';
 
-// Componente Privacidade
-// Permite ao usuário configurar preferências de privacidade (notificações e compartilhamento de dados)
+// Privacy Component
+// Allows the user to configure privacy preferences (notifications and data sharing)
 // Props:
-// - onVoltar: função chamada ao clicar em voltar ao perfil
+// - onVoltar: function called when clicking to return to the profile
 //
-// Estados:
-// - notificacoesEmail: controla permissão de notificações por e-mail
-// - compartilharDados: controla permissão de compartilhamento de dados
-// - snackbar: controla feedback visual
+// States:
+// - notificacoesEmail: controls email notification permission
+// - compartilharDados: controls data sharing permission
+// - snackbar: controls visual feedback
 //
-// Lógica:
-// - Preferências são salvas e lidas do localStorage
-// - handleSalvar: exibe feedback ao salvar preferências
-// - Layout com Paper, Typography, Switch, FormControlLabel, Button, Snackbar/Alert
-// - CSS inline (sx) para espaçamento, largura, centralização
+// Logic:
+// - Preferences are saved to and read from localStorage
+// - handleSalvar: displays feedback when saving preferences
+// - Layout with Paper, Typography, Switch, FormControlLabel, Button, Snackbar/Alert
+// - Inline CSS (sx) for spacing, width, and centering
 
 export default function Privacidade({ onVoltar }) {
-  // Estado inicial lendo preferências do localStorage
+  // Initial state reads preferences from localStorage
   const [notificacoesEmail, setNotificacoesEmail] = useState(() => {
     const prefs = JSON.parse(localStorage.getItem('preferenciasPrivacidade'));
     return prefs?.notificacoesEmail ?? true;
@@ -29,9 +29,9 @@ export default function Privacidade({ onVoltar }) {
     return prefs?.compartilharDados ?? false;
   });
 
-  const [snackbar, setSnackbar] = useState(false); // Estado para feedback visual
+  const [snackbar, setSnackbar] = useState(false); // State for visual feedback
 
-  // Atualiza o localStorage sempre que as preferências mudam
+  // Update localStorage whenever preferences change
   useEffect(() => {
     localStorage.setItem(
       'preferenciasPrivacidade',
@@ -42,9 +42,9 @@ export default function Privacidade({ onVoltar }) {
     );
   }, [notificacoesEmail, compartilharDados]);
 
-  // Exibe feedback ao salvar preferências
+  // Display feedback when saving preferences
   const handleSalvar = async () => {
-    // Salva no backend também
+    // Also saves to the backend
     try {
       const userId = localStorage.getItem('userId');
       await fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
@@ -63,15 +63,15 @@ export default function Privacidade({ onVoltar }) {
 
   return (
     <Paper elevation={4} sx={{ p: 4, maxWidth: 420, mx: 'auto', borderRadius: 3 }}>
-      {/* Paper: container visual com sombra e bordas arredondadas
-          elevation={4}: nível de sombra
-          sx: padding, largura máxima, centralização, borda arredondada */}
+      {/* Paper: visual container with shadow and rounded borders
+          elevation={4}: shadow level
+          sx: padding, max width, centering, border radius */}
       <Typography variant="h5" gutterBottom align="center">
-        {/* Typography: título grande centralizado
-            variant="h5": tamanho grande
-            gutterBottom: margem inferior
-            align="center": centraliza texto */}
-        Configurações de Privacidade
+        {/* Typography: large centered title
+            variant="h5": large size
+            gutterBottom: bottom margin
+            align="center": center text */}
+        Privacy Settings
       </Typography>
       <FormControlLabel
         control={
@@ -81,7 +81,7 @@ export default function Privacidade({ onVoltar }) {
             sx={{mt:2}}
           />
         }
-        label="Permitir notificações por e-mail"
+        label="Allow email notifications"
       />
       <FormControlLabel
         control={
@@ -91,7 +91,7 @@ export default function Privacidade({ onVoltar }) {
             sx={{mt:2}}
           />
         }
-        label="Compartilhamento de dados com parceiros"
+        label="Share data with partners"
       />
       <Button
         variant="contained"
@@ -100,12 +100,12 @@ export default function Privacidade({ onVoltar }) {
         sx={{ mt: 2 }}
         fullWidth
       >
-        {/* Button: botão de ação principal
-            variant="contained": fundo preenchido
-            color="primary": cor principal do tema
-            sx: mt=2 (margem superior)
-            fullWidth: ocupa toda a largura */}
-        Salvar Preferências
+        {/* Button: main action button
+            variant="contained": filled background
+            color="primary": main theme color
+            sx: mt=2 (top margin)
+            fullWidth: occupies full width */}
+        Save Preferences
       </Button>
       <Button
         variant="outlined"
@@ -114,12 +114,12 @@ export default function Privacidade({ onVoltar }) {
         sx={{ mt: 2 }}
         fullWidth
       >
-        {/* Button: botão secundário
-            variant="outlined": borda visível, fundo transparente
-            color="inherit": cor neutra
-            sx: mt=2 (margem superior)
-            fullWidth: ocupa toda a largura */}
-        Confirmar e voltar ao Perfil
+        {/* Button: secondary button
+            variant="outlined": visible border, transparent background
+            color="inherit": neutral color
+            sx: mt=2 (top margin)
+            fullWidth: occupies full width */}
+        Confirm and return to Profile
       </Button>
       <Snackbar
         open={snackbar}
@@ -128,7 +128,7 @@ export default function Privacidade({ onVoltar }) {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert severity="success" sx={{ width: '100%' }}>
-          Preferências salvas com sucesso!
+          Preferences saved successfully!
         </Alert>
       </Snackbar>
     </Paper>

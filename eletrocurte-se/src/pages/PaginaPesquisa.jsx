@@ -8,37 +8,37 @@ import ScrollToTop from '../components/ScrollToTop';
 import ProductDisplay from '../components/ProductDisplay'; 
 
 /*
-  Página de pesquisa do portal Eletrocurte-se.
-  - Display de todos os produtos em ordem aleatória quando acessado como "/PaginaPesquisa"
-  - Display de produtos que contenham aquilo que foi colocado na URL ou pesquisado atráves da barra de pesquisa.
-  - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
+  Eletrocurte-se portal search page.
+  - Displays all products in random order when accessed as "/PaginaPesquisa"
+  - Displays products that contain what was placed in the URL or searched via the search bar.
+  - Has brand and price filter features, as well as ascending/descending ordering by A-Z and price.
 */
 
 function PaginaPesquisa() {
-    //Variáveis de estado
-    const { name } = useParams();  //Faz a identificação do nome da url  
+    // State variables
+    const { name } = useParams();  // Identifies the name from the URL  
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [produtosLocais, setProdutosLocais] = React.useState([]);
-    //Lê dados dos produtos diretamento do JSON
+    // Reads data of products directly from the JSON
     useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend to ensure consistency
         fetch(process.env.REACT_APP_API_URL + '/produtos')
             .then(res => res.json())
             .then(data => setProdutosLocais(data))
             .catch(() => setProdutosLocais([]));
     }, []);
-    //Lida com as marcas dos produtos
+    // Reads product brands
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
-    //Lida com a mudança de ordem dos produtos 
+    // Handles product order change
     function handleOrderChange(e) {
         setOrder(e.target.value);
     }
-    //Utilização do useMemo para organizar, sempre que alterada, a nova ordem de nossos produtos
+    // Uses useMemo to organize products whenever the order changes
     const orderedProducts = React.useMemo(() => {
         const produtosOrdenados = [...produtosLocais].sort((a, b) => {
             if (a.inStock > 0  && b.inStock === 0) return -1; 

@@ -4,69 +4,69 @@ import Footer from '../components/Footer';
 import '../styles/Apresentacao.css';
 
 /*
-  Página "Sobre nós" do portal Eletrocurte-se.
-  - Apresenta visão geral do projeto, logo, descrição técnica e contexto acadêmico.
-  - Estrutura semântica, responsiva e com integração ao React Router.
-  - Comentários explicam cada bloco principal e reforçam a proposta documental.
+  "About Us" page for the Eletrocurte-se portal.
+  - Presents an overview of the project, logo, technical description, and academic context.
+  - Semantic, responsive structure with React Router integration.
+  - Comments explain each main block and reinforce the documentation proposal.
 */
 
 export default function Apresentacao() {
   return (
     <>
-      {/* Container principal centralizado */}
+      {/* Main centered container */}
       <main className="container-apresentacao">
-        {/* Logo institucional do portal */}
-        <img src="/logo-com-escrita.png" alt="Logo do website" className="logo" />
+        {/* Institutional portal logo */}
+        <img src="/logo-com-escrita.png" alt="Website logo" className="logo" />
 
-        {/* Título de destaque */}
-        <h2>Encontre os melhores produtos e fornecedores em um só lugar!</h2>
+        {/* Highlighted title */}
+        <h2>Find the best products and suppliers in one place!</h2>
         <br />
 
-        {/* Seção descritiva: contexto acadêmico, técnicas e tecnologias */}
+        {/* Descriptive section: academic context, techniques, and technologies */}
         <section className="descricao">
           <p>
-            <strong>Projeto Integrador: </strong>
-            Este portal de e-commerce de dispositivos eletrônicos foi desenvolvido
-            como um trabalho da disciplina <em>Introdução ao Desenvolvimento Web</em>.
+            <strong>Integration Project: </strong>
+            This electronic devices e-commerce portal was developed
+            as an assignment for the <em>Introduction to Web Development</em> course.
           </p>
           <br />
 
           <p>
-            <strong>Estrutura Semântica: </strong>
-            Utilizamos HTML5 semântico, estruturando conteúdo em cabeçalhos
-            (<code>&lt;h2&gt;, &lt;h3&gt;</code>) e seções, para melhor acessibilidade e SEO.
+            <strong>Semantic Structure: </strong>
+            We use semantic HTML5, structuring content in headings
+            (<code>&lt;h2&gt;, &lt;h3&gt;</code>) and sections, for better accessibility and SEO.
           </p>
           <br />
 
           <p>
-            <strong>Layout Responsivo: </strong>
-            CSS3 com Flexbox e Grid garante fluidez em desktop, tablet e mobile, com media queries para ajustes finos.
+            <strong>Responsive Layout: </strong>
+            CSS3 with Flexbox and Grid ensures fluidity on desktop, tablet, and mobile, with media queries for fine adjustments.
           </p>
           <br />
 
           <p>
-            <strong>Interatividade: </strong>
-            O front-end utiliza JavaScript para validação, navegação suave e animações CSS. Integração com framework e banco NoSQL (MongoDB).
+            <strong>Interactivity: </strong>
+            The front-end uses JavaScript for validation, smooth navigation, and CSS animations. Integration with framework and NoSQL database (MongoDB).
           </p>
           <br />
 
           <p>
-            <strong>Fluxo de trabalho: </strong>
-            Controle de versão e revisão de código via Git/GitHub.
+            <strong>Workflow: </strong>
+            Version control and code review via Git/GitHub.
           </p>
           <br />
 
           <p>
-            Para dúvidas ou contribuições, utilize o repositório no GitHub. Bom proveito e <em>&ldquo;eletrocurte-se&rdquo;</em>!
+            For questions or contributions, use the GitHub repository. Enjoy and <em>&ldquo;eletrocurte-se&rdquo;</em>!
           </p>
           <br />
         </section>
       </main>
 
-      {/* Botão flutuante para rolar ao topo */}
+      {/* Floating button to scroll to top */}
       <ScrollToTop />
 
-      {/* Rodapé institucional */}
+      {/* Institutional footer */}
       <Footer />
     </>
   );

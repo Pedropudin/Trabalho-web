@@ -8,23 +8,23 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import '../../../styles/EditarPerfil.css';
 
-// Componente principal da Carteira do usuário
-// - Gerencia saldo e cartões usando localStorage
-// - Permite adicionar saldo e excluir cartões
-// - Usa ModalCarteira para adicionar saldo e CartoesList para listar cartões
-// - Exibe botões para adicionar saldo e voltar ao perfil
-// - Utiliza Material UI para layout e diálogos
-// - Atualiza localStorage sempre que saldo ou cartões mudam
-// - Confirma exclusão de cartão com diálogo
+// Main Wallet component for the user
+// - Manages balance and cards using localStorage
+// - Allows adding balance and deleting cards
+// - Uses ModalCarteira to add balance and CartoesList to list cards
+// - Displays buttons to add balance and return to profile
+// - Uses Material UI for layout and dialogs
+// - Updates localStorage whenever balance or cards change
+// - Confirms card deletion with a dialog
 
 export default function Carteira({ onVoltar }) {
-  // Inicializa saldo com localStorage, ou 0 se vazio
+  // Initializes balance with localStorage, or 0 if empty
   const [saldo, setSaldo] = useState(() => {
     const saldoArmazenado = localStorage.getItem('carteiraSaldo');
     return saldoArmazenado ? parseFloat(saldoArmazenado) : 0;
   });
 
-  // Inicializa cartões com localStorage, ou com um cartão padrão
+  // Initializes cards with localStorage, or with a default card
   const [cartoes, setCartoes] = useState(() => {
     const cartoesArmazenados = localStorage.getItem('carteiraCartoes');
     return cartoesArmazenados
@@ -43,12 +43,12 @@ export default function Carteira({ onVoltar }) {
     }));
   }, [cartoes]);
 
-  // Atualiza o localStorage sempre que o saldo mudar
+  // Updates localStorage whenever balance changes
   useEffect(() => {
     localStorage.setItem('carteiraSaldo', saldo.toString());
   }, [saldo]);
 
-  // Atualiza o localStorage sempre que os cartões mudarem
+  // Updates localStorage whenever cards change
   useEffect(() => {
     localStorage.setItem('carteiraCartoes', JSON.stringify(cartoes));
   }, [cartoes]);
@@ -72,14 +72,14 @@ export default function Carteira({ onVoltar }) {
   return (
     <Paper elevation={4} sx={{ p: 4, maxWidth: 400, mx: 'auto', borderRadius: 3 }}>
       <Typography variant="h4" align="center" fontWeight={700} color="primary" mb={2}>
-        {/* variant="h4": título grande */}
-        {/* fontWeight={700}: deixa o texto em negrito */}
-        {/* color="primary": usa a cor principal do tema */}
-        {/* mb={2}: adiciona margem inferior (margin-bottom) para espaçamento */}
+        {/* variant="h4": large title */}
+        {/* fontWeight={700}: bold text */}
+        {/* color="primary": uses the theme's primary color */}
+        {/* mb={2}: adds bottom margin for spacing */}
         Carteira
       </Typography>
 
-      {/* Novo componente de cartões */}
+      {/* New card component */}
       <CartoesList cartoes={cartoesValidados} onExcluir={handleExcluirCartao} />
 
       {modalAberto && (
@@ -93,7 +93,7 @@ export default function Carteira({ onVoltar }) {
         />
       )}
 
-      {/* Espaço extra antes dos botões */}
+      {/* Extra space before buttons */}
       <div style={{ height: 24 }} />
 
       <Button

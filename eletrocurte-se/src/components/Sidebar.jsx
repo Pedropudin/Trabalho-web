@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import ROUTES from "../routes";
 
 /*
-  Sidebar da tela de Pesquisa e Setor
-  - Contém setores e filtros de preço e marca
+  Sidebar for Search and Sector screens
+  - Contains sectors and price/brand filters
 */
 
-//Recebe dados da página como parâmetro, já que dependemos daquilo que foi renderizado para deifnir características de filtro
+// Receives page data as parameter, since we depend on what was rendered to define filter characteristics
 export default function Sidebar({
     items = [],
     selectedBrands = [],
@@ -19,7 +19,7 @@ export default function Sidebar({
     setMaxPrice,
     brands 
 }) {
-    //Pega o menor e maior valor dos itens disponíveis naquela página
+    // Gets the lowest and highest price of the available items on that page
     const priceRange = () => {
         if (!items.length) return [0, 0];
         const prices = items.map(item => item.price);
@@ -30,7 +30,7 @@ export default function Sidebar({
 
     const [minAvailable, maxAvailable] = priceRange();
 
-    //Aplicação da filtragem de marca
+    // Brand filter application
     const handleBrandChange = (e) => {
         const { value, checked } = e.target;
         if (checked) {

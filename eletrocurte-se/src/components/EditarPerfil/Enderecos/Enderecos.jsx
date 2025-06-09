@@ -1,9 +1,9 @@
 // -----------------------------------------------------------------------------
 // Enderecos.jsx
-// Componente de gerenciamento de endereços de entrega do usuário.
-// Permite visualizar, selecionar, adicionar e remover endereços, com persistência
-// em localStorage. Utiliza Material-UI para UI e diálogos. Integrado ao ModalEndereco
-// para cadastro de novos endereços.
+// User delivery address management component.
+// Allows viewing, selecting, adding, and removing addresses, with persistence
+// in localStorage. Uses Material-UI for UI and dialogs. Integrated with ModalEndereco
+// for registering new addresses.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
 import {
@@ -26,9 +26,9 @@ import ModalEndereco from './ModalEndereco';
 import Alert from '@mui/material/Alert';
 
 export default function Enderecos({ onVoltar }) {
-  // Lista de endereços do usuário, persistida em localStorage.
+  // List of user addresses, persisted in localStorage.
   const [enderecos, setEnderecos] = useState(() => {
-    // Busca endereços salvos ou inicializa com exemplos.
+    // Fetches saved addresses or initializes with examples.
     const armazenados = localStorage.getItem('enderecos');
     return armazenados ? JSON.parse(armazenados) : [
       {
@@ -42,22 +42,22 @@ export default function Enderecos({ onVoltar }) {
     ];
   });
 
-  // ID do endereço atualmente selecionado para entrega.
+  // ID of the currently selected delivery address.
   const [enderecoSelecionado, setEnderecoSelecionado] = useState(
     localStorage.getItem('enderecoSelecionado') || 'endereco1'
   );
 
-  // Controle de exibição do modal de cadastro de endereço.
+  // Controls display of the address registration modal.
   const [modalAberto, setModalAberto] = useState(false);
-  // Controle do diálogo de confirmação de remoção de endereço.
+  // Controls the address removal confirmation dialog.
   const [dialogRemover, setDialogRemover] = useState({ open: false, id: null });
-  // Estado para mensagem de confirmação ao trocar endereço
+  // State for confirmation message when changing address
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
 
-  // Atualiza localStorage e backend sempre que endereços mudam.
+  // Updates localStorage and backend whenever addresses change.
   useEffect(() => {
     localStorage.setItem('enderecos', JSON.stringify(enderecos));
-    // Atualiza backend
+    // Updates backend
     const userId = localStorage.getItem('userId');
     fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
       method: 'PATCH',
@@ -66,10 +66,10 @@ export default function Enderecos({ onVoltar }) {
     });
   }, [enderecos]);
 
-  // Atualiza localStorage e backend sempre que o endereço selecionado muda.
+  // Updates localStorage and backend whenever the selected address changes.
   useEffect(() => {
     localStorage.setItem('enderecoSelecionado', enderecoSelecionado);
-    // Atualiza backend
+    // Updates backend
     const userId = localStorage.getItem('userId');
     fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
       method: 'PATCH',
@@ -78,15 +78,15 @@ export default function Enderecos({ onVoltar }) {
     });
   }, [enderecoSelecionado]);
 
-  // Ao trocar o endereço selecionado, mostra mensagem de confirmação
+  // When changing the selected address, shows confirmation message
   const handleChangeEndereco = (e) => {
     setEnderecoSelecionado(e.target.value);
     setSnackbar({ open: true, message: 'Local de entrega alterado com sucesso!' });
   };
 
-  // Adiciona um novo endereço à lista e o seleciona.
+  // Adds a new address to the list and selects it.
   const adicionarEndereco = (enderecoCompleto) => {
-    // Formata o endereço caso seja objeto (retorno do ModalEndereco).
+    // Formats the address if it's an object (ModalEndereco return).
     const texto = typeof enderecoCompleto === 'object' && enderecoCompleto !== null
       ? `${enderecoCompleto.logradouro || ''}, ${enderecoCompleto.numero || ''} ${enderecoCompleto.complemento ? '- ' + enderecoCompleto.complemento : ''} - ${enderecoCompleto.bairro || ''}, ${enderecoCompleto.localidade || ''}/${enderecoCompleto.uf || ''}`.replace(/\s+/g, ' ').trim()
       : enderecoCompleto;
@@ -95,7 +95,7 @@ export default function Enderecos({ onVoltar }) {
     setEnderecoSelecionado(novo.id);
   };
 
-  // Remove endereço pelo id e ajusta seleção se necessário.
+  // Removes address by id and adjusts selection if necessary.
   const removerEndereco = (id) => {
     const filtrados = enderecos.filter(e => e.id !== id);
     setEnderecos(filtrados);
@@ -106,18 +106,18 @@ export default function Enderecos({ onVoltar }) {
     }
   };
 
-  // Abre diálogo de confirmação para remover endereço.
+  // Opens confirmation dialog to remove address.
   const handleRemoverClick = (id) => {
     setDialogRemover({ open: true, id });
   };
 
-  // Confirma remoção do endereço selecionado no diálogo.
+  // Confirms removal of the selected address in the dialog.
   const confirmarRemover = () => {
     removerEndereco(dialogRemover.id);
     setDialogRemover({ open: false, id: null });
   };
 
-  // Cancela diálogo de remoção.
+  // Cancels removal dialog.
   const cancelarRemover = () => {
     setDialogRemover({ open: false, id: null });
   };

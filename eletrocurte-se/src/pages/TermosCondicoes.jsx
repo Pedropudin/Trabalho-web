@@ -5,114 +5,114 @@ import ROUTES from '../routes';
 import ScrollToTop from '../components/ScrollToTop';
 
 /*
-  Página de Termos e Condições do portal.
-  - Estrutura semântica, baseada no HTML original, adaptada para React.
-  - Seções bem definidas: definições, aceitação, cadastro, propriedade intelectual, conduta, etc.
-  - Rodapé com dados institucionais e links externos.
+  Terms and Conditions page for the portal.
+  - Semantic structure, based on the original HTML, adapted for React.
+  - Well-defined sections: definitions, acceptance, registration, intellectual property, conduct, etc.
+  - Footer with institutional data and external links.
 */
 
 export default function TermosCondicoes() {
   return (
     <>
       <main className="container-termos">
-        {/* Logo institucional */}
-        <img src="/logo-com-escrita.png" alt="Logo do website" className="logo" />
+        {/* Institutional logo */}
+        <img src="/logo-com-escrita.png" alt="Website logo" className="logo" />
 
-        {/* Título principal */}
-        <h2>Termos e Condições de Uso</h2>
+        {/* Main title */}
+        <h2>Terms and Conditions of Use</h2>
 
-        {/* Seção descritiva com data e cláusulas */}
+        {/* Descriptive section with date and clauses */}
         <section className="descricao">
-          <p><strong>Data de Vigência:</strong> 12 de Março de 2025</p>
+          <p><strong>Effective Date:</strong> March 12, 2025</p>
           <p>
-            Bem-vindo ao nosso site! Estes Termos e Condições regem o acesso e uso deste website.
-            Ao acessar ou usar a página, você concorda em cumprir e estar vinculado a estes termos.
-            Caso não concorde com qualquer parte, por favor, não utilize o site.
+            Welcome to our website! These Terms and Conditions govern access to and use of this website.
+            By accessing or using the page, you agree to comply with and be bound by these terms.
+            If you do not agree with any part, please do not use the site.
           </p>
 
-          {/* Definições principais */}
-          <h3>1. Definições</h3>
+          {/* Main definitions */}
+          <h3>1. Definitions</h3>
           <ul>
-            <li><strong>Site</strong>: refere-se à página web e todos os seus recursos, conteúdos, funcionalidades e serviços associados.</li>
-            <li><strong>Usuário</strong>: qualquer pessoa que acesse ou utilize o Site.</li>
-            <li><strong>Conteúdo</strong>: textos, imagens, vídeos, áudios, arquivos, interfaces, scripts e qualquer outro material disponibilizado.</li>
+            <li><strong>Site</strong>: refers to the web page and all its features, content, functionalities, and associated services.</li>
+            <li><strong>User</strong>: any person who accesses or uses the Site.</li>
+            <li><strong>Content</strong>: texts, images, videos, audios, files, interfaces, scripts, and any other material made available.</li>
           </ul>
 
-          {/* Aceitação dos termos */}
-          <h3>2. Aceitação dos Termos</h3>
+          {/* Acceptance of terms */}
+          <h3>2. Acceptance of Terms</h3>
           <ol>
-            <li>O uso do Site implica aceitação integral destes Termos.</li>
-            <li>Reservamo-nos o direito de alterar os Termos a qualquer momento, mediante publicação da versão atualizada. A continuidade no uso do Site após modificações constitui aceitação.</li>
+            <li>Use of the Site implies full acceptance of these Terms.</li>
+            <li>We reserve the right to change the Terms at any time by publishing the updated version. Continued use of the Site after changes constitutes acceptance.</li>
           </ol>
 
-          {/* Cadastro e acesso */}
-          <h3>3. Acesso e Cadastro</h3>
+          {/* Access and registration */}
+          <h3>3. Access and Registration</h3>
           <p>
-            O acesso ao Site é livre, desde que seja efetuado o devido login para a área de cliente ou de administrador.
-            O Usuário é responsável pela veracidade das informações fornecidas e compromete-se a manter seus dados de login seguros.
+            Access to the Site is free, provided that proper login is performed for the client or administrator area.
+            The User is responsible for the accuracy of the information provided and agrees to keep their login data secure.
           </p>
 
-          {/* Propriedade intelectual */}
-          <h3>4. Propriedade Intelectual</h3>
+          {/* Intellectual property */}
+          <h3>4. Intellectual Property</h3>
           <p>
-            Todo Conteúdo é protegido por direitos autorais e outras leis de propriedade intelectual.
-            É proibida a reprodução, distribuição, modificação ou criação de obras derivadas sem autorização prévia por escrito.
+            All Content is protected by copyright and other intellectual property laws.
+            Reproduction, distribution, modification, or creation of derivative works without prior written authorization is prohibited.
           </p>
 
-          {/* Conduta do usuário */}
-          <h3>5. Conduta do Usuário</h3>
-          <p>O Usuário concorda em não:</p>
+          {/* User conduct */}
+          <h3>5. User Conduct</h3>
+          <p>The User agrees not to:</p>
           <ul>
-            <li>Violar leis aplicáveis ou direitos de terceiros;</li>
-            <li>Publicar conteúdo ofensivo, difamatório, obsceno ou ilegal;</li>
-            <li>Utilizar ferramentas automáticas ou bots que interfiram com o funcionamento normal do Site;</li>
-            <li>Engajar em práticas que comprometam a segurança ou integridade do Site.</li>
+            <li>Violate applicable laws or third-party rights;</li>
+            <li>Post offensive, defamatory, obscene, or illegal content;</li>
+            <li>Use automated tools or bots that interfere with the normal operation of the Site;</li>
+            <li>Engage in practices that compromise the security or integrity of the Site.</li>
           </ul>
 
-          {/* Limitação de responsabilidade */}
-          <h3>6. Limitação de Responsabilidade</h3>
+          {/* Limitation of liability */}
+          <h3>6. Limitation of Liability</h3>
           <ul>
-            <li>O Site é fornecido "no estado em que se encontra", sem garantias expressas ou implícitas.</li>
-            <li>Não garantimos disponibilidade ininterrupta nem ausência de erros.</li>
-            <li>Não nos responsabilizamos por danos diretos, indiretos, acidentais ou consequenciais decorrentes do uso ou da impossibilidade de uso do Site.</li>
+            <li>The Site is provided "as is", without express or implied warranties.</li>
+            <li>We do not guarantee uninterrupted availability or absence of errors.</li>
+            <li>We are not responsible for direct, indirect, incidental, or consequential damages arising from the use or inability to use the Site.</li>
           </ul>
 
-          {/* Links externos */}
-          <h3>7. Links para Sites de Terceiros</h3>
+          {/* External links */}
+          <h3>7. Links to Third-Party Sites</h3>
           <p>
-            O Site pode conter links para domínios externos. Não nos responsabilizamos pelo conteúdo ou políticas de privacidade desses sites.
+            The Site may contain links to external domains. We are not responsible for the content or privacy policies of those sites.
           </p>
 
-          {/* Alterações nos serviços */}
-          <h3>8. Alterações nos Serviços</h3>
+          {/* Service changes */}
+          <h3>8. Changes to Services</h3>
           <p>
-            Reservamo-nos o direito de modificar, suspender ou descontinuar qualquer recurso ou conteúdo sem aviso prévio.
+            We reserve the right to modify, suspend, or discontinue any feature or content without prior notice.
           </p>
 
-          {/* Jurisdição */}
-          <h3>9. Lei Aplicável e Foro</h3>
+          {/* Jurisdiction */}
+          <h3>9. Applicable Law and Jurisdiction</h3>
           <p>
-            Estes Termos são regidos pelas leis da República Federativa do Brasil.
-            Fica eleito o foro da comarca de [Cidade/Estado] para resolver quaisquer conflitos.
+            These Terms are governed by the laws of the Federative Republic of Brazil.
+            The court of [City/State] is chosen to resolve any disputes.
           </p>
 
-          {/* Contato */}
-          <h3>10. Contato</h3>
+          {/* Contact */}
+          <h3>10. Contact</h3>
           <p>
-            Em caso de dúvidas ou solicitações, entre em contato através dos dados presentes no rodapé do site.
+            In case of questions or requests, contact us through the data in the site footer.
           </p>
           <br />
-          {/* Mensagem final */}
+          {/* Final message */}
           <p>
-            Agradecemos sua visita e desejamos uma excelente experiência :)
+            Thank you for your visit and we wish you an excellent experience :)
           </p>
         </section>
       </main>
 
-      {/* Botão para rolar ao topo */}
+      {/* Scroll to top button */}
       <ScrollToTop />
 
-      {/* Rodapé institucional e redes sociais */}
+      {/* Institutional footer and social networks */}
       <footer>
         <div className="rodape-conteudo">
           <p>000.000.000-00</p>
@@ -120,10 +120,10 @@ export default function TermosCondicoes() {
           <p>Tel: (00) 00000-0000</p>
           <p>
             <Link to={ROUTES.APRESENTACAO}>
-              Sobre nós
+              About us
             </Link>
           </p>
-          <p>Endereço</p>
+          <p>Address</p>
           <div className="social-icons">
             <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-instagram"></i>

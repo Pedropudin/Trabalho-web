@@ -32,18 +32,18 @@ const userSchema = new mongoose.Schema({
   privacidade: {
     notificacao: { type: Boolean, default: false },
     dadosCompartilhados: { type: Boolean, default: false },
-    termosUso: { type: Boolean, default: false } // Vira true se entrar na página de termos e condições
+    termosUso: { type: Boolean, default: false } // Becomes true if user visits the terms and conditions page
   }
 });
 
-// Hash da senha antes de salvar
+// Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('senha')) return next();
   this.senha = await bcrypt.hash(this.senha, 10);
   next();
 });
 
-// Método para comparar senha
+// Method to compare password
 userSchema.methods.compararSenha = function (senha) {
   return bcrypt.compare(senha, this.senha);
 };

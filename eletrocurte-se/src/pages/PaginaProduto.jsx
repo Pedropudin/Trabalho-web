@@ -7,23 +7,23 @@ import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function PaginaProduto() {
-  //Variáveis
+  // Variables
   const navigate = useNavigate();
-  const { id } = useParams();  //Faz a identificação do id da url 
+  const { id } = useParams();  // Identifies the id from the URL 
   const [produtosLocais, setProdutosLocais] = React.useState([]);
 
-  //Lê dados dos produtos diretamento do JSON
+  // Reads product data directly from JSON
   useEffect(() => {
-      // Busca sempre do backend para garantir consistência
+      // Always fetch from backend for consistency
       fetch(process.env.REACT_APP_API_URL + '/produtos')
           .then(res => res.json())
           .then(data => setProdutosLocais(data))
           .catch(() => setProdutosLocais([]));
   }, []);
-  //Variáveis
+  // Variables
   const product = produtosLocais.find(p => String(p.id) === String(id));
 
-  //Atualização de imagens, após o recebimento de ados
+  // Image update after receiving data
   const [mainImg, setMainImg] = useState();
   const [thumbs, setThumbs] = useState([]);
 
@@ -35,7 +35,7 @@ export default function PaginaProduto() {
   }, [product]);
 
 
-  //Ao clicar em "adicionar ao carrinho"
+  //When clicking "add to cart"
   function handleAdicionarCarrinho(productId) {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existing = cart.find(item => item.id === productId);
@@ -72,19 +72,19 @@ export default function PaginaProduto() {
       window.forceCartUpdate && window.forceCartUpdate();
     }
   }
-  if (!product) {//Caso não achar nenhum produto com esse id, mostra que produto não foi encontrado.
+  if (!product) {//If no product with this id is found, shows that the product was not found.
     return (
       <>
         <Header />
         <main className="main-content">
-          <h2 style={{ margin: '2rem', textAlign: 'center' }}>Produto não encontrado.</h2>
+          <h2 style={{ margin: '2rem', textAlign: 'center' }}>Product not found.</h2>
         </main>
         <Footer />
       </>
     );
   }
 
-  return (//Caso contrário, faz load na págija
+  return (//Otherwise, loads the page
     <>
       <Header />
       <main className="main-content">
@@ -99,7 +99,7 @@ export default function PaginaProduto() {
                   mb: 2,
                   borderRadius: 2,
                   overflow: "hidden",
-                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)" // sombra sutil
+                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)" // subtle shadow
                 }}
               >
                 <img
@@ -120,7 +120,7 @@ export default function PaginaProduto() {
                       p: 0.5,
                       cursor: "pointer",
                       background: mainImg === thumbUrl ? "#e3f2fd" : "#fff",
-                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)" // sombra ainda mais sutil
+                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)" // even more subtle shadow
                     }}
                     onClick={() => {
                       if (mainImg !== thumbUrl) {

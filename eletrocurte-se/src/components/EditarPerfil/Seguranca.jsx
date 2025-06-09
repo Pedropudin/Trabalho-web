@@ -1,60 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, AlertTitle, Button, Typography, Paper, TextField, Snackbar } from '@mui/material';
 
-// Componente FormSeguranca
-// Permite ao usuário alterar e validar e-mail, senha, CPF e telefone
+// FormSecurity Component
+// Allows the user to update and validate email, password, CPF, and phone number
 // Props:
-// - onVoltar: função chamada ao clicar em voltar ao perfil
+// - onBack: function called when clicking to return to the profile
 //
-// Estados:
-// - form: objeto com campos email, senha, cpf, telefone
-// - mensagem: mensagem de feedback
-// - tipoMensagem: tipo do feedback (info, error, success)
-// - validando: controla estado de validação assíncrona
-// - snackbar: controla feedback visual
+// States:
+// - form: object with fields email, password, cpf, phone
+// - message: feedback message
+// - messageType: type of feedback (info, error, success)
+// - validating: controls asynchronous validation state
+// - snackbar: controls visual feedback
 //
-// Funções:
-// - extrairDominio: extrai domínio do e-mail
-// - checarDominioEmail: valida domínio do e-mail via DNS
-// - validarCamposCompletos: valida todos os campos do formulário
-// - handleSubmit: executa validação e feedback
+// Functions:
+// - extractDomain: extracts email domain
+// - checkEmailDomain: validates email domain via DNS
+// - validateAllFields: validates all form fields
+// - handleSubmit: runs validation and feedback
 //
-// Lógica:
-// - Validação de formato de e-mail, CPF, telefone e senha forte
-// - Validação de domínio de e-mail via API DNS
-// - Feedback visual com Snackbar/Alert
-// - Layout com Paper, Typography, TextField, Button
-// - CSS inline (sx) para espaçamento, largura, centralização
+// Logic:
+// - Validation of email, CPF, phone format and strong password
+// - DNS-based email domain validation
+// - Visual feedback using Snackbar/Alert
+// - Layout with Paper, Typography, TextField, Button
+// - Inline CSS (sx) for spacing, width, centering
 
-const senhaSegura = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/; // Regex para senha forte
+const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/; // Regex for strong password
 
-// Extrai domínio do e-mail para validação DNS
-function extrairDominio(email) {
-  const partes = email.split('@');
-  return partes.length === 2 ? partes[1].toLowerCase() : '';
+// Extract email domain for DNS validation
+function extractDomain(email) {
+  const parts = email.split('@');
+  return parts.length === 2 ? parts[1].toLowerCase() : '';
 }
 
-export default function FormSeguranca({ onVoltar }) {
-  // Estado do formulário (email, senha, cpf, telefone)
-  const [form, setForm] = useState({ email: '', senha: '', cpf: '', telefone: '' });
-  const [mensagem, setMensagem] = useState(''); // Mensagem de feedback
-  const [tipoMensagem, setTipoMensagem] = useState('info'); // Tipo do feedback
-  const [validando, setValidando] = useState(false); // Indica se está validando domínio
-  const [snackbar, setSnackbar] = useState(false); // Estado para feedback visual
+export default function FormSecurity({ onBack }) {
+  const [form, setForm] = useState({ email: '', password: '', cpf: '', phone: '' });
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('info');
+  const [validating, setValidating] = useState(false);
+  const [snackbar, setSnackbar] = useState(false);
 
-  // Atualiza estado ao digitar nos campos
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Limpa mensagem ao digitar para melhor UX
-    setMensagem('');
-    setTipoMensagem('info');
+    setMessage('');
+    setMessageType('info');
   };
 
-  // Valida domínio do e-mail via DNS Google
-  async function checarDominioEmail(dominio) {
+  async function checkEmailDomain(domain) {
     try {
-      const url = `https://dns.google/resolve?name=${dominio}&type=MX`;
+      const url = `https://dns.google/resolve?name=${domain}&type=MX`;
       const res = await fetch(url);
       if (!res.ok) return false;
       const data = await res.json();
@@ -64,53 +60,49 @@ export default function FormSeguranca({ onVoltar }) {
     }
   }
 
-  // Valida todos os campos do formulário
-  const validarCamposCompletos = () => {
-    if (!form.cpf || !form.email || !form.senha || !form.telefone) {
-      return { valido: false, mensagem: 'Preencha todos os campos.' };
+  const validateAllFields = () => {
+    if (!form.cpf || !form.email || !form.password || !form.phone) {
+      return { valid: false, message: 'Please fill out all fields.' };
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      return { valido: false, mensagem: 'E-mail inválido.' };
+      return { valid: false, message: 'Invalid email.' };
     }
     if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(form.cpf)) {
-      return { valido: false, mensagem: 'CPF inválido. Use o formato 000.000.000-00.' };
+      return { valid: false, message: 'Invalid CPF. Use format 000.000.000-00.' };
     }
-    if (!senhaSegura.test(form.senha)) {
+    if (!strongPassword.test(form.password)) {
       return {
-        valido: false,
-        mensagem:
-          'Senha insegura. Deve conter no mínimo 8 caracteres, incluindo maiúsculas, minúsculas, números e caracteres especiais.',
+        valid: false,
+        message:
+          'Weak password. It must contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.',
       };
     }
-    // Validação simples para telefone brasileiro (formato (00) 00000-0000 ou (00) 0000-0000)
-    if (!/^(\(\d{2}\)\s?)?\d{4,5}-\d{4}$/.test(form.telefone)) {
-      return { valido: false, mensagem: 'Telefone inválido. Use o formato (00) 00000-0000.' };
+    if (!/^(\(\d{2}\)\s?)?\d{4,5}-\d{4}$/.test(form.phone)) {
+      return { valid: false, message: 'Invalid phone number. Use format (00) 00000-0000.' };
     }
-    return { valido: true };
+    return { valid: true };
   };
 
-  // Submete o formulário, valida campos e domínio
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const valida = validarCamposCompletos();
-    if (!valida.valido) {
-      setMensagem(valida.mensagem);
-      setTipoMensagem('error');
+    const validation = validateAllFields();
+    if (!validation.valid) {
+      setMessage(validation.message);
+      setMessageType('error');
       setSnackbar(true);
       return;
     }
-    setValidando(true);
-    const dominio = extrairDominio(form.email);
-    const dominioValido = await checarDominioEmail(dominio);
-    setValidando(false);
-    if (!dominioValido) {
-      setMensagem('Domínio do e-mail não existe ou não possui registro MX válido.');
-      setTipoMensagem('error');
+    setValidating(true);
+    const domain = extractDomain(form.email);
+    const isDomainValid = await checkEmailDomain(domain);
+    setValidating(false);
+    if (!isDomainValid) {
+      setMessage('The email domain does not exist or has no valid MX records.');
+      setMessageType('error');
       setSnackbar(true);
       return;
     }
 
-    // Envia atualização para o backend
     try {
       const userId = localStorage.getItem('userId');
       await fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
@@ -118,72 +110,58 @@ export default function FormSeguranca({ onVoltar }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: form.email,
-          senha: form.senha,
+          senha: form.password,
           CPF: form.cpf,
-          telefone: form.telefone,
+          telefone: form.phone,
         }),
       });
-      setMensagem('Alterações salvas com sucesso!');
-      setTipoMensagem('success');
+      setMessage('Changes saved successfully!');
+      setMessageType('success');
       setSnackbar(true);
     } catch {
-      setMensagem('Erro ao salvar alterações no servidor.');
-      setTipoMensagem('error');
+      setMessage('Failed to save changes to the server.');
+      setMessageType('error');
       setSnackbar(true);
     }
   };
 
   useEffect(() => {
-    // Limpa mensagem de sucesso após 3s
-    if (tipoMensagem === 'success') {
+    if (messageType === 'success') {
       const timer = setTimeout(() => {
-        setMensagem('');
-        setTipoMensagem('info');
+        setMessage('');
+        setMessageType('info');
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [tipoMensagem]);
+  }, [messageType]);
 
   return (
     <Paper elevation={4} sx={{ p: 4, maxWidth: 420, mx: 'auto', borderRadius: 3 }}>
-      {/* Paper: container visual com sombra e bordas arredondadas
-          elevation={4}: nível de sombra
-          sx: padding, largura máxima, centralização, borda arredondada */}
       <Typography variant="h5" align="center" fontWeight={700} mb={2}>
-        {/* Typography: título grande centralizado
-            variant="h5": tamanho grande
-            align="center": centraliza texto
-            fontWeight={700}: negrito
-            mb={2}: margem inferior */}
-        Segurança
+        Security
       </Typography>
       <form onSubmit={handleSubmit} noValidate>
         <TextField
-          label="E-mail"
+          label="Email"
           type="email"
           name="email"
           value={form.email}
           onChange={handleChange}
           fullWidth
           margin="normal"
-          disabled={validando}
+          disabled={validating}
         />
-        {/* TextField: campo de texto para e-mail
-            fullWidth: ocupa toda a largura
-            margin="normal": espaçamento vertical
-            disabled: desabilita durante validação */}
         <TextField
-          label="Senha"
+          label="Password"
           type="password"
-          name="senha"
-          value={form.senha}
+          name="password"
+          value={form.password}
           onChange={handleChange}
           fullWidth
           margin="normal"
-          disabled={validando}
-          helperText="Mínimo 8 caracteres, incluindo maiúsculas, minúsculas, números e especiais."
+          disabled={validating}
+          helperText="Minimum 8 characters, including uppercase, lowercase, numbers, and special characters."
         />
-        {/* TextField: campo de senha com dica de segurança */}
         <TextField
           label="CPF"
           type="text"
@@ -202,48 +180,33 @@ export default function FormSeguranca({ onVoltar }) {
           }}
           fullWidth
           margin="normal"
-          disabled={validando}
+          disabled={validating}
           placeholder="000.000.000-00"
         />
-        {/* TextField: campo de CPF com máscara e placeholder */}
         <TextField
-          label="Telefone"
+          label="Phone"
           type="text"
-          name="telefone"
-          value={form.telefone}
+          name="phone"
+          value={form.phone}
           onChange={e => {
-            // Máscara para telefone brasileiro (00) 00000-0000 ou (00) 0000-0000
             let raw = e.target.value.replace(/\D/g, '').slice(0, 11);
             if (raw.length > 6) {
               raw = raw.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
             } else if (raw.length > 2) {
               raw = raw.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
             }
-            handleChange({ target: { name: 'telefone', value: raw.trim() } });
+            handleChange({ target: { name: 'phone', value: raw.trim() } });
           }}
           fullWidth
           margin="normal"
-          disabled={validando}
+          disabled={validating}
           placeholder="(00) 00000-0000"
         />
-        {/* TextField: campo de telefone com máscara e placeholder */}
-        <Button type="submit" variant="contained" color="primary" fullWidth disabled={validando} sx={{ mt: 2 }}>
-          {/* Button: botão de ação principal
-              variant="contained": fundo preenchido
-              color="primary": cor principal do tema
-              fullWidth: ocupa toda a largura
-              disabled: desabilita durante validação
-              sx: mt=2 (margem superior) */}
-          {validando ? 'Validando...' : 'Salvar Alterações'}
+        <Button type="submit" variant="contained" color="primary" fullWidth disabled={validating} sx={{ mt: 2 }}>
+          {validating ? 'Validating...' : 'Save Changes'}
         </Button>
-        <Button type="button" variant="outlined" color="inherit" fullWidth onClick={onVoltar} sx={{ mt: 2 }} disabled={validando}>
-          {/* Button: botão secundário para voltar
-              variant="outlined": borda visível
-              color="inherit": cor neutra
-              fullWidth: ocupa toda a largura
-              sx: mt=2 (margem superior)
-              disabled: desabilita durante validação */}
-          Voltar ao Perfil
+        <Button type="button" variant="outlined" color="inherit" fullWidth onClick={onBack} sx={{ mt: 2 }} disabled={validating}>
+          Back to Profile
         </Button>
       </form>
       <Snackbar
@@ -252,9 +215,11 @@ export default function FormSeguranca({ onVoltar }) {
         onClose={() => setSnackbar(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity={tipoMensagem} sx={{ width: '100%' }}>
-          <AlertTitle>{tipoMensagem === 'success' ? 'Sucesso' : tipoMensagem === 'warning' ? 'Aviso' : 'Erro'}</AlertTitle>
-          {mensagem}
+        <Alert severity={messageType} sx={{ width: '100%' }}>
+          <AlertTitle>
+            {messageType === 'success' ? 'Success' : messageType === 'warning' ? 'Warning' : 'Error'}
+          </AlertTitle>
+          {message}
         </Alert>
       </Snackbar>
     </Paper>
