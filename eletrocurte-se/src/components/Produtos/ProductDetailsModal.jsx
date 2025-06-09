@@ -22,6 +22,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
   const navigate = useNavigate();
   // Novo estado para mostrar o pop-up de contagem do carrinho
   const [cartCountPopup, setCartCountPopup] = useState(null);
+  const [showLoginMsg, setShowLoginMsg] = useState(false);
 
   // Se não houver produto, não renderiza nada
   if (!product) return null;
@@ -38,7 +39,13 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
 
   // Função para adicionar ao carrinho e ir para o checkout
   function handleComprar() {
-    if (!product) return;
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!isLoggedIn) {
+      setShowLoginMsg(true);
+      setTimeout(() => setShowLoginMsg(false), 2500);
+      return;
+    }
+
     // Adiciona ao carrinho (se já existir, incrementa quantidade)
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const id = product.id || product.ID || product.Id;
@@ -105,6 +112,14 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
           {cartCountPopup} produto{cartCountPopup > 1 ? 's' : ''} no carrinho
         </div>
       )}
+
+       {/* Mensagem de login obrigatória ao tentar comprar sem login */}
+      {showLoginMsg && (
+        <div className="mensagem show info" style={{ position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 9999, background: '#2196F3', color: '#fff', padding: '12px 24px', borderRadius: 8, fontWeight: 'bold' }}>
+          Faça login para comprar o produto.
+        </div>
+      )}
+
       <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
         {/* Título do modal com nome do produto */}
         <DialogTitle>{product.nome || product.name || 'Detalhes do Produto'}</DialogTitle>

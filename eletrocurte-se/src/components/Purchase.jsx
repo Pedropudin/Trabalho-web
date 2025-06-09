@@ -46,7 +46,7 @@ export default function Purchase({ onBack, onNext, steps }) {
 
     const total = cartProducts.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
 
-    const [erro, setErro] = useState('');
+    const [, setErro] = useState('');
 
     // Checagem de dados obrigatórios
     function dadosValidos() {
