@@ -7,18 +7,18 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import CadastrarCartao from './CadastrarCartao';
 
-// Objeto de estilo inline para o Box principal do modal
-// Define centralização, largura máxima, cor de fundo, borda, sombra, padding e layout flexível
+// Inline style object for the modal's main Box
+// Defines centering, max width, background color, border radius, shadow, padding, and flexible layout
 const style = {
-  // CSS inline para o Box principal do modal
-  // position, top, left, transform: centralizam o modal na tela
-  // width, maxWidth: controlam o tamanho
-  // bgcolor: cor de fundo do tema
-  // borderRadius: bordas arredondadas
-  // boxShadow: sombra para destaque
-  // p: padding interno
-  // outline: remove borda de foco
-  // display, flexDirection, gap: layout flexível em coluna com espaçamento
+  // Inline CSS for the modal's main Box
+  // position, top, left, transform: center the modal on the screen
+  // width, maxWidth: control size
+  // bgcolor: theme background color
+  // borderRadius: rounded corners
+  // boxShadow: shadow for highlight
+  // p: internal padding
+  // outline: removes focus border
+  // display, flexDirection, gap: flexible column layout with spacing
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -35,167 +35,167 @@ const style = {
   gap: 2,
 };
 
-// Componente ModalCarteira
+// WalletModal component
 // Props:
-// - cartoes: array de cartões cadastrados
-// - setCartoes: função para atualizar cartões
-// - cartoesValidados: cartões com saldo atualizado
-// - onClose: função para fechar o modal
+// - cards: array of registered cards
+// - setCards: function to update cards
+// - validatedCards: cards with updated balance
+// - onClose: function to close the modal
 
 export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, onClose }) {
-  const [valorAdicionar, setValorAdicionar] = useState('');
+  const [amountToAdd, setAmountToAdd] = useState('');
 
-  // Estado para cartão selecionado para cobrança
-  const [cartaoSelecionado, setCartaoSelecionado] = useState(cartoes[0]?.final || '');
+  // State for the selected card for charging
+  const [selectedCard, setSelectedCard] = useState(cartoes[0]?.final || '');
 
-  // Mensagem de feedback (sucesso ou erro)
-  const [mensagem, setMensagem] = useState('');
+  // Feedback message (success or error)
+  const [message, setMessage] = useState('');
 
-  // step controla se está adicionando saldo ou cadastrando novo cartão
-  const [step, setStep] = useState('adicionar');
+  // Step controls whether adding balance or registering a new card
+  const [step, setStep] = useState('add');
 
-  // Estado para mensagem de erro do formulário
-  const [erroForm, setErroForm] = useState('');
+  // State for form error message
+  const [formError, setFormError] = useState('');
 
-  // Efeito colateral para travar o scroll do body enquanto o modal está aberto
+  // Side effect to lock body scroll while the modal is open
   useEffect(() => {
-    document.body.classList.add('modal-carteira-open');
+    document.body.classList.add('wallet-modal-open');
     return () => {
-      document.body.classList.remove('modal-carteira-open');
+      document.body.classList.remove('wallet-modal-open');
     };
   }, []);
 
-  // Função para adicionar saldo ao cartão selecionado
-  // Valida valor, cartão e atualiza o array de cartões
-  function handleAdicionarSaldo(e) {
+  // Function to add balance to the selected card
+  // Validates value, card, and updates the cards array
+  function handleAddBalance(e) {
     e.preventDefault();
-    setErroForm('');
+    setFormError('');
 
-    // Validação: valor não pode ser vazio
-    if (!valorAdicionar) {
-      setErroForm('Por favor, informe o valor a ser adicionado.');
+    // Validation: amount cannot be empty
+    if (!amountToAdd) {
+      setFormError('Please enter the amount to add.');
       return;
     }
 
-    // Validação: valor deve ser número positivo
-    const valor = parseFloat(valorAdicionar.replace(',', '.'));
-    if (isNaN(valor) || valor <= 0) {
-      setErroForm('Digite um valor válido maior que zero.');
+    // Validation: amount must be a positive number
+    const value = parseFloat(amountToAdd.replace(',', '.'));
+    if (isNaN(value) || value <= 0) {
+      setFormError('Please enter a valid amount greater than zero.');
       return;
     }
 
-    // Validação: cartão deve estar selecionado
-    if (!cartaoSelecionado) {
-      setErroForm('Selecione um cartão para cobrança antes de adicionar saldo.');
+    // Validation: a card must be selected
+    if (!selectedCard) {
+      setFormError('Please select a card for charging before adding balance.');
       return;
     }
 
-    // Atualiza saldo do cartão selecionado
+    // Update the balance of the selected card
     setCartoes(prev =>
       prev.map(c =>
-        c.final === cartaoSelecionado
-          ? { ...c, saldo: (c.saldo ?? 0) + valor }
+        c.final === selectedCard
+          ? { ...c, saldo: (c.saldo ?? 0) + value }
           : c
       )
     );
 
-    // Mensagem de sucesso e fechamento automático do modal
-    setMensagem('Saldo adicionado com sucesso!');
-    setValorAdicionar('');
+    // Success message and automatic modal close
+    setMessage('Balance added successfully!');
+    setAmountToAdd('');
     setTimeout(() => {
-      setMensagem('');
+      setMessage('');
       onClose();
     }, 1200);
   }
 
-  // Função para excluir um cartão da lista
-  // Pede confirmação ao usuário antes de remover
-  function handleExcluirCartao(final) {
-    const confirm = window.confirm('Tem certeza que deseja excluir este cartão?');
-    if (confirm) {
+  // Function to delete a card from the list
+  // Asks for user confirmation before removal
+  function handleDeleteCard(final) {
+    const confirmDelete = window.confirm('Are you sure you want to delete this card?');
+    if (confirmDelete) {
       setCartoes(prev => prev.filter(c => c.final !== final));
-      // Se o cartão excluído era o selecionado, seleciona outro (ou nenhum)
-      if (cartaoSelecionado === final) {
-        const restante = cartoes.filter(c => c.final !== final);
-        setCartaoSelecionado(restante[0]?.final || '');
+      // If the deleted card was selected, select another (or none)
+      if (selectedCard === final) {
+        const remaining = cartoes.filter(c => c.final !== final);
+        setSelectedCard(remaining[0]?.final || '');
       }
     }
   }
 
-  // Busca o saldo do cartão atualmente selecionado
-  const saldoSelecionado = cartoesValidados.find(c => c.final === cartaoSelecionado)?.saldo ?? 0;
+  // Get the balance of the currently selected card
+  const selectedBalance = cartoesValidados.find(c => c.final === selectedCard)?.saldo ?? 0;
 
   return (
-    // Modal do Material UI, com z-index elevado para sobrepor a interface
-    <Modal open onClose={onClose} aria-labelledby="modal-carteira-title" sx={{ zIndex: 1300 }}>
-      {/* Box principal com estilo inline definido acima */}
+    // Material UI Modal with high z-index to overlay the interface
+    <Modal open onClose={onClose} aria-labelledby="wallet-modal-title" sx={{ zIndex: 1300 }}>
+      {/* Main Box with inline style defined above */}
       <Box sx={style}>
-        {/* Botão para fechar o modal (canto superior direito) */}
+        {/* Button to close the modal (top right corner) */}
         <Button onClick={onClose} sx={{ alignSelf: 'flex-end', minWidth: 0, p: 0, mb: 1 }}>
-          {/* alignSelf: posiciona o botão à direita
-              p: padding zero
-              mb: margem inferior */}
+          {/* alignSelf: aligns button right
+              p: zero padding
+              mb: bottom margin */}
           <CloseIcon />
         </Button>
 
-        {/* Título do modal */}
+        {/* Modal title */}
         <Typography
-          id="modal-carteira-title"
+          id="wallet-modal-title"
           variant="h5"
           component="h2"
           align="center"
           fontWeight={600}
           mb={2}
         >
-          {/* variant="h5": título médio
-              align="center": centraliza
-              fontWeight={600}: negrito
-              mb={2}: margem inferior */}
-          Carteira
+          {/* variant="h5": medium title
+              align="center": center text
+              fontWeight={600}: bold
+              mb={2}: bottom margin */}
+          Wallet
         </Typography>
 
-        {/* Exibe o saldo do cartão selecionado */}
+        {/* Displays selected card balance */}
         <Typography align="center" fontSize={18} mb={2}>
-          {/* align="center": centraliza
-              fontSize={18}: tamanho da fonte
-              mb={2}: margem inferior */}
-          Saldo disponível: <b>{saldoSelecionado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b>
+          {/* align="center": center text
+              fontSize={18}: font size
+              mb={2}: bottom margin */}
+          Available balance: <b>{selectedBalance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b>
         </Typography>
 
-        {/* Passo de adicionar saldo */}
-        {step === 'adicionar' && (
+        {/* Step to add balance */}
+        {step === 'add' && (
           <>
-            {/* Formulário para adicionar saldo */}
-            <Box component="form" onSubmit={handleAdicionarSaldo} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {/* display: flex, flexDirection: 'column': layout em coluna
-                  gap: espaçamento entre campos */}
-              {/* Campo para valor a ser adicionado */}
+            {/* Form to add balance */}
+            <Box component="form" onSubmit={handleAddBalance} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {/* display: flex, flexDirection: 'column': vertical layout
+                  gap: spacing between fields */}
+              {/* Field for the amount to add */}
               <TextField
-                label="Adicionar dinheiro"
+                label="Add Money"
                 type="number"
-                value={valorAdicionar}
+                value={amountToAdd}
                 onChange={e => {
-                  // Impede valores negativos e caracteres inválidos
+                  // Prevents negative values and invalid characters
                   const v = e.target.value;
                   if (v === '' || /^\d*\.?\d*$/.test(v)) {
-                    setValorAdicionar(v);
+                    setAmountToAdd(v);
                   }
                 }}
-                placeholder="Valor em R$"
+                placeholder="Amount in R$"
                 fullWidth
-                error={!!erroForm && (!valorAdicionar || parseFloat(valorAdicionar) <= 0)}
+                error={!!formError && (!amountToAdd || parseFloat(amountToAdd) <= 0)}
               />
 
-              {/* Select para escolher o cartão de cobrança */}
-              <FormControl fullWidth required error={!!erroForm && !cartaoSelecionado}>
-                <InputLabel id="cartao-label">Cartão para cobrança</InputLabel>
+              {/* Select to choose the payment card */}
+              <FormControl fullWidth required error={!!formError && !selectedCard}>
+                <InputLabel id="card-label">Payment Card</InputLabel>
                 <Select
-                  labelId="cartao-label"
-                  value={cartaoSelecionado}
-                  label="Cartão para cobrança"
-                  onChange={e => setCartaoSelecionado(e.target.value)}
+                  labelId="card-label"
+                  value={selectedCard}
+                  label="Payment Card"
+                  onChange={e => setSelectedCard(e.target.value)}
                 >
-                  {/* Lista de cartões disponíveis */}
+                  {/* List of available cards */}
                   {cartoesValidados.map(c => (
                     <MenuItem key={c.final} value={c.final}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
@@ -204,7 +204,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
                         <IconButton
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleExcluirCartao(c.final);
+                            handleDeleteCard(c.final);
                           }}
                           size="small"
                           edge="end"
@@ -218,60 +218,60 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
               </FormControl>
 
               {/* Displays form error message, if any */}
-              {erroForm && (
+              {formError && (
                 <Typography color="error" align="center" fontSize={14} mt={1}>
-                  {erroForm}
+                  {formError}
                 </Typography>
               )}
 
               {/* Button to submit the form and add balance */}
               <Button type="submit" variant="contained" color="primary" sx={{ mt: 1 }}>
                 {/* mt: top margin */}
-                Adicionar saldo
+                Add Balance
               </Button>
             </Box>
 
-            {/* Button to switch to the new card registration step */}
+            {/* Button to switch to new card registration step */}
             <Button
               variant="text"
               color="primary"
               sx={{ mt: 1, fontSize: 14, alignSelf: 'center' }}
-              onClick={() => setStep('novoCartao')}
+              onClick={() => setStep('newCard')}
             >
               {/* mt: top margin, fontSize: size, alignSelf: centers button */}
-              Cadastrar novo cartão
+              Register New Card
             </Button>
           </>
         )}
 
         {/* New card registration step */}
-        {step === 'novoCartao' && (
+        {step === 'newCard' && (
            <CadastrarCartao
-             onSalvar={(cartaoSalvo) => {
-               const final = cartaoSalvo.numero.slice(-4);
+             onSalvar={(savedCard) => {
+               const final = savedCard.numero.slice(-4);
                // Prevents duplicate cards by number (last digits)
                if (cartoes.some(c => c.final === final)) {
-                 setMensagem('Já existe um cartão cadastrado com esses dígitos finais.');
-                 setTimeout(() => setMensagem(''), 1800);
-                 setStep('adicionar');
+                 setMessage('A card with these final digits is already registered.');
+                 setTimeout(() => setMessage(''), 1800);
+                 setStep('add');
                  return;
                }
-               setCartoes(cs => [...cs, { ...cartaoSalvo, final, saldo: 0 }]);
-               setCartaoSelecionado(final);
-               setMensagem('Cartão cadastrado!');
-               setStep('adicionar');
-               setTimeout(() => setMensagem(''), 1200);
+               setCartoes(cs => [...cs, { ...savedCard, final, saldo: 0 }]);
+               setSelectedCard(final);
+               setMessage('Card registered!');
+               setStep('add');
+               setTimeout(() => setMessage(''), 1200);
              }}
-             onCancelar={() => setStep('adicionar')}
+             onCancelar={() => setStep('add')}
            />
         )}
 
         {/* Success feedback message displayed at the bottom of the modal */}
-        {mensagem && (
+        {message && (
           <Typography color="success.main" align="center" mt={2}>
             {/* color: theme success color
                 mt: top margin */}
-            {mensagem}
+            {message}
           </Typography>
         )}
       </Box>

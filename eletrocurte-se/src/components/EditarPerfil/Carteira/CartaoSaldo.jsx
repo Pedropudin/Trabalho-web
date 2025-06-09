@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 // - Shows brand, last digits of the card, and formatted balance
 // - Button to add balance to the card
 
-export default function CartaoSaldo({ cartao, saldo, onAdicionarSaldo }) {
+export default function CardBalance({ card, balance, onAddBalance }) {
   return (
     <Box
       sx={{
@@ -25,22 +25,22 @@ export default function CartaoSaldo({ cartao, saldo, onAdicionarSaldo }) {
       }}
     >
       <Typography variant="h6" gutterBottom>
-        {/*
+        {/* 
           variant="h6" — Sets the text as a large subtitle (theme size and weight).
           gutterBottom — Adds automatic bottom margin to separate from the next element.
         */}
-        {cartao.bandeira} **** {cartao.final}
+        {card.brand} **** {card.last4}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        {/*variant="body1" — Standard text size for body content.*/}
-        Balance: {saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+        {/* variant="body1" — Standard text size for body content. */}
+        Balance: {balance.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
       </Typography>
       <Button
         variant="contained" // Button with filled background (theme primary color)
         color="primary"     // Uses the theme's primary color
-        onClick={() => onAdicionarSaldo(cartao.final)}
+        onClick={() => onAddBalance(card.last4)}
       >
-        Adicionar Saldo
+        Add Balance
       </Button>
     </Box>
   );

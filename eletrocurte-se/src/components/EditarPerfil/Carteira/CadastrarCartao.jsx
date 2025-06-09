@@ -47,100 +47,100 @@ const cardLogos = {
   credz: '/card-logos/credz.png',
 };
 
-export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) {
+export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
   const [activeStep, setActiveStep] = useState(0);
-  const [novoCartao, setNovoCartao] = useState({
+  const [newCard, setNewCard] = useState({
     numero: '',
     bandeira: '',
     nomeImpresso: '',
     validade: '',
     CVV: ''
   });
-  const [erroNumero, setErroNumero] = useState('');
-  const [erroForm, setErroForm] = useState('');
+  const [numberError, setNumberError] = useState('');
+  const [formError, setFormError] = useState('');
   const [touched, setTouched] = useState({ numero: false });
 
   // Consistency: checks for duplicates both when advancing and when saving
-  function isDuplicado(numero) {
+  function isDuplicate(numero) {
     const final = numero.replace(/\D/g, '').slice(-4);
     return cartoes.some(c => c.final === final);
   }
 
   const handleNext = () => {
     if (activeStep === 0) {
-      const numeroLimpo = novoCartao.numero.replace(/\D/g, '');
-      const numberValidation = valid.number(numeroLimpo);
+      const cleanNumber = newCard.numero.replace(/\D/g, '');
+      const numberValidation = valid.number(cleanNumber);
       const expectedLengths = (numberValidation.card && numberValidation.card.lengths) || [16];
-      if (isDuplicado(novoCartao.numero)) {
-        setErroNumero('Já existe um cartão cadastrado com esses dígitos finais.');
-        setErroForm('');
+      if (isDuplicate(newCard.numero)) {
+        setNumberError('A card with these final digits is already registered.');
+        setFormError('');
         return;
       }
-      if (!expectedLengths.includes(numeroLimpo.length)) {
-        setErroNumero(`Número inválido. Digite ${expectedLengths.join(' ou ')} dígitos para ${numberValidation.card ? numberValidation.card.niceType : 'o cartão selecionado'}.`);
-        setErroForm('');
+      if (!expectedLengths.includes(cleanNumber.length)) {
+        setNumberError(`Invalid number. Please enter ${expectedLengths.join(' or ')} digits for ${numberValidation.card ? numberValidation.card.niceType : 'the selected card'}.`);
+        setFormError('');
         return;
       } else if (!numberValidation.isValid) {
-        setErroNumero('Número inválido (falha na verificação de Luhn ou formato).');
-        setErroForm('');
+        setNumberError('Invalid number (failed Luhn check or format).');
+        setFormError('');
         return;
       } else if (!numberValidation.card) {
-        setErroNumero('Bandeira não reconhecida.');
-        setErroForm('');
+        setNumberError('Card brand not recognized.');
+        setFormError('');
         return;
       }
-      setErroNumero('');
-      setErroForm('');
-      setNovoCartao((prev) => ({ ...prev, bandeira: numberValidation.card.niceType || '' }));
+      setNumberError('');
+      setFormError('');
+      setNewCard((prev) => ({ ...prev, bandeira: numberValidation.card.niceType || '' }));
     }
     setActiveStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
     setActiveStep((prev) => prev - 1);
-    setErroForm('');
+    setFormError('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (activeStep === 1) {
-      if (isDuplicado(novoCartao.numero)) {
-        setErroForm('Já existe um cartão cadastrado com esses dígitos finais.');
+      if (isDuplicate(newCard.numero)) {
+        setFormError('A card with these final digits is already registered.');
         return;
       }
       // Printed name validation: at least 2 words, only letters and spaces, minimum 5 characters
-      if (!/^[A-Za-zÀ-ÿ\s]{5,}$/.test(novoCartao.nomeImpresso.trim()) || novoCartao.nomeImpresso.trim().split(' ').length < 2) {
-        setErroForm('Nome impresso inválido. Use nome e sobrenome, apenas letras.');
+      if (!/^[A-Za-zÀ-ÿ\s]{5,}$/.test(newCard.nomeImpresso.trim()) || newCard.nomeImpresso.trim().split(' ').length < 2) {
+        setFormError('Invalid printed name. Use first and last name, letters only.');
         return;
       }
       // Expiry validation: format MM/YY, month between 01 and 12, year >= current year
-      const validadeMatch = novoCartao.validade.match(/^(\d{2})\/(\d{2})$/);
-      if (!validadeMatch) {
-        setErroForm('Validade inválida. Use o formato MM/AA.');
+      const expiryMatch = newCard.validade.match(/^(\d{2})\/(\d{2})$/);
+      if (!expiryMatch) {
+        setFormError('Invalid expiry date. Use MM/YY format.');
         return;
       }
-      const mes = parseInt(validadeMatch[1], 10);
-      const ano = parseInt(validadeMatch[2], 10) + 2000;
+      const month = parseInt(expiryMatch[1], 10);
+      const year = parseInt(expiryMatch[2], 10) + 2000;
       const now = new Date();
-      const anoAtual = now.getFullYear();
-      const mesAtual = now.getMonth() + 1;
-      if (mes < 1 || mes > 12) {
-        setErroForm('Mês da validade inválido.');
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
+      if (month < 1 || month > 12) {
+        setFormError('Invalid expiry month.');
         return;
       }
-      if (ano < anoAtual || (ano === anoAtual && mes < mesAtual)) {
-        setErroForm('Card expired. Use a future expiry.');
+      if (year < currentYear || (year === currentYear && month < currentMonth)) {
+        setFormError('Card expired. Use a future expiry date.');
         return;
       }
-      if (!/^\d{3,4}$/.test(novoCartao.CVV)) {
-        setErroForm('Invalid CVV. Must be 3 or 4 digits.');
+      if (!/^\d{3,4}$/.test(newCard.CVV)) {
+        setFormError('Invalid CVV. Must be 3 or 4 digits.');
         return;
       }
-      if (!novoCartao.numero) {
-        setErroForm('Preencha o número do cartão antes de salvar.');
+      if (!newCard.numero) {
+        setFormError('Please enter the card number before saving.');
         return;
       }
-      onSalvar(novoCartao);
+      onSalvar(newCard);
     }
   };
 
@@ -164,40 +164,40 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
         ))}
       </Stepper>
       <form onSubmit={handleSubmit} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {erroForm && (
+        {formError && (
           <Alert severity="error" icon={<ErrorOutlineIcon fontSize="inherit" />} sx={{ mb: 2 }}>
-            {erroForm}
+            {formError}
           </Alert>
         )}
         {activeStep === 0 && (
           <Box>
             <TextField
               label={(() => {
-                const numeroLimpo = novoCartao.numero.replace(/\D/g, '');
-                const numberValidation = valid.number(numeroLimpo);
+                const cleanNumber = newCard.numero.replace(/\D/g, '');
+                const numberValidation = valid.number(cleanNumber);
                 const expectedLengths = (numberValidation.card && numberValidation.card.lengths) || [16];
-                return `Número do cartão (${expectedLengths.join(' ou ')} dígitos${numberValidation.card ? ' - ' + numberValidation.card.niceType : ''})`;
+                return `Card number (${expectedLengths.join(' or ')} digits${numberValidation.card ? ' - ' + numberValidation.card.niceType : ''})`;
               })()}
-              value={novoCartao.numero}
+              value={newCard.numero}
               onChange={(e) => {
-                const numero = e.target.value.replace(/\D/g, '');
-                const numberValidation = valid.number(numero);
+                const number = e.target.value.replace(/\D/g, '');
+                const numberValidation = valid.number(number);
                 const expectedLengths = (numberValidation.card && numberValidation.card.lengths) || [16];
-                setNovoCartao({ ...novoCartao, numero: numero.slice(0, Math.max(...expectedLengths)) });
+                setNewCard({ ...newCard, numero: number.slice(0, Math.max(...expectedLengths)) });
                 setTouched(t => ({ ...t, numero: true }));
-                setErroNumero('');
+                setNumberError('');
               }}
-              placeholder="Número do cartão"
+              placeholder="Card number"
               fullWidth
-              error={!!erroNumero || (touched.numero && isDuplicado(novoCartao.numero))}
-              helperText={erroNumero || (touched.numero && isDuplicado(novoCartao.numero) ? 'Já existe um cartão cadastrado com esses dígitos finais.' : '')}
+              error={!!numberError || (touched.numero && isDuplicate(newCard.numero))}
+              helperText={numberError || (touched.numero && isDuplicate(newCard.numero) ? 'A card with these final digits is already registered.' : '')}
               sx={{ mb: 2 }}
               onBlur={() => setTouched(t => ({ ...t, numero: true }))}
             />
             {/* Extra consistency: Material-UI helperText for duplicate */}
-            {touched.numero && isDuplicado(novoCartao.numero) && !erroNumero && (
+            {touched.numero && isDuplicate(newCard.numero) && !numberError && (
               <FormHelperText error>
-                Já existe um cartão cadastrado com esses dígitos finais.
+                A card with these final digits is already registered.
               </FormHelperText>
             )}
           </Box>
@@ -208,17 +208,17 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
               Confirm card details:
             </Typography>
             <Box display="flex" alignItems="center" mb={1}>
-              <Typography>Bandeira detectada: <b>{novoCartao.bandeira}</b></Typography>
+              <Typography>Detected brand: <b>{newCard.bandeira}</b></Typography>
               {(() => {
-                const numeroLimpo = novoCartao.numero.replace(/\D/g, '');
-                const numberValidation = valid.number(numeroLimpo);
+                const cleanNumber = newCard.numero.replace(/\D/g, '');
+                const numberValidation = valid.number(cleanNumber);
                 const cardType = numberValidation.card && numberValidation.card.type;
                 const logoSrc = cardType && cardLogos[cardType];
                 if (logoSrc) {
                   return (
                     <img
                       src={logoSrc}
-                      alt={novoCartao.bandeira}
+                      alt={newCard.bandeira}
                       style={{ height: 28, marginLeft: 10, verticalAlign: 'middle' }}
                     />
                   );
@@ -226,37 +226,37 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
                 return null;
               })()}
             </Box>
-            <Typography>Número: <b>**** **** **** {novoCartao.numero.slice(-4)}</b></Typography>
+            <Typography>Number: <b>**** **** **** {newCard.numero.slice(-4)}</b></Typography>
             <TextField
-              label="Nome impresso no cartão"
-              value={novoCartao.nomeImpresso}
-              onChange={e => setNovoCartao({ ...novoCartao, nomeImpresso: e.target.value })}
-              placeholder="Nome impresso"
+              label="Name printed on card"
+              value={newCard.nomeImpresso}
+              onChange={e => setNewCard({ ...newCard, nomeImpresso: e.target.value })}
+              placeholder="Printed name"
               fullWidth
               required
               sx={{ mt: 2 }}
               inputProps={{ maxLength: 40 }}
-              helperText="Use nome e sobrenome, apenas letras."
+              helperText="Use first and last name, letters only."
             />
             <Box display="flex" gap={2} mt={2}>
               <TextField
-                label="Validade (MM/AA)"
-                value={novoCartao.validade}
+                label="Expiry (MM/YY)"
+                value={newCard.validade}
                 onChange={e => {
                   let v = e.target.value.replace(/\D/g, '').slice(0, 4);
                   if (v.length > 2) v = v.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-                  setNovoCartao({ ...novoCartao, validade: v });
+                  setNewCard({ ...newCard, validade: v });
                 }}
-                placeholder="MM/AA"
+                placeholder="MM/YY"
                 fullWidth
                 required
                 inputProps={{ maxLength: 5 }}
-                helperText="Mês e ano, ex: 08/27"
+                helperText="Month and year, e.g. 08/27"
               />
               <TextField
                 label="CVV"
-                value={novoCartao.CVV}
-                onChange={e => setNovoCartao({ ...novoCartao, CVV: e.target.value.replace(/\D/g, '').slice(0, 4) })}
+                value={newCard.CVV}
+                onChange={e => setNewCard({ ...newCard, CVV: e.target.value.replace(/\D/g, '').slice(0, 4) })}
                 placeholder="CVV"
                 fullWidth
                 required
@@ -267,11 +267,11 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
         )}
         <Box display="flex" justifyContent="space-between" mt={3} gap={3} sx={{ mt: 3, mb: 1 }}>
           <Button onClick={onCancelar} color="secondary" variant="outlined">
-            Cancelar
+            Cancel
           </Button>
           {activeStep > 0 && (
             <Button onClick={handleBack} color="inherit" variant="outlined">
-              Voltar
+              Back
             </Button>
           )}
           {activeStep < steps.length - 1 ? (
@@ -279,13 +279,13 @@ export default function CadastrarCartao({ onSalvar, onCancelar, cartoes = [] }) 
               onClick={handleNext}
               color="primary"
               variant="contained"
-              disabled={isDuplicado(novoCartao.numero)}
+              disabled={isDuplicate(newCard.numero)}
             >
-              Avançar
+              Next
             </Button>
           ) : (
             <Button type="submit" color="primary" variant="contained">
-              Salvar Cartão
+              Save Card
             </Button>
           )}
         </Box>

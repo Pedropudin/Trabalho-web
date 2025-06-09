@@ -1,38 +1,38 @@
 import React, { createContext, useState, useContext } from 'react';
 
 // React Context for the Wallet
-// - Allows global access to cards and balances
-// - Functions to add card and balance
-// - Used to share data between wallet-related components
+// - Provides global access to cards and balances
+// - Functions to add cards and add balance
+// - Used to share wallet data between components
 
-const CarteiraContext = createContext();
+const WalletContext = createContext();
 
-export function CarteiraProvider({ children }) {
-  const [cartoes, setCartoes] = useState([]);
-  const [saldos, setSaldos] = useState({});
+export function WalletProvider({ children }) {
+  const [cards, setCards] = useState([]);
+  const [balances, setBalances] = useState({});
 
-  // Adds a new card to the state and initializes its balance to 0
-  function adicionarCartao(cartao) {
-    setCartoes((prev) => [...prev, cartao]);
-    setSaldos((prev) => ({ ...prev, [cartao.final]: 0 }));
+  // Adds a new card to state and initializes its balance to 0
+  function addCard(card) {
+    setCards(prev => [...prev, card]);
+    setBalances(prev => ({ ...prev, [card.last4]: 0 }));
   }
 
-  // Adds the value to the informed card's balance
-  function adicionarSaldo(finalCartao, valor) {
-    setSaldos((prev) => ({
+  // Adds value to the specified card's balance
+  function addBalance(cardLast4, amount) {
+    setBalances(prev => ({
       ...prev,
-      [finalCartao]: (prev[finalCartao] || 0) + valor,
+      [cardLast4]: (prev[cardLast4] || 0) + amount,
     }));
   }
 
   return (
-    <CarteiraContext.Provider value={{ cartoes, saldos, adicionarCartao, adicionarSaldo }}>
+    <WalletContext.Provider value={{ cards, balances, addCard, addBalance }}>
       {children}
-    </CarteiraContext.Provider>
+    </WalletContext.Provider>
   );
 }
 
 // Hook to access the wallet context in other components
-export function useCarteira() {
-  return useContext(CarteiraContext);
+export function useWallet() {
+  return useContext(WalletContext);
 }

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Button, Typography, Paper } from '@mui/material';
-import ModalCarteira from './ModalCarteira';
-import CartoesList from './CartoesList';
+import WalletModal from './ModalCarteira'; // Você pode renomear o arquivo se quiser
+import CardsList from './CartoesList';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,62 +11,62 @@ import '../../../styles/EditarPerfil.css';
 // Main Wallet component for the user
 // - Manages balance and cards using localStorage
 // - Allows adding balance and deleting cards
-// - Uses ModalCarteira to add balance and CartoesList to list cards
+// - Uses WalletModal to add balance and CardsList to list cards
 // - Displays buttons to add balance and return to profile
 // - Uses Material UI for layout and dialogs
 // - Updates localStorage whenever balance or cards change
 // - Confirms card deletion with a dialog
 
-export default function Carteira({ onVoltar }) {
+export default function Wallet({ onBack }) {
   // Initializes balance with localStorage, or 0 if empty
-  const [saldo, setSaldo] = useState(() => {
-    const saldoArmazenado = localStorage.getItem('carteiraSaldo');
-    return saldoArmazenado ? parseFloat(saldoArmazenado) : 0;
+  const [balance, setBalance] = useState(() => {
+    const storedBalance = localStorage.getItem('walletBalance');
+    return storedBalance ? parseFloat(storedBalance) : 0;
   });
 
   // Initializes cards with localStorage, or with a default card
-  const [cartoes, setCartoes] = useState(() => {
-    const cartoesArmazenados = localStorage.getItem('carteiraCartoes');
-    return cartoesArmazenados
-      ? JSON.parse(cartoesArmazenados)
-      : [{ bandeira: 'Visa', final: '1234', numero: '**** **** **** 1234' }];
+  const [cards, setCards] = useState(() => {
+    const storedCards = localStorage.getItem('walletCards');
+    return storedCards
+      ? JSON.parse(storedCards)
+      : [{ brand: 'Visa', last4: '1234', number: '**** **** **** 1234' }];
   });
 
-  const [modalAberto, setModalAberto] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [cartaoParaExcluir, setCartaoParaExcluir] = useState(null);
+  const [cardToDelete, setCardToDelete] = useState(null);
 
-  const cartoesValidados = useMemo(() => {
-    return cartoes.map(c => ({
+  const validatedCards = useMemo(() => {
+    return cards.map(c => ({
       ...c,
-      saldo: c.saldo ?? 0,
+      balance: c.balance ?? 0,
     }));
-  }, [cartoes]);
+  }, [cards]);
 
   // Updates localStorage whenever balance changes
   useEffect(() => {
-    localStorage.setItem('carteiraSaldo', saldo.toString());
-  }, [saldo]);
+    localStorage.setItem('walletBalance', balance.toString());
+  }, [balance]);
 
   // Updates localStorage whenever cards change
   useEffect(() => {
-    localStorage.setItem('carteiraCartoes', JSON.stringify(cartoes));
-  }, [cartoes]);
+    localStorage.setItem('walletCards', JSON.stringify(cards));
+  }, [cards]);
 
-  function handleExcluirCartao(final) {
-    setCartaoParaExcluir(final);
+  function handleDeleteCard(last4) {
+    setCardToDelete(last4);
     setDialogOpen(true);
   }
 
-  function confirmarExclusao() {
-    setCartoes(prev => prev.filter(c => c.final !== cartaoParaExcluir));
+  function confirmDeletion() {
+    setCards(prev => prev.filter(c => c.last4 !== cardToDelete));
     setDialogOpen(false);
-    setCartaoParaExcluir(null);
+    setCardToDelete(null);
   }
 
-  function cancelarExclusao() {
+  function cancelDeletion() {
     setDialogOpen(false);
-    setCartaoParaExcluir(null);
+    setCardToDelete(null);
   }
 
   return (
@@ -76,20 +76,20 @@ export default function Carteira({ onVoltar }) {
         {/* fontWeight={700}: bold text */}
         {/* color="primary": uses the theme's primary color */}
         {/* mb={2}: adds bottom margin for spacing */}
-        Carteira
+        Wallet
       </Typography>
 
-      {/* New card component */}
-      <CartoesList cartoes={cartoesValidados} onExcluir={handleExcluirCartao} />
+      {/* Cards list component */}
+      <CardsList cards={validatedCards} onDelete={handleDeleteCard} />
 
-      {modalAberto && (
-        <ModalCarteira
-          saldo={saldo}
-          setSaldo={setSaldo}
-          cartoes={cartoes}
-          setCartoes={setCartoes}
-          cartoesValidados={cartoesValidados}
-          onClose={() => setModalAberto(false)}
+      {modalOpen && (
+        <WalletModal
+          balance={balance}
+          setBalance={setBalance}
+          cards={cards}
+          setCards={setCards}
+          validatedCards={validatedCards}
+          onClose={() => setModalOpen(false)}
         />
       )}
 
@@ -101,28 +101,28 @@ export default function Carteira({ onVoltar }) {
         color="primary"
         fullWidth
         sx={{ mb: 2, fontWeight: 600, fontSize: 16 }}
-        onClick={() => setModalAberto(true)}
+        onClick={() => setModalOpen(true)}
       >
-        Adicionar saldo
+        Add Balance
       </Button>
       <Button
         variant="outlined"
         color="inherit"
         fullWidth
         sx={{ mb: 2, fontWeight: 500, fontSize: 15 }}
-        onClick={onVoltar}
+        onClick={onBack}
       >
-        Voltar ao Perfil
+        Back to Profile
       </Button>
 
-      <Dialog open={dialogOpen} onClose={cancelarExclusao}>
-        <DialogTitle>Confirmação</DialogTitle>
+      <Dialog open={dialogOpen} onClose={cancelDeletion}>
+        <DialogTitle>Confirmation</DialogTitle>
         <DialogContent>
-          <Typography>Tem certeza que deseja excluir o cartão selecionado?</Typography>
+          <Typography>Are you sure you want to delete the selected card?</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={cancelarExclusao} color="inherit">Cancelar</Button>
-          <Button onClick={confirmarExclusao} color="error" variant="contained">Excluir</Button>
+          <Button onClick={cancelDeletion} color="inherit">Cancel</Button>
+          <Button onClick={confirmDeletion} color="error" variant="contained">Delete</Button>
         </DialogActions>
       </Dialog>
     </Paper>

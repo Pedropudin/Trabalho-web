@@ -3,21 +3,21 @@ import { Box, Typography, IconButton, Card, CardContent } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 // Lists all registered user cards
-// - Shows message if there are no cards
-// - Shows brand, last digits, and balance of each card
-// - Allows deleting cards via button
+// - Shows message if no cards are registered
+// - Displays brand, last digits, and balance of each card
+// - Allows deleting cards via a button
 
-export default function CartoesList({ cartoes, onExcluir }) {
-  if (!cartoes || cartoes.length === 0) {
+export default function CardsList({ cards, onDelete }) {
+  if (!cards || cards.length === 0) {
     return (
       <Box mt={2}>
-        <Typography fontWeight={500} align="center" mb={1}>Cartões cadastrados:</Typography>
+        <Typography fontWeight={500} align="center" mb={1}>Registered cards:</Typography>
         <Box sx={{ background: '#f8f9fb', p: 2, borderRadius: 2 }}>
           <Typography align="center" color="text.secondary" fontStyle="italic">
             <span style={{ fontSize: 22 }}>💳</span><br />
-            Nenhum cartão cadastrado ainda.<br />
+            No cards registered yet.<br />
             <span style={{ fontSize: 13, color: '#aaa' }}>
-              Adicione um cartão para facilitar suas compras!
+              Add a card to make your purchases easier!
             </span>
           </Typography>
         </Box>
@@ -27,29 +27,25 @@ export default function CartoesList({ cartoes, onExcluir }) {
 
   return (
     <Box mt={2}>
-      {/* mt={2}: top margin to move away from the top */}
       <Typography fontWeight={500} align="center" mb={1}>
-        {/* fontWeight: bold, align: center, mb: bottom margin */}
-        Cartões registrados:
+        Registered cards:
       </Typography>
       <Box display="flex" flexDirection="column" gap={1}>
-        {/* flexDirection: 'column': column layout, gap: spacing between cards */}
-        {cartoes.map((c) => (
-          <Card key={c.final} variant="outlined" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1 }}>
-            {/* justifyContent: space-between: separates content and button */}
+        {cards.map((card) => (
+          <Card
+            key={card.last4}
+            variant="outlined"
+            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1 }}
+          >
             <CardContent sx={{ flexGrow: 1, p: 0 }}>
-              {/* flexGrow: takes available space */}
-              <Typography variant="body1" fontWeight={500}>{c.bandeira} **** {c.final}</Typography>
+              <Typography variant="body1" fontWeight={500}>
+                {card.brand} **** {card.last4}
+              </Typography>
               <Typography variant="body2" color="text.secondary">
-                {/* 
-                  Shows the card balance formatted as Brazilian currency (R$).
-                  Uses 0 as default if balance is null/undefined.
-                  Example: 1500 becomes "R$ 1.500,00"
-                */}
-                Saldo: {(c.saldo ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                Balance: {(card.balance ?? 0).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
               </Typography>
             </CardContent>
-            <IconButton onClick={() => onExcluir(c.final)}>
+            <IconButton onClick={() => onDelete(card.last4)}>
               <DeleteIcon color="error" />
             </IconButton>
           </Card>

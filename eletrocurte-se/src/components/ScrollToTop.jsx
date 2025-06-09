@@ -1,20 +1,20 @@
 // -----------------------------------------------------------------------------
 // ScrollToTop.jsx
-// Botão flutuante para rolar a página ao topo com efeito visual.
-// Integra EfeitoEletrico para feedback animado ao clicar.
-// Exibe apenas quando o scroll passa de 200px.
+// Floating button to scroll the page to the top with visual effect.
+// Integrates EfeitoEletrico for animated feedback on click.
+// Displays only when scroll is past 200px.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
 import EfeitoEletrico from './EfeitoEletrico';
 import '../styles/ScrollToTop.css';
 
 const ScrollToTop = () => {
-  // Controla visibilidade do botão
+  // Controls button visibility
   const [visible, setVisible] = useState(false);
-  // Estado para trigger do efeito elétrico
+  // State to trigger electric effect
   const [efeito, setEfeito] = useState(null);
 
-  // Mostra o botão quando o scroll passa de 200px
+  // Shows button when scroll passes 200px
   useEffect(() => {
     const handleScroll = () => {
       setVisible(window.scrollY > 200);
@@ -23,11 +23,11 @@ const ScrollToTop = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Função para rolar ao topo e disparar o efeito elétrico
+  // Function to scroll to top and trigger electric effect
   const handleRetornoClick = (e) => {
     const btn = e.currentTarget;
     const rect = btn.getBoundingClientRect();
-    // Coordenadas relativas ao botão para posicionar o efeito
+    // Coordinates relative to the button to position the effect
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setEfeito({ x, y });
@@ -43,10 +43,10 @@ const ScrollToTop = () => {
       className="btn-retorno"
       onClick={handleRetornoClick}
       style={{ position: 'fixed', bottom: 30, right: 30, zIndex: 1000 }}
-      aria-label="Voltar ao topo"
+      aria-label="Scroll to top"
     >
       <span style={{ position: 'relative', display: 'inline-block' }}>
-        {/* Efeito visual animado ao clicar */}
+        {/* Animated visual effect on click */}
         <EfeitoEletrico trigger={efeito} />
         <i className="fas fa-arrow-up"></i>
       </span>

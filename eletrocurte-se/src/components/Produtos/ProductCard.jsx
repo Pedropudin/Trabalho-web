@@ -1,9 +1,9 @@
 // -----------------------------------------------------------------------------
 // ProductCard.jsx
-// Card de produto reutilizável para exibição em listas e grids.
-// Mostra imagem, nome, preço, estoque, avaliação e detalhes do produto.
-// Integração com Material-UI para layout responsivo e estilização.
-// Exibe mensagem de login se usuário não autenticado tentar acessar detalhes.
+// Reusable product card for display in lists and grids.
+// Shows image, name, price, stock, rating, and product details.
+// Integration with Material-UI for responsive layout and styling.
+// Shows login message if unauthenticated user tries to access details.
 // -----------------------------------------------------------------------------
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
@@ -14,20 +14,20 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 
 const CARD_WIDTH = 260;
-const CARD_HEIGHT = 420; // Aumenta altura para mais espaço para texto
-const IMG_HEIGHT = 90;   // Diminui altura da imagem para liberar espaço
+const CARD_HEIGHT = 420; // Increased height for more text space
+const IMG_HEIGHT = 90;   // Reduced image height to free space
 
 const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
-  // Estado para controlar erro de carregamento da imagem
+  // State to handle image load error
   const [imgError, setImgError] = useState(false);
-  // Estado para exibir mensagem de login obrigatório
+  // State to display login required message
   const [showLoginMsg, setShowLoginMsg] = useState(false);
-  // Seleciona a fonte da imagem do produto
+  // Select product image source
   const imageSrc = !imgError ? (product.img || product.imagem || product.image) : null;
-  // Verifica se está na home e usuário não está logado
+  // Check if on home page and user is not logged in
   const isHomeNotLogged = pageType === 'home' && !isLoggedIn;
 
-  // Lida com clique no card: exige login na home, senão chama onClick
+  // Handles card click: requires login on home, otherwise calls onClick
   const handleCardClick = (e) => {
     if (isHomeNotLogged) {
       e.preventDefault();
@@ -39,11 +39,11 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
     if (onClick) onClick(product);
   };
 
-  // Exibe mensagem flutuante se usuário não estiver logado
+  // Shows floating message if user is not logged in
   React.useEffect(() => {
     if (showLoginMsg) {
       const msgDiv = document.createElement('div');
-      msgDiv.className = 'mensagem show info';
+      msgDiv.className = 'message show info';
       msgDiv.style.position = 'fixed';
       msgDiv.style.top = '20px';
       msgDiv.style.left = '50%';
@@ -54,7 +54,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
       msgDiv.style.padding = '12px 24px';
       msgDiv.style.borderRadius = '8px';
       msgDiv.style.fontWeight = 'bold';
-      msgDiv.textContent = 'Faça login para ver as especificações do produto.';
+      msgDiv.textContent = 'Please log in to view product specifications.';
       document.body.appendChild(msgDiv);
       const timeout = setTimeout(() => {
         msgDiv.remove();
@@ -68,7 +68,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
 
   return (
     <Card
-      // Card do Material-UI com estilização responsiva
+      // Material-UI Card with responsive styling
       sx={{
         width: { xs: '95vw', sm: CARD_WIDTH },
         maxWidth: CARD_WIDTH,
@@ -85,10 +85,10 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
         m: '0 auto',
         position: 'relative',
       }}
-      className="produto-card"
+      className="product-card"
     >
       <CardActionArea
-        // Área clicável do card, customizada para não mudar cor ao focar/hover
+        // Clickable area of the card, customized to not change color on focus/hover
         onClick={handleCardClick}
         sx={{
           width: '100%',
@@ -106,7 +106,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
         }}
         tabIndex={0}
       >
-        {/* Imagem do produto ou mensagem de indisponível */}
+        {/* Product image or unavailable message */}
         <Box sx={{
           height: IMG_HEIGHT,
           width: '100%',
@@ -132,7 +132,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
               onError={() => setImgError(true)}
             />
           ) : (
-            <Typography variant="caption" color="text.secondary">Imagem indisponível</Typography>
+            <Typography variant="caption" color="text.secondary">Image unavailable</Typography>
           )}
         </Box>
         <CardContent sx={{
@@ -144,7 +144,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
           p: 2,
           gap: 0.5
         }}>
-          {/* Nome do produto */}
+          {/* Product name */}
           <Typography
             gutterBottom
             variant="h6"
@@ -165,7 +165,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
           >
             {product.nome || product.name}
           </Typography>
-          {/* Preço e parcelamento */}
+          {/* Price and installment */}
           <Box mt={1} mb={0} sx={{ textAlign: 'center' }}>
             <Typography variant="subtitle1" color="primary" sx={{ fontWeight: 600 }}>
               {typeof product.preco === 'string' && product.preco.startsWith('R$')
@@ -174,11 +174,11 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
             </Typography>
             {product.parcelamento && (
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
-                ou {product.parcelamento}
+                or {product.parcelamento}
               </Typography>
             )}
           </Box>
-          {/* Avaliação do produto */}
+          {/* Product rating */}
           <Box mt={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
             {product.avaliacao !== undefined && (
               <>
@@ -189,15 +189,15 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
               </>
             )}
           </Box>
-          {/* Estoque */}
+          {/* Stock */}
           <Box mt={1} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1 }}>
             {product.estoque !== undefined && (
               <Typography variant="caption" color={product.estoque > 0 ? 'success.main' : 'error.main'}>
-                {product.estoque > 0 ? `Em estoque: ${product.estoque}` : 'Indisponível'}
+                {product.estoque > 0 ? `In stock: ${product.estoque}` : 'Unavailable'}
               </Typography>
             )}
           </Box>
-          {/* Detalhes adicionais: marca, modelo, cor, voltagem, garantia */}
+          {/* Additional details: brand, model, color, voltage, warranty */}
           <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -206,18 +206,18 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
             width: '100%'
           }}>
             <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
-              {product.marca && `Marca: ${product.marca}`} {product.modelo && `| Modelo: ${product.modelo}`}
+              {product.marca && `Brand: ${product.marca}`} {product.modelo && `| Model: ${product.modelo}`}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
-              {product.cor && `Cor: ${product.cor}`} {product.voltagem && `| Voltagem: ${product.voltagem}`}
+              {product.cor && `Color: ${product.cor}`} {product.voltagem && `| Voltage: ${product.voltagem}`}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
-              {product.garantia && `Garantia: ${product.garantia}`}
+              {product.garantia && `Warranty: ${product.garantia}`}
             </Typography>
           </Box>
         </CardContent>
       </CardActionArea>
-      {/* Botão Comprar removido do card. Agora só aparece no modal de detalhes. */}
+      {/* Buy button removed from the card. Now only appears in the details modal. */}
     </Card>
   );
 };
