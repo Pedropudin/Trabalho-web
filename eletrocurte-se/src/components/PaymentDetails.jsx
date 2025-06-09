@@ -4,12 +4,13 @@ import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import CartOverview from "./CartOverview";
 
 /*
-  Página de dados de pagamento.
-  - Exibida durante processo de conclusão de compra.
-  - Recolhe os dados de um cartão de crédito, como número, nome, cvv.
-  - Botões de redirecionamento para tela anterior ou para a próxima etapa da conclusão do pedido.
+  Payment details page.
+  - Displayed during the checkout process.
+  - Collects credit card data such as number, name, cvv.
+  - Buttons to go back or proceed to the next step of the order.
 */
 
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
@@ -22,24 +23,24 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         parcelamento: "", 
     });
 
-    //Vezes de parcelamento
+    // Installment options
     const vezesDeParcelamento = [
         1,2,3,4,5,6,7,8,9,10,11,12
     ];
 
-    // Progresso
+    // Progress
     const activeStep = 2;
 
-    //Formatação de CPF
+    // CPF formatting
     function formatCPF(value) {
         value = value.replace(/\D/g, "").slice(0, 11);
-        // Aplica a máscara
+        // Apply mask
         value = value.replace(/(\d{3})(\d)/, "$1.$2");
         value = value.replace(/(\d{3})(\d)/, "$1.$2");
         value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
         return value;
     }
-    //Formatação de data de validade
+    // Expiry date formatting
     function formatValidade(value) {
         value = value.replace(/\D/g, "").slice(0, 4);
         if (value.length > 2) {
@@ -47,19 +48,19 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         }
         return value;
     }
-    //Formatação de cartão
+    // Card number formatting
     function formatCartao(value) {
         value = value.replace(/\D/g, "").slice(0, 16);
         value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
         return value.trim();
     }
     
-    //Atualização do form sempre que o formulário for preenchido
+    // Updates the form whenever a field is filled
     function handleChange(e) {
         const { name, value } = e.target;
         let newValue = value;
 
-        //Formatação de dados
+        // Data formatting
         if (name === "cpf") {
             newValue = formatCPF(newValue);
         }else if (name === "validade") {
@@ -75,38 +76,38 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         setForm({ ...form, [name]: newValue });
     }
     
-    //Envio do formulário
+    // Form submission
     function handleSubmit(e) {
-        e.preventDefault();//Grante controle do envio do formulário
+        e.preventDefault();//Ensures control of form submission
 
-        // Validação da validade (MM/AA)
+        // Expiry validation (MM/YY)
         const validade = form.validade;
         const validadeRegex = /^(\d{2})\/(\d{2})$/;
         const match = validade.match(validadeRegex);
 
-        if (!match) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Validade inválida. Use o formato MM/AA.");
+        if (!match) {//Warn if condition is not met
+            toast.error("Invalid expiry date. Use the format MM/YY.");
             return;
         }
 
-        //Separa mês e ano, a fim de garantir que cumprem regras básicas do calendário
+        // Separate month and year to ensure they meet basic calendar rules
         const mes = parseInt(match[1], 10);
         const ano = 2000 + parseInt(match[2], 10);
 
-        if (mes < 1 || mes > 12) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Mês da validade deve ser entre 01 e 12.");
+        if (mes < 1 || mes > 12) {//Warn if condition is not met
+            toast.error("Expiry month must be between 01 and 12.");
             return;
         }
-        if (ano < 2025) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Ano da validade deve ser 2025 ou maior.");
+        if (ano < 2025) {//Warn if condition is not met
+            toast.error("Expiry year must be 2025 or greater.");
             return;
         }
 
-        if (!form.parcelamento) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Escolha o número de parcelas.");
+        if (!form.parcelamento) {//Warn if condition is not met
+            toast.error("Choose the number of installments.");
             return;
         }
-        //Salvamento no json local e envio
+        // Save to local json and submit
         localStorage.setItem("card", JSON.stringify(form));
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
@@ -124,28 +125,29 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 ))}
             </Stepper>
         </div>
+        <div className="main-content">
         <form className="payment-details-form" onSubmit={handleSubmit}>
-            <h2>Dados de Pagamento</h2>
+            <h2>Payment Details</h2>
             <label htmlFor="numero_cartao"></label>
             <input
                 id="numero_cartao"
                 type="text"
                 name="numero_cartao"
-                placeholder="Número do cartão"
+                placeholder="Card number"
                 value={form.numero_cartao}
                 onChange={handleChange}
                 required
                 maxLength={19}
                 inputMode="numeric"
                 pattern="\d{4} \d{4} \d{4} \d{4}"
-                title="Digite 16 números do cartão (formato: 0000 0000 0000 0000)"
+                title="Enter 16 card numbers (format: 0000 0000 0000 0000)"
             />
             <label htmlFor="nome_cartao"></label>
             <input
                 id="nome_cartao"
                 type="text"
                 name="nome_cartao"
-                placeholder="Nome impresso no cartão"
+                placeholder="Name on card"
                 value={form.nome_cartao}
                 onChange={handleChange}
                 required
@@ -157,7 +159,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                         id="validade"
                         type="text"
                         name="validade"
-                        placeholder="MM/AA"
+                        placeholder="MM/YY"
                         value={form.validade}
                         onChange={handleChange}
                         required
@@ -183,7 +185,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 id="cpf"
                 type="text"
                 name="cpf"
-                placeholder="CPF do titular"
+                placeholder="Cardholder CPF"
                 value={form.cpf}
                 onChange={handleChange}
                 required
@@ -195,10 +197,10 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 value={form.parcelamento || ""}
                 onChange={handleChange}
             >
-                <option value="" disabled>Escolha o número de parcelas</option>
+                <option value="" disabled>Choose the number of installments</option>
                 {vezesDeParcelamento.map((num) => (
                     <option key={num} value={num}>
-                        Em {num}x sem juros
+                        In {num}x without interest
                     </option>
                 ))}
             </select>
@@ -208,16 +210,18 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                     className="back-button"
                     onClick={onBack}
                 >
-                    Voltar
+                    Back
                 </button>
                 <button
                     type="submit"
                     className="submit-button"
                 >
-                    Próximo
+                    Next
                 </button>
             </div>
         </form>
+        <CartOverview/>
+        </div>
     </>
     );
 }

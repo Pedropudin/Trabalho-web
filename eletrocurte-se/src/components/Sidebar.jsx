@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import ROUTES from "../routes";
 
 /*
-  Sidebar da tela de Pesquisa e Setor
-  - Contém setores e filtros de preço e marca
+  Sidebar for the Search and Sector page
+  - Contains categories and filters for price and brand
 */
 
-//Recebe dados da página como parâmetro, já que dependemos daquilo que foi renderizado para deifnir características de filtro
+// Receives page data as a parameter, since we depend on what was rendered to define filter characteristics
 export default function Sidebar({
     items = [],
     selectedBrands = [],
@@ -19,7 +19,7 @@ export default function Sidebar({
     setMaxPrice,
     brands 
 }) {
-    //Pega o menor e maior valor dos itens disponíveis naquela página
+    // Gets the lowest and highest price of the items available on that page
     const priceRange = () => {
         if (!items.length) return [0, 0];
         const prices = items.map(item => item.price);
@@ -30,7 +30,7 @@ export default function Sidebar({
 
     const [minAvailable, maxAvailable] = priceRange();
 
-    //Aplicação da filtragem de marca
+    // Brand filtering
     const handleBrandChange = (e) => {
         const { value, checked } = e.target;
         if (checked) {
@@ -41,24 +41,24 @@ export default function Sidebar({
     };
     return (
         <div className="product-sidebar">
-            <h4 className="product-category">Categorias Relacionadas</h4>
+            <h4 className="product-category">Related Categories</h4>
                
             <ul>
-                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Perifericos")}>Perifericos</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Perifericos")}>Peripherals</Link></li>
                 <li><Link to={ROUTES.PAG_SETOR.replace(":name","Hardware")}>Hardware</Link></li>
-                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Celulares")}>Celulares</Link></li>
-                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Computadores")}>Computadores</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Celulares")}>Cell Phones</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Computadores")}>Computers</Link></li>
             </ul>
             
-            <h4 className="filters">Filtros</h4>
+            <h4 className="filters">Filters</h4>
             <div className="filter-titles-row">
-                <span className="filter-title">Preço</span>
+                <span className="filter-title">Price</span>
             </div>
             <div>
                 <div className="price-filter">
                     <div>
                         <label htmlFor="min-price">
-                            <span>Mínimo</span>
+                            <span>Minimum</span>
                             <input
                                 type="number"
                                 id="min-price"
@@ -72,7 +72,7 @@ export default function Sidebar({
                     </div>
                     <div>
                         <label htmlFor="max-price">
-                            <span>Máximo</span>
+                            <span>Maximum</span>
                             <input
                                 type="number"
                                 id="max-price"
@@ -88,7 +88,7 @@ export default function Sidebar({
             </div>
             <div>
             <div className="filter-titles-row">
-                <span className="filter-title">Marca</span>
+                <span className="filter-title">Brand</span>
             </div>
                 {brands.map(brand => (
                     <label className="brand-filter" htmlFor={brand.id} key={brand.id}>

@@ -1,4 +1,4 @@
-import "../styles/PaginaSetor.css";
+import "../styles/SectorPage.css";
 import AdminHeader from "../components/admin/AdminHeader";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,13 +8,12 @@ import ProductDisplay from "../components/ProductDisplay";
 import { useParams } from "react-router-dom";
 import React, { useState,useEffect } from 'react';
 
-
 /*
-  Página de setores do portal Eletrocurte-se.
-  - Display de todos os produtos separados em setor quando acessado como "/PaginaSetor"
-  - Display de todos os produtos pertencentes a uma categoria geral, como Hardware ou Periféricos.
-  - Para chegar a esta página é necessário alterar a URL '/PaginaSetor/NomeDoSetor' ou apenas interagir com os botões e clicáveis da interface.
-  - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
+  Eletrocurte-se sector page.
+  - Displays all products separated by sector when accessed as "/PaginaSetor"
+  - Displays all products belonging to a general category, such as Hardware or Peripherals.
+  - To reach this page, you need to change the URL '/PaginaSetor/SectorName' or just interact with the buttons and clickable elements of the interface.
+  - Has brand and price filter functionalities, as well as ascending/descending sorting by A-Z and price.
 */
 
 const categoryIndexRel = {
@@ -24,7 +23,7 @@ const categoryIndexRel = {
     "celulares": 3,
 }
 
-export default function PaginaSetor() {
+export default function SectorPage() {
     const { name } = useParams(); 
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
@@ -33,7 +32,7 @@ export default function PaginaSetor() {
     const [produtosLocais, setProdutosLocais] = React.useState([]);
     const [categoryIndex, setCategoryIndex] = useState(0);
     
-    //Lê dados dos produtos diretamento do JSON
+    // Reads product data directly from JSON
     useEffect(() => {
         const localProducts = localStorage.getItem("products");
         if (localProducts) {
@@ -55,20 +54,20 @@ export default function PaginaSetor() {
         }
     }, []);
 
-    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]//Pega todas as marcas disponíves
+    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))] // Gets all available brands
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
-    //Função para desconsiderar os acentos, usada para tratar a origem do acesso
+    // Function to ignore accents, used to handle the access origin
     const normalize = (str) =>
         str?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    // Se não houver name, mostra todos os produtos
+    // If there is no name, show all products
     const sectorProducts = name
         ? produtosLocais.filter((p) => normalize(p.setorGeral) === normalize(name))
         : produtosLocais;
     
 
-    // Ordenação de produtos a partir da ordem escolhida
+    // Product sorting based on the chosen order
     const orderedProducts = React.useMemo(() => {
         let products = [...sectorProducts];
         products.sort((a, b) => {
@@ -88,7 +87,7 @@ export default function PaginaSetor() {
         return products;
     }, [order, sectorProducts]);
 
-    // Filtros de marca e preço
+    // Brand and price filters
     const filteredProducts = orderedProducts.filter(product => {
         const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.marca.toLowerCase());
         const matchesMin = minPrice === '' || product.price >= Number(minPrice);
@@ -96,7 +95,7 @@ export default function PaginaSetor() {
         return matchesBrand && matchesMin && matchesMax;
     });
 
-    //Pega todos os setores específicos dentro dessa página de setor geral
+    // Gets all specific sectors within this general sector page
     const setoresEspecificos = Array.from(
         new Set(filteredProducts.map((p) => p.setorEspecifico))
     );
@@ -120,22 +119,22 @@ export default function PaginaSetor() {
                 />
                 <div className="results">
                     <div className="results-header-row">
-                        <h4>Resultados para "{!name ? "Geral" : name}"</h4>
+                        <h4>Results for "{!name ? "General" : name}"</h4>
                         <select
                             id="order-criteria"
                             value={order}
                             onChange={e => setOrder(e.target.value)}
                             className="order-criterion"
                         >
-                            <option value="alphabetical-asc">Nome A-Z</option>
-                            <option value="alphabetical-desc">Nome Z-A</option>
-                            <option value="high-price">Maior Preço</option>
-                            <option value="low-price">Menor Preço</option>
+                            <option value="alphabetical-asc">Name A-Z</option>
+                            <option value="alphabetical-desc">Name Z-A</option>
+                            <option value="high-price">Highest Price</option>
+                            <option value="low-price">Lowest Price</option>
                         </select>
                     </div>
                     <div className="sector-display">
                         {setoresEspecificos.length === 0 ? (
-                            <p style={{ margin: "40px auto", fontWeight: "bold" }}>Nenhum produto encontrado.</p>
+                            <p style={{ margin: "40px auto", fontWeight: "bold" }}>No products found.</p>
                         ) : (
                             setoresEspecificos.map((setorEsp) => {
                                 const produtosSetorEsp = filteredProducts.filter(

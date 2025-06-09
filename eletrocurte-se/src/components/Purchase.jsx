@@ -54,14 +54,14 @@ export default function Purchase({ onBack, onNext, steps }) {
 
     // Checagem de dados obrigatórios
     function dadosValidos() {
-        if (!cart.length) return "O carrinho está vazio.";
-        if (!personal.nome || !personal.sobrenome || !personal.email || !personal.cpf || !personal.telefone) return "Preencha todos os dados pessoais.";
-        if (!personal.endereco || !personal.numero || !personal.bairro || !personal.cidade || !personal.estado || !personal.cep) return "Preencha todos os campos do endereço.";
-        if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade) return "Preencha todos os dados do cartão.";
+        if (!cart.length) return "The cart is empty.";
+        if (!personal.nome || !personal.sobrenome || !personal.email || !personal.cpf || !personal.telefone) return "Fill in all personal data.";
+        if (!personal.endereco || !personal.numero || !personal.bairro || !personal.cidade || !personal.estado || !personal.cep) return "Fill in all address fields.";
+        if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade) return "Fill in all card data.";
         // Checagem de estoque
         for (const item of cart) {
             const prod = produtosLocais.find(p => p.id === item.id);
-            if (!prod || prod.inStock < item.quantity) return `Estoque insuficiente para o produto: ${item.name}`;
+            if (!prod || prod.inStock < item.quantity) return `Insufficient stock for product: ${item.name}`;
         }
         return "";
     }
@@ -110,38 +110,38 @@ export default function Purchase({ onBack, onNext, steps }) {
         </div>
         <div className="purchase-summary-container">
             <h2 className="purchase-summary-title">
-                Resumo do Pedido
+                Order Summary
             </h2>
             <section className="purchase-section">
-                <h3 className="purchase-section-title">Dados Pessoais</h3>
+                <h3 className="purchase-section-title">Personal Data</h3>
                 <div className="purchase-section-content">
-                    <div><b>Nome:</b> {personal.nome} {personal.sobrenome}</div>
-                    <div><b>E-mail:</b> {personal.email}</div>
-                    <div><b>Telefone:</b> {personal.telefone}</div>
+                    <div><b>Name:</b> {personal.nome} {personal.sobrenome}</div>
+                    <div><b>Email:</b> {personal.email}</div>
+                    <div><b>Phone:</b> {personal.telefone}</div>
                     <div><b>CPF:</b> {personal.cpf}</div>
-                    <div><b>Data de nascimento:</b> {personal.nascimento}</div>
+                    <div><b>Birth date:</b> {personal.nascimento}</div>
                 </div>
-                <h3 className="purchase-section-title">Dados Cobrança</h3>
+                <h3 className="purchase-section-title">Billing Data</h3>
                 <div className="purchase-section-content">
-                    <div><b>Nome:</b> {card.nome_cartao}</div>
-                    <div><b>Numero do Cartão:</b> {card.numero_cartao}</div>
+                    <div><b>Name:</b> {card.nome_cartao}</div>
+                    <div><b>Card Number:</b> {card.numero_cartao}</div>
                     <div><b>CVV:</b> {card.cvv}</div>
                     <div><b>CPF:</b> {card.cpf}</div>
-                    <div><b>Data de Validade:</b> {card.validade}</div>
-                    <div><b>Parcelamento:</b> Em {card.parcelamento}x vezes de R${(total/card.parcelamento).toFixed(2).replace('.',',')}</div>
+                    <div><b>Expiry Date:</b> {card.validade}</div>
+                    <div><b>Installments:</b> In {card.parcelamento}x of ${(total/card.parcelamento).toFixed(2)}</div>
                 </div>
-                <h3 className="purchase-section-title address">Endereço</h3>
+                <h3 className="purchase-section-title address">Address</h3>
                 <div className="purchase-section-content">
                     <div>
                         {personal.endereco}, {personal.numero} {personal.complemento && <span>- {personal.complemento}</span>}
                     </div>
                     <div>
-                        {personal.bairro} - {personal.cidade}/{personal.estado} - <b>CEP:</b> {personal.cep}
+                        {personal.bairro} - {personal.cidade}/{personal.estado} - <b>ZIP:</b> {personal.cep}
                     </div>
                 </div>
             </section>
             <section className="purchase-section">
-                <h3 className="purchase-section-title">Produtos</h3>
+                <h3 className="purchase-section-title">Products</h3>
                 <ul className="purchase-products-list">
                     {cart.map(item => {
                         const prod = produtosLocais.find(p => p.id === item.id);
@@ -153,14 +153,14 @@ export default function Purchase({ onBack, onNext, steps }) {
                                     <span className="purchase-product-qty">x{item.quantity}</span>
                                 </span>
                                 <span className="purchase-product-price">
-                                    {(prod.price * item.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                                    ${(prod.price * item.quantity).toFixed(2)}
                                 </span>
                             </li>
                         );
                     })}
                 </ul>
                 <div className="purchase-total">
-                    Total: {total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                    Total: ${total.toFixed(2)}
                 </div>
             </section>
             <div className="purchase-buttons-row">
@@ -169,14 +169,14 @@ export default function Purchase({ onBack, onNext, steps }) {
                     className="purchase-btn-back"
                     onClick={onBack}
                 >
-                    Voltar
+                    Back
                 </button>
                 <button
                     type="button"
                     className="purchase-btn-finish"
                     onClick={handlePurchase}
                 >
-                    Finalizar compra
+                    Finish Purchase
                 </button>
             </div>
         </div>

@@ -8,9 +8,9 @@ import Perfil from './pages/Perfil';
 import HistoricoCompras from './pages/HistoricoCompras';
 import HistoricoProdutos from './pages/HistoricoProdutos';
 import TermosCondicoes from './pages/TermosCondicoes';
-import PaginaProduto from './pages/PaginaProduto';
-import PaginaPesquisa from './pages/PaginaPesquisa';
-import PaginaSetor from './pages/PaginaSetor';
+import ProductPage from './pages/ProductPage';
+import SearchPage from './pages/SearchPage';
+import SectorPage from './pages/SectorPage';
 import Checkout from './pages/Checkout';
 import Logout from './pages/Logout';
 import EditarPerfil from './pages/EditarPerfil';
@@ -32,10 +32,10 @@ function AppRoutes() {
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.PERFIL} element={<Perfil />} />
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
-        <Route path={ROUTES.PAG_PRODUTO} element={<PaginaProduto />} />
-        <Route path={ROUTES.PAG_PESQUISA} element={<PaginaPesquisa />} />
+        <Route path={ROUTES.PAG_PRODUTO} element={<ProductPage />} />
+        <Route path={ROUTES.PAG_PESQUISA} element={<SearchPage />} />
         <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
-        <Route path={ROUTES.PAG_SETOR} element={<PaginaSetor />} />
+        <Route path={ROUTES.PAG_SETOR} element={<SectorPage />} />
         <Route path={ROUTES.HIST_COMPRAS} element={<HistoricoCompras />} />
         <Route path={ROUTES.EDITAR_PERFIL} element={<EditarPerfil />} />
         <Route path={ROUTES.HIST_PRODUTOS} element={<HistoricoProdutos />} />

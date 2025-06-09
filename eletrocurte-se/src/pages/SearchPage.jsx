@@ -1,4 +1,4 @@
-import '../styles/PaginaPesquisa.css';
+import '../styles/SearchPage.css';
 import React, { useState, useEffect } from 'react';
 import {useParams } from "react-router-dom";
 import Header from '../components/Header';
@@ -8,21 +8,21 @@ import ScrollToTop from '../components/ScrollToTop';
 import ProductDisplay from '../components/ProductDisplay'; 
 
 /*
-  Página de pesquisa do portal Eletrocurte-se.
-  - Display de todos os produtos em ordem aleatória quando acessado como "/PaginaPesquisa"
-  - Display de produtos que contenham aquilo que foi colocado na URL ou pesquisado atráves da barra de pesquisa.
-  - Possui as funcionalidades de filtro por marca e preço, além da ordenação ascendente/decrescente ente A-Z e preço. 
+  Eletrocurte-se search page.
+  - Displays all products in random order when accessed as "/SearchPage"
+  - Displays products that contain what was placed in the URL or searched through the search bar.
+  - Has brand and price filter functionalities, as well as ascending/descending sorting by A-Z and price.
 */
 
-function PaginaPesquisa() {
-    //Variáveis de estado
-    const { name } = useParams();  //Faz a identificação do nome da url  
+export default function SearchPage() {
+    // State variables
+    const { name } = useParams();  // Identifies the name from the url  
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [produtosLocais, setProdutosLocais] = React.useState([]);
-    //Lê dados dos produtos diretamento do JSON
+    // Reads product data directly from JSON
     useEffect(() => {
         const localProducts = localStorage.getItem("products");
         if (localProducts) {
@@ -36,15 +36,15 @@ function PaginaPesquisa() {
                 .catch(() => setProdutosLocais([]));
         }
     }, []);
-    //Lida com as marcas dos produtos
+    // Handles product brands
     const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
     .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
 
-    //Lida com a mudança de ordem dos produtos 
+    // Handles product order change
     function handleOrderChange(e) {
         setOrder(e.target.value);
     }
-    //Utilização do useMemo para organizar, sempre que alterada, a nova ordem de nossos produtos
+    // Uses useMemo to organize, whenever changed, the new order of our products
     const orderedProducts = React.useMemo(() => {
         const produtosOrdenados = [...produtosLocais].sort((a, b) => {
             if (a.inStock > 0  && b.inStock === 0) return -1; 
@@ -88,22 +88,22 @@ function PaginaPesquisa() {
                 />
                 <div className="results">
                     <div className="results-header-row">
-                        <h4>Resultados para "{!name ? "Geral" : name}"</h4>
+                        <h4>Results for "{!name ? "General" : name}"</h4>
                         <select
                             id="order-criteria"
                             value={order}
                             onChange={handleOrderChange}
                             className="order-criterion"
                         >
-                            <option value="alphabetical-asc">Nome A-Z</option>
-                            <option value="alphabetical-desc">Nome Z-A</option>
-                            <option value="high-price">Maior Preço</option>
-                            <option value="low-price">Menor Preço</option>
+                            <option value="alphabetical-asc">Name A-Z</option>
+                            <option value="alphabetical-desc">Name Z-A</option>
+                            <option value="high-price">Highest Price</option>
+                            <option value="low-price">Lowest Price</option>
                         </select>
                     </div>
                     <nav className="product-display">
                         {filteredProducts.length === 0 ? (
-                            <p style={{ margin: "40px auto", fontWeight: "bold" }}>Nenhum produto encontrado.</p>
+                            <p style={{ margin: "40px auto", fontWeight: "bold" }}>No products found.</p>
                         ) : (
                             filteredProducts.map(produtos => (
                                 <ProductDisplay key={produtos.id} product={produtos} />
@@ -118,4 +118,3 @@ function PaginaPesquisa() {
     );
 }
 
-export default PaginaPesquisa;

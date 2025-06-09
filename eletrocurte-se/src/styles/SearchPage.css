@@ -1,4 +1,4 @@
-/* Reset e layout principal */
+/* Reset and main layout */
 * {
     margin: 0;
     padding: 0;
@@ -18,7 +18,7 @@
     min-height: 500px;
 }
 
-/* Área de resultados e filtros */
+/* Results and filters area */
 .results {
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@
     padding: 10px;
 }
 
-/* Grid de produtos */
+/* Product grid */
 .product-display {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -54,7 +54,7 @@
     border-radius: 5px;
 }
 
-/* Card de produto */
+/* Product card */
 .items {
     background-color: white;
     padding: 10px;
@@ -84,7 +84,7 @@
     font-weight: bold;
 }
 
-/* Botão de compra e produto indisponível */
+/* Purchase button and unavailable product */
 .product-unavailable {
     margin-top: 16px;
     cursor: default;
@@ -118,7 +118,7 @@
     transform: translateY(-2px) scale(1.04);
 }
 
-/* Ordenação e cabeçalho dos resultados */
+/* Sorting and results header */
 .order-criterion {
     padding: 5px;
     border-radius: 5px;
@@ -135,7 +135,7 @@
     gap: 20px;
 }
 
-/* Responsividade para mobile */
+/* Responsive for mobile */
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column;

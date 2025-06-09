@@ -1,4 +1,4 @@
-/* Reset e layout principal */
+/* Reset and main layout */
 * {
     margin: 0;
     padding: 0;
@@ -22,7 +22,7 @@
     min-height: 500px;
 }
 
-/* Área de resultados e filtros */
+/* Results and filters area */
 .results select, .results h4{
     display: inherit;
     flex-direction: row;
@@ -44,7 +44,7 @@
     box-sizing: border-box;
 }
 
-/* Grid de setores */
+/* Sector grid */
 .sector-display {
     display: flex;
     flex-flow: column nowrap;
@@ -58,7 +58,7 @@
     text-align: start;
 }
 
-/* Ordenação */
+/* Sorting */
 .order-criterion {
     padding: 5px;
     border-radius: 5px;
@@ -75,7 +75,7 @@
     gap: 20px;
 }
 
-/* Responsivo para mobile */
+/* Responsive for mobile */
 @media (max-width: 768px) {
     *{
         max-width: 100%;

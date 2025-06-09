@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/Cart.css';
 import toast, { Toaster } from 'react-hot-toast';
+import ROUTES from "../routes";
 
 /*
-  Página do carrinho.
-  - Exibe produtos no carrinho de compra.
-  - Permite adição e deleção de produtos do carrinho.
-  - Botões de redirecionamento para tela inicial ou para a próxima etapa da conclusão do pedido.
+  Cart page.
+  - Displays products in the shopping cart.
+  - Allows adding and removing products from the cart.
+  - Buttons to redirect to the home page or to the next step of the checkout process.
 */
-
-
 
 export default function Cart({onNext}) {
     const navigate = useNavigate();
@@ -18,7 +17,7 @@ export default function Cart({onNext}) {
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
     const [productsLocal, setProductsLocal] = useState([]);
 
-    // Buscar produtos do JSON ao montar o componente
+    // Fetch products from JSON when the component mounts
     useEffect(() => {
         const localProducts = localStorage.getItem("products");
         if (localProducts) {
@@ -31,7 +30,7 @@ export default function Cart({onNext}) {
         }
     }, []);
 
-    /* // Limpa o carrinho de produtos que não existem mais
+    /* // Cleans the cart of products that no longer exist
     React.useEffect(() => {
         const validIds = new Set(productsLocal.map(p => String(p.id)));
         const filteredCart = cart.filter(item => validIds.has(String(item.id)));
@@ -39,11 +38,11 @@ export default function Cart({onNext}) {
             setCart(filteredCart);
             localStorage.setItem("cart", JSON.stringify(filteredCart));
         }
-    // Só roda na montagem e se productsLocal mudar
+    // Runs only on mount and if productsLocal changes
     // eslint-disable-next-line
     }, [productsLocal]); */
 
-    //Pega o estoque do produto
+    // Gets the stock of the product
     function getProductStock(productId) {
         const prod = productsLocal.find(p => p.id === productId);
         if(prod){
@@ -53,14 +52,14 @@ export default function Cart({onNext}) {
         }
     }
 
-    //Aumenta quantidade no carrinho, semmpre conferindo se existe estoque
+    // Increases quantity in the cart, always checking if there is stock
     function handleIncrease(productId) {
         setCart(prev =>
             prev.map(item => {
                 if (item.id === productId) {
                     const stock = getProductStock(productId);
                     if (item.quantity + 1 > stock) {
-                        toast.error ("Número máximo de produtos atingido. Erro: Falta de estoque!");
+                        toast.error ("Maximum number of products reached. Error: Out of stock!");
                         return item;
                     }
                     return { ...item, quantity: item.quantity + 1 };
@@ -70,7 +69,7 @@ export default function Cart({onNext}) {
         );
     }
 
-    //Diminui a quantidade no carrinho até 1, caso queira excluir, teremos um botão para isso
+    // Decreases the quantity in the cart down to 1, if you want to delete, there will be a button for that
     function handleDecrease(productId) {
         setCart(prev =>
             prev.map(item =>
@@ -81,19 +80,19 @@ export default function Cart({onNext}) {
         );
     }
 
-    //Irá remover o item do carrinho por meio de uma filtragem pelo id, atualiza diretamente o Cart que atualizará nosso JSON local
+    // Will remove the item from the cart by filtering by id, updates Cart directly which will update our local JSON
     function handleRemove(productId) {
         setCart(prev => prev.filter(item => item.id !== productId));
     }
 
-    // Salva o carrinho no localStorage sempre que mudar
+    // Saves the cart to localStorage whenever it changes
     React.useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
         window.dispatchEvent(new Event('cartUpdated'));
         window.forceCartUpdate && window.forceCartUpdate();
     }, [cart]);
 
-    //Calculo do total de itens e do total de preços 
+    // Calculates the total number of items and total prices
     const cartProducts = cart
         .map(item => {
             const prod = productsLocal.find(p => String(p.id) === String(item.id));
@@ -111,31 +110,31 @@ export default function Cart({onNext}) {
     const totalItems = cartProducts.reduce((sum, p) => sum + p.quantity, 0);
     const totalPrice = cartProducts.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
-    // Se o carrinho estiver vazio
+    // If the cart is empty
     if (!cartProducts.length) {
         return (
             <div className="review-container" style={{ minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                 <div className="products-list-bg" style={{ padding: 40, textAlign: "center" }}>
-                    <h2 className="title">Seu carrinho está vazio</h2>
-                    <p>Adicione produtos para visualizar o resumo do carrinho.</p>
+                    <h2 className="title">Your cart is empty</h2>
+                    <p>Add products to view the cart summary.</p>
                     <button
                         type="button"
                         className="empty-cart-btn"
                         onClick={() => navigate(`/PaginaPesquisa`)}
                     >
-                        Ir para a loja
+                        Go to store
                     </button>
                 </div>
             </div>
         );
     }
 
-    // Renderização do carrinho
+    // Cart rendering
     return (
         <div className="review-container">
             <Toaster/>
             <div className="products-list-bg">
-                <h2 className="title">Resumo do Carrinho</h2>
+                <h2 className="title">Cart Summary</h2>
                 <ul className="products-list">
                     {cartProducts.map(product => (
                         <li key={product.id} className="product-list-item">
@@ -148,10 +147,10 @@ export default function Cart({onNext}) {
                             <div className="product-info">
                                 <span className="product-name">{product.name}</span>
                                 <span className="product-qty-price">
-                                    Preço do produto: R${Number(product.price).toFixed(2).replace('.', ',')}
+                                    Product price: ${Number(product.price).toFixed(2)}
                                 </span>
                                 <span className="product-stock-info">
-                                    Estoque: {product.inStock}
+                                    Stock: {product.inStock}
                                 </span>
                             </div>
                             <div className="product-actions">
@@ -163,20 +162,20 @@ export default function Cart({onNext}) {
                                     color: "#007b99"
                                 }}>{product.quantity}</span>
                                 <button onClick={() => handleIncrease(product.id)}>+</button>
-                                <button className="remove-btn" onClick={() => handleRemove(product.id)} title="Remover">Excluir</button>
+                                <button className="remove-btn" onClick={() => handleRemove(product.id)} title="Remove">Delete</button>
                             </div>
                             <span className="product-total">
-                                R${(Number(product.price) * product.quantity).toFixed(2).replace('.', ',')}
+                                ${ (Number(product.price) * product.quantity).toFixed(2) }
                             </span>
                         </li>
                     ))}
                 </ul>
                 <div className="products-list-total highlight-total">
-                    <span>Total de itens: <b>{totalItems}</b></span>
+                    <span>Total items: <b>{totalItems}</b></span>
                     <span>
                         <b>Total:</b>
                         <span className="total-value">
-                            R${totalPrice.toFixed(2).replace('.', ',')}
+                            ${totalPrice.toFixed(2)}
                         </span>
                     </span>
                 </div>
@@ -184,16 +183,16 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="continue-btn"
-                        onClick={() => navigate(`/PaginaPesquisa`)}
+                        onClick={() => navigate(ROUTES.PAG_SETOR)}
                     >
-                        Continuar Comprando
+                        Continue Shopping
                     </button>
                     <button
                         type="button"
                         className="finish-btn"
                         onClick={onNext}
                     >
-                        Finalizar Compra
+                        Checkout
                     </button>
                 </div>
             </div>

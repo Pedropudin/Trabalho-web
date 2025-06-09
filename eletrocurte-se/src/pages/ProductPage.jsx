@@ -1,4 +1,4 @@
-import '../styles/PaginaProduto.css';
+import '../styles/ProductPage.css';
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,13 +6,21 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 
-export default function PaginaProduto() {
-  //Variáveis
+
+/*
+  Eletrocurte-se product page.
+  - Displays the product acessed.
+  - Display the specifications and descriptions for the product. 
+  - Two buttons: 'Add to Cart', which adds a product to the cart but stays in the page, and 'Buy', which adds the product to the cart and redirects to the cart page.
+*/
+
+export default function ProductPage() {
+  // Variables
   const navigate = useNavigate();
-  const { id } = useParams();  //Faz a identificação do id da url 
+  const { id } = useParams();  // Identifies the id from the url 
   const [produtosLocais, setProdutosLocais] = React.useState([]);
 
-  //Lê dados dos produtos diretamento do JSON
+  // Reads product data directly from JSON
   useEffect(() => {
       const localProducts = localStorage.getItem("products");
       if (localProducts) {
@@ -24,10 +32,10 @@ export default function PaginaProduto() {
               .catch(() => setProdutosLocais([]));
       }
   }, []);
-  //Variáveis
+  // Variables
   const product = produtosLocais.find(p => String(p.id) === String(id));
 
-  //Atualização de imagens, após o recebimento de ados
+  // Updates images after receiving data
   const [mainImg, setMainImg] = useState();
   const [thumbs, setThumbs] = useState([]);
 
@@ -39,7 +47,7 @@ export default function PaginaProduto() {
   }, [product]);
 
 
-  //Ao clicar em "adicionar ao carrinho"
+  // When clicking "add to cart"
   function handleAdicionarCarrinho(productId) {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existing = cart.find(item => item.id === productId);
@@ -47,7 +55,7 @@ export default function PaginaProduto() {
 
     if (existing) {
       if (existing.quantity + 1 > stock) {
-        toast.error("Número máximo de produtos atingido. Erro: Falta de estoque!");
+        toast.error("Maximum number of products reached. Error: Out of stock!");
         return;
       }
       const updatedCart = cart.map(item =>
@@ -56,7 +64,7 @@ export default function PaginaProduto() {
           : item
       );
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      toast.success('Produto colocado no carrinho com sucesso!');
+      toast.success('Product successfully added to cart!');
       window.dispatchEvent(new Event('cartUpdated'));
       window.forceCartUpdate && window.forceCartUpdate();
     } else {
@@ -71,24 +79,24 @@ export default function PaginaProduto() {
         }
       ];
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      toast.success('Produto colocado no carrinho com sucesso!');
+      toast.success('Product successfully added to cart!');
       window.dispatchEvent(new Event('cartUpdated'));
       window.forceCartUpdate && window.forceCartUpdate();
     }
   }
-  if (!product) {//Caso não achar nenhum produto com esse id, mostra que produto não foi encontrado.
+  if (!product) {//If no product is found with this id, show that the product was not found.
     return (
       <>
         <Header />
         <main className="main-content">
-          <h2 style={{ margin: '2rem', textAlign: 'center' }}>Produto não encontrado.</h2>
+          <h2 style={{ margin: '2rem', textAlign: 'center' }}>Product not found.</h2>
         </main>
         <Footer />
       </>
     );
   }
 
-  return (//Caso contrário, faz load na págija
+  return (//Otherwise, load the page
     <>
       <Header />
       <main className="main-content">
@@ -103,7 +111,7 @@ export default function PaginaProduto() {
                   mb: 2,
                   borderRadius: 2,
                   overflow: "hidden",
-                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)" // sombra sutil
+                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)" // subtle shadow
                 }}
               >
                 <img
@@ -124,7 +132,7 @@ export default function PaginaProduto() {
                       p: 0.5,
                       cursor: "pointer",
                       background: mainImg === thumbUrl ? "#e3f2fd" : "#fff",
-                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)" // sombra ainda mais sutil
+                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)" // even more subtle shadow
                     }}
                     onClick={() => {
                       if (mainImg !== thumbUrl) {
@@ -133,7 +141,7 @@ export default function PaginaProduto() {
                       }
                     }}
                   >
-                    <img src={thumbUrl} alt={`Miniatura de ${product.name}`} style={{ width: 56, height: 56, objectFit: "contain" }} />
+                    <img src={thumbUrl} alt={`Thumbnail of ${product.name}`} style={{ width: 56, height: 56, objectFit: "contain" }} />
                   </Paper>
                 ))}
               </Stack>
@@ -145,24 +153,24 @@ export default function PaginaProduto() {
                 R${product.price.toFixed(2).replace('.', ',')}
               </h2>
               <p>
-                Em até 10x de R$ {(product.price / 12).toFixed(2).replace('.', ',')} sem juros no cartão de crédito.
+                Up to 10x of R$ {(product.price / 12).toFixed(2).replace('.', ',')} without interest on credit card.
               </p>
               <p>
-                {product.inStock > 0 ? <span className="product-in-stock">Em estoque ({product.inStock})</span> : <span className="product-unavailable-product-page">Fora de estoque ({product.inStock})</span>}
+                {product.inStock > 0 ? <span className="product-in-stock">In stock ({product.inStock})</span> : <span className="product-unavailable-product-page">Out of stock ({product.inStock})</span>}
               </p>
               <div className="product-buttons">
                 {product.inStock <= 0 ? 
                   <>
-                    <button className="product-purchase-button" onClick={() => toast.error("Produto fora de estoque!")}>PRODUTO INDISPONÍVEL</button>  
+                    <button className="product-purchase-button" onClick={() => toast.error("Product out of stock!")}>PRODUCT UNAVAILABLE</button>  
                     <Toaster/>
-                    <button className="product-cart-button" onClick={() => navigate(`/PaginaPesquisa`)}>VOLTAR AO INÍCIO</button>              
+                    <button className="product-cart-button" onClick={() => navigate(`/PaginaPesquisa`)}>BACK TO HOME</button>              
                   </>
                 : 
                   <>
-                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(`/Checkout`)}}>COMPRAR</button>
+                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(`/Checkout`)}}>BUY</button>
                     <Toaster/>
                     <button className="product-cart-button" onClick={() => handleAdicionarCarrinho(product.id)}>
-                      ADICIONAR AO CARRINHO
+                      ADD TO CART
                     </button>              
                   </>
                 }
@@ -171,11 +179,11 @@ export default function PaginaProduto() {
           </div>
           <div className="item-description">
             <div className="text-description">
-              <h2>Descrição do Produto</h2>
+              <h2>Product Description</h2>
               <p>{product.fullDescription}</p>
             </div>
             <div className="text-specifications">
-              <h2>Especificações do Produto</h2>
+              <h2>Product Specifications</h2>
               <ul>
                 {product.specifications?.map((spec, i) => (
                   <li key={i}>{spec}</li>

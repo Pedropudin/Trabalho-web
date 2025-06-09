@@ -1,4 +1,4 @@
-/* Reset e layout principal */
+/* Reset and main layout */
 * {
     margin: 0;
     padding: 0;
@@ -7,13 +7,14 @@
     text-decoration: none;
 }
 
+/* Body background and layout */
 body {
     background-color: white;
     display: flex;
     flex-direction: column;
 }
 
-/* Conteúdo principal da página do produto */
+/* Main product page content layout */
 .main-content {
     flex: 1;
     text-align: center;
@@ -30,7 +31,7 @@ body {
     height: auto;
 }
 
-/* Card do produto */
+/* Product card container */
 .item {
     display: flex;
     flex-flow: row nowrap;
@@ -58,17 +59,19 @@ body {
     font-size: 14px;
 }
 
+/* Button hover effect */
 .item button:hover {
     background-color: #007b99;
 }
 
-/* Imagem e informações do produto */
+/* Product information section */
 .product-information {
     justify-content: space-between; 
     justify-content: flex-start;
     padding-right: 20px;
 }
 
+/* Main product image */
 .product-image {
     width: 100%;
     max-width: 330px;
@@ -80,14 +83,13 @@ body {
     border-radius: 5px;
 }
 
+/* Thumbnails and image navigation */
 .item-images{
     margin: 20px 50px 20px 0; 
     gap: 10px;
     border-right: 1px solid #007b99;
     padding-right: 40px; 
 }
-
-/* Miniaturas e navegação de imagens */
 .IconArrowCarousel{
     color: black;
     width: 20px;
@@ -104,7 +106,6 @@ body {
     gap: 10px;
     margin-top: 10px;
 }
-
 .thumbs img,
 .thumb {
     width: 80px;
@@ -119,7 +120,7 @@ body {
     transition: border 0.2s;
 }
 
-/* Nome, preço e disponibilidade */
+/* Product name, price, and availability */
 .product-name-product-page{
     margin: 10px 0;
     justify-content: center;
@@ -159,7 +160,7 @@ body {
     display: block;
 }
 
-/* Botões de ação */
+/* Action buttons for purchase/cart */
 .product-buttons {
     display: flex;
     flex-flow: row wrap;
@@ -184,13 +185,14 @@ body {
     margin: 0 10px 0 0;
 }
 
+/* Button hover effect */
 .product-purchase-button:hover, .product-cart-button:hover {
     background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
     transform: translateY(-2px) scale(1.04);
 }
 
-/* Especificações e descrição */
+/* Product description and specifications */
 .text-specifications, .text-description {
     text-align: start;
     background-color: #f9f9f9; 
@@ -231,7 +233,7 @@ body {
     margin-bottom: 5px;
 }
 
-/* Responsivo para mobile */
+/* Responsive for mobile */
 @media (max-width: 768px) {
     *{
         max-width: 100%;

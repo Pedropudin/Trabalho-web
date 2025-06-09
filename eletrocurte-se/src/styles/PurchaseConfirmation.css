@@ -1,4 +1,4 @@
-/* Página de confirmação de compra */
+/* Purchase confirmation page */
 .page-finalizada {
     min-height: 40vh;
     display: flex;
@@ -6,11 +6,11 @@
     align-items: center;
     justify-content: center;
     padding: 24px 6px;
-    margin-top: 50px;
+    margin-top: 200px;
     background: #f7fafc;
 }
 
-/* Texto de confirmação */
+/* Confirmation text */
 .textos-confirmacao-cima, .textos-confirmacao-baixo {
     color: #007b99;
     text-align: center;
@@ -21,7 +21,7 @@
     letter-spacing: 0.5px;
 }
 
-/* Imagem de confirmação */
+/* Confirmation image */
 .foto-confirmacao {
     display: block;
     margin: 36px auto 36px auto;
@@ -32,7 +32,7 @@
     object-fit: contain;
 }
 
-/* Botão para voltar ao início */
+/* Button to return to home */
 .botao-inicio {
     background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
     color: #fff;

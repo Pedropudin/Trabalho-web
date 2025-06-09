@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/CompraFinalizada.css'
+import '../styles/PurchaseConfirmation.css'
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../routes";
 
@@ -9,7 +9,7 @@ import ROUTES from "../routes";
   - Button to redirect to the home screen.
 */
 
-export default function CompraFinalizada(){
+export default function PurchaseConfirmation(){
     const navigate = useNavigate(); 
     return(
         <>
