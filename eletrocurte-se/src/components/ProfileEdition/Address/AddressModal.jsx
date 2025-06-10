@@ -26,7 +26,7 @@ export default function ModalEndereco({ onSalvar }) {
   const [erro, setErro] = useState('');
 
   // Fetch address data from the CEP using the ViaCEP API
-  const buscarCep = async () => {
+  const fetchCep = async () => {
     setCarregando(true);
     setErro('');
     try {
@@ -53,7 +53,7 @@ export default function ModalEndereco({ onSalvar }) {
         setErro('Enter a valid CEP (8 digits).');
         return;
       }
-      buscarCep();
+      fetchCep();
       setActiveStep(1);
       return;
     }

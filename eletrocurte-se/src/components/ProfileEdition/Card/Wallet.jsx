@@ -86,9 +86,9 @@ export default function Wallet({ onBack }) {
         <WalletModal
           balance={balance}
           setBalance={setBalance}
-          cards={cards || []}
-          setCards={setCards}
-          validatedCards={validatedCards || []}
+          cartoes={cards}
+          setCartoes={setCards}
+          cartoesValidados={validatedCards}
           onClose={() => setModalOpen(false)}
         />
       )}

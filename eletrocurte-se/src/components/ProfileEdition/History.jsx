@@ -3,7 +3,7 @@ import { Button, Typography, Stack, Paper, Snackbar, Alert } from '@mui/material
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../routes';
 
-// Historico Component
+// History Component
 // Displays options for the user to access their purchase and viewed product history
 // Props:
 // - onVoltar: function called when clicking to return to the profile
@@ -19,7 +19,7 @@ import ROUTES from '../../routes';
 // - Stack arranges buttons vertically with spacing
 // - Snackbar/Alert shows temporary messages to the user
 
-export default function Historico({ onVoltar }) {
+export default function History({ onVoltar }) {
   const navigate = useNavigate();
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
 

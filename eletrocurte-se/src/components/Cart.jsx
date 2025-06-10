@@ -11,8 +11,6 @@ import ROUTES from '../routes';
   - Botões de redirecionamento para tela inicial ou para a próxima etapa da conclusão do pedido.
 */
 
-
-
 export default function Cart({onNext}) {
     const navigate = useNavigate();
 

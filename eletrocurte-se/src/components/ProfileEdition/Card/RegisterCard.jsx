@@ -47,31 +47,31 @@ const cardLogos = {
   credz: '/card-logos/credz.png',
 };
 
-export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
+export default function RegisterCard({ onSalvar, onCancelar, cards = [] }) {
   const [activeStep, setActiveStep] = useState(0);
   const [newCard, setNewCard] = useState({
-    numero: '',
-    bandeira: '',
-    nomeImpresso: '',
-    validade: '',
+    number: '',
+    brand: '',
+    nameOnCard: '',
+    expiry: '',
     CVV: ''
   });
   const [numberError, setNumberError] = useState('');
   const [formError, setFormError] = useState('');
-  const [touched, setTouched] = useState({ numero: false });
+  const [touched, setTouched] = useState({ number: false });
 
   // Consistency: checks for duplicates both when advancing and when saving
-  function isDuplicate(numero) {
-    const final = numero.replace(/\D/g, '').slice(-4);
-    return cartoes.some(c => c.final === final);
+  function isDuplicate(number) {
+    const last4 = (number || '').replace(/\D/g, '').slice(-4);
+    return (Array.isArray(cards) ? cards : []).some(c => c.last4 === last4);
   }
 
   const handleNext = () => {
     if (activeStep === 0) {
-      const cleanNumber = newCard.numero.replace(/\D/g, '');
+      const cleanNumber = newCard.number.replace(/\D/g, '');
       const numberValidation = valid.number(cleanNumber);
       const expectedLengths = (numberValidation.card && numberValidation.card.lengths) || [16];
-      if (isDuplicate(newCard.numero)) {
+      if (isDuplicate(newCard.number)) {
         setNumberError('A card with these final digits is already registered.');
         setFormError('');
         return;
@@ -91,7 +91,7 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
       }
       setNumberError('');
       setFormError('');
-      setNewCard((prev) => ({ ...prev, bandeira: numberValidation.card.niceType || '' }));
+      setNewCard((prev) => ({ ...prev, brand: numberValidation.card.niceType || '' }));
     }
     setActiveStep((prev) => prev + 1);
   };
@@ -104,17 +104,17 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (activeStep === 1) {
-      if (isDuplicate(newCard.numero)) {
+      if (isDuplicate(newCard.number)) {
         setFormError('A card with these final digits is already registered.');
         return;
       }
       // Printed name validation: at least 2 words, only letters and spaces, minimum 5 characters
-      if (!/^[A-Za-zÀ-ÿ\s]{5,}$/.test(newCard.nomeImpresso.trim()) || newCard.nomeImpresso.trim().split(' ').length < 2) {
+      if (!/^[A-Za-zÀ-ÿ\s]{5,}$/.test(newCard.nameOnCard.trim()) || newCard.nameOnCard.trim().split(' ').length < 2) {
         setFormError('Invalid printed name. Use first and last name, letters only.');
         return;
       }
       // Expiry validation: format MM/YY, month between 01 and 12, year >= current year
-      const expiryMatch = newCard.validade.match(/^(\d{2})\/(\d{2})$/);
+      const expiryMatch = newCard.expiry.match(/^(\d{2})\/(\d{2})$/);
       if (!expiryMatch) {
         setFormError('Invalid expiry date. Use MM/YY format.');
         return;
@@ -136,11 +136,20 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
         setFormError('Invalid CVV. Must be 3 or 4 digits.');
         return;
       }
-      if (!newCard.numero) {
+      if (!newCard.number) {
         setFormError('Please enter the card number before saving.');
         return;
       }
-      onSalvar(newCard);
+      // Salva o cartão com os campos padronizados
+      const cardToSave = {
+        brand: newCard.brand,
+        last4: (newCard.number || '').replace(/\D/g, '').slice(-4),
+        number: newCard.number,
+        nameOnCard: newCard.nameOnCard,
+        expiry: newCard.expiry,
+        CVV: newCard.CVV
+      };
+      onSalvar(cardToSave);
     }
   };
 
@@ -173,29 +182,29 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
           <Box>
             <TextField
               label={(() => {
-                const cleanNumber = newCard.numero.replace(/\D/g, '');
+                const cleanNumber = newCard.number.replace(/\D/g, '');
                 const numberValidation = valid.number(cleanNumber);
                 const expectedLengths = (numberValidation.card && numberValidation.card.lengths) || [16];
                 return `Card number (${expectedLengths.join(' or ')} digits${numberValidation.card ? ' - ' + numberValidation.card.niceType : ''})`;
               })()}
-              value={newCard.numero}
+              value={newCard.number}
               onChange={(e) => {
                 const number = e.target.value.replace(/\D/g, '');
                 const numberValidation = valid.number(number);
                 const expectedLengths = (numberValidation.card && numberValidation.card.lengths) || [16];
-                setNewCard({ ...newCard, numero: number.slice(0, Math.max(...expectedLengths)) });
-                setTouched(t => ({ ...t, numero: true }));
+                setNewCard({ ...newCard, number: number.slice(0, Math.max(...expectedLengths)) });
+                setTouched(t => ({ ...t, number: true }));
                 setNumberError('');
               }}
               placeholder="Card number"
               fullWidth
-              error={!!numberError || (touched.numero && isDuplicate(newCard.numero))}
-              helperText={numberError || (touched.numero && isDuplicate(newCard.numero) ? 'A card with these final digits is already registered.' : '')}
+              error={!!numberError || (touched.number && isDuplicate(newCard.number))}
+              helperText={numberError || (touched.number && isDuplicate(newCard.number) ? 'A card with these final digits is already registered.' : '')}
               sx={{ mb: 2 }}
-              onBlur={() => setTouched(t => ({ ...t, numero: true }))}
+              onBlur={() => setTouched(t => ({ ...t, number: true }))}
             />
             {/* Extra consistency: Material-UI helperText for duplicate */}
-            {touched.numero && isDuplicate(newCard.numero) && !numberError && (
+            {touched.number && isDuplicate(newCard.number) && !numberError && (
               <FormHelperText error>
                 A card with these final digits is already registered.
               </FormHelperText>
@@ -208,9 +217,9 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
               Confirm card details:
             </Typography>
             <Box display="flex" alignItems="center" mb={1}>
-              <Typography>Detected brand: <b>{newCard.bandeira}</b></Typography>
+              <Typography>Detected brand: <b>{newCard.brand}</b></Typography>
               {(() => {
-                const cleanNumber = newCard.numero.replace(/\D/g, '');
+                const cleanNumber = newCard.number.replace(/\D/g, '');
                 const numberValidation = valid.number(cleanNumber);
                 const cardType = numberValidation.card && numberValidation.card.type;
                 const logoSrc = cardType && cardLogos[cardType];
@@ -218,7 +227,7 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
                   return (
                     <img
                       src={logoSrc}
-                      alt={newCard.bandeira}
+                      alt={newCard.brand}
                       style={{ height: 28, marginLeft: 10, verticalAlign: 'middle' }}
                     />
                   );
@@ -226,11 +235,11 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
                 return null;
               })()}
             </Box>
-            <Typography>Number: <b>**** **** **** {newCard.numero.slice(-4)}</b></Typography>
+            <Typography>Number: <b>**** **** **** {newCard.number.slice(-4)}</b></Typography>
             <TextField
               label="Name printed on card"
-              value={newCard.nomeImpresso}
-              onChange={e => setNewCard({ ...newCard, nomeImpresso: e.target.value })}
+              value={newCard.nameOnCard}
+              onChange={e => setNewCard({ ...newCard, nameOnCard: e.target.value })}
               placeholder="Printed name"
               fullWidth
               required
@@ -241,11 +250,11 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
             <Box display="flex" gap={2} mt={2}>
               <TextField
                 label="Expiry (MM/YY)"
-                value={newCard.validade}
+                value={newCard.expiry}
                 onChange={e => {
                   let v = e.target.value.replace(/\D/g, '').slice(0, 4);
                   if (v.length > 2) v = v.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-                  setNewCard({ ...newCard, validade: v });
+                  setNewCard({ ...newCard, expiry: v });
                 }}
                 placeholder="MM/YY"
                 fullWidth
@@ -279,7 +288,7 @@ export default function RegisterCard({ onSalvar, onCancelar, cartoes = [] }) {
               onClick={handleNext}
               color="primary"
               variant="contained"
-              disabled={isDuplicate(newCard.numero)}
+              disabled={isDuplicate(newCard.number)}
             >
               Next
             </Button>

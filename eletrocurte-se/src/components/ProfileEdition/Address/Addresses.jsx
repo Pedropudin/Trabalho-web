@@ -85,7 +85,7 @@ export default function Addresses({ onVoltar }) {
   };
 
   // Adds a new address to the list and selects it.
-  const adicionarEndereco = (enderecoCompleto) => {
+  const addAddress = (enderecoCompleto) => {
     // Formats the address if it's an object (AdressModal return).
     const texto = typeof enderecoCompleto === 'object' && enderecoCompleto !== null
       ? `${enderecoCompleto.logradouro || ''}, ${enderecoCompleto.numero || ''} ${enderecoCompleto.complemento ? '- ' + enderecoCompleto.complemento : ''} - ${enderecoCompleto.bairro || ''}, ${enderecoCompleto.localidade || ''}/${enderecoCompleto.uf || ''}`.replace(/\s+/g, ' ').trim()
@@ -161,7 +161,7 @@ export default function Addresses({ onVoltar }) {
         <DialogContent>
           {/* AddressModal component for registration form */}
           <AddressModal onSalvar={(endereco) => {
-            adicionarEndereco(endereco);
+            addAddress(endereco);
             setModalAberto(false);
           }} />
         </DialogContent>
