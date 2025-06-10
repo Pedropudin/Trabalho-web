@@ -34,7 +34,7 @@ export default function SectorPage() {
     
     // Reads product data directly from JSON
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
+        const localProducts = localStorage.getItem("produtos");
         if (localProducts) {
             setProdutosLocais(JSON.parse(localProducts));
         } else {
@@ -66,7 +66,6 @@ export default function SectorPage() {
         ? produtosLocais.filter((p) => normalize(p.setorGeral) === normalize(name))
         : produtosLocais;
     
-
     // Product sorting based on the chosen order
     const orderedProducts = React.useMemo(() => {
         let products = [...sectorProducts];

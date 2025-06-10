@@ -22,9 +22,10 @@ export default function SearchPage() {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [produtosLocais, setProdutosLocais] = React.useState([]);
+
     // Reads product data directly from JSON
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
+        const localProducts = localStorage.getItem("produtos");
         if (localProducts) {
             setProdutosLocais(JSON.parse(localProducts));
         } else {
@@ -36,9 +37,18 @@ export default function SearchPage() {
                 .catch(() => setProdutosLocais([]));
         }
     }, []);
+    
+    const produtosValidos = produtosLocais.filter(
+      p => p && p.name && p.marca && p.price !== undefined && p.inStock !== undefined
+    );
+    
     // Handles product brands
-    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
-    .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
+    const marcasLocais = [
+      ...new Set(produtosValidos.map(p => p.marca.toLowerCase()))
+    ].map(marca => ({
+      id: marca,
+      label: marca.charAt(0).toUpperCase() + marca.slice(1)
+    }));
 
     // Handles product order change
     function handleOrderChange(e) {
@@ -46,22 +56,22 @@ export default function SearchPage() {
     }
     // Uses useMemo to organize, whenever changed, the new order of our products
     const orderedProducts = React.useMemo(() => {
-        const produtosOrdenados = [...produtosLocais].sort((a, b) => {
-            if (a.inStock > 0  && b.inStock === 0) return -1; 
-            if (a.inStock === 0  && b.inStock > 0) return 1; 
-            if (order === "alphabetical-asc") {
-                return a.name.localeCompare(b.name);
-            } else if (order === "alphabetical-desc") {
-                return b.name.localeCompare(a.name);
-            } else if (order === "low-price") {
-                return a.price - b.price;
-            } else if (order === "high-price") {
-                return b.price - a.price;
-            }
-            return 0;
-        });
-        return produtosOrdenados;
-    }, [order, produtosLocais]);
+      const produtosOrdenados = [...produtosValidos].sort((a, b) => {
+          if (a.inStock > 0  && b.inStock === 0) return -1; 
+          if (a.inStock === 0  && b.inStock > 0) return 1; 
+          if (order === "alphabetical-asc") {
+            return a.name.localeCompare(b.name);
+          } else if (order === "alphabetical-desc") {
+            return b.name.localeCompare(a.name);
+          } else if (order === "low-price") {
+            return a.price - b.price;
+          } else if (order === "high-price") {
+            return b.price - a.price;
+          }
+          return 0;
+      });
+      return produtosOrdenados;
+    }, [order, produtosValidos]);
 
     const filteredProducts = orderedProducts.filter(product => {
         const matchesName = !name || product.name.toLowerCase().includes(name.toLowerCase());
@@ -71,7 +81,6 @@ export default function SearchPage() {
         return matchesBrand && matchesMin && matchesMax && matchesName;
     });
     
-
     return(
         <>
             <Header/>

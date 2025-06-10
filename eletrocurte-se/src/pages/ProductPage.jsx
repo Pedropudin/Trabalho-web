@@ -22,7 +22,7 @@ export default function ProductPage() {
 
   // Reads product data directly from JSON
   useEffect(() => {
-      const localProducts = localStorage.getItem("products");
+      const localProducts = localStorage.getItem("produtos");
       if (localProducts) {
           setProdutosLocais(JSON.parse(localProducts));
       } else {
@@ -150,20 +150,24 @@ export default function ProductPage() {
               <h1 className="product-name-product-page">{product.name}</h1>
               <p className="product-description">{product.description}</p>
               <h2 className="product-price">
-                R${product.price.toFixed(2).replace('.', ',')}
+                {Number.isFinite(Number(product.price))
+                  ? `R$${Number(product.price).toFixed(2).replace('.', ',')}`
+                  : "Preço indisponível"}
               </h2>
               <p>
-                Up to 10x of R$ {(product.price / 12).toFixed(2).replace('.', ',')} without interest on credit card.
+                {Number.isFinite(Number(product.price))
+                  ? `Up to 10x of R$ ${(Number(product.price) / 12).toFixed(2).replace('.', ',')} without interest on credit card.`
+                  : "Parcelamento indisponível"}
               </p>
               <p>
-                {product.inStock > 0 ? <span className="product-in-stock">In stock ({product.inStock})</span> : <span className="product-unavailable-product-page">Out of stock ({product.inStock})</span>}
+                {product.inStock > 0 ? <span className="product-in-stock">In stock ({product.inStock})</span> : <span className="product-unavailable-product-page">Out of stock</span>}
               </p>
               <div className="product-buttons">
                 {product.inStock <= 0 ? 
                   <>
                     <button className="product-purchase-button" onClick={() => toast.error("Product out of stock!")}>PRODUCT UNAVAILABLE</button>  
                     <Toaster/>
-                    <button className="product-cart-button" onClick={() => navigate(`/PaginaPesquisa`)}>BACK TO HOME</button>              
+                    <button className="product-cart-button" onClick={() => navigate(`/SearchPage`)}>BACK TO HOME</button>              
                   </>
                 : 
                   <>

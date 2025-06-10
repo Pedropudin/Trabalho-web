@@ -245,7 +245,7 @@ function Header({
       return;
     }
     if (e.key === 'Enter' && searchRealValue) {
-      navigate(`/PaginaPesquisa/${encodeURIComponent(searchRealValue)}`);
+      navigate(`/SearchPage/${encodeURIComponent(searchRealValue)}`);
     }
   };
 
