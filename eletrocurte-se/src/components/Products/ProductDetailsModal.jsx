@@ -4,7 +4,7 @@
 // Usa Material-UI Dialog e mostra mensagens se usuário não estiver logado.
 // Exibe contagem atualizada do carrinho após adição.
 // -----------------------------------------------------------------------------
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogTitle,

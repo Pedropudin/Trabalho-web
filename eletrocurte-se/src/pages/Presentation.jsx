@@ -10,7 +10,7 @@ import '../styles/Apresentacao.css';
   - Comments explain each main block and reinforce the documentation proposal.
 */
 
-export default function Apresentacao() {
+export default function Presentation() {
   return (
     <>
       {/* Main centered container */}

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Button, Typography, Paper } from '@mui/material';
-import WalletModal from './ModalCarteira'; // Você pode renomear o arquivo se quiser
-import CardsList from './CartoesList';
+import WalletModal from './WalletModal';
+import CardsList from './CardsList';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -86,9 +86,9 @@ export default function Wallet({ onBack }) {
         <WalletModal
           balance={balance}
           setBalance={setBalance}
-          cards={cards}
+          cards={cards || []}
           setCards={setCards}
-          validatedCards={validatedCards}
+          validatedCards={validatedCards || []}
           onClose={() => setModalOpen(false)}
         />
       )}

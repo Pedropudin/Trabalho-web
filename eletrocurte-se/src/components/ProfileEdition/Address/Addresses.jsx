@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
-// Enderecos.jsx
+// Addresses.jsx
 // User delivery address management component.
 // Allows viewing, selecting, adding, and removing addresses, with persistence
-// in localStorage. Uses Material-UI for UI and dialogs. Integrated with ModalEndereco
+// in localStorage. Uses Material-UI for UI and dialogs. Integrated with AdressModal
 // for registering new addresses.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
@@ -22,10 +22,10 @@ import {
   Snackbar
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ModalEndereco from './ModalEndereco';
+import AddressModal from './AddressModal';
 import Alert from '@mui/material/Alert';
 
-export default function Enderecos({ onVoltar }) {
+export default function Addresses({ onVoltar }) {
   // List of user addresses, persisted in localStorage.
   const [enderecos, setEnderecos] = useState(() => {
     // Fetches saved addresses or initializes with examples.
@@ -81,12 +81,12 @@ export default function Enderecos({ onVoltar }) {
   // When changing the selected address, shows confirmation message
   const handleChangeEndereco = (e) => {
     setEnderecoSelecionado(e.target.value);
-    setSnackbar({ open: true, message: 'Local de entrega alterado com sucesso!' });
+    setSnackbar({ open: true, message: 'Delivery location changed successfully!' });
   };
 
   // Adds a new address to the list and selects it.
   const adicionarEndereco = (enderecoCompleto) => {
-    // Formats the address if it's an object (ModalEndereco return).
+    // Formats the address if it's an object (AdressModal return).
     const texto = typeof enderecoCompleto === 'object' && enderecoCompleto !== null
       ? `${enderecoCompleto.logradouro || ''}, ${enderecoCompleto.numero || ''} ${enderecoCompleto.complemento ? '- ' + enderecoCompleto.complemento : ''} - ${enderecoCompleto.bairro || ''}, ${enderecoCompleto.localidade || ''}/${enderecoCompleto.uf || ''}`.replace(/\s+/g, ' ').trim()
       : enderecoCompleto;
@@ -124,16 +124,16 @@ export default function Enderecos({ onVoltar }) {
 
   return (
     <div className="editarperfil-card-form">
-      {/* Título da seção */}
-      <Typography variant="h5" gutterBottom>Endereços de Entrega</Typography>
-      {/* Formulário de seleção de endereço usando Material-UI */}
+      {/* Section title */}
+      <Typography variant="h5" gutterBottom>Delivery Addresses</Typography>
+      {/* Address selection form using Material-UI */}
       <FormControl component="fieldset">
-        <FormLabel component="legend">Escolha o endereço para entrega</FormLabel>
+        <FormLabel component="legend">Choose the delivery address</FormLabel>
         <RadioGroup
           value={enderecoSelecionado}
           onChange={handleChangeEndereco}
         >
-          {/* Lista de endereços com opção de remoção */}
+          {/* List of addresses with removal option */}
           {enderecos.map((endereco) => (
             <div key={endereco.id} style={{ display: 'flex', alignItems: 'center' }}>
               <FormControlLabel
@@ -141,7 +141,7 @@ export default function Enderecos({ onVoltar }) {
                 control={<Radio />}
                 label={endereco.texto}
               />
-              {/* Botão para remover endereço, com ícone de lixeira */}
+              {/* Button to remove address, with trash can icon */}
               <IconButton onClick={() => handleRemoverClick(endereco.id)}>
                 <DeleteIcon color="error" />
               </IconButton>
@@ -150,39 +150,39 @@ export default function Enderecos({ onVoltar }) {
         </RadioGroup>
       </FormControl>
 
-      {/* Botão para abrir modal de cadastro de novo endereço */}
+      {/* Button to open new address registration modal */}
       <Button variant="outlined" sx={{ mt: 3, width: '100%' }} onClick={() => setModalAberto(true)}>
-        Cadastrar Novo Endereço
+        Add New Address
       </Button>
 
-      {/* Modal para cadastro de novo endereço */}
+      {/* Modal for new address registration */}
       <Dialog open={modalAberto} onClose={() => setModalAberto(false)}>
-        <DialogTitle>Novo Endereço</DialogTitle>
+        <DialogTitle>New Address</DialogTitle>
         <DialogContent>
-          {/* Componente ModalEndereco para formulário de cadastro */}
-          <ModalEndereco onSalvar={(endereco) => {
+          {/* AddressModal component for registration form */}
+          <AddressModal onSalvar={(endereco) => {
             adicionarEndereco(endereco);
             setModalAberto(false);
           }} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setModalAberto(false)}>Cancelar</Button>
+          <Button onClick={() => setModalAberto(false)}>Cancel</Button>
         </DialogActions>
       </Dialog>
 
-      {/* Diálogo de confirmação para remoção de endereço */}
+      {/* Confirmation dialog for address removal */}
       <Dialog open={dialogRemover.open} onClose={cancelarRemover}>
-        <DialogTitle>Confirmação</DialogTitle>
+        <DialogTitle>Confirmation</DialogTitle>
         <DialogContent>
-          <Typography>Tem certeza que deseja remover o local cadastrado?</Typography>
+          <Typography>Are you sure you want to remove the registered address?</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={cancelarRemover} color="inherit">Cancelar</Button>
-          <Button onClick={confirmarRemover} color="error" variant="contained">Remover</Button>
+          <Button onClick={cancelarRemover} color="inherit">Cancel</Button>
+          <Button onClick={confirmarRemover} color="error" variant="contained">Remove</Button>
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar de confirmação ao trocar endereço */}
+      {/* Confirmation snackbar when changing address */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2500}
@@ -194,7 +194,7 @@ export default function Enderecos({ onVoltar }) {
         </Alert>
       </Snackbar>
 
-      {/* Botão para confirmar seleção e voltar ao perfil */}
+      {/* Button to confirm selection and return to profile */}
       <div style={{ marginTop: '1rem' }}>
         <Button
           variant="contained"
@@ -202,7 +202,7 @@ export default function Enderecos({ onVoltar }) {
           onClick={onVoltar}
           sx={{ width: '100%' }}
         >
-          Confirmar e Voltar ao Perfil
+          Confirm and Back to Profile
         </Button>
       </div>
     </div>

@@ -51,7 +51,7 @@ footer a:hover {
 }
 
 .social-icons a {
-  color: #99ccff; /* Azul por padrão */
+  color: #fff !important; /* Força branco em todas as renderizações */
   font-size: 20px;
   transition: color 0.3s;
 }

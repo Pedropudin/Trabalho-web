@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
+import ROUTES from '../routes';
 
 export default function PaginaProduto() {
   // Variables
@@ -151,11 +152,11 @@ export default function PaginaProduto() {
                   <>
                     <button className="product-purchase-button" onClick={() => toast.error("Produto fora de estoque!")}>PRODUTO INDISPONÍVEL</button>  
                     <Toaster/>
-                    <button className="product-cart-button" onClick={() => navigate(`/PaginaPesquisa`)}>VOLTAR AO INÍCIO</button>              
+                    <button className="product-cart-button" onClick={() => navigate(ROUTES.PAG_PESQUISA)}>VOLTAR AO INÍCIO</button>              
                   </>
                 : 
                   <>
-                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(`/Checkout`)}}>COMPRAR</button>
+                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(ROUTES.CHECKOUT)}}>COMPRAR</button>
                     <Toaster/>
                     <button className="product-cart-button" onClick={() => handleAdicionarCarrinho(product.id)}>
                       ADICIONAR AO CARRINHO

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/Cart.css';
 import toast, { Toaster } from 'react-hot-toast';
+import ROUTES from '../routes';
 
 /*
   Página do carrinho.
@@ -117,7 +118,7 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="empty-cart-btn"
-                        onClick={() => navigate(`/PaginaPesquisa`)}
+                        onClick={() => navigate(ROUTES.PAG_PESQUISA)}
                     >
                         Ir para a loja
                     </button>
@@ -180,7 +181,7 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="continue-btn"
-                        onClick={() => navigate(`/PaginaPesquisa`)}
+                        onClick={() => navigate(ROUTES.PAG_PESQUISA)}
                     >
                         Continuar Comprando
                     </button>

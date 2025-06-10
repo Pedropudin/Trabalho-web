@@ -8,16 +8,18 @@ import "../styles/Footer.css";
 
 const Footer = () => {
     const { pathname } = useLocation();
+    const isTermsPage =
+        pathname.replace(/\/+$/, '').toLowerCase() === ROUTES.TERMS_CONDITIONS.replace(/\/+$/, '').toLowerCase();
 
     return (
-        pathname === ROUTES.TERMOS ? (
+        isTermsPage ? (
             <footer>
-                <div className="footer-content">
+                <div className="rodape-conteudo">
                     <p>000.000.000-00</p>
                     <p>email@gmail.com</p>
                     <p>Phone: (00) 00000-0000</p>
                     <p>
-                        <Link to={ROUTES.APRESENTACAO}>
+                        <Link to={ROUTES.PRESENTATION}>
                             About us!
                         </Link>
                     </p>
@@ -39,12 +41,12 @@ const Footer = () => {
             </footer>
         ) : (
             <footer>
-                <div className="footer-content">
+                <div className="rodape-conteudo">
                     <p>000.000.000-00</p>
                     <p>email@gmail.com</p>
                     <p>Phone: (00) 00000-0000</p>
                     <p>
-                        <Link to={ROUTES.TERMOS}>
+                        <Link to={ROUTES.TERMS_CONDITIONS}>
                             Terms and Conditions
                         </Link>
                     </p>

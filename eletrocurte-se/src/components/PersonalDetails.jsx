@@ -4,6 +4,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes';
 
 /*
   Página de dados do comprador.
@@ -16,6 +18,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     // Progresso
     const activeStep = 1;
+    const navigate = useNavigate();
 
     //Formulário de informações básicas do usuário
     const [form, setForm] = useState({
@@ -125,6 +128,11 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }
+
+    const handleVoltar = () => {
+        navigate(ROUTES.PROFILE);
+    };
+
     return (
         <>
         <Toaster />
@@ -275,7 +283,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 <button
                     type="button"
                     className="back-button"
-                    onClick={onBack}
+                    onClick={handleVoltar}
                 >
                     Voltar
                 </button>

@@ -5,7 +5,7 @@ import {
   FormControl, IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CadastrarCartao from './CadastrarCartao';
+import RegisterCard from './RegisterCard';
 
 // Inline style object for the modal's main Box
 // Defines centering, max width, background color, border radius, shadow, padding, and flexible layout
@@ -20,11 +20,12 @@ const style = {
   // outline: removes focus border
   // display, flexDirection, gap: flexible column layout with spacing
   position: 'absolute',
-  top: '50%',
+  top: '56%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '90%',
-  maxWidth: 400,
+  width: '95vw',
+  maxWidth: 480,
+  minWidth: 300,
   bgcolor: 'background.paper',
   borderRadius: 3,
   boxShadow: 24,
@@ -33,6 +34,7 @@ const style = {
   display: 'flex',
   flexDirection: 'column',
   gap: 2,
+  boxSizing: 'border-box',
 };
 
 // WalletModal component
@@ -42,11 +44,14 @@ const style = {
 // - validatedCards: cards with updated balance
 // - onClose: function to close the modal
 
-export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, onClose }) {
+export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onClose }) {
+  const safeCards = Array.isArray(cartoes) ? cartoes : [];
+  const safeValidatedCards = Array.isArray(cartoesValidados) ? cartoesValidados : [];
+
   const [amountToAdd, setAmountToAdd] = useState('');
 
   // State for the selected card for charging
-  const [selectedCard, setSelectedCard] = useState(cartoes[0]?.final || '');
+  const [selectedCard, setSelectedCard] = useState(safeCards[0]?.final || '');
 
   // Feedback message (success or error)
   const [message, setMessage] = useState('');
@@ -123,7 +128,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
   }
 
   // Get the balance of the currently selected card
-  const selectedBalance = cartoesValidados.find(c => c.final === selectedCard)?.saldo ?? 0;
+  const selectedBalance = safeValidatedCards.find(c => c.final === selectedCard)?.saldo ?? 0;
 
   return (
     // Material UI Modal with high z-index to overlay the interface
@@ -131,12 +136,18 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
       {/* Main Box with inline style defined above */}
       <Box sx={style}>
         {/* Button to close the modal (top right corner) */}
-        <Button onClick={onClose} sx={{ alignSelf: 'flex-end', minWidth: 0, p: 0, mb: 1 }}>
-          {/* alignSelf: aligns button right
-              p: zero padding
-              mb: bottom margin */}
+        <IconButton
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            zIndex: 2,
+          }}
+          aria-label="Close"
+        >
           <CloseIcon />
-        </Button>
+        </IconButton>
 
         {/* Modal title */}
         <Typography
@@ -196,7 +207,7 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
                   onChange={e => setSelectedCard(e.target.value)}
                 >
                   {/* List of available cards */}
-                  {cartoesValidados.map(c => (
+                  {safeValidatedCards.map(c => (
                     <MenuItem key={c.final} value={c.final}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                         <Box>{c.bandeira} **** {c.final}</Box>
@@ -239,14 +250,14 @@ export default function ModalCarteira({ cartoes, setCartoes, cartoesValidados, o
               onClick={() => setStep('newCard')}
             >
               {/* mt: top margin, fontSize: size, alignSelf: centers button */}
-              Register New Card
+              + Register New Card
             </Button>
           </>
         )}
 
         {/* New card registration step */}
         {step === 'newCard' && (
-           <CadastrarCartao
+           <RegisterCard
              onSalvar={(savedCard) => {
                const final = savedCard.numero.slice(-4);
                // Prevents duplicate cards by number (last digits)

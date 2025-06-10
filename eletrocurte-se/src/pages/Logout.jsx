@@ -23,7 +23,7 @@ export default function Logout() {
   useEffect(() => {
     // If not just logged out, block access to this page
     if (localStorage.getItem('isLoggedIn') === 'true') {
-      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+      navigate(ROUTES.HOME_PAGE, { replace: true });
     }
     // Replace history to prevent going back to logout page
     window.history.replaceState({}, document.title, window.location.pathname);
@@ -51,14 +51,14 @@ export default function Logout() {
   // useEffect to redirect when countdown reaches 0
   useEffect(() => {
     if (countdown === 0) {
-      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+      navigate(ROUTES.HOME_PAGE, { replace: true });
     }
   }, [countdown, navigate]);
 
   // Handler for immediate return button
   function handleHomeClick() {
     clearInterval(intervalRef.current);
-    navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+    navigate(ROUTES.HOME_PAGE, { replace: true });
   }
 
   return (

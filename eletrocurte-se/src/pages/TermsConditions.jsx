@@ -11,7 +11,7 @@ import ScrollToTop from '../components/ScrollToTop';
   - Footer with institutional data and external links.
 */
 
-export default function TermosCondicoes() {
+export default function TermsConditions() {
   return (
     <>
       <main className="container-termos">
@@ -117,9 +117,9 @@ export default function TermosCondicoes() {
         <div className="rodape-conteudo">
           <p>000.000.000-00</p>
           <p>email@gmail.com</p>
-          <p>Tel: (00) 00000-0000</p>
+          <p>Phone: (00) 00000-0000</p>
           <p>
-            <Link to={ROUTES.APRESENTACAO}>
+            <Link to={ROUTES.PRESENTATION}>
               About us
             </Link>
           </p>

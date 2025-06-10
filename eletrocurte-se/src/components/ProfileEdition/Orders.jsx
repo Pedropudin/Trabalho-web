@@ -3,6 +3,8 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, Button, Typography, Accordion, AccordionSummary, AccordionDetails, Snackbar, Alert, Skeleton
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../routes';
 
 // Pedidos Component
 // Displays a list of the user's orders with status, date, and details
@@ -44,6 +46,7 @@ const statusColor = {
 export default function Pedidos({ onVoltar }) {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' }); // State for visual feedback
   const [loading, setLoading] = useState(true); // Simulates initial loading
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Simulates initial loading (e.g., API request)

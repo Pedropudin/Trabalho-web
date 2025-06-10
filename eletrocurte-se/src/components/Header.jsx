@@ -215,11 +215,12 @@ function Header({
 
   // Profile: if logged in go to profile, else go to login
   const handleProfileClick = () => {
+    console.log("handleProfileClick called"); // Debug purpose
     if (onProfile) {
       onProfile();
     } else {
       if (isLoggedIn) {
-        navigate(ROUTES.PERFIL);
+        navigate(ROUTES.PROFILE);
       } else {
         navigate(ROUTES.LOGIN);
       }
@@ -263,7 +264,7 @@ function Header({
     if (onLogoClick) {
       onLogoClick();
     } else {
-      navigate(ROUTES.PAGINA_INICIAL);
+      navigate(ROUTES.HOME_PAGE);
     }
   };
 

@@ -4,6 +4,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes';
 
 /*
   Página de dados de pagamento.
@@ -112,6 +114,12 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         if (onNext) onNext();
     }
 
+    const navigate = useNavigate();
+
+    const handleVoltar = () => {
+        navigate(ROUTES.PROFILE);
+    };
+
     return (
        <>
         <Toaster />
@@ -206,7 +214,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 <button
                     type="button"
                     className="back-button"
-                    onClick={onBack}
+                    onClick={handleVoltar}
                 >
                     Voltar
                 </button>

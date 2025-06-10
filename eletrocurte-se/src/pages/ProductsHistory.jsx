@@ -2,8 +2,8 @@ import React, { useMemo, useEffect, useState } from 'react';
 import Header from '../components/Header';
 import '../styles/HistoricoProdutos.css';
 import Footer from '../components/Footer';
-import ProductCard from '../components/Produtos/ProductCard';
-import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+import ProductCard from '../components/Products/ProductCard';
+import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 import ScrollToTop from '../components/ScrollToTop';
 
 /*

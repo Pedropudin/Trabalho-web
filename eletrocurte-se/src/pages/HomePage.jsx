@@ -10,8 +10,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import '../styles/PaginaInicial.css';
 import ROUTES from '../routes';
-import ProductCard from '../components/Produtos/ProductCard';
-import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+import ProductCard from '../components/Products/ProductCard';
+import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 
 /*
   Home page of the Eletrocurte-se portal.
@@ -50,9 +50,10 @@ const PaginaInicial = () => {
         }
     }
 
+    // Certifique-se de que, se passar onProfile, ele faz navigate(ROUTES.PROFILE)
     function handleProfile() {
         if (localStorage.getItem('isLoggedIn') === 'true') {
-            navigate(ROUTES.PERFIL);
+            navigate(ROUTES.PROFILE);
         } else {
             navigate(ROUTES.LOGIN);
         }

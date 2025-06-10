@@ -12,13 +12,14 @@ import Footer from '../components/Footer';
   - Responsive and accessible layout aligned with the project's visual standards.
 */
 
-export default function Perfil() {
+export default function Profile() {
   const navigate = useNavigate();
-  const nomeUsuario = localStorage.getItem('nomeUsuario') || "User"; // Retrieves saved name
+  // Search username saved in different keys for compatibility
+  const nomeUsuario = localStorage.getItem('nomeUsuario') || localStorage.getItem('userName') || "User";
 
   // Navigates to the editing area corresponding to the clicked card
   function handleCardClick(flag) {
-    navigate(ROUTES.EDITAR_PERFIL, { state: { flag } });
+    navigate(ROUTES.PROFILE_EDITION, { state: { flag } });
   }
 
   return (
@@ -32,37 +33,37 @@ export default function Perfil() {
         {/* Grid of profile feature cards */}
         <div className="cards-grid">
           {/* Each card represents a profile feature */}
-          <div className="card" onClick={() => handleCardClick('pedidos')} tabIndex={0} role="button">
+          <div className="card" onClick={() => handleCardClick('orders')} tabIndex={0} role="button">
             <i className="fas fa-search fa-2x"></i>
             <h3>Orders</h3>
             <p>Track the status of your products</p>
           </div>
-          <div className="card" onClick={() => handleCardClick('mensagens')} tabIndex={0} role="button">
+          <div className="card" onClick={() => handleCardClick('messages')} tabIndex={0} role="button">
             <i className="fas fa-envelope fa-2x"></i>
             <h3>Messages</h3>
             <p>See your messages and news</p>
           </div>
-          <div className="card" onClick={() => handleCardClick('carteira')} tabIndex={0} role="button">
+          <div className="card" onClick={() => handleCardClick('wallet')} tabIndex={0} role="button">
             <i className="fas fa-wallet fa-2x"></i>
             <h3>Wallet</h3>
             <p>Manage your balance and accounts</p>
           </div>
-          <div className="card" onClick={() => handleCardClick('seguranca')} tabIndex={0} role="button">
+          <div className="card" onClick={() => handleCardClick('security')} tabIndex={0} role="button">
             <i className="fas fa-shield-alt fa-2x"></i>
             <h3>Security</h3>
             <p>Update your password, email, and CPF</p>
           </div>
-          <div className="card" onClick={() => handleCardClick('enderecos')} tabIndex={0} role="button">
+          <div className="card" onClick={() => handleCardClick('addresses')} tabIndex={0} role="button">
             <i className="fas fa-map-marker-alt fa-2x"></i>
             <h3>Addresses</h3>
             <p>Manage your delivery locations</p>
           </div>
-          <div className="card" onClick={() => handleCardClick('privacidade')} tabIndex={0} role="button">
+          <div className="card" onClick={() => handleCardClick('privacy')} tabIndex={0} role="button">
             <i className="fas fa-user-secret fa-2x"></i>
             <h3>Privacy</h3>
             <p>Security and data settings</p>
           </div>
-          <div className="card wide-card" onClick={() => handleCardClick('historico')} tabIndex={0} role="button">
+          <div className="card wide-card" onClick={() => handleCardClick('history')} tabIndex={0} role="button">
             <i className="fas fa-history fa-2x"></i>
             <h3>History</h3>
             <p>View your purchases and products</p>

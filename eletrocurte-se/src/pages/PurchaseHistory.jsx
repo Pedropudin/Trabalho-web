@@ -4,8 +4,8 @@ import '../styles/HistoricoCompras.css';
 import Footer from '../components/Footer';
 import UserRating from '../components/UserRating';
 import '../styles/UserRating.css';
-import ProductCard from '../components/Produtos/ProductCard';
-import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+import ProductCard from '../components/Products/ProductCard';
+import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 import ScrollToTop from '../components/ScrollToTop';
 import ROUTES from '../routes';
 

@@ -4,8 +4,8 @@ import AdminHeader from "../components/admin/AdminHeader";
 import Card from "../components/Card";
 import Question from "../components/Pendencias/Question";
 import GenericInfoRedirect from "../components/Pendencias/GenericInfoRedirect";
-import ProductCard from '../components/Produtos/ProductCard';
-import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
+import ProductCard from '../components/Products/ProductCard';
+import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 import ReactPaginate from 'react-paginate';
 
 import "../styles/Pagination.css";

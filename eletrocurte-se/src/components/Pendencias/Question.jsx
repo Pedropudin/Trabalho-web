@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Button from "../Button";
 import MessageAlert from "../MessageAlert";
-
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../routes";
 import "../../styles/Question.css";
 
 const Answer = ({ value, change, submit }) => {
@@ -18,13 +19,18 @@ const Answer = ({ value, change, submit }) => {
 const Question = ({ data, style, answer, onAnswerChange }) => {
     const [showAnswer, setShowAnswer] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const navigate = useNavigate();
 
     const handleAnswer = () => {
         setShowAnswer(!showAnswer);
     }
 
     const handleRedirectProduct = () => {
-        alert("Faz nada ainda");
+        if (data.product_id) {
+            navigate(ROUTES.PAG_PRODUTO.replace(":id", data.product_id));
+        } else {
+            alert("Faz nada ainda");
+        }
     };
 
     const handleSubmit = () => {

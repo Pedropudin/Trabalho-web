@@ -20,10 +20,9 @@ import ROUTES from '../../routes';
 // - Snackbar/Alert shows temporary messages to the user
 
 export default function Historico({ onVoltar }) {
-  const navigate = useNavigate(); // Hook for route navigation
-  const [snackbar, setSnackbar] = useState({ open: false, message: '' }); // State to control visual feedback
+  const navigate = useNavigate();
+  const [snackbar, setSnackbar] = useState({ open: false, message: '' });
 
-  // Function to navigate to a route and show a snackbar message
   const handleClick = (route, msg) => {
     navigate(route);
     setSnackbar({ open: true, message: msg });
@@ -31,31 +30,19 @@ export default function Historico({ onVoltar }) {
 
   return (
     <Paper elevation={4} sx={{ p: 4, maxWidth: 420, mx: 'auto', borderRadius: 3 }}>
-      {/* Paper: visual container with shadow and rounded corners
-          elevation={4}: shadow level
-          sx: padding, max width, centering, rounded border */}
       <Typography variant="h5" gutterBottom align="center">
-        {/* Typography: large centered title
-            variant="h5": large size
-            gutterBottom: bottom margin
-            align="center": center text */}
         History
       </Typography>
       <Stack spacing={2} sx={{ mt: 2 }}>
-        {/* Stack: arranges buttons in a vertical column with spacing
-            spacing={2}: space between items
-            sx: mt=2 (top margin) */}
         <Button
           variant="outlined"
-          onClick={() => handleClick(ROUTES.HIST_COMPRAS, 'Accessing purchase history...')}
+          onClick={() => handleClick(ROUTES.PURCHASE_HISTORY, 'Accessing purchase history...')}
         >
-          {/* Button: action button
-              variant="outlined": visible border, transparent background */}
           View Purchase History
         </Button>
         <Button
           variant="outlined"
-          onClick={() => handleClick(ROUTES.HIST_PRODUTOS, 'Accessing viewed products history...')}
+          onClick={() => handleClick(ROUTES.PRODUCT_HISTORY, 'Accessing viewed products history...')}
         >
           View Viewed Products History
         </Button>
@@ -63,7 +50,6 @@ export default function Historico({ onVoltar }) {
           variant="contained"
           onClick={onVoltar}
         >
-          {/* variant="contained": button with filled background (highlighted) */}
           Back to Profile
         </Button>
       </Stack>
@@ -73,8 +59,6 @@ export default function Historico({ onVoltar }) {
         onClose={() => setSnackbar({ ...snackbar, open: false })}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        {/* Snackbar: temporary visual feedback
-            Alert: informational message */}
         <Alert severity="info" sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>

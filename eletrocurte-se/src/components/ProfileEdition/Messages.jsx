@@ -154,6 +154,33 @@ export default function Mensagens({ onVoltar }) {
   // Groups filtered messages by date
   const agrupadas = agruparMensagensPorData(mensagensFiltradas);
 
+  if (loading) {
+    return (
+      <Box maxWidth="md" mx="auto" mt={4}>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" gutterBottom sx={{mb: 3}}>
+              Admin messages
+            </Typography>
+            <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+            <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+            <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+            <div style={{ margin: '24px 0', display: 'flex', justifyContent: 'center' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onVoltar}
+                sx={{ mt: 2, fontWeight: 600, borderRadius: 2 }}
+              >
+                Back to Profile
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </Box>
+    );
+  }
+
   return (
     <Box maxWidth="md" mx="auto" mt={4}>
       {/* Box: flexible container

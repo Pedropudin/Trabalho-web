@@ -8,7 +8,6 @@ import ProductDisplay from "../components/ProductDisplay";
 import { useParams } from "react-router-dom";
 import React, { useState,useEffect } from 'react';
 
-
 /*
   Eletrocurte-se portal sector page.
   - Displays all products separated by sector when accessed as "/PaginaSetor"
