@@ -14,10 +14,10 @@ import ProductCard from '../components/Produtos/ProductCard';
 import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 
 /*
-  Página inicial do portal Eletrocurte-se.
-  - Banner de boas-vindas, produtos em destaque e chamada para ação.
-  - Integração com autenticação, navegação e feedback visual.
-  - Layout responsivo com Material-UI e alinhamento ao padrão visual do projeto.
+  Home page of the Eletrocurte-se portal.
+  - Welcome banner, featured products, and call-to-action.
+  - Integrated with authentication, navigation, and visual feedback.
+  - Responsive layout using Material-UI and aligned with project visual standards.
 */
 
 const PaginaInicial = () => {
@@ -25,17 +25,17 @@ const PaginaInicial = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [mensagem, setMensagem] = useState('');
     const [produtosHistorico, setProdutosHistorico] = useState([]);
-    // Estado para modal de detalhes do produto
+    // State for product details modal
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
-        // Verifica autenticação ao carregar a página
+        // Check authentication on page load
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, []);
 
     useEffect(() => {
-        // Busca produtos em destaque do histórico
+        // Fetch featured products from history
         fetch(process.env.PUBLIC_URL + '/data/products.json')
             .then(res => res.json())
             .then(data => setProdutosHistorico(data.produtosHistorico || []));
@@ -62,27 +62,27 @@ const PaginaInicial = () => {
         if (localStorage.getItem('isLoggedIn') === 'true') {
             navigate(ROUTES.CHECKOUT);
         } else {
-        navigate(ROUTES.LOGIN);
+            navigate(ROUTES.LOGIN);
         }
     }
 
     function handleLogout() {
         if (localStorage.getItem('isLoggedIn') !== 'true') {
-            setMensagem('Você já está deslogado!');
+            setMensagem('You are already logged out!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userType');
         setIsLoggedIn(false);
-        setMensagem('Logout realizado com sucesso!');
+        setMensagem('Successfully logged out!');
         setTimeout(() => setMensagem(''), 3500);
         navigate(ROUTES.LOGOUT, { replace: true });
     }
 
     function handleSearchChange(e) {
         if (!isLoggedIn) {
-            setMensagem('Faça login para pesquisar produtos!');
+            setMensagem('Log in to search for products!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
@@ -90,18 +90,18 @@ const PaginaInicial = () => {
 
     function handleCategoryClick(cat) {
         if (!isLoggedIn) {
-            setMensagem('Faça login para filtrar por categoria!');
+            setMensagem('Log in to filter by category!');
             setTimeout(() => setMensagem(''), 3500);
             return;
         }
     }
 
-    // Handlers para modal de detalhes do produto
+    // Handlers for product detail modal
     const handleProductClick = (product) => {
         setSelectedProduct({ ...product, showBuyButton: true });
         setModalOpen(true);
     };
-    
+
     const handleModalClose = () => {
         setModalOpen(false);
         setSelectedProduct(null);
@@ -117,48 +117,48 @@ const PaginaInicial = () => {
                 onCategoryClick={handleCategoryClick}
                 searchDisabled={!isLoggedIn}
                 onSearchDenied={() => {
-                    setMensagem('Faça login para pesquisar produtos!');
+                    setMensagem('Log in to search for products!');
                     setTimeout(() => setMensagem(''), 3500);
                 }}
                 onLogoClick={undefined}
             />
-            {/* Mensagem amigável para funcionalidades restritas */}
+            {/* Friendly message for restricted features */}
             {mensagem && (
                 <div className="mensagem show info" style={{ position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 999, background: '#2196F3', color: '#fff', padding: '12px 24px', borderRadius: 8, fontWeight: 'bold' }}>{mensagem}</div>
             )}
             <Box className="landing-container" sx={{ background: '#f5fafd', minHeight: '100vh', pb: 4 }}>
-                {/* Banner principal com chamada para ação */}
+                {/* Main banner with call-to-action */}
                 {!isLoggedIn && (
-                  <Paper elevation={3} className="banner" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #1565c0 80%, #5e92f3 100%)', color: '#fff', p: { xs: 2, md: 6 }, gap: 4, flexWrap: 'wrap', mb: 4 }}>
-                      <Box className="banner-content" sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: { xs: 'center', md: 'flex-start' }, minWidth: 220 }}>
-                          <Typography variant="h3" component="h1" sx={{ color: '#fff', fontWeight: 700, mb: 1, fontSize: { xs: '2rem', md: '2.5rem' } }}>
-                              Bem-vindo ao Eletrocurte-se
-                          </Typography>
-                          <Typography variant="subtitle1" sx={{ color: '#e3f2fd', mb: 2 }}>
-                              Os melhores eletrônicos, ofertas e novidades para você!
-                          </Typography>
-                          <Button
-                              text="Comece agora"
-                              onClick={handleComeceAgora}
-                              type={1}
-                              style={{
-                                  background: '#ffb300',
-                                  color: '#222',
-                                  fontWeight: 700,
-                                  borderRadius: 8,
-                                  padding: '12px 32px',
-                                  fontSize: '1.1rem',
-                                  marginTop: 8,
-                                  boxShadow: '0 2px 8px #0002',
-                                  border: 'none'
-                              }}
-                          />
-                      </Box>
-                  </Paper>
+                    <Paper elevation={3} className="banner" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #1565c0 80%, #5e92f3 100%)', color: '#fff', p: { xs: 2, md: 6 }, gap: 4, flexWrap: 'wrap', mb: 4 }}>
+                        <Box className="banner-content" sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: { xs: 'center', md: 'flex-start' }, minWidth: 220 }}>
+                            <Typography variant="h3" component="h1" sx={{ color: '#fff', fontWeight: 700, mb: 1, fontSize: { xs: '2rem', md: '2.5rem' } }}>
+                                Welcome to Eletrocurte-se
+                            </Typography>
+                            <Typography variant="subtitle1" sx={{ color: '#e3f2fd', mb: 2 }}>
+                                The best electronics, deals and news for you!
+                            </Typography>
+                            <Button
+                                text="Start now"
+                                onClick={handleComeceAgora}
+                                type={1}
+                                style={{
+                                    background: '#ffb300',
+                                    color: '#222',
+                                    fontWeight: 700,
+                                    borderRadius: 8,
+                                    padding: '12px 32px',
+                                    fontSize: '1.1rem',
+                                    marginTop: 8,
+                                    boxShadow: '0 2px 8px #0002',
+                                    border: 'none'
+                                }}
+                            />
+                        </Box>
+                    </Paper>
                 )}
-                {/* Produtos em destaque */}
+                {/* Featured products */}
                 <Box className="produtos-destaque" sx={{ maxWidth: 1200, mx: 'auto', px: 2, mb: 6 }}>
-                    <Typography variant="h4" sx={{ color: '#004d66', mb: 5, }}>Produtos em destaque</Typography>
+                    <Typography variant="h4" sx={{ color: '#004d66', mb: 5, }}>Featured Products</Typography>
                     <Grid
                         container
                         columns={{ xs: 1, sm: 2, md: 3 }}
@@ -172,7 +172,7 @@ const PaginaInicial = () => {
                             <Grid sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                                 <Paper elevation={2} sx={{ p: 4, borderRadius: 2, textAlign: 'center', width: '100%', maxWidth: 320 }}>
                                     <Typography variant="subtitle1" sx={{ color: '#888' }}>
-                                        Nenhum produto disponível no momento.
+                                        No products available at the moment.
                                     </Typography>
                                 </Paper>
                             </Grid>
@@ -191,14 +191,14 @@ const PaginaInicial = () => {
                         )}
                     </Grid>
                 </Box>
-                {/* Chamada para ação extra: newsletter para logados */}
+                {/* Extra call-to-action: newsletter for logged-in users */}
                 {isLoggedIn && (
                     <Paper elevation={2} className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
-                        <Typography variant="h6" sx={{ color: '#004d66', mb: 2 }}>Receba ofertas exclusivas!</Typography>
+                        <Typography variant="h6" sx={{ color: '#004d66', mb: 2 }}>Receive exclusive offers!</Typography>
                         <form className="newsletter-form" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 8 }}>
-                            <input type="email" placeholder="Seu e-mail" required style={{ padding: '10px 16px', borderRadius: 6, border: '1px solid #b0bec5', fontSize: '1rem', flex: 1, minWidth: 0 }} />
+                            <input type="email" placeholder="Your email" required style={{ padding: '10px 16px', borderRadius: 6, border: '1px solid #b0bec5', fontSize: '1rem', flex: 1, minWidth: 0 }} />
                             <Button
-                                text="Quero receber"
+                                text="Subscribe"
                                 type={1}
                                 style={{
                                     background: '#ffb300',
@@ -214,7 +214,7 @@ const PaginaInicial = () => {
                     </Paper>
                 )}
             </Box>
-            {/* Modal de detalhes do produto */}
+            {/* Product details modal */}
             <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
             <ScrollToTop />
             <Footer />

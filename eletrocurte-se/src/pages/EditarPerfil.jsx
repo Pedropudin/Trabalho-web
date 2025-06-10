@@ -13,20 +13,20 @@ import FormSeguranca from '../components/EditarPerfil/Seguranca';
 import Historico from '../components/EditarPerfil/Historico';
 
 /*
-  Página de edição de perfil do usuário.
-  - Renderiza dinamicamente a seção de acordo com o flag de navegação.
-  - Garante navegação segura: só permite flags válidos, senão redireciona para perfil.
-  - Integra componentes de cada funcionalidade do perfil (pedidos, mensagens, carteira, etc).
+  User profile editing page.
+  - Dynamically renders the section based on navigation flag.
+  - Ensures safe navigation: only allows valid flags, otherwise redirects to profile.
+  - Integrates components for each profile functionality (orders, messages, wallet, etc).
 */
 
-export default function EditarPerfil() {
+export default function EditProfile() {
   const location = useLocation();
   const navigate = useNavigate();
   const flag = location.state?.flag || '';
 
   useEffect(() => {
-    // Permite acesso apenas a flags válidos, senão volta para perfil
-    const flagsSecundarias = [
+    // Allows access only to valid flags, otherwise redirects to profile
+    const validFlags = [
       'pedidos',
       'mensagens',
       'carteira',
@@ -35,7 +35,7 @@ export default function EditarPerfil() {
       'privacidade',
       'historico',
     ];
-    if (!flag || !flagsSecundarias.includes(flag)) {
+    if (!flag || !validFlags.includes(flag)) {
       navigate(ROUTES.PERFIL);
     }
   }, [flag, navigate]);
@@ -45,7 +45,7 @@ export default function EditarPerfil() {
       <Header />
       <main className="editarperfil-body-content">
         <div className="editarperfil-cards-grid">
-          {/* Renderiza componente conforme flag selecionado */}
+          {/* Renders component based on selected flag */}
           {flag === 'pedidos' && <Pedidos onVoltar={() => navigate(ROUTES.PERFIL)} />}
           {flag === 'mensagens' && <Mensagens onVoltar={() => navigate(ROUTES.PERFIL)} />}
           {flag === 'carteira' && <Carteira onVoltar={() => navigate(ROUTES.PERFIL)} />}

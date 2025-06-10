@@ -10,10 +10,10 @@ import ScrollToTop from '../components/ScrollToTop';
 import ROUTES from '../routes';
 
 /*
-  Página de histórico de compras do usuário.
-  - Exibe produtos agrupados por mês/ano de compra.
-  - Permite avaliar produtos ainda não avaliados.
-  - Modal de detalhes sem botão de compra.
+  User purchase history page.
+  - Displays products grouped by purchase month/year.
+  - Allows rating products that haven't been rated yet.
+  - Details modal without purchase button.
 */
 
 function getProdutosByRoute(route, data) {
@@ -28,12 +28,12 @@ function getProdutosByRoute(route, data) {
 }
 
 export default function HistoricoCompras() {
-  // Obtém produtos do histórico via products.js
+  // Gets products from the history via products.js
   const [produtos, setProdutos] = useState([]);
-  // Estado para modal de detalhes do produto
+  // State for product details modal
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  // Estado para controlar o índice do produto selecionado para avaliação
+  // State to control the index of the product selected for review
   const [produtoAvaliacaoIdx, setProdutoAvaliacaoIdx] = useState(0);
 
   useEffect(() => {
@@ -41,19 +41,19 @@ export default function HistoricoCompras() {
       .then(res => res.json())
       .then(data => {
         let produtos = getProdutosByRoute(ROUTES.HIST_COMPRAS, data);
-        // Adiciona até 4 produtos reais do JSON sem avaliação, com datas recentes (intenção de teste de funcionalidade)
+        // Adds up to 4 real products from JSON without reviews, with recent dates (functionality test intention)
         const produtosSemAvaliacao = [];
         for (let i = 0; i < 4 && i < produtos.length; i++) {
           const novoProduto = { ...produtos[i] };
           delete novoProduto.avaliacao;
-          // Datas diferentes para cada produto
+          // Different dates for each product
           const dia = 10 + i;
           novoProduto.data = `${dia.toString().padStart(2, '0')}/06/2024`;
           produtosSemAvaliacao.push(novoProduto);
         }
         produtos = [...produtosSemAvaliacao, ...produtos];
 
-        // Aplica avaliações do usuário logado, se houver
+        // Applies reviews from the logged-in user, if any
         const nomeUsuario = localStorage.getItem('nomeUsuario');
         let avaliacoes = {};
         if (nomeUsuario) {
@@ -70,13 +70,13 @@ export default function HistoricoCompras() {
       });
   }, []);
 
-  // Produtos aguardando avaliação: possuem avaliacao null ou undefined
+  // Products awaiting review: have null or undefined review
   const produtosAguardando = produtos.filter(p => p.avaliacao == null);
 
-  // Função chamada ao avaliar um produto
+  // Function called when reviewing a product
   const handleAvaliar = (nota, comentario, idx) => {
     setProdutos(produtosAntigos => {
-      // Atualiza o produto avaliado com a nota e comentário
+      // Updates the reviewed product with the rating and comment
       const nomeUsuario = localStorage.getItem('nomeUsuario');
       let avaliacoes = {};
       if (nomeUsuario) {
@@ -98,9 +98,9 @@ export default function HistoricoCompras() {
     });
   };
 
-  // Data dinâmica e agrupamento por ano/mês
+  // Dynamic date and grouping by year/month
   const { produtosPorAnoMes } = useMemo(() => {
-    // Agrupa produtos por ano e mês
+    // Groups products by year and month
     function agruparPorAnoMes(produtos) {
       return produtos.reduce((acc, produto) => {
         if (!produto.data) return acc;
@@ -116,21 +116,21 @@ export default function HistoricoCompras() {
     return { produtosPorAnoMes: agrupados };
   }, [produtos]);
 
-  // Função utilitária para renderizar o cabeçalho de mês/ano
+  // Utility function to render month/year header
   function renderCabecalhoMesAno(mes, ano) {
-    const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return (
       <section className="compras">
         <p>
-          Compras realizadas em {meses[parseInt(mes, 10) - 1]} de {ano}
+          Purchases made in {months[parseInt(mes, 10) - 1]} {ano}
         </p>
       </section>
     );
   }
 
-  // Função para abrir detalhes do produto avaliado
+  // Function to open details of the reviewed product
   const handleProductClick = (product) => {
-    // Nunca mostra o botão de compra no modal do histórico de compras
+    // Never shows the purchase button in the purchase history modal
     setSelectedProduct({ ...product, showBuyButton: false });
     setModalOpen(true);
   };
@@ -142,18 +142,18 @@ export default function HistoricoCompras() {
   return (
     <>
       <Header />
-      {/* Seção de avaliação destacada no topo, se houver produtos aguardando avaliação */}
+      {/* Highlighted review section at the top, if there are products awaiting review */}
       {produtosAguardando.length > 0 && (
         <section className="avaliacao">
           <img
             src={produtosAguardando[produtoAvaliacaoIdx]?.img || "/imagens/raquete_elétrica2.jpeg"}
-            alt="Produto aguardando avaliação"
+            alt="Product awaiting review"
             className="img-miniatura"
           />
           <p>
             {produtosAguardando.length > 0
-              ? `${produtosAguardando.length} produto${produtosAguardando.length > 1 ? 's' : ''} esperam sua opinião/avaliação`
-              : 'Todos os produtos já foram avaliados!'}
+              ? `${produtosAguardando.length} product${produtosAguardando.length > 1 ? 's' : ''} waiting for your review`
+              : 'All products have already been reviewed!'}
           </p>
           <UserRating
             produtosAguardando={produtosAguardando.length}
@@ -165,11 +165,11 @@ export default function HistoricoCompras() {
           />
         </section>
       )}
-      {/* Produtos agrupados por mês/ano de compra */}
+      {/* Products grouped by month/year of purchase */}
       <section className="produtos">
         {Object.entries(produtosPorAnoMes)
           .sort((a, b) => {
-            // Ordena por ano e mês decrescente (mais recente primeiro)
+            // Sorts by year and month descending (most recent first)
             const [anoA, mesA] = a[0].split('-').map(Number);
             const [anoB, mesB] = b[0].split('-').map(Number);
             if (anoA !== anoB) return anoB - anoA;
@@ -186,7 +186,7 @@ export default function HistoricoCompras() {
             </div>
           ))}
       </section>
-      {/* Modal de detalhes do produto */}
+      {/* Product details modal */}
       <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <ScrollToTop />
       <Footer />

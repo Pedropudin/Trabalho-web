@@ -7,9 +7,9 @@ import ProductDetailsModal from '../components/Produtos/ProductDetailsModal';
 import ScrollToTop from '../components/ScrollToTop';
 
 /*
-  Página de histórico de produtos visualizados pelo usuário.
-  - Exibe produtos agrupados por mês/ano de visualização.
-  - Modal de detalhes sempre com botão de compra.
+  Page for user's viewed products history.
+  - Displays products grouped by month/year of view.
+  - Details modal always includes buy button.
 */
 
 function getProdutosByRoute(route, data) {
@@ -24,7 +24,7 @@ function getProdutosByRoute(route, data) {
 }
 
 export default function HistoricoProdutos() {
-  // Estado para produtos (simulando fetch)
+  // State for products (simulating fetch)
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
@@ -35,41 +35,42 @@ export default function HistoricoProdutos() {
       });
   }, []);
 
-  // Data dinâmica e agrupamento por ano/mês
+  // Dynamic date and grouping by year/month
   const { produtosPorAnoMes } = useMemo(() => {
-    // Agrupa produtos por ano e mês
-    function agruparPorAnoMes(produtos) {
+    // Groups products by year and month
+    function groupByYearMonth(produtos) {
       return produtos.reduce((acc, produto) => {
         if (!produto.data) return acc;
-        // const [dia, mes, ano] = produto.data.split('/');
-        const [, mes, ano] = produto.data.split('/');
-        const chave = `${ano}-${mes}`;
-        if (!acc[chave]) acc[chave] = { ano, mes, produtos: [] };
-        acc[chave].produtos.push(produto);
+        // const [day, month, year] = produto.data.split('/');
+        const [, month, year] = produto.data.split('/');
+        const key = `${year}-${month}`;
+        if (!acc[key]) acc[key] = { year, month, produtos: [] };
+        acc[key].produtos.push(produto);
         return acc;
       }, {});
     }
-    const agrupados = agruparPorAnoMes(produtos);
-    return { produtosPorAnoMes: agrupados };
+    const grouped = groupByYearMonth(produtos);
+    return { produtosPorAnoMes: grouped };
   }, [produtos]);
 
-  // Função utilitária para renderizar o cabeçalho de mês/ano
-  function renderCabecalhoMesAno(mes, ano) {
-    const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  // Utility function to render month/year header
+  function renderMonthYearHeader(month, year) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
     return (
       <section className="compras">
         <p>
-          Produtos visualizados em {meses[parseInt(mes, 10) - 1]} de {ano}
+          Products viewed in {months[parseInt(month, 10) - 1]} {year}
         </p>
       </section>
     );
   }
 
-  // Estado para modal de detalhes
+  // State for details modal
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Handlers para abrir/fechar modal de detalhes
+  // Handlers to open/close details modal
   const handleCardClick = (product) => {
     setSelectedProduct({ ...product, showBuyButton: true });
     setModalOpen(true);
@@ -82,19 +83,19 @@ export default function HistoricoProdutos() {
   return (
     <>
       <Header />
-      {/* Produtos agrupados por mês/ano de visualização */}
+      {/* Products grouped by view month/year */}
       <section className="produtos">
         {Object.entries(produtosPorAnoMes)
           .sort((a, b) => {
-            // Ordena por ano e mês decrescente (mais recente primeiro)
-            const [anoA, mesA] = a[0].split('-').map(Number);
-            const [anoB, mesB] = b[0].split('-').map(Number);
-            if (anoA !== anoB) return anoB - anoA;
-            return mesB - mesA;
+            // Sort by year and month descending (most recent first)
+            const [yearA, monthA] = a[0].split('-').map(Number);
+            const [yearB, monthB] = b[0].split('-').map(Number);
+            if (yearA !== yearB) return yearB - yearA;
+            return monthB - monthA;
           })
-          .map(([chave, { ano, mes, produtos }], idx) => (
-            <div key={chave}>
-              {renderCabecalhoMesAno(mes, ano)}
+          .map(([key, { year, month, produtos }], idx) => (
+            <div key={key}>
+              {renderMonthYearHeader(month, year)}
               <div className="produtos">
                 {Array.isArray(produtos) ? produtos.map((produto, idx) => (
                   <ProductCard product={produto} onClick={handleCardClick} key={(produto.id || produto.nome) + '-' + idx} showBuyButton={true} />
@@ -103,7 +104,7 @@ export default function HistoricoProdutos() {
             </div>
           ))}
       </section>
-      {/* Modal de detalhes do produto */}
+      {/* Product details modal */}
       <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <ScrollToTop />
       <Footer />
