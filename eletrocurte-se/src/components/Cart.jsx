@@ -19,7 +19,7 @@ export default function Cart({onNext}) {
 
     // Fetch products from JSON when the component mounts
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
+        const localProducts = localStorage.getItem("produtos");
         if (localProducts) {
             setProductsLocal(JSON.parse(localProducts));
         } else {
@@ -120,7 +120,7 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="empty-cart-btn"
-                        onClick={() => navigate(`/PaginaPesquisa`)}
+                        onClick={() => navigate(`/SearchPage`)}
                     >
                         Go to store
                     </button>

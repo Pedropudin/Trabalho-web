@@ -17,7 +17,7 @@ export default function ProductCard({product}) {
                 className="item-image"
                 src={product.img}
                 alt={"Imagem do " + product.name}
-                style={!product.inStock > 0 ? { filter: "grayscale(100%)" } : {}}
+                style={product.inStock > 0 ? {} : { filter: "grayscale(100%)" }}
             />
             <p className="item-name">{product.name}</p><br />
             <p className="item-price">
@@ -26,14 +26,14 @@ export default function ProductCard({product}) {
             {product.inStock > 0 ? (
                 <button
                     className="product-display-purchase-button"
-                    onClick={() => navigate(`/PaginaProduto/${product.id}`)}
+                    onClick={() => navigate(`/ProductPage/${product.id}`)}
                 >
                     Comprar
                 </button>
             ) : (
                 <button
                     className="product-display-purchase-button"
-                    onClick={() => navigate(`/PaginaProduto/${product.id}`)}
+                    onClick={() => navigate(`/ProductPage/${product.id}`)}
                 >
                     Ver produto
                 </button>

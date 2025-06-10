@@ -22,7 +22,7 @@ export default function Purchase({ onBack, onNext, steps }) {
 
     //Lê dados dos produtos diretamento do JSON
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
+        const localProducts = localStorage.getItem("produtos");
         if (localProducts) {
             setProdutosLocais(JSON.parse(localProducts));
         } else {
