@@ -1,28 +1,28 @@
-/* Seletor universal: remove margens e preenchimentos padrão,
-   define a box-sizing para incluir bordas e paddings nas dimensões dos elementos */
+/* Universal selector: removes default margins and paddings,
+   sets box-sizing to include borders and paddings in element dimensions */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif; /* Fonte padrão da página */
+    font-family: Arial, sans-serif; /* Default page font */
 }
 
-/* Estilização geral da página */
+/* General page styling */
 body {
-    background-color: #eaf6f6; /* Cor de fundo clara */
-    color: #333; /* Cor de texto padrão */
-    text-align: center; /* Centraliza textos por padrão */
-    padding: 0; /* Espaçamento interno da página */
+    background-color: #eaf6f6; /* Light background color */
+    color: #333; /* Default text color */
+    text-align: center; /* Center text by default */
+    padding: 0; /* Page inner spacing */
 }
 
-/* Container principal do conteúdo */
+/* Main content container */
 .container-apresentacao {
-    max-width: 900px; /* Largura máxima */
-    margin: auto; /* Centraliza horizontalmente */
-    padding: 30px; /* Espaçamento interno */
-    background-color: white; /* Fundo branco */
-    border-radius: 12px; /* Bordas arredondadas */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra ao redor */
+    max-width: 900px; /* Maximum width */
+    margin: auto; /* Horizontally center */
+    padding: 30px; /* Inner spacing */
+    background-color: white; /* White background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Box shadow */
 }
 
 .container-apresentacao img, .logo {
@@ -34,46 +34,46 @@ body {
     margin-right: auto;
 }
 
-/* Estilo da logo */
+/* Logo style */
 .logo {
     width: 120px;
     height: auto;
     margin-bottom: 15px;
-    transition: transform 0.3s ease-in-out; /* Transição suave */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
 }
 
-/* Efeito ao passar o mouse na logo */
+/* Logo hover effect */
 .logo:hover {
-    transform: scale(1.1) rotate(5deg); /* Aumenta e gira levemente */
+    transform: scale(1.1) rotate(5deg); /* Slightly enlarge and rotate */
 }
 
-/* Título principal (h2) */
+/* Main title (h2) */
 h2 {
-    color: #003b5c; /* Azul escuro */
+    color: #003b5c; /* Dark blue */
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-/* Parágrafo descritivo */
+/* Descriptive paragraph */
 .descricao {
     font-size: 16px;
-    color: #666; /* Cinza escuro */
+    color: #666; /* Dark gray */
     margin-bottom: 20px;
     text-align: left;
-    max-width: 700px; /* Limita a largura para melhorar a legibilidade */
-    margin: 0 auto 20px; /* centra horizontalmente e adiciona margens verticais */
-    line-height: 1.6; /* Espaçamento entre linhas para leitura confortável */
-    word-spacing: 0.1em; /* Espaçamento extra entre palavras */
-    letter-spacing: 0.02em; /* Espaçamento suave entre caracteres */
-    hyphens: auto; /* Hifenização automática em navegadores que suportem */
+    max-width: 700px; /* Limit width for readability */
+    margin: 0 auto 20px; /* center horizontally and add vertical margins */
+    line-height: 1.6; /* Comfortable line spacing */
+    word-spacing: 0.1em; /* Extra word spacing */
+    letter-spacing: 0.02em; /* Smooth character spacing */
+    hyphens: auto; /* Automatic hyphenation in supported browsers */
 }
 
-/* Botão de retorno ao logo */
+/* Back to logo button */
 .btn-retorno {
-    position: fixed; /* Fixa posição na viewport */
+    position: fixed; /* Fixed position in viewport */
     bottom: 25px;
     right: 25px;
-    z-index: 9999; /* Garante estar acima de outros elementos */
+    z-index: 9999; /* Ensure above other elements */
     background-color: #003b5c;
     color: white;
     border: none;
@@ -91,23 +91,23 @@ h2 {
     transform: scale(1.05);
 }
 
-/* Efeito de clique apenas no botão voltar ao topo */
+/* Click effect only on back-to-top button */
 .btn-retorno:active {
     transform: scale(0.9);
 }
 
-/* Animação de aparição */
+/* Appearance animation */
 @keyframes aparecer {
     0% { opacity: 0; transform: translateY(-20px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Classe para aplicar a animação de aparição */
+/* Class to apply appearance animation */
 .aparecer {
     animation: aparecer 1s ease-out forwards;
 }
 
-/* Responsividade para telas menores que 768px */
+/* Responsiveness for screens smaller than 768px */
 @media (max-width: 768px) {
     .container-apresentacao {
         width: 100%;
@@ -144,7 +144,7 @@ h2 {
     }
 }
 
-/* Responsividade para telas menores que 480px */
+/* Responsiveness for screens smaller than 480px */
 @media (max-width: 480px) {
     .container-apresentacao {
         width: 100%;

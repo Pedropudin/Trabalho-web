@@ -5,9 +5,9 @@
 // Used for visual feedback in actions like ScrollToTop.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect, useRef } from 'react';
-import '../styles/EfeitoEletrico.css';
+import '../styles/ElectricEfect.css';
 
-export default function EfeitoEletrico({ trigger }) {
+export default function ElectricEffect({ trigger }) {
   // List of animated particles on the screen
   const [particulas, setParticulas] = useState([]);
   // Stores the last trigger to avoid repetition

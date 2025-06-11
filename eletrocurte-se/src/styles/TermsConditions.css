@@ -1,28 +1,28 @@
-/* Seletor universal: remove margens e preenchimentos padrão,
-   define a box-sizing para incluir bordas e paddings nas dimensões dos elementos */
+/* Universal selector: removes default margins and paddings,
+   sets box-sizing to include borders and paddings in element dimensions */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif; /* Fonte padrão da página */
+    font-family: Arial, sans-serif; /* Default page font */
 }
 
-/* Estilização geral da página */
+/* General page styling */
 body {
-    background-color: #eaf6f6; /* Cor de fundo clara institucional */
-    color: #333; /* Cor de texto padrão */
-    text-align: center; /* Centraliza textos por padrão */
+    background-color: #eaf6f6; /* Institutional light background color */
+    color: #333; /* Default text color */
+    text-align: center; /* Center text by default */
     padding: 0;
 }
 
-/* Container principal do conteúdo */
+/* Main content container */
 .container-termos {
-    max-width: 900px; /* Largura máxima do conteúdo */
-    margin: auto; /* Centraliza horizontalmente */
-    padding: 30px; /* Espaçamento interno */
-    background-color: white; /* Fundo branco para destaque */
-    border-radius: 12px; /* Bordas arredondadas */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra ao redor */
+    max-width: 900px; /* Maximum content width */
+    margin: auto; /* Horizontally center */
+    padding: 30px; /* Inner spacing */
+    background-color: white; /* White background for highlight */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Box shadow */
 }
 
 .container-termos img, .logo {
@@ -34,30 +34,30 @@ body {
     margin-right: auto;
 }
 
-/* Estilo da logo */
+/* Logo style */
 .logo {
     width: 120px;
     height: auto;
     margin-bottom: 15px;
-    transition: transform 0.3s ease-in-out; /* Transição suave ao passar o mouse */
+    transition: transform 0.3s ease-in-out; /* Smooth transition on hover */
 }
 
 .logo:hover {
-    transform: scale(1.1) rotate(5deg); /* Aumenta e gira levemente ao passar o mouse */
+    transform: scale(1.1) rotate(5deg); /* Slightly enlarge and rotate on hover */
 }
 
-/* Título principal (h2) e subtítulo (h3) */
+/* Main title (h2) and subtitle (h3) */
 h2,
 h3 {
-    color: #003b5c; /* Azul escuro institucional */
+    color: #003b5c; /* Institutional dark blue */
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-/* Parágrafo descritivo e listas */
+/* Descriptive paragraph and lists */
 .descricao {
     font-size: 16px;
-    color: #666; /* Cinza escuro para leitura confortável */
+    color: #666; /* Dark gray for comfortable reading */
     margin-bottom: 20px;
     text-align: left;
     max-width: 700px;
@@ -69,11 +69,11 @@ h3 {
 }
 
 .descricao ul, .descricao ol {
-    margin: 1em 0 1em 1.5em; /* Espaço acima e abaixo, indentação confortável */
+    margin: 1em 0 1em 1.5em; /* Space above and below, comfortable indentation */
     padding: 0;
 }
 .descricao li {
-    margin-bottom: 0.75em; /* Espaçamento entre itens */
+    margin-bottom: 0.75em; /* Space between items */
 }
 
 h3 {
@@ -81,7 +81,7 @@ h3 {
     margin: 20px 0 10px;
 }
 
-/* Responsividade para tablets */
+/* Responsiveness for tablets */
 @media (max-width: 768px) {
     .container-termos {
         width: 100%;
@@ -103,7 +103,7 @@ h3 {
     }
 }
 
-/* Responsividade para celulares */
+/* Responsiveness for phones */
 @media (max-width: 480px) {
     .container-termos {
         width: 100%;

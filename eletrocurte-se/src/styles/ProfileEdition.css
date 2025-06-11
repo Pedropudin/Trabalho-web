@@ -1,16 +1,16 @@
 /*
-  EditarPerfil.css
-  - CSS para telas de edição de perfil e carteira do Eletrocurte-se.
-  - Reset e base: remove margens/paddings padrão e define fonte global.
-  - Layout principal: centraliza e limita largura do conteúdo do perfil.
-  - Formulários: campos, botões e mensagens com visual limpo, acessível e responsivo.
-  - Modal Carteira/Endereço: fundo escurecido, centralização, responsividade e destaque visual.
-  - Responsividade: media queries para telas pequenas (mobile).
-  - Animações: fade-in para modais.
-  - Inputs: foco destacado para melhor usabilidade.
+  ProfileEdition.css
+  - CSS for Eletrocurte-se profile editing and wallet screens.
+  - Reset and base: removes default margins/paddings and sets global font.
+  - Main layout: centers and limits profile content width.
+  - Forms: fields, buttons, and messages with clean, accessible, responsive look.
+  - Wallet/Address Modal: dark overlay, centering, responsiveness, and visual highlight.
+  - Responsiveness: media queries for small screens (mobile).
+  - Animations: fade-in for modals.
+  - Inputs: highlighted focus for better usability.
 */
 
-/* RESET E BASE: garante visual consistente em todos os navegadores */
+/* RESET AND BASE: ensures consistent look across browsers */
 * {
   margin: 0;
   padding: 0;
@@ -19,13 +19,13 @@
 }
 
 body {
-  background-color: #f4f4f4; /* fundo neutro para toda a área */
+  background-color: #f4f4f4; /* neutral background for the whole area */
 }
 
-/* CONTEÚDO PRINCIPAL: centraliza e limita largura do conteúdo do perfil */
+/* MAIN CONTENT: centers and limits profile content width */
 .editarperfil-body-content {
-  max-width: 600px; /* limita largura do conteúdo */
-  margin: 40px auto 0 auto; /* centraliza na tela */
+  max-width: 600px; /* limits content width */
+  margin: 40px auto 0 auto; /* centers on screen */
   padding: 0 16px 40px 16px;
 }
 
@@ -34,7 +34,7 @@ body {
   justify-content: center;
 }
 
-/* CARD DE FORMULÁRIO: visual limpo, sombra e espaçamento */
+/* FORM CARD: clean look, shadow, and spacing */
 .editarperfil-card-form {
   background: #fff;
   border-radius: 12px;
@@ -105,7 +105,7 @@ body {
   color: #3949ab;
 }
 
-/* BOTÕES: estilos para salvar e voltar, com hover e acessibilidade */
+/* BUTTONS: styles for save and back, with hover and accessibility */
 .editarperfil-btn-salvar,
 .editarperfil-btn-voltar {
   padding: 10px 0;
@@ -137,7 +137,7 @@ body {
   background: #ccc;
 }
 
-/* MENSAGEM DE FEEDBACK */
+/* FEEDBACK MESSAGE */
 .editarperfil-mensagem-editar {
   margin: 10px 0 0 0;
   padding: 8px 0;
@@ -148,13 +148,13 @@ body {
   font-size: 1rem;
 }
 
-/* MODAL CARTEIRA: overlay escurecido e modal centralizado */
+/* WALLET MODAL: dark overlay and centered modal */
 .modal-carteira-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(30, 34, 60, 0.55); /* escurece fundo */
+  background: rgba(30, 34, 60, 0.55); /* darkens background */
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -236,7 +236,7 @@ body.modal-carteira-open {
   background: #fff;
 }
 
-/* MODAL ENDERECO: segue padrão visual do modal-carteira */
+/* ADDRESS MODAL: follows wallet modal visual pattern */
 .modal-endereco-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -299,7 +299,7 @@ body.modal-endereco-open {
   border-radius: 1px;
 }
 
-/* RESPONSIVIDADE: ajustes para telas pequenas */
+/* RESPONSIVENESS: adjustments for small screens */
 @media (max-width: 600px) {
   .editarperfil-body-content {
     max-width: 100%;

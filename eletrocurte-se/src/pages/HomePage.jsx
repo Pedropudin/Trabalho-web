@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import '../styles/PaginaInicial.css';
+import '../styles/HomePage.css';
 import ROUTES from '../routes';
 import ProductCard from '../components/Products/ProductCard';
 import ProductDetailsModal from '../components/Products/ProductDetailsModal';
@@ -20,7 +20,7 @@ import ProductDetailsModal from '../components/Products/ProductDetailsModal';
   - Responsive layout using Material-UI and aligned with project visual standards.
 */
 
-const PaginaInicial = () => {
+const HomePage = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [mensagem, setMensagem] = useState('');
@@ -223,4 +223,4 @@ const PaginaInicial = () => {
     );
 };
 
-export default PaginaInicial;
+export default HomePage;

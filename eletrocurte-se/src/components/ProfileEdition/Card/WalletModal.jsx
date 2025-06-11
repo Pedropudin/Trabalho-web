@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box, Typography, Button, Modal,
   TextField, Select, MenuItem, InputLabel,
@@ -45,21 +45,13 @@ const style = {
 // - onClose: function to close the modal
 
 export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onClose }) {
-  // Memorize safeCards para evitar recalculo em toda renderização
-  const safeCards = useMemo(() => Array.isArray(cartoes) ? cartoes : [], [cartoes]);
+  const safeCards = Array.isArray(cartoes) ? cartoes : [];
   const safeValidatedCards = Array.isArray(cartoesValidados) ? cartoesValidados : [];
 
   const [amountToAdd, setAmountToAdd] = useState('');
 
   // State for the selected card for charging
-  const [selectedCard, setSelectedCard] = useState(safeCards[0]?.last4 || '');
-
-  // Atualiza selectedCard sempre que a lista de cartões muda
-  useEffect(() => {
-    if (!safeCards.some(c => c.last4 === selectedCard)) {
-      setSelectedCard(safeCards[0]?.last4 || '');
-    }
-  }, [safeCards, selectedCard]);
+  const [selectedCard, setSelectedCard] = useState(safeCards[0]?.final || '');
 
   // Feedback message (success or error)
   const [message, setMessage] = useState('');
@@ -106,8 +98,8 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
     // Update the balance of the selected card
     setCartoes(prev =>
       prev.map(c =>
-        c.last4 === selectedCard
-          ? { ...c, balance: (c.balance ?? 0) + value }
+        c.final === selectedCard
+          ? { ...c, saldo: (c.saldo ?? 0) + value }
           : c
       )
     );
@@ -123,20 +115,20 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
 
   // Function to delete a card from the list
   // Asks for user confirmation before removal
-  function handleDeleteCard(last4) {
+  function handleDeleteCard(final) {
     const confirmDelete = window.confirm('Are you sure you want to delete this card?');
     if (confirmDelete) {
-      setCartoes(prev => prev.filter(c => c.last4 !== last4));
+      setCartoes(prev => prev.filter(c => c.final !== final));
       // If the deleted card was selected, select another (or none)
-      if (selectedCard === last4) {
-        const remaining = cartoes.filter(c => c.last4 !== last4);
-        setSelectedCard(remaining[0]?.last4 || '');
+      if (selectedCard === final) {
+        const remaining = cartoes.filter(c => c.final !== final);
+        setSelectedCard(remaining[0]?.final || '');
       }
     }
   }
 
   // Get the balance of the currently selected card
-  const selectedBalance = safeValidatedCards.find(c => c.last4 === selectedCard)?.balance ?? 0;
+  const selectedBalance = safeValidatedCards.find(c => c.final === selectedCard)?.saldo ?? 0;
 
   return (
     // Material UI Modal with high z-index to overlay the interface
@@ -178,7 +170,7 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
           {/* align="center": center text
               fontSize={18}: font size
               mb={2}: bottom margin */}
-          Available balance: <b>{selectedBalance.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b>
+          Available balance: <b>{selectedBalance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b>
         </Typography>
 
         {/* Step to add balance */}
@@ -216,13 +208,14 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
                 >
                   {/* List of available cards */}
                   {safeValidatedCards.map(c => (
-                    <MenuItem key={c.last4} value={c.last4}>
+                    <MenuItem key={c.final} value={c.final}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                        <Box>{c.brand} **** {c.last4}</Box>
+                        <Box>{c.brand} **** {c.final}</Box>
+                        {/* Button to delete card (trash icon) */}
                         <IconButton
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleDeleteCard(c.last4);
+                            handleDeleteCard(c.final);
                           }}
                           size="small"
                           edge="end"
@@ -278,7 +271,7 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
                  {
                    ...savedCard,
                    last4,
-                   balance: 0
+                   saldo: 0
                  }
                ]);
                setSelectedCard(last4);
@@ -287,6 +280,7 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
                setTimeout(() => setMessage(''), 1200);
              }}
              onCancelar={() => setStep('add')}
+             setCartoes={setCartoes}
            />
         )}
 

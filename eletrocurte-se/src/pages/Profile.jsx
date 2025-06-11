@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ROUTES from '../routes';
-import '../styles/Perfil.css';
+import '../styles/Profile.css';
 import Footer from '../components/Footer';
 
 /*

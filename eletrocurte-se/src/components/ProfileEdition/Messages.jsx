@@ -60,7 +60,7 @@ const agruparMensagensPorData = (mensagens) => {
   }, {});
 };
 
-export default function Mensagens({ onVoltar }) {
+export default function Messages({ onVoltar }) {
   // State with user message list
   const [mensagens, setMensagens] = useState([
     {
@@ -87,7 +87,7 @@ export default function Mensagens({ onVoltar }) {
   ]);
 
   const [novaMensagem, setNovaMensagem] = useState(''); // State for new message input
-  const [filtro, setFiltro] = useState('todas'); // State for display filter
+  const [filtro, setFiltro] = useState('all'); // State for display filter
   const [mensagemEmDestaque, setMensagemEmDestaque] = useState(null); // Highlights newly arrived message
   const [snackbar, setSnackbar] = useState(false); // Controls visual feedback
   const [loading, setLoading] = useState(true); // Simulates initial loading
@@ -145,9 +145,9 @@ export default function Mensagens({ onVoltar }) {
 
   // Filters messages according to the selected filter
   const mensagensFiltradas = mensagens.filter((msg) => {
-    if (filtro === 'todas') return true;
-    if (filtro === 'importantes') return msg.importante;
-    if (filtro === 'naoLidas') return !msg.lida;
+    if (filtro === 'all') return true;
+    if (filtro === 'important') return msg.importante;
+    if (filtro === 'unread') return !msg.lida;
     return true;
   });
 
@@ -211,9 +211,9 @@ export default function Mensagens({ onVoltar }) {
                 sx={{ mb: 2 }}
               >
                 {/* ToggleButtonGroup: filter button group */}
-                <ToggleButton value="todas">All</ToggleButton>
-                <ToggleButton value="importantes">Important</ToggleButton>
-                <ToggleButton value="naoLidas">Unread</ToggleButton>
+                <ToggleButton value="all">All</ToggleButton>
+                <ToggleButton value="important">Important</ToggleButton>
+                <ToggleButton value="unread">Unread</ToggleButton>
               </ToggleButtonGroup>
               {Object.entries(agrupadas).map(([grupo, msgs]) => (
                 <Box key={grupo} mb={3}>

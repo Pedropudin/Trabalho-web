@@ -9,7 +9,7 @@ import { TextField, Button, Box, Stepper, Step, StepLabel, Typography } from '@m
 
 const steps = ['CEP', 'Address', 'Confirm'];
 
-export default function ModalEndereco({ onSalvar }) {
+export default function AddressModal({ onSalvar }) {
   // Current step in the Stepper (0: CEP, 1: Address, 2: Confirmation)
   const [activeStep, setActiveStep] = useState(0);
   // Value of the CEP field

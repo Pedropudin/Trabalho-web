@@ -1,9 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import PersonalDetails from '../../components/PersonalDetails';
+import { MemoryRouter } from 'react-router-dom';
 
 it('aplica máscara de CPF e valida data de nascimento', () => {
-  render(<PersonalDetails onNext={() => {}} steps={['A', 'B']} />);
+  render(
+    <MemoryRouter>
+      <PersonalDetails onNext={() => {}} steps={['A', 'B']} />
+    </MemoryRouter>
+  );
   const cpfInput = screen.getByPlaceholderText('CPF');
   fireEvent.change(cpfInput, { target: { value: '12345678901' } });
   expect(cpfInput.value).toBe('123.456.789-01');

@@ -1,7 +1,7 @@
 import React from 'react';
 import ScrollToTop from '../components/ScrollToTop';
 import Footer from '../components/Footer';
-import '../styles/Apresentacao.css';
+import '../styles/Presentation.css';
 
 /*
   "About Us" page for the Eletrocurte-se portal.

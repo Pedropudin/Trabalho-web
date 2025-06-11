@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Perfil from '../Perfil';
+import Profile from '../Profile';
 import { MemoryRouter } from 'react-router-dom';
 
-describe('Perfil', () => {
+describe('Profile', () => {
   beforeEach(() => {
     localStorage.setItem('nomeUsuario', 'Maria');
   });
@@ -15,15 +15,15 @@ describe('Perfil', () => {
   it('exibe o nome do usuário salvo', () => {
     render(
       <MemoryRouter>
-        <Perfil />
+        <Profile />
       </MemoryRouter>
     );
 
     // Verifica se o nome está no elemento com data-testid
     expect(screen.getByTestId('nome-usuario')).toHaveTextContent('Maria');
 
-    // Verifica se a saudação "Olá," aparece
-    expect(screen.getByText('Olá,')).toBeInTheDocument();
+    // Verifica se a saudação "Hello," aparece
+    expect(screen.getByText(/Hello,/i)).toBeInTheDocument();
 
     // Verifica se o nome do usuário também aparece como texto
     expect(screen.getByText('Maria')).toBeInTheDocument();

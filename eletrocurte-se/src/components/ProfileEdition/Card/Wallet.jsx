@@ -6,7 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import '../../../styles/EditarPerfil.css';
+import '../../../styles/ProfileEdition.css';
 
 // Main Wallet component for the user
 // - Manages balance and cards using localStorage

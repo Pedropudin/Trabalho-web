@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ROUTES from '../routes';
 import Header from '../components/Header';
-import '../styles/EditarPerfil.css';
+import '../styles/ProfileEdition.css';
 import Footer from '../components/Footer'; 
 import Orders from '../components/ProfileEdition/Orders';
 import Messages from '../components/ProfileEdition/Messages';

@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import Header from '../components/Header';
-import '../styles/HistoricoCompras.css';
+import '../styles/PurchaseHistory.css';
 import Footer from '../components/Footer';
 import UserRating from '../components/UserRating';
 import '../styles/UserRating.css';
@@ -27,7 +27,7 @@ function getProdutosByRoute(route, data) {
   }
 }
 
-export default function HistoricoCompras() {
+export default function PurchaseHistory() {
   // Gets products from the history via products.js
   const [produtos, setProdutos] = useState([]);
   // State for product details modal

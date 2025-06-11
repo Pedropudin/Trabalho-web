@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import Header from '../components/Header';
-import '../styles/HistoricoProdutos.css';
+import '../styles/ProductHistory.css';
 import Footer from '../components/Footer';
 import ProductCard from '../components/Products/ProductCard';
 import ProductDetailsModal from '../components/Products/ProductDetailsModal';
@@ -23,7 +23,7 @@ function getProdutosByRoute(route, data) {
   }
 }
 
-export default function HistoricoProdutos() {
+export default function ProductsHistory() {
   // State for products (simulating fetch)
   const [produtos, setProdutos] = useState([]);
 
