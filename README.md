@@ -74,7 +74,9 @@ Realiza a testagem padrão da biblioteca jest, via o script package.json do proj
 
 ### `npx jest --verbose`
 
-Realiza a testagem dos arquivos, mas usa flags mais amplas e mais flexíveis que as contidas no package.json (mais abrangência de teste é garantida)
+Realiza a testagem dos arquivos, mas usa flags mais amplas e mais flexíveis que as contidas no package.json (mais abrangência de teste é garantida).
+
+O "--verbose" é usado para detalhar os resultados do teste, tornando-o mais transparente ainda para o usuário.
 
 **Observação**: os testes devem ser feitos na pasta eletrocurte-se.
 
