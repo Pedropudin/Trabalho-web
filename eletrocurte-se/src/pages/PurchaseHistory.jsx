@@ -18,9 +18,9 @@ import ROUTES from '../routes';
 
 function getProdutosByRoute(route, data) {
   switch (route) {
-    case ROUTES.HIST_COMPRAS:
+    case ROUTES.PURCHASE_HISTORY:
       return data.produtosHistorico || [];
-    case ROUTES.HIST_PRODUTOS:
+    case ROUTES.PRODUCT_HISTORY:
       return data.produtosVisualizados || [];
     default:
       return [];
@@ -40,7 +40,7 @@ export default function PurchaseHistory() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        let produtos = getProdutosByRoute(ROUTES.HIST_COMPRAS, data);
+        let produtos = getProdutosByRoute(ROUTES.PURCHASE_HISTORY, data);
         // Adds up to 4 real products from JSON without reviews, with recent dates (functionality test intention)
         const produtosSemAvaliacao = [];
         for (let i = 0; i < 4 && i < produtos.length; i++) {

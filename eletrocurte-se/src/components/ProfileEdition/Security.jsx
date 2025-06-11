@@ -34,7 +34,7 @@ function extractDomain(email) {
   return parts.length === 2 ? parts[1].toLowerCase() : '';
 }
 
-export default function FormSecurity({ onBack }) {
+export default function Security({ onBack }) {
   const [form, setForm] = useState({ email: '', password: '', cpf: '', phone: '' });
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('info');

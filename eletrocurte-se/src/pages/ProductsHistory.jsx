@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import ProductCard from '../components/Products/ProductCard';
 import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 import ScrollToTop from '../components/ScrollToTop';
+import ROUTES from '../routes';
 
 /*
   Page for user's viewed products history.
@@ -14,9 +15,9 @@ import ScrollToTop from '../components/ScrollToTop';
 
 function getProdutosByRoute(route, data) {
   switch (route) {
-    case '/historico-compras':
+    case ROUTES.PURCHASE_HISTORY:
       return data.produtosHistorico || [];
-    case '/historico-produtos':
+    case ROUTES.PRODUCT_HISTORY:
       return data.produtosVisualizados || [];
     default:
       return [];
@@ -31,7 +32,7 @@ export default function ProductsHistory() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        setProdutos(getProdutosByRoute('/historico-produtos', data));
+        setProdutos(getProdutosByRoute(ROUTES.PRODUCT_HISTORY, data));
       });
   }, []);
 

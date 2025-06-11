@@ -5,7 +5,7 @@
 // Displays only when scroll is past 200px.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
-import EfeitoEletrico from './ElectricEfect';
+import EfeitoEletrico from './ElectricEffect';
 import '../styles/ScrollToTop.css';
 
 const ScrollToTop = () => {
