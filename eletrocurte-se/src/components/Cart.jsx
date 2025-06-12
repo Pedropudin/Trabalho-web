@@ -13,9 +13,27 @@ import ROUTES from "../routes";
 
 export default function Cart({onNext}) {
     const navigate = useNavigate();
-
+    
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
     const [productsLocal, setProductsLocal] = useState([]);
+
+    ///Verificação de usuário logado
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // Verifica autenticação ao carregar a página
+        setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    }, []);
+
+    //Function that verifies if the user is logged in before proceeding with the payment
+    function handleLogin(e) {
+        if (!isLoggedIn) {
+            toast.error('Login to pay!');
+            return;
+        } else{
+            onNext();
+        }
+    }
 
     // Fetch products from JSON when the component mounts
     useEffect(() => {
@@ -190,7 +208,7 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="finish-btn"
-                        onClick={onNext}
+                        onClick={handleLogin}
                     >
                         Checkout
                     </button>
