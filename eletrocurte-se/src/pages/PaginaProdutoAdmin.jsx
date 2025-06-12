@@ -115,7 +115,9 @@ export default function PaginaProdutoAdmin() {
   }
 
   /*
-    TODO: Missing Image Upload and delete handlers
+    TODO:
+    - Missing Image Upload and delete handlers
+    - Style buttons
   */
 
   return (
@@ -125,10 +127,12 @@ export default function PaginaProdutoAdmin() {
         <div className="products">
           <div className="item">
             <div className="item-images" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <IconButton onClick={() => console.log("Upload foto")}>
+              <Button onClick={() => console.log("Upload foto")} style={{
+                gap: "10px"
+              }}>
                 Adicionar imagem
                 <UploadIcon />
-              </IconButton>
+              </Button>
               <Paper
                 elevation={2}
                 sx={{
@@ -147,9 +151,14 @@ export default function PaginaProdutoAdmin() {
                   alt={editProduct.name}
                   style={{ width: "100%", height: "100%", objectFit: "contain" }}
                 />
-                <IconButton onClick={() => console.log("Remove imagem")} style={{position:"absolute", right:"0", top:"0"}}>
+                <Button onClick={() => console.log("Remove imagem")} style={{
+                  position:"absolute",
+                  right:"0", top:"0",
+                  backgroundColor: "rgb(228, 0, 0)",
+                  width: "fit-content"
+                }}>
                   <DeleteIcon />
-                </IconButton>
+                </Button>
               </Paper>
               <Stack direction="row" spacing={2}>
                 {(editProduct.thumbs || []).map((thumbUrl, i) => (
