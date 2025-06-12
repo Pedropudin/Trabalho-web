@@ -5,6 +5,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import CartOverview from "./CartOverview";
+import { useNavigate } from 'react-router-dom';
 
 /*
   Buyer details page.
@@ -17,6 +18,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     // Progress
     const activeStep = 1;
+    const navigate = useNavigate();
 
     // User basic information form
     const [form, setForm] = useState({
@@ -126,6 +128,11 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }
+
+    const handleVoltar = () => {
+        navigate(ROUTES.PROFILE);
+    };
+
     return (
         <>
         <Toaster />

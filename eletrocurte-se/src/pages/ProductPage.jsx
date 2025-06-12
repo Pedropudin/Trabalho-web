@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
+import ROUTES from '../routes';
 
 
 /*
@@ -31,6 +32,11 @@ export default function ProductPage() {
               .then(data => setProdutosLocais(data))
               .catch(() => setProdutosLocais([]));
       }
+      /* // Always fetch from backend for consistency
+      fetch(process.env.REACT_APP_API_URL + '/produtos')
+          .then(res => res.json())
+          .then(data => setProdutosLocais(data))
+          .catch(() => setProdutosLocais([])); */
   }, []);
   // Variables
   const product = produtosLocais.find(p => String(p.id) === String(id));

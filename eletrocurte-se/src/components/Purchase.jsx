@@ -31,6 +31,11 @@ export default function Purchase({ onBack, onNext, steps }) {
                 .then(data => setProdutosLocais(data))
                 .catch(() => setProdutosLocais([]));
         }
+        /* // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/produtos')
+            .then(res => res.json())
+            .then(data => setProdutosLocais(data))
+            .catch(() => setProdutosLocais([])); */
     }, []);
 
     //Calcula o valor total do pedido, se baseando naquilo que está no carrinho
@@ -50,7 +55,7 @@ export default function Purchase({ onBack, onNext, steps }) {
 
     const total = cartProducts.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
 
-    const [erro, setErro] = useState('');
+    const [, setErro] = useState('');
 
     // Checagem de dados obrigatórios
     function dadosValidos() {
@@ -67,28 +72,32 @@ export default function Purchase({ onBack, onNext, steps }) {
     }
 
     //Assim que o botão de finalizar compra é apertado, os itens que estvam no carrinho são retirados do estoque e o carrinho é esvaziado
-    function handlePurchase() {
+    async function handlePurchase() {
         const erroMsg = dadosValidos();
         if (erroMsg) {
             setErro(erroMsg);
             return;
         }
 
-        const updatedProducts = produtosLocais.map(prod => {
-            const cartItem = cart.find(p => p.id === prod.id);
-            if (cartItem) {
-                return {
-                    ...prod,
-                    inStock: prod.inStock - cartItem.quantity,
-                }
-            }
-            return prod;
-        });
-        
-        //Grava mudanças no JSON local
+        // Chamada à API para atualizar estoque
+        try {
+            await fetch(process.env.REACT_APP_API_URL + '/pedidos/finalizar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    itens: cart.map(item => ({
+                        id: item.id,
+                        quantity: item.quantity
+                    }))
+                })
+            });
+        } catch (e) {
+            setErro('Erro ao finalizar compra. Tente novamente.');
+            return;
+        }
 
-        localStorage.setItem("products", JSON.stringify(updatedProducts));//Atualiza estoque após a finalização da compra
-        localStorage.setItem("cart", JSON.stringify([]));//Limpa cart após a finalização da compra
+        // Limpa carrinho após sucesso
+        localStorage.setItem("cart", JSON.stringify([])); //Limpa cart após a finalização da compra
         setErro('');
 
         if (onNext) onNext();

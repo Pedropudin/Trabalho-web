@@ -46,6 +46,11 @@ export default function Cart({onNext}) {
                 .then(data => setProductsLocal(data))
                 .catch(() => setProductsLocal([]));
         }
+        /* // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/produtos')
+            .then(res => res.json())
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([])); */
     }, []);
 
     /* // Cleans the cart of products that no longer exist

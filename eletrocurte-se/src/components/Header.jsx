@@ -1,14 +1,14 @@
 // -----------------------------------------------------------------------------
 // Header.jsx
-// Cabeçalho principal do sistema Eletrocurte-se.
-// Exibe logo, barra de pesquisa, menu de usuário, carrinho, logout e categorias.
-// Responsivo, utiliza Material-UI e styled-components para estilização.
-// Integração com badge animado, menu mobile e props customizáveis.
+// Main header of the Eletrocurte-se system.
+// Displays logo, search bar, user menu, cart, logout, and categories.
+// Responsive, uses Material-UI and styled-components for styling.
+// Integration with animated badge, mobile menu, and customizable props.
 // -----------------------------------------------------------------------------
 
 import React, { useState, useEffect } from 'react';
 import ROUTES from '../routes';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -28,7 +28,7 @@ import { useTheme } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import '../styles/Header.css';
 
-// Animação pulse para o badge do carrinho
+// Pulse animation for the cart badge
 const pulseKeyframes = `
 @keyframes pulse {
   0% { transform: scale(1);}
@@ -36,7 +36,7 @@ const pulseKeyframes = `
 }
 `;
 
-// Logo estilizado, com efeito de hover
+// Styled logo with hover effect
 const Logo = styled('img')(({ theme }) => ({
   width: 85,
   height: 85,
@@ -50,67 +50,64 @@ const Logo = styled('img')(({ theme }) => ({
   },
 }));
 
-// Wrapper para centralizar barra de pesquisa
+// Wrapper to center the search bar
 const SearchWrapper = styled(Box)(({ theme }) => ({
-  flex: 1, // Ocupa o máximo de espaço possível entre logo e ícones
-  display: 'flex', // Layout flexível horizontal
-  justifyContent: 'center', // Centraliza a barra de pesquisa
-  alignItems: 'center', // Alinha verticalmente
-  minWidth: 0, // Permite encolher em telas pequenas
-  marginLeft: theme.spacing(2), // Espaço à esquerda
-  marginRight: theme.spacing(2), // Espaço à direita
-  // theme.breakpoints.down('sm') aplica estilos para telas <= 600px (mobile)
+  flex: 1, // Takes up as much space as possible between logo and icons
+  display: 'flex', // Horizontal flex layout
+  justifyContent: 'center', // Centers the search bar
+  alignItems: 'center', // Vertically aligns
+  minWidth: 0, // Allows shrinking on small screens
+  marginLeft: theme.spacing(2), // Left spacing
+  marginRight: theme.spacing(2), // Right spacing
   [theme.breakpoints.down('sm')]: {
-    order: 3, // Move para baixo no layout mobile
-    width: '100%', // Ocupa toda a largura
-    margin: `${theme.spacing(1)} 0`, // Margem vertical reduzida
+    order: 3, // Moves down in mobile layout
+    width: '100%', // Takes full width
+    margin: `${theme.spacing(1)} 0`, // Reduced vertical margin
   },
 }));
 
-// Barra de pesquisa estilizada, sem efeito de foco
+// Styled search bar with no focus effect
 const Search = styled('div')(({ theme }) => ({
-  backgroundColor: '#fff', // Fundo branco
-  borderRadius: 12, // Cantos arredondados
-  display: 'flex', // Layout flexível horizontal
-  alignItems: 'center', // Alinha verticalmente
-  padding: '12px 18px', // Espaçamento interno padrão
-  flex: 1, // Ocupa o máximo de espaço possível
-  minWidth: 0, // Permite encolher
-  maxWidth: 700, // Largura máxima em telas grandes
-  boxShadow: '0 2px 12px 0 rgba(0,0,0,0.08)', // Sombra leve
-  transition: 'box-shadow 0.2s, border 0.2s', // Transição suave
-  border: '2px solid transparent', // Borda invisível (pode ser usada para foco)
+  backgroundColor: '#fff', // White background
+  borderRadius: 12, // Rounded corners
+  display: 'flex', // Horizontal flex layout
+  alignItems: 'center', // Vertically aligns
+  padding: '12px 18px', // Default inner spacing
+  flex: 1, // Takes up maximum space
+  minWidth: 0, // Allows shrinking
+  maxWidth: 700, // Max width on large screens
+  boxShadow: '0 2px 12px 0 rgba(0,0,0,0.08)', // Light shadow
+  transition: 'box-shadow 0.2s, border 0.2s', // Smooth transition
+  border: '2px solid transparent', // Invisible border (can be used for focus)
 
-  // theme.breakpoints.down('md') aplica estilos para telas <= 900px (tablets)
   [theme.breakpoints.down('md')]: {
-    maxWidth: 450, // Reduz largura máxima em tablets
-    padding: '10px 12px', // Reduz padding
+    maxWidth: 450, // Reduced max width on tablets
+    padding: '10px 12px', // Reduced padding
   },
 
-  // theme.breakpoints.down('sm') aplica estilos para telas <= 600px (mobile)
   [theme.breakpoints.down('sm')]: {
-    maxWidth: '100%', // Ocupa toda a largura
+    maxWidth: '100%',
     width: '100%',
-    padding: '8px 8px', // Padding ainda menor
+    padding: '8px 8px', // Even smaller padding
   },
 }));
 
-// Barra de categorias horizontal
+// Horizontal category bar
 const CategoryBar = styled(Box)(({ theme }) => ({
-  display: 'flex', // Layout horizontal
-  justifyContent: 'center', // Centraliza categorias
-  alignItems: 'center', // Alinha verticalmente
-  backgroundColor: '#003d52', // Fundo azul escuro
-  padding: '8px', // Espaçamento interno
-  gap: '10px', // Espaço entre categorias
+  display: 'flex', // Horizontal layout
+  justifyContent: 'center', // Centers categories
+  alignItems: 'center', // Vertically aligns
+  backgroundColor: '#003d52', // Dark blue background
+  padding: '8px', // Inner spacing
+  gap: '10px', // Space between categories
 
   [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column', // Empilha categorias verticalmente
-    gap: '0', // Remove espaçamento extra
+    flexDirection: 'column', // Stacks categories vertically
+    gap: '0', // Removes extra spacing
   },
 }));
 
-// Link de categoria customizado, sem destaque azul
+// Custom category link without blue highlight
 const CategoryLink = styled(RouterLink, {
   shouldForwardProp: (prop) => prop !== 'active',
 })(({ theme, active }) => ({
@@ -130,27 +127,27 @@ const CategoryLink = styled(RouterLink, {
   },
 }));
 
-// Normaliza o contador do carrinho para exibir '9+' se necessário
+// Normalizes the cart counter to show '9+' if needed
 function normalizeCartCount(count) {
   return count > 9 ? '9+' : count;
 }
 
 function Header({
-  // logoSrc: caminho da imagem da logo exibida no cabeçalho
-  // onLogoClick: função chamada ao clicar na logo
-  // onSearchChange: callback para mudança no campo de pesquisa
-  // categories: array de strings com nomes das categorias exibidas
-  // selectedCategoryIndex: índice da categoria inicialmente selecionada
-  // onCategoryClick: callback ao clicar em uma categoria
-  // useElementsMenu: array de booleans [perfil, carrinho, logout] para exibir ou não cada ícone
-  // onProfile, onCart, onLogout: callbacks para ações dos ícones
-  // cartCount: número de itens no carrinho (badge)
-  // searchDisabled: desabilita campo de pesquisa se true
-  // onSearchDenied: callback chamado ao tentar pesquisar com searchDisabled
+  // logoSrc: path to the logo image displayed in the header
+  // onLogoClick: function called when clicking the logo
+  // onSearchChange: callback for changes in the search field
+  // categories: array of strings with names of the displayed categories
+  // selectedCategoryIndex: index of the initially selected category
+  // onCategoryClick: callback when clicking a category
+  // useElementsMenu: array of booleans [profile, cart, logout] to show or not each icon
+  // onProfile, onCart, onLogout: callbacks for icon actions
+  // cartCount: number of items in the cart (badge)
+  // searchDisabled: disables search field if true
+  // onSearchDenied: callback called when trying to search with searchDisabled
   logoSrc = '/logo-com-borda.png',
   onLogoClick,
   onSearchChange,
-  categories = ['Hardware', 'Periféricos', 'Computadores', 'Celulares'],
+  categories = ['Hardware', 'Peripherals', 'Computers', 'Phones'],
   selectedCategoryIndex = 0,
   onCategoryClick,
   adminContext = false,
@@ -158,20 +155,20 @@ function Header({
   onProfile,
   onCart,
   onLogout,
-  cartCount, // será ignorado, pois vamos calcular dinamicamente
+  cartCount, // ignored, will be calculated dynamically
   searchDisabled = false,
   onSearchDenied,
 }) {
-  // Estado do menu mobile
+  // Mobile menu state
   const [anchorEl, setAnchorEl] = useState(null);
-  // Categoria atualmente selecionada
+  // Currently selected category
   const [selectedCategory, setSelectedCategory] = useState(categories[selectedCategoryIndex] || '');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
 
-  // Calcula o número de itens no carrinho a partir do localStorage
+  // Calculates the number of items in the cart from localStorage
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const [mensagemCategoria, setMensagemCategoria] = useState('');
   const mensagemTimeoutRef = React.useRef(null);
@@ -184,7 +181,7 @@ function Header({
     }
     updateCartCount();
 
-    // Permite atualização instantânea via window.forceCartUpdate()
+    // Allows instant update via window.forceCartUpdate()
     window.forceCartUpdate = updateCartCount;
 
     function handleStorage(e) {
@@ -202,43 +199,44 @@ function Header({
     };
   }, []);
 
-  // Abre menu mobile
+  // Opens mobile menu
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
-  // Fecha menu mobile
+  // Closes mobile menu
   const handleClose = () => setAnchorEl(null);
 
-  // Centraliza a lógica de autenticação
+  // Centralizes authentication logic
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
-  // Seleciona categoria e dispara callback
+  // Selects category and triggers callback
   const handleCategoryClick = (cat) => {
     setSelectedCategory(cat);
     if (onCategoryClick) onCategoryClick(cat);
   };
 
-  // Perfil: se logado vai para perfil, senão para login
+  // Profile: if logged in go to profile, else go to login
   const handleProfileClick = () => {
+    console.log("handleProfileClick called"); // Debug purpose
     if (onProfile) {
       onProfile();
     } else {
       if (isLoggedIn) {
-        navigate(ROUTES.PERFIL);
+        navigate(ROUTES.PROFILE);
       } else {
         navigate(ROUTES.LOGIN);
       }
     }
   };
 
-  // Carrinho: só permite se logado, senão vai para login
-  // Handler para mudança no campo de pesquisa
+  // Cart: only allows if logged in, else go to login
+  // Handler for search field change
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
     if (onSearchChange) onSearchChange(e);
   };
 
-  //Envio de conteúdo da barra de pesquisa
+  // Sends search bar content
   const handleSearchKeyDown = (e) => {
-    const searchRealValue = searchValue.trim()
+    const searchRealValue = searchValue.trim();
     if (searchDisabled) {
       if (onSearchDenied) onSearchDenied();
       e.preventDefault();
@@ -261,23 +259,23 @@ function Header({
     }
   };
 
-  // Logo: usa prop ou padrão para home
+  // Logo: uses prop or defaults to home
   const handleLogoClick = () => {
     if (onLogoClick) {
       onLogoClick();
     } else {
-      navigate(ROUTES.PAGINA_INICIAL);
+      navigate(ROUTES.HOME_PAGE);
     }
   };
 
-  // Logout: usa prop ou padrão
+  // Logout: uses prop or defaults
   const handleLogoutInternal = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
     navigate(ROUTES.LOGOUT, { replace: true });
   };
 
-  // Função para exibir mensagem e garantir que só uma aparece por vez
+  // Function to show message and ensure only one appears at a time
   function showMensagemCategoria(msg) {
     setMensagemCategoria(msg);
     if (mensagemTimeoutRef.current) {
@@ -291,9 +289,9 @@ function Header({
 
   return (
     <>
-      {/* Animação pulse para badge do carrinho */}
+      {/* Pulse animation for cart badge */}
       <style>{pulseKeyframes}</style>
-      {/* Mensagem de aviso para categorias */}
+      {/* Warning message for categories */}
       {mensagemCategoria && (
         <div className="mensagem show info" style={{ position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 999, background: '#2196F3', color: '#fff', padding: '12px 24px', borderRadius: 8, fontWeight: 'bold' }}>
           {mensagemCategoria}
@@ -302,7 +300,7 @@ function Header({
       <AppBar
         position="static"
         sx={{
-          // Gradiente de fundo do cabeçalho
+          // Header background gradient
           background: 'linear-gradient(90deg, #004d66 80%, #007b99 100%)',
           color: '#fff',
           boxShadow: '0 4px 16px 0 rgba(0,0,0,0.10)',
@@ -310,38 +308,38 @@ function Header({
       >
         <Toolbar
           sx={{
-            display: 'flex', // Layout flexível horizontal
+            display: 'flex', // Horizontal flexible layout
             alignItems: 'center',
-            gap: 2, // Espaçamento entre elementos
-            flexWrap: isMobile ? 'wrap' : 'nowrap', // Quebra linha no mobile
+            gap: 2, // Space between elements
+            flexWrap: isMobile ? 'wrap' : 'nowrap', // Wraps on mobile
             justifyContent: isMobile ? 'center' : 'flex-start',
-            minHeight: { xs: 90, sm: 90, md: 100 }, // Altura mínima responsiva
+            minHeight: { xs: 90, sm: 90, md: 100 }, // Responsive min height
           }}
         >
-          {/* Logo do sistema */}
+          {/* System logo */}
           <Logo src={logoSrc} alt="Logo" onClick={handleLogoClick} />
-          {/* Barra de pesquisa centralizada */}
+          {/* Centered search bar */}
           <SearchWrapper>
             <Search>
               <InputBase
-                placeholder="Pesquisar…"
+                placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={handleSearchChange}
                 onKeyDown={handleSearchKeyDown}
                 sx={{
-                  width: '100%', // Ocupa toda a largura do Search
-                  fontSize: { xs: 16, sm: 18 }, // Tamanho responsivo da fonte
-                  color: '#222', // Cor do texto
-                  backgroundColor: '#fff', // Fundo branco
-                  cursor: 'text', // Cursor padrão de texto
+                  width: '100%',
+                  fontSize: { xs: 16, sm: 18 },
+                  color: '#222',
+                  backgroundColor: '#fff',
+                  cursor: 'text',
                 }}
               />
             </Search>
           </SearchWrapper>
-          {/* Menu desktop: perfil, carrinho, logout */}
+          {/* Desktop menu: profile, cart, logout */}
           <Box
             sx={{
-              display: { xs: 'none', md: 'flex' }, // Esconde no mobile
+              display: { xs: 'none', md: 'flex' }, // Hidden on mobile
               alignItems: 'center',
               gap: 2,
               minWidth: 0,
@@ -352,7 +350,7 @@ function Header({
               onClick={handleProfileClick}
               sx={{
                 transition: 'background 0.2s',
-                '&:hover': { background: 'rgba(0,123,153,0.15)' }, // Hover azul claro
+                '&:hover': { background: 'rgba(0,123,153,0.15)' },
               }}
             >
               <AccountCircle />
@@ -371,10 +369,10 @@ function Header({
                   color="secondary"
                   sx={{
                     '& .MuiBadge-badge': {
-                      animation: 'pulse 1s infinite alternate', // Animação do badge
-                      minWidth: 22, // Largura mínima do badge
-                      fontSize: 14, // Tamanho da fonte do badge
-                      right: -3, // Ajuste de posição
+                      animation: 'pulse 1s infinite alternate',
+                      minWidth: 22,
+                      fontSize: 14,
+                      right: -3,
                       top: 6,
                     },
                   }}
@@ -396,7 +394,7 @@ function Header({
               <LogoutIcon />
             </IconButton>}
           </Box>
-          {/* Menu mobile: hambúrguer */}
+          {/* Mobile menu: hamburger */}
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton color="inherit" onClick={handleMenu} aria-label="menu">
               <MenuIcon />
@@ -406,13 +404,13 @@ function Header({
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              {/* Exibe apenas as opções ativas conforme useElementsMenu */}
+              {/* Shows only the active options according to useElementsMenu */}
               {useElementsMenu[0] && (
                 <MenuItem onClick={handleProfileClick}>
                   <ListItemIcon>
                     <AccountCircle fontSize="small" />
                   </ListItemIcon>
-                  Perfil
+                  Profile
                 </MenuItem>
               )}
               {useElementsMenu[1] && (
@@ -420,7 +418,7 @@ function Header({
                   <ListItemIcon>
                     <ShoppingCartIcon fontSize="small" />
                   </ListItemIcon>
-                  Carrinho
+                  Cart
                 </MenuItem>
               )}
               {useElementsMenu[2] && (
@@ -428,13 +426,13 @@ function Header({
                   <ListItemIcon>
                     <LogoutIcon fontSize="small" />
                   </ListItemIcon>
-                  Sair
+                  Logout
                 </MenuItem>
               )}
             </Menu>
           </Box>
         </Toolbar>
-        {/* Barra de categorias */}
+        {/* Category bar */}
         <CategoryBar>
           {categories.map((cat) => (
             <CategoryLink
@@ -447,7 +445,7 @@ function Header({
               onClick={e => {
                 if (!isLoggedIn) {
                   e.preventDefault();
-                  showMensagemCategoria('Faça login para filtrar por categoria!');
+                  showMensagemCategoria('Please log in to filter by category!');
                 } else {
                   handleCategoryClick(cat);
                 }

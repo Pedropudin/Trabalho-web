@@ -1,13 +1,14 @@
 const ROUTES = {
-  APRESENTACAO: '/Apresentacao',
+  PRESENTATION: '/Presentation',
   LOGIN: '/Login',
-  PERFIL: '/Perfil',
-  EDITAR_PERFIL: '/EditarPerfil',
-  HIST_COMPRAS: '/HistoricoCompras',
-  HIST_PRODUTOS: '/HistoricoProdutos',
-  TERMOS: '/TermosCondicoes',
   PAG_PRODUTO: '/ProductPage/:id',
   PAG_PESQUISA: '/SearchPage/:name?',
+  PROFILE: '/Profile',
+  PROFILE_EDITION: '/ProfileEdition',
+  EDIT_PROFILE: '/EditProfile',
+  PURCHASE_HISTORY: '/PurchaseHistory',
+  PRODUCT_HISTORY: '/ProductHistory',
+  TERMS_CONDITIONS: '/TermsConditions',
   CHECKOUT: '/Checkout',
   PAG_SETOR: '/SectorPage/:name?',
   LOGOUT: '/Logout',
@@ -15,7 +16,7 @@ const ROUTES = {
   TIME: '/admin/Time',
   VENDAS: '/admin/Vendas',
   PENDENCIAS: '/admin/Pendencias',
-  PAGINA_INICIAL: '/',
+  HOME_PAGE: '/',
 };
 
 export default ROUTES;

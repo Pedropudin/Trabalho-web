@@ -43,6 +43,11 @@ export default function SectorPage() {
                 .then(data => setProdutosLocais(data))
                 .catch(() => setProdutosLocais([]));
         }
+        /* // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/produtos')
+            .then(res => res.json())
+            .then(data => setProdutosLocais(data))
+            .catch(() => setProdutosLocais([])); */
     }, []);
 
     useEffect(() => {

@@ -113,6 +113,12 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         if (onNext) onNext();
     }
 
+    const navigate = useNavigate();
+
+    const handleVoltar = () => {
+        navigate(ROUTES.PROFILE);
+    };
+
     return (
        <>
         <Toaster />
@@ -208,7 +214,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 <button
                     type="button"
                     className="back-button"
-                    onClick={onBack}
+                    onClick={handleVoltar}
                 >
                     Back
                 </button>

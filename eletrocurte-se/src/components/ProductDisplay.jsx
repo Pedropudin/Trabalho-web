@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
   - Contém foto, nome, preço e botão de compra para um produto. 
 */
 
-export default function ProductCard({product}) {
+export default function ProductDisplay({product}) {
     const navigate = useNavigate();
 
     return (

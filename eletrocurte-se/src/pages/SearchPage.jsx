@@ -49,6 +49,17 @@ export default function SearchPage() {
       id: marca,
       label: marca.charAt(0).toUpperCase() + marca.slice(1)
     }));
+    /* // Reads data of products directly from the JSON
+    useEffect(() => {
+        // Always fetch from backend to ensure consistency
+        fetch(process.env.REACT_APP_API_URL + '/produtos')
+            .then(res => res.json())
+            .then(data => setProdutosLocais(data))
+            .catch(() => setProdutosLocais([]));
+    }, []);
+    // Reads product brands
+    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
+    .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) })); */
 
     // Handles product order change
     function handleOrderChange(e) {

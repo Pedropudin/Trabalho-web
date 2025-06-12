@@ -1,27 +1,29 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link, useLocation } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link, useLocation } from 'react-router-dom';
 import ROUTES from "../routes";
-import { faInstagram, faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
 
 import "../styles/Footer.css";
 
 const Footer = () => {
     const { pathname } = useLocation();
+    const isTermsPage =
+        pathname.replace(/\/+$/, '').toLowerCase() === ROUTES.TERMS_CONDITIONS.replace(/\/+$/, '').toLowerCase();
 
     return (
-        pathname === ROUTES.TERMOS ? (
+        isTermsPage ? (
             <footer>
                 <div className="rodape-conteudo">
                     <p>000.000.000-00</p>
                     <p>email@gmail.com</p>
-                    <p>Tel: (00) 00000-0000</p>
+                    <p>Phone: (00) 00000-0000</p>
                     <p>
-                        <Link to={ROUTES.APRESENTACAO}>
-                            Sobre nós!
+                        <Link to={ROUTES.PRESENTATION}>
+                            About us!
                         </Link>
                     </p>
-                    <p>Endereço</p>
+                    <p>Address</p>
                     <div className="social-icons">
                         <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faInstagram} />
@@ -34,7 +36,7 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
-                <br/>
+                <br />
                 <p className="copyright">Copyright &copy;2025</p>
             </footer>
         ) : (
@@ -42,13 +44,13 @@ const Footer = () => {
                 <div className="rodape-conteudo">
                     <p>000.000.000-00</p>
                     <p>email@gmail.com</p>
-                    <p>Tel: (00) 00000-0000</p>
+                    <p>Phone: (00) 00000-0000</p>
                     <p>
-                        <Link to={ROUTES.TERMOS}>
-                            Termos e Condições
+                        <Link to={ROUTES.TERMS_CONDITIONS}>
+                            Terms and Conditions
                         </Link>
                     </p>
-                    <p>Endereço</p>
+                    <p>Address</p>
                     <div className="social-icons">
                         <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faInstagram} />
@@ -61,7 +63,7 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
-                <br/>
+                <br />
                 <p className="copyright">Copyright &copy;2025</p>
             </footer>
         )

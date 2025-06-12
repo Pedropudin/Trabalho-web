@@ -1,9 +1,10 @@
 // -----------------------------------------------------------------------------
 // UserRating.jsx
-// Componente para avaliação de produtos pelo usuário.
-// Permite selecionar produto, dar nota, comentar e enviar avaliação.
-// Utiliza Material-UI Dialog, Rating e campos de texto.
+// Component for user product rating.
+// Allows selecting a product, giving a rating, commenting, and submitting the review.
+// Uses Material-UI Dialog, Rating, and text fields.
 // -----------------------------------------------------------------------------
+
 import React, { useState } from 'react';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
@@ -16,35 +17,35 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
 function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produtoAvaliacaoIdx, setProdutoAvaliacaoIdx }) {
-  // Estado da nota de estrelas
+  // Star rating state
   const [nota, setNota] = useState(0);
-  // Estado do comentário
+  // Comment state
   const [comentario, setComentario] = useState('');
-  // Mensagem de erro para validação
+  // Error message for validation
   const [erro, setErro] = useState('');
 
-  // Produto atualmente selecionado
+  // Currently selected product
   const produto = produtosParaAvaliar[produtoAvaliacaoIdx] || {};
 
-  // Envia avaliação se nota e comentário forem válidos
+  // Submit review if rating and comment are valid
   const handleSubmit = () => {
     if (nota < 1) {
-      setErro('Por favor, selecione uma nota de estrelas para enviar.');
+      setErro('Please select a star rating before submitting.');
       return;
     }
     if (comentario.trim() === '') {
-      setErro('Por favor, escreva um comentário antes de enviar.');
+      setErro('Please write a comment before submitting.');
       return;
     }
     onAvaliar(nota, comentario, produtoAvaliacaoIdx);
     setNota(0);
     setComentario('');
     setErro('');
-    setProdutoAvaliacaoIdx(0); // volta para o primeiro produto após avaliação
+    setProdutoAvaliacaoIdx(0); // reset to first product after review
     onClose();
   };
 
-  // Fecha o modal e limpa erro
+  // Close modal and clear error
   const handleClose = () => {
     setErro('');
     onClose();
@@ -52,22 +53,22 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-      <DialogTitle>Avaliar Produto</DialogTitle>
+      <DialogTitle>Rate Product</DialogTitle>
       <DialogContent>
-        {/* Imagem do produto selecionado */}
+        {/* Selected product image */}
         <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
           <img
             src={produto.img || '/logo-sem-borda.png'}
-            alt={produto.nome || 'Produto'}
+            alt={produto.nome || 'Product'}
             width={80}
             height={80}
             style={{ borderRadius: 12, boxShadow: '0 2px 8px #0002', background: '#fff', objectFit: 'cover' }}
           />
         </Box>
-        {/* Seleção do produto a ser avaliado */}
+        {/* Product selection dropdown */}
         <TextField
           select
-          label="Produto"
+          label="Product"
           value={produtoAvaliacaoIdx}
           onChange={e => setProdutoAvaliacaoIdx(Number(e.target.value))}
           fullWidth
@@ -82,22 +83,22 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
             </MenuItem>
           ))}
         </TextField>
-        {/* Exibe preço e data da compra */}
+        {/* Displays price and purchase date */}
         <Box display="flex" flexDirection="column" alignItems="center" mt={2} mb={2}>
           {produto.preco && <span style={{ color: '#2e7d32', fontWeight: 500, fontSize: '1.1em' }}>{produto.preco}</span>}
-          {produto.data && <span style={{ color: '#555', fontSize: '0.98em', marginTop: 2 }}>Data da compra: {produto.data}</span>}
+          {produto.data && <span style={{ color: '#555', fontSize: '0.98em', marginTop: 2 }}>Purchase date: {produto.data}</span>}
         </Box>
-        {/* Campo de avaliação por estrelas */}
+        {/* Star rating field */}
         <Box display="flex" alignItems="center" gap={2} mb={2}>
-          <span>Avaliação:</span>
+          <span>Rating:</span>
           <Rating
             value={nota}
             onChange={(_, newValue) => setNota(newValue)}
           />
         </Box>
-        {/* Campo de comentário */}
+        {/* Comment field */}
         <TextField
-          label="Comentário"
+          label="Comment"
           multiline
           rows={4}
           value={comentario}
@@ -105,20 +106,20 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
           fullWidth
           margin="normal"
         />
-        {/* Mensagem de erro, se houver */}
+        {/* Error message, if any */}
         {erro && <Box color="#b71c1c" mb={1}>{erro}</Box>}
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'flex-start', pl: 2, pr: 2 }}>
-        {/* Botão para enviar avaliação */}
+        {/* Submit review button */}
         <Button 
           onClick={handleSubmit} 
           color="primary" 
           variant="contained"
           sx={{ mr: 1 }}
         >
-          Enviar
+          Submit
         </Button>
-        {/* Botão para cancelar */}
+        {/* Cancel button */}
         <Button 
           onClick={handleClose} 
           color="secondary"
@@ -134,7 +135,7 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
             }
           }}
         >
-          Cancelar
+          Cancel
         </Button>
       </DialogActions>
     </Dialog>
@@ -142,7 +143,7 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
 }
 
 function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar, produtoAvaliacaoIdx, setProdutoAvaliacaoIdx }) {
-  // Estado para abrir/fechar modal
+  // State for open/close modal
   const [open, setOpen] = useState(false);
 
   const handleAvaliarClick = () => setOpen(true);
@@ -150,14 +151,14 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar, pro
 
   return (
     <section>
-      {/* Botão para abrir modal de avaliação */}
+      {/* Button to open review modal */}
       <button 
         onClick={handleAvaliarClick} 
         disabled={open} 
         className="avaliacao-btn"
         type="button"
       >
-        <i className="fas fa-star"></i> Avaliar
+        <i className="fas fa-star"></i> Review
       </button>
       <AvaliacaoModal
         open={open}
@@ -171,10 +172,10 @@ function AvaliacaoCard({ produtosAguardando, produtosParaAvaliar, onAvaliar, pro
   );
 }
 
-const UserRating = ({ produtosAguardando = 1, imagem = "/imagens/raquete_elétrica2.jpeg", produtosParaAvaliar = [], onAvaliar = () => {}, produtoAvaliacaoIdx = 0, setProdutoAvaliacaoIdx = () => {} }) => {
+const UserRating = ({ produtosAguardando = 1, produtosParaAvaliar = [], onAvaliar = () => {}, produtoAvaliacaoIdx = 0, setProdutoAvaliacaoIdx = () => {} }) => {
   return (
     <div>
-      {/* Card de avaliação de produtos aguardando avaliação */}
+      {/* Product rating card for products awaiting review */}
       <AvaliacaoCard
         produtosAguardando={produtosAguardando}
         produtosParaAvaliar={produtosParaAvaliar}
