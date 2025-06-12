@@ -22,7 +22,7 @@ export default function PurchaseConfirmation(){
                     Check your email or the "profile" tab to track your order.
                   </h1>
                 </strong>
-                <button className="botao-inicio" onClick={() => navigate(ROUTES.PAGINA_INICIAL)}>
+                <button className="botao-inicio" onClick={() => navigate(ROUTES.HOME_PAGE)}>
                   Back to Home
                 </button>
             </div>

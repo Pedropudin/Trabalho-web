@@ -5,8 +5,7 @@ import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
-import ROUTES from '../routes';
-
+//import ROUTES from "../routes.js";
 
 /*
   Eletrocurte-se product page.

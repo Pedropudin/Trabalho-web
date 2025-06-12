@@ -11,7 +11,6 @@ import Profile from './pages/Profile';
 import PurchaseHistory from './pages/PurchaseHistory';
 import ProductsHistory from './pages/ProductsHistory';
 import TermsConditions from './pages/TermsConditions';
-import PaginaSetor from './pages/PaginaSetor';
 import Checkout from './pages/Checkout';
 import Logout from './pages/Logout';
 import ProfileEdition from './pages/ProfileEdition';
@@ -37,7 +36,6 @@ function AppRoutes() {
         <Route path={ROUTES.PAG_PESQUISA} element={<SearchPage />} />
         <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
         <Route path={ROUTES.PAG_SETOR} element={<SectorPage />} />
-        <Route path={ROUTES.PAG_SETOR} element={<PaginaSetor />} />
         <Route path={ROUTES.PURCHASE_HISTORY} element={<PurchaseHistory />} />
         <Route path={ROUTES.PROFILE_EDITION} element={<ProfileEdition />} />
         <Route path={ROUTES.PRODUCT_HISTORY} element={<ProductsHistory />} />

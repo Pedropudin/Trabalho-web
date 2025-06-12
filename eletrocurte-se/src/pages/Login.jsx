@@ -133,7 +133,7 @@ export default function Login() {
       localStorage.setItem('userType', 'client');
       localStorage.setItem('userName', name); // Save client name
       showMessage("Client login successful!", "success");
-      setTimeout(() => navigate(ROUTES.PAGINA_INICIAL), 1500);
+      setTimeout(() => navigate(ROUTES.HOME_PAGE), 1500);
     }
   }
 
@@ -219,7 +219,7 @@ export default function Login() {
                   <Button
                     variant="outlined"
                     color="inherit"
-                    onClick={() => navigate(ROUTES.PAGINA_INICIAL, { replace: true })}
+                    onClick={() => navigate(ROUTES.HOME_PAGE, { replace: true })}
                   >
                     Back
                   </Button>
@@ -254,7 +254,7 @@ export default function Login() {
                   <Button
                     variant="outlined"
                     color="inherit"
-                    onClick={() => navigate(ROUTES.PAGINA_INICIAL, { replace: true })}
+                    onClick={() => navigate(ROUTES.HOME_PAGE, { replace: true })}
                   >
                     Back
                   </Button>

@@ -1,8 +1,6 @@
 import '../styles/CartOverview.css'
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import '../styles/Cart.css';
-import toast, { Toaster } from 'react-hot-toast';
 
 // Cart summary component
 export default function CartOverview(){

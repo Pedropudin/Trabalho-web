@@ -44,7 +44,7 @@ const HomePage = () => {
     function handleComeceAgora(e) {
         e.preventDefault();
         if (isLoggedIn) {
-            navigate(ROUTES.PERFIL);
+            navigate(ROUTES.PROFILE);
         } else {
             navigate(ROUTES.LOGIN);
         }
