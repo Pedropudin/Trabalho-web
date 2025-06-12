@@ -172,7 +172,7 @@ export default function ProductPage() {
                   <>
                     <button className="product-purchase-button" onClick={() => toast.error("Product out of stock!")}>PRODUCT UNAVAILABLE</button>  
                     <Toaster/>
-                    <button className="product-cart-button" onClick={() => navigate(`/SearchPage`)}>BACK TO HOME</button>              
+                    <button className="product-cart-button" onClick={() => navigate(ROUTES.PAG_PESQUISA)}>BACK TO HOME</button>              
                   </>
                 : 
                   <>

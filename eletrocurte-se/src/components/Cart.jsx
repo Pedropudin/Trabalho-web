@@ -143,7 +143,7 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="empty-cart-btn"
-                        onClick={() => navigate(`/SearchPage`)}
+                        onClick={() => navigate(ROUTES.PAG_PESQUISA)}
                     >
                         Go to store
                     </button>
