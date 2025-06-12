@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import AdminHeader from '../components/admin/AdminHeader';
 import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
-import { Paper, Stack, TextField, Button, Typography } from '@mui/material';
+import { Paper, Stack, TextField, Button, Typography, IconButton } from '@mui/material';
+import UploadIcon from '@mui/icons-material/Upload';
+import DeleteIcon from '@mui/icons-material/Delete';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function PaginaProdutoAdmin() {
@@ -112,6 +114,10 @@ export default function PaginaProdutoAdmin() {
     );
   }
 
+  /*
+    TODO: Missing Image Upload and delete handlers
+  */
+
   return (
     <>
       <AdminHeader />
@@ -119,6 +125,10 @@ export default function PaginaProdutoAdmin() {
         <div className="products">
           <div className="item">
             <div className="item-images" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <IconButton onClick={() => console.log("Upload foto")}>
+                Adicionar imagem
+                <UploadIcon />
+              </IconButton>
               <Paper
                 elevation={2}
                 sx={{
@@ -127,7 +137,8 @@ export default function PaginaProdutoAdmin() {
                   mb: 2,
                   borderRadius: 2,
                   overflow: "hidden",
-                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)"
+                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)",
+                  position: "relative"
                 }}
               >
                 <img
@@ -136,6 +147,9 @@ export default function PaginaProdutoAdmin() {
                   alt={editProduct.name}
                   style={{ width: "100%", height: "100%", objectFit: "contain" }}
                 />
+                <IconButton onClick={() => console.log("Remove imagem")} style={{position:"absolute", right:"0", top:"0"}}>
+                  <DeleteIcon />
+                </IconButton>
               </Paper>
               <Stack direction="row" spacing={2}>
                 {(editProduct.thumbs || []).map((thumbUrl, i) => (
