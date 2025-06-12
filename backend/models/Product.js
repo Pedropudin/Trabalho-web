@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({ // Schema a ser definido, conforme JSON final dos produtos
-  nome: String,
-  marca: String,
-  preco: Number,
-  descricao: String,
-  img: String,
-  estoque: Number,
   id: Number,
-  setorGeral: String,
-  setorEspecifico: String,
+  name: String,
+  specificSector: String,
+  generalSector: String,
+  brand: String,
+  price: Number,
+  inStock: Number,
+  evaluation: String,
+  img: String,
   thumbs: [String],
-  descricao: String,
-  descricaoCompleta: String,
-  specifications: [String],
-  avaliacao: String,
-  cor: String,
-  garantia: String,
-  // outros campos conforme necessário
+  description: String,
+  fullDescription: String,
+  specifications: {
+    warranty: String,
+    model: String,
+    color: String,
+    voltage: String
+  }
 });
 
 module.exports = mongoose.model('Product', productSchema);

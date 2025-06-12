@@ -4,48 +4,48 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   email: { type: String, unique: true, required: true },
-  senha: { type: String, required: true },
-  telefone: { type: String, required: true },
-  CPF: { type: String, unique: true, sparse: true },
-  dataNascimento: { type: Date, required: true },
+  password: { type: String, required: true },
+  phone: { type: String, required: true },
+  cpf: { type: String, unique: true, sparse: true },
+  birthDate: { type: Date, required: true }
 
-  endereco: {
-    rua: { type: String, required: true },
-    numero: { type: String, required: true },
-    complemento: { type: String },
-    bairro: { type: String, required: true },
-    cidade: { type: String, required: true },
-    estado: { type: String, required: true },
-    CEP: { type: String, required: true }
+  address: {
+    street: { type: String, required: true },
+    number: { type: String, required: true },
+    complement: { type: String },
+    district: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zipCode: { type: String, required: true }
   },
 
-  carteira: {
-    dinheiro: { type: Number, default: 0 },
-    cartao: {
-      numero: { type: String, required: true },
-      nomeImpresso: { type: String, required: true },
-      validade: { type: Date, required: true },
-      CVV: { type: String, required: true }
+  wallet: {
+    money: { type: Number, default: 0 },
+    card: {
+      number: { type: String, required: true },
+      printedName: { type: String, required: true },
+      expiry: { type: Date, required: true },
+      cvv: { type: String, required: true }
     }
   },
 
-  privacidade: {
-    notificacao: { type: Boolean, default: false },
-    dadosCompartilhados: { type: Boolean, default: false },
-    termosUso: { type: Boolean, default: false } // Becomes true if user visits the terms and conditions page
+  privacy: {
+    notification: { type: Boolean, default: false },
+    sharedData: { type: Boolean, default: false },
+    termsAccepted: { type: Boolean, default: false }
   }
 });
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('senha')) return next();
-  this.senha = await bcrypt.hash(this.senha, 10);
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
 // Method to compare password
-userSchema.methods.compararSenha = function (senha) {
-  return bcrypt.compare(senha, this.senha);
+userSchema.methods.comparePassword = function (password) {
+  return bcrypt.compare(password, this.password);
 };
 
 module.exports = mongoose.model('User', userSchema);
