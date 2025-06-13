@@ -7,6 +7,7 @@ import { Paper, Stack, TextField, Button, Typography, IconButton } from '@mui/ma
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import toast, { Toaster } from 'react-hot-toast';
+import "../styles/PaginaProdutoAdmin.css";
 
 export default function PaginaProdutoAdmin() {
   const navigate = useNavigate();
@@ -237,7 +238,7 @@ export default function PaginaProdutoAdmin() {
                 </div>
               ))}
               <Button variant="outlined" onClick={handleAddSpec} sx={{ mt: 1, mb: 2 }}>Adicionar Especificação</Button>
-              <div style={{ display: "flex", gap: 16, marginTop: 24 }}>
+              <div style={{ display: "flex", gap: 16, marginTop: 24, justifyContent: "space-evenly" }}>
                 <Button variant="contained" color="primary" onClick={handleSave}>Salvar</Button>
                 <Button variant="outlined" color="secondary" onClick={() => navigate(-1)}>Cancelar</Button>
               </div>
