@@ -45,7 +45,7 @@ export default function PurchaseHistory() {
         const produtosSemAvaliacao = [];
         for (let i = 0; i < 4 && i < produtos.length; i++) {
           const novoProduto = { ...produtos[i] };
-          delete novoProduto.avaliacao;
+          delete novoProduto.evaluation;
           // Different dates for each product
           const dia = 10 + i;
           novoProduto.data = `${dia.toString().padStart(2, '0')}/06/2024`;
@@ -61,9 +61,9 @@ export default function PurchaseHistory() {
         }
         produtos = produtos.map(prod => {
           if (avaliacoes[prod.id]) {
-            return { ...prod, avaliacao: avaliacoes[prod.id].nota, comentario: avaliacoes[prod.id].comentario };
+            return { ...prod, evaluation: avaliacoes[prod.id].nota, comment: avaliacoes[prod.id].comentario };
           }
-          return { ...prod, avaliacao: prod.avaliacao, comentario: undefined };
+          return { ...prod, evaluation: prod.evaluation, comment: undefined };
         });
 
         setProdutos(produtos);
@@ -71,7 +71,7 @@ export default function PurchaseHistory() {
   }, []);
 
   // Products awaiting review: have null or undefined review
-  const produtosAguardando = produtos.filter(p => p.avaliacao == null);
+  const produtosAguardando = produtos.filter(p => p.evaluation == null);
 
   // Function called when reviewing a product
   const handleAvaliar = (nota, comentario, idx) => {
@@ -91,7 +91,7 @@ export default function PurchaseHistory() {
       }
       return produtosAntigos.map((p, i) => {
         if (produtoAvaliado && p.id === produtoAvaliado.id) {
-          return { ...p, avaliacao: nota, comentario };
+          return { ...p, evaluation: nota, comment: comentario };
         }
         return p;
       });
@@ -146,7 +146,7 @@ export default function PurchaseHistory() {
       {produtosAguardando.length > 0 && (
         <section className="avaliacao">
           <img
-            src={produtosAguardando[produtoAvaliacaoIdx]?.img || "/imagens/raquete_elétrica2.jpeg"}
+            src={produtosAguardando[produtoAvaliacaoIdx]?.image || "/imagens/raquete_elétrica2.jpeg"}
             alt="Product awaiting review"
             className="img-miniatura"
           />
@@ -180,7 +180,7 @@ export default function PurchaseHistory() {
               {renderCabecalhoMesAno(mes, ano)}
               <div className="produtos">
                 {Array.isArray(produtos) ? produtos.map((produto, idx) => (
-                  <ProductCard product={produto} onClick={handleProductClick} key={produto.nome + idx} showBuyButton={false} />
+                  <ProductCard product={produto} onClick={handleProductClick} key={produto.name + idx} showBuyButton={false} />
                 )) : null}
               </div>
             </div>

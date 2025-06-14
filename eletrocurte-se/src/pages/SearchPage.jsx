@@ -21,45 +21,33 @@ export default function SearchPage() {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
-    const [produtosLocais, setProdutosLocais] = React.useState([]);
+    const [productsLocal, setProductsLocal] = React.useState([]);
 
     // Reads product data directly from JSON
     useEffect(() => {
-        const localProducts = localStorage.getItem("produtos");
+        const localProducts = localStorage.getItem("products");
         if (localProducts) {
-            setProdutosLocais(JSON.parse(localProducts));
+            setProductsLocal(JSON.parse(localProducts));
         } else {
-            fetch('/data/produtos.json')
+            fetch('/data/products.json')
                 .then(res => res.json())
                 .then(data => {
-                    setProdutosLocais(data);
+                    setProductsLocal(data);
                 })
-                .catch(() => setProdutosLocais([]));
+                .catch(() => setProductsLocal([]));
         }
     }, []);
     
-    const produtosValidos = produtosLocais.filter(
-      p => p && p.name && p.marca && p.price !== undefined && p.inStock !== undefined
+    const validProducts = productsLocal.filter(
+      p => p && p.name && p.brand && p.price !== undefined && p.inStock !== undefined
     );
     
-    // Handles product brands
-    const marcasLocais = [
-      ...new Set(produtosValidos.map(p => p.marca.toLowerCase()))
-    ].map(marca => ({
-      id: marca,
-      label: marca.charAt(0).toUpperCase() + marca.slice(1)
+    const brandsLocal = [
+      ...new Set(validProducts.map(p => p.brand?.toLowerCase()))
+    ].map(brand => ({
+      id: brand,
+      label: brand?.charAt(0).toUpperCase() + brand?.slice(1)
     }));
-    /* // Reads data of products directly from the JSON
-    useEffect(() => {
-        // Always fetch from backend to ensure consistency
-        fetch(process.env.REACT_APP_API_URL + '/produtos')
-            .then(res => res.json())
-            .then(data => setProdutosLocais(data))
-            .catch(() => setProdutosLocais([]));
-    }, []);
-    // Reads product brands
-    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))]
-    .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) })); */
 
     // Handles product order change
     function handleOrderChange(e) {
@@ -67,7 +55,7 @@ export default function SearchPage() {
     }
     // Uses useMemo to organize, whenever changed, the new order of our products
     const orderedProducts = React.useMemo(() => {
-      const produtosOrdenados = [...produtosValidos].sort((a, b) => {
+      const sortedProducts = [...validProducts].sort((a, b) => {
           if (a.inStock > 0  && b.inStock === 0) return -1; 
           if (a.inStock === 0  && b.inStock > 0) return 1; 
           if (order === "alphabetical-asc") {
@@ -81,12 +69,12 @@ export default function SearchPage() {
           }
           return 0;
       });
-      return produtosOrdenados;
-    }, [order, produtosValidos]);
+      return sortedProducts;
+    }, [order, validProducts]);
 
     const filteredProducts = orderedProducts.filter(product => {
         const matchesName = !name || product.name.toLowerCase().includes(name.toLowerCase());
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.marca.toLowerCase());
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand?.toLowerCase());
         const matchesMin = minPrice === '' || product.price >= Number(minPrice);
         const matchesMax = maxPrice === '' || product.price <= Number(maxPrice);
         return matchesBrand && matchesMin && matchesMax && matchesName;
@@ -97,8 +85,8 @@ export default function SearchPage() {
             <Header/>
             <div className="main-content">
                 <Sidebar
-                    items={produtosLocais}
-                    brands = {marcasLocais}
+                    items={productsLocal}
+                    brands = {brandsLocal}
                     selectedBrands={selectedBrands}
                     setSelectedBrands={setSelectedBrands}
                     minPrice={minPrice}
@@ -137,4 +125,3 @@ export default function SearchPage() {
         </>    
     );
 }
-

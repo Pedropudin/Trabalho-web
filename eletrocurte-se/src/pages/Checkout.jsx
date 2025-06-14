@@ -31,23 +31,24 @@ export default function Checkout() {
         if (step === 2) {
             const personal = JSON.parse(localStorage.getItem("personal")) || {};
             if (
-                !personal.nome ||
-                !personal.sobrenome ||
+                !personal.firstName ||
+                !personal.lastName ||
                 !personal.email ||
                 !personal.cpf ||
-                !personal.telefone ||
-                !personal.endereco ||
-                !personal.numero ||
-                !personal.bairro ||
-                !personal.cidade ||
-                !personal.estado ||
-                !personal.cep
+                !personal.phone ||
+                !personal.address ||
+                !personal.address.street ||
+                !personal.address.number ||
+                !personal.address.district ||
+                !personal.address.city ||
+                !personal.address.state ||
+                !personal.address.zipCode
             ) return;
         }
 
         if (step === 3) {
             const card = JSON.parse(localStorage.getItem("card")) || {};
-            if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade || !card.parcelamento) return;
+            if (!card.cardHolder || !card.cardNumber || !card.cvv || !card.cpf || !card.expiry || !card.installments) return;
         }
         setStep(prev => prev + 1);
     }

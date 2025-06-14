@@ -5,31 +5,33 @@ const jwt = require('jsonwebtoken');
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
-  const { email, senha } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user) return res.status(401).json({ error: 'Credenciais inválidas' });
+  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
-  const senhaCorreta = await user.compararSenha(senha);
-  if (!senhaCorreta) return res.status(401).json({ error: 'Credenciais inválidas' });
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) return res.status(401).json({ error: 'Invalid credentials' });
 
-  // Gera token JWT
+  // Generate JWT token
   const token = jwt.sign(
-    { id: user._id, tipo: user.tipo, nome: user.nome },
+    { id: user._id, firstName: user.firstName, email: user.email },
     process.env.JWT_SECRET,
     { expiresIn: '2h' }
   );
-  res.json({ token, user: { id: user._id, nome: user.nome, email: user.email, tipo: user.tipo } });
+  res.json({ token, user: { id: user._id, firstName: user.firstName, email: user.email } });
 });
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
-  const { nome, email, senha, tipo } = req.body;
+  // Receives data from frontend
+  const { firstName, lastName, email, password, phone, cpf, birthDate, address, card, privacy } = req.body;
   try {
-    const user = new User({ nome, email, senha, tipo });
+    // Creates user with schema fields
+    const user = new User({ firstName, lastName, email, password, phone, cpf, birthDate, address, card, privacy });
     await user.save();
-    res.status(201).json({ user: { id: user._id, nome: user.nome, email: user.email, tipo: user.tipo } });
+    res.status(201).json({ user: { id: user._id, firstName: user.firstName, email: user.email } });
   } catch (err) {
-    res.status(400).json({ error: 'Erro ao registrar usuário.' });
+    res.status(400).json({ error: 'Error registering user.' });
   }
 });
 

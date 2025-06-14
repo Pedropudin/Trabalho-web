@@ -45,10 +45,10 @@ export default function Purchase({ onBack, onNext, steps }) {
             if (!prod) return null;
             return {
                 ...item,
-                name: prod.name || prod.nome,
-                price: prod.price || prod.preco,
-                image: prod.img || prod.imagem || prod.image,
-                inStock: prod.inStock !== undefined ? prod.inStock : prod.estoque
+                name: prod.name,
+                price: prod.price,
+                image: prod.image,
+                inStock: prod.inStock
             };
         })
         .filter(Boolean);
@@ -60,10 +60,30 @@ export default function Purchase({ onBack, onNext, steps }) {
     // Checagem de dados obrigatórios
     function dadosValidos() {
         if (!cart.length) return "The cart is empty.";
-        if (!personal.nome || !personal.sobrenome || !personal.email || !personal.cpf || !personal.telefone) return "Fill in all personal data.";
-        if (!personal.endereco || !personal.numero || !personal.bairro || !personal.cidade || !personal.estado || !personal.cep) return "Fill in all address fields.";
-        if (!card.nome_cartao || !card.numero_cartao || !card.cvv || !card.cpf || !card.validade) return "Fill in all card data.";
-        // Checagem de estoque
+        if (
+            !personal.firstName ||
+            !personal.lastName ||
+            !personal.email ||
+            !personal.cpf ||
+            !personal.phone
+        ) return "Fill in all personal data.";
+        if (
+            !personal.address ||
+            !personal.address.street ||
+            !personal.address.number ||
+            !personal.address.district ||
+            !personal.address.city ||
+            !personal.address.state ||
+            !personal.address.zipCode
+        ) return "Fill in all address fields.";
+        if (
+            !card.cardHolder ||
+            !card.cardNumber ||
+            !card.cvv ||
+            !card.cpf ||
+            !card.expiry
+        ) return "Fill in all card data.";
+        // Stock check
         for (const item of cart) {
             const prod = produtosLocais.find(p => p.id === item.id);
             if (!prod || prod.inStock < item.quantity) return `Insufficient stock for product: ${item.name}`;
@@ -124,28 +144,28 @@ export default function Purchase({ onBack, onNext, steps }) {
             <section className="purchase-section">
                 <h3 className="purchase-section-title">Personal Data</h3>
                 <div className="purchase-section-content">
-                    <div><b>Name:</b> {personal.nome} {personal.sobrenome}</div>
+                    <div><b>Name:</b> {personal.firstName} {personal.lastName}</div>
                     <div><b>Email:</b> {personal.email}</div>
-                    <div><b>Phone:</b> {personal.telefone}</div>
+                    <div><b>Phone:</b> {personal.phone}</div>
                     <div><b>CPF:</b> {personal.cpf}</div>
-                    <div><b>Birth date:</b> {personal.nascimento}</div>
+                    <div><b>Birth date:</b> {personal.birthDate}</div>
                 </div>
                 <h3 className="purchase-section-title">Billing Data</h3>
                 <div className="purchase-section-content">
-                    <div><b>Name:</b> {card.nome_cartao}</div>
-                    <div><b>Card Number:</b> {card.numero_cartao}</div>
+                    <div><b>Name:</b> {card.cardHolder}</div>
+                    <div><b>Card Number:</b> {card.cardNumber}</div>
                     <div><b>CVV:</b> {card.cvv}</div>
                     <div><b>CPF:</b> {card.cpf}</div>
-                    <div><b>Expiry Date:</b> {card.validade}</div>
-                    <div><b>Installments:</b> In {card.parcelamento}x of ${(total/card.parcelamento).toFixed(2)}</div>
+                    <div><b>Expiry Date:</b> {card.expiry}</div>
+                    <div><b>Installments:</b> In {card.installments}x of ${(total/card.installments).toFixed(2)}</div>
                 </div>
                 <h3 className="purchase-section-title address">Address</h3>
                 <div className="purchase-section-content">
                     <div>
-                        {personal.endereco}, {personal.numero} {personal.complemento && <span>- {personal.complemento}</span>}
+                        {personal.address?.street}, {personal.address?.number} {personal.address?.complement && <span>- {personal.address.complement}</span>}
                     </div>
                     <div>
-                        {personal.bairro} - {personal.cidade}/{personal.estado} - <b>ZIP:</b> {personal.cep}
+                        {personal.address?.district} - {personal.address?.city}/{personal.address?.state} - <b>ZIP:</b> {personal.address?.zipCode}
                     </div>
                 </div>
             </section>

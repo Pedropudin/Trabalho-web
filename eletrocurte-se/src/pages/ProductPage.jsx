@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
-//import ROUTES from "../routes.js";
+import ROUTES from "../routes.js";
 
 /*
   Eletrocurte-se product page.
@@ -18,27 +18,27 @@ export default function ProductPage() {
   // Variables
   const navigate = useNavigate();
   const { id } = useParams();  // Identifies the id from the url 
-  const [produtosLocais, setProdutosLocais] = React.useState([]);
+  const [productsLocal, setProductsLocal] = React.useState([]);
 
   // Reads product data directly from JSON
   useEffect(() => {
-      const localProducts = localStorage.getItem("produtos");
+      const localProducts = localStorage.getItem("products");
       if (localProducts) {
-          setProdutosLocais(JSON.parse(localProducts));
+          setProductsLocal(JSON.parse(localProducts));
       } else {
-          fetch('/data/produtos.json')
+          fetch('/data/products.json')
               .then(res => res.json())
-              .then(data => setProdutosLocais(data))
-              .catch(() => setProdutosLocais([]));
+              .then(data => setProductsLocal(data))
+              .catch(() => setProductsLocal([]));
       }
       /* // Always fetch from backend for consistency
-      fetch(process.env.REACT_APP_API_URL + '/produtos')
+      fetch(process.env.REACT_APP_API_URL + '/products')
           .then(res => res.json())
-          .then(data => setProdutosLocais(data))
-          .catch(() => setProdutosLocais([])); */
+          .then(data => setProductsLocal(data))
+          .catch(() => setProductsLocais([])); */
   }, []);
   // Variables
-  const product = produtosLocais.find(p => String(p.id) === String(id));
+  const product = productsLocal.find(p => String(p.id) === String(id));
 
   // Updates images after receiving data
   const [mainImg, setMainImg] = useState();
@@ -46,7 +46,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (product) {
-      setMainImg(product.img);
+      setMainImg(product.image);
       setThumbs(product.thumbs || []);
     }
   }, [product]);
@@ -79,7 +79,7 @@ export default function ProductPage() {
           id: product.id,
           name: product.name,
           price: product.price,
-          image: product.img,
+          image: product.image,
           quantity: 1
         }
       ];
@@ -176,7 +176,7 @@ export default function ProductPage() {
                   </>
                 : 
                   <>
-                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(`/Checkout`)}}>BUY</button>
+                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(ROUTES.CHECKOUT)}}>BUY</button>
                     <Toaster/>
                     <button className="product-cart-button" onClick={() => handleAdicionarCarrinho(product.id)}>
                       ADD TO CART

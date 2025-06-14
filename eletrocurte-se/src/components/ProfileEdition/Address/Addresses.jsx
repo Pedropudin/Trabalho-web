@@ -25,12 +25,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddressModal from './AddressModal';
 import Alert from '@mui/material/Alert';
 
-export default function Addresses({ onVoltar }) {
+export default function Addresses({ onBack }) {
   // List of user addresses, persisted in localStorage.
-  const [enderecos, setEnderecos] = useState(() => {
+  const [addresses, setAddresses] = useState(() => {
     // Fetches saved addresses or initializes with examples.
-    const armazenados = localStorage.getItem('enderecos');
-    return armazenados ? JSON.parse(armazenados) : [
+    const stored = localStorage.getItem('addresses');
+    return stored ? JSON.parse(stored) : [
       {
         id: 'endereco1',
         texto: 'Rua das Flores, 123 - Centro, São Paulo/SP'
@@ -43,8 +43,8 @@ export default function Addresses({ onVoltar }) {
   });
 
   // ID of the currently selected delivery address.
-  const [enderecoSelecionado, setEnderecoSelecionado] = useState(
-    localStorage.getItem('enderecoSelecionado') || 'endereco1'
+  const [selectedAddress, setSelectedAddress] = useState(
+    localStorage.getItem('selectedAddress') || 'address1'
   );
 
   // Controls display of the address registration modal.
@@ -56,64 +56,64 @@ export default function Addresses({ onVoltar }) {
 
   // Updates localStorage and backend whenever addresses change.
   useEffect(() => {
-    localStorage.setItem('enderecos', JSON.stringify(enderecos));
+    localStorage.setItem('addresses', JSON.stringify(addresses));
     // Updates backend
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enderecos })
+      body: JSON.stringify({ addresses })
     });
-  }, [enderecos]);
+  }, [addresses]);
 
   // Updates localStorage and backend whenever the selected address changes.
   useEffect(() => {
-    localStorage.setItem('enderecoSelecionado', enderecoSelecionado);
+    localStorage.setItem('selectedAddress', selectedAddress);
     // Updates backend
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enderecoSelecionado })
+      body: JSON.stringify({ selectedAddress })
     });
-  }, [enderecoSelecionado]);
+  }, [selectedAddress]);
 
   // When changing the selected address, shows confirmation message
-  const handleChangeEndereco = (e) => {
-    setEnderecoSelecionado(e.target.value);
+  const handleChangeAddress = (e) => {
+    setSelectedAddress(e.target.value);
     setSnackbar({ open: true, message: 'Delivery location changed successfully!' });
   };
 
   // Adds a new address to the list and selects it.
-  const addAddress = (enderecoCompleto) => {
+  const addAddress = (fullAddress) => {
     // Formats the address if it's an object (AdressModal return).
-    const texto = typeof enderecoCompleto === 'object' && enderecoCompleto !== null
-      ? `${enderecoCompleto.logradouro || ''}, ${enderecoCompleto.numero || ''} ${enderecoCompleto.complemento ? '- ' + enderecoCompleto.complemento : ''} - ${enderecoCompleto.bairro || ''}, ${enderecoCompleto.localidade || ''}/${enderecoCompleto.uf || ''}`.replace(/\s+/g, ' ').trim()
-      : enderecoCompleto;
-    const novo = { id: `endereco${Date.now()}`, texto };
-    setEnderecos([...enderecos, novo]);
-    setEnderecoSelecionado(novo.id);
+    const text = typeof fullAddress === 'object' && fullAddress !== null
+      ? `${fullAddress.street || ''}, ${fullAddress.number || ''} ${fullAddress.complement ? '- ' + fullAddress.complement : ''} - ${fullAddress.district || ''}, ${fullAddress.city || ''}/${fullAddress.state || ''}`.replace(/\s+/g, ' ').trim()
+      : fullAddress;
+    const newAddress = { id: `address${Date.now()}`, text };
+    setAddresses([...addresses, newAddress]);
+    setSelectedAddress(newAddress.id);
   };
 
   // Removes address by id and adjusts selection if necessary.
-  const removerEndereco = (id) => {
-    const filtrados = enderecos.filter(e => e.id !== id);
-    setEnderecos(filtrados);
-    if (id === enderecoSelecionado && filtrados.length > 0) {
-      setEnderecoSelecionado(filtrados[0].id);
-    } else if (filtrados.length === 0) {
-      setEnderecoSelecionado('');
+  const removeAddress = (id) => {
+    const filtered = addresses.filter(e => e.id !== id);
+    setAddresses(filtered);
+    if (id === selectedAddress && filtered.length > 0) {
+      setSelectedAddress(filtered[0].id);
+    } else if (filtered.length === 0) {
+      setSelectedAddress('');
     }
   };
 
   // Opens confirmation dialog to remove address.
-  const handleRemoverClick = (id) => {
+  const handleRemoveClick = (id) => {
     setDialogRemover({ open: true, id });
   };
 
   // Confirms removal of the selected address in the dialog.
   const confirmarRemover = () => {
-    removerEndereco(dialogRemover.id);
+    removeAddress(dialogRemover.id);
     setDialogRemover({ open: false, id: null });
   };
 
@@ -130,19 +130,19 @@ export default function Addresses({ onVoltar }) {
       <FormControl component="fieldset">
         <FormLabel component="legend">Choose the delivery address</FormLabel>
         <RadioGroup
-          value={enderecoSelecionado}
-          onChange={handleChangeEndereco}
+          value={selectedAddress}
+          onChange={handleChangeAddress}
         >
           {/* List of addresses with removal option */}
-          {enderecos.map((endereco) => (
-            <div key={endereco.id} style={{ display: 'flex', alignItems: 'center' }}>
+          {addresses.map((address) => (
+            <div key={address.id} style={{ display: 'flex', alignItems: 'center' }}>
               <FormControlLabel
-                value={endereco.id}
+                value={address.id}
                 control={<Radio />}
-                label={endereco.texto}
+                label={address.text}
               />
               {/* Button to remove address, with trash can icon */}
-              <IconButton onClick={() => handleRemoverClick(endereco.id)}>
+              <IconButton onClick={() => handleRemoveClick(address.id)}>
                 <DeleteIcon color="error" />
               </IconButton>
             </div>
@@ -199,7 +199,7 @@ export default function Addresses({ onVoltar }) {
         <Button
           variant="contained"
           color="primary"
-          onClick={onVoltar}
+          onClick={onBack}
           sx={{ width: '100%' }}
         >
           Confirm and Back to Profile

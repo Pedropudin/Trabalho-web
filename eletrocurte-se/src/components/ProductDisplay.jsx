@@ -15,7 +15,7 @@ export default function ProductDisplay({product}) {
         <div className={`items${product.inStock > 0 ? '' : ' unavailable'}`}>
             <img
                 className="item-image"
-                src={product.img}
+                src={product.image}
                 alt={"Imagem do " + product.name}
                 style={product.inStock > 0 ? {} : { filter: "grayscale(100%)" }}
             />

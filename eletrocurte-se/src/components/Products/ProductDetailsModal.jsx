@@ -41,17 +41,17 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
     }
 
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const id = product.id || product.ID || product.Id;
-    const name = product.nome || product.name;
-    const price = parseFloat(String(product.preco || product.price).replace(',', '.'));
-    const image = product.img || product.imagem || product.image;
-    const estoque = product.estoque ?? product.inStock ?? 1;
+    const id = product.id;
+    const name = product.name;
+    const price = parseFloat(String(product.price).replace(',', '.'));
+    const image = product.image;
+    const stock = product.inStock ?? 1;
 
     const existing = cart.find(item => String(item.id) === String(id));
     let updatedCart;
 
     if (existing) {
-      if ((existing.quantity + 1) > estoque) {
+      if ((existing.quantity + 1) > stock) {
         toast.error("Estoque insuficiente!");
         return;
       }
@@ -96,7 +96,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
             boxShadow: '0 4px 16px rgba(0,0,0,0.13)'
           }}
         >
-          {cartCountPopup} produto{cartCountPopup > 1 ? 's' : ''} no carrinho
+          {cartCountPopup} product{cartCountPopup > 1 ? 's' : ''} in cart
         </Box>
       )}
 
@@ -123,7 +123,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
       )}
 
       <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-        <DialogTitle>{product.nome || product.name || 'Detalhes do Produto'}</DialogTitle>
+        <DialogTitle>{product.name || 'Product Details'}</DialogTitle>
         <Divider />
         <DialogContent>
           <Box
@@ -142,8 +142,8 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
                 height={220}
               >
                 <img
-                  src={product.imagem || product.image || product.img}
-                  alt={product.nome || product.name}
+                  src={product.image}
+                  alt={product.name}
                   style={{ width: 200, height: 200, objectFit: 'contain', background: '#fafafa', borderRadius: 8 }}
                 />
                 {product.showBuyButton === true && (
@@ -169,16 +169,16 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
               minWidth={220}
             >
               <Typography variant="h6" gutterBottom>
-                {product.nome || product.name}
+                {product.name}
               </Typography>
-              {(product.descricao || product.description) && (
+              {product.description && (
                 <Typography variant="body1" gutterBottom>
-                  {product.descricao || product.description}
+                  {product.description}
                 </Typography>
               )}
-              {(product.detalhes || product.details) && (
+              {product.details && (
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  {product.detalhes || product.details}
+                  {product.details}
                 </Typography>
               )}
               {comentarioUsuario && (
@@ -187,16 +187,16 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
                 </Typography>
               )}
               <Typography variant="subtitle1" color="primary" gutterBottom>
-                R$ {product.preco || product.price}
+                $ {product.price}
               </Typography>
-              {(product.categoria || product.category) && (
+              {product.category && (
                 <Typography variant="body2" color="text.secondary">
-                  Categoria: {product.categoria || product.category}
+                  Category: {product.category}
                 </Typography>
               )}
-              {(product.marca || product.brand) && (
+              {product.brand && (
                 <Typography variant="body2" color="text.secondary">
-                  Marca: {product.marca || product.brand}
+                  Brand: {product.brand}
                 </Typography>
               )}
               {product.data && (

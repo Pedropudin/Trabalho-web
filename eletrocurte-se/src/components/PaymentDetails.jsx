@@ -17,12 +17,12 @@ import ROUTES from '../routes';
 
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     const [form, setForm] = useState({
-        numero_cartao: "",
-        nome_cartao: "",
-        validade: "",
+        cardNumber: "",
+        cardHolder: "",
+        expiry: "",
         cvv: "",
         cpf: "",
-        parcelamento: "", 
+        installments: "", 
     });
 
     // Installment options
@@ -65,13 +65,13 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         // Data formatting
         if (name === "cpf") {
             newValue = formatCPF(newValue);
-        }else if (name === "validade") {
+        } else if (name === "expiry") {
             newValue = formatValidade(newValue);
         } else if (name === "cvv") {
             newValue = newValue.replace(/\D/g, "").slice(0, 3);
-        } else if (name === "numero_cartao") {
+        } else if (name === "cardNumber") {
             newValue = formatCartao(newValue);
-        } else if (name === "nome_cartao") {
+        } else if (name === "cardHolder") {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
         }
 
@@ -83,9 +83,9 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         e.preventDefault();//Ensures control of form submission
 
         // Expiry validation (MM/YY)
-        const validade = form.validade;
-        const validadeRegex = /^(\d{2})\/(\d{2})$/;
-        const match = validade.match(validadeRegex);
+        const expiry = form.expiry;
+        const expiryRegex = /^(\d{2})\/(\d{2})$/;
+        const match = expiry.match(expiryRegex);
 
         if (!match) {//Warn if condition is not met
             toast.error("Invalid expiry date. Use the format MM/YY.");
@@ -93,19 +93,19 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         }
 
         // Separate month and year to ensure they meet basic calendar rules
-        const mes = parseInt(match[1], 10);
-        const ano = 2000 + parseInt(match[2], 10);
+        const month = parseInt(match[1], 10);
+        const year = 2000 + parseInt(match[2], 10);
 
-        if (mes < 1 || mes > 12) {//Warn if condition is not met
+        if (month < 1 || month > 12) {//Warn if condition is not met
             toast.error("Expiry month must be between 01 and 12.");
             return;
         }
-        if (ano < 2025) {//Warn if condition is not met
+        if (year < 2025) {//Warn if condition is not met
             toast.error("Expiry year must be 2025 or greater.");
             return;
         }
 
-        if (!form.parcelamento) {//Warn if condition is not met
+        if (!form.installments) {//Warn if condition is not met
             toast.error("Choose the number of installments.");
             return;
         }
@@ -136,13 +136,13 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         <div className="main-content">
         <form className="payment-details-form" onSubmit={handleSubmit}>
             <h2>Payment Details</h2>
-            <label htmlFor="numero_cartao"></label>
+            <label htmlFor="cardNumber"></label>
             <input
-                id="numero_cartao"
+                id="cardNumber"
                 type="text"
-                name="numero_cartao"
+                name="cardNumber"
                 placeholder="Card number"
-                value={form.numero_cartao}
+                value={form.cardNumber}
                 onChange={handleChange}
                 required
                 maxLength={19}
@@ -150,25 +150,25 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 pattern="\d{4} \d{4} \d{4} \d{4}"
                 title="Enter 16 card numbers (format: 0000 0000 0000 0000)"
             />
-            <label htmlFor="nome_cartao"></label>
+            <label htmlFor="cardHolder"></label>
             <input
-                id="nome_cartao"
+                id="cardHolder"
                 type="text"
-                name="nome_cartao"
+                name="cardHolder"
                 placeholder="Name on card"
-                value={form.nome_cartao}
+                value={form.cardHolder}
                 onChange={handleChange}
                 required
             />
             <div className="input-row">
                 <div>
-                    <label htmlFor="validade"></label>
+                    <label htmlFor="expiry"></label>
                     <input
-                        id="validade"
+                        id="expiry"
                         type="text"
-                        name="validade"
+                        name="expiry"
                         placeholder="MM/YY"
-                        value={form.validade}
+                        value={form.expiry}
                         onChange={handleChange}
                         required
                         maxLength={5}
@@ -198,11 +198,11 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 onChange={handleChange}
                 required
             />
-            <label htmlFor="parcelamento"></label>
+            <label htmlFor="installments"></label>
             <select
-                id="parcelamento"
-                name="parcelamento"
-                value={form.parcelamento || ""}
+                id="installments"
+                name="installments"
+                value={form.installments || ""}
                 onChange={handleChange}
             >
                 <option value="" disabled>Choose the number of installments</option>

@@ -37,17 +37,17 @@ export default function Cart({onNext}) {
 
     // Fetch products from JSON when the component mounts
     useEffect(() => {
-        const localProducts = localStorage.getItem("produtos");
+        const localProducts = localStorage.getItem("products");
         if (localProducts) {
             setProductsLocal(JSON.parse(localProducts));
         } else {
-            fetch('/data/Produtos.json')
+            fetch('/data/products.json')
                 .then(res => res.json())
                 .then(data => setProductsLocal(data))
                 .catch(() => setProductsLocal([]));
         }
         /* // Busca sempre do backend para garantir consistência
-        fetch(process.env.REACT_APP_API_URL + '/produtos')
+        fetch(process.env.REACT_APP_API_URL + '/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))
             .catch(() => setProductsLocal([])); */
@@ -122,10 +122,10 @@ export default function Cart({onNext}) {
             if (!prod) return null;
             return {
                 ...item,
-                name: prod.name || prod.nome,
-                price: prod.price || prod.preco,
-                image: prod.img || prod.imagem || prod.image,
-                inStock: prod.inStock !== undefined ? prod.inStock : prod.estoque
+                name: prod.name,
+                price: prod.price,
+                image: prod.image,
+                inStock: prod.inStock
             };
         })
         .filter(Boolean);

@@ -18,10 +18,10 @@ import React, { useState,useEffect } from 'react';
 
 const categoryIndexRel = {
     "hardware": 0,
-    "perifericos": 1,
-    "computadores": 2,
-    "celulares": 3,
-}
+    "peripherals": 1,
+    "computers": 2,
+    "cellphones": 3,
+};
 
 export default function SectorPage() {
     const { name } = useParams(); 
@@ -29,19 +29,19 @@ export default function SectorPage() {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
-    const [produtosLocais, setProdutosLocais] = React.useState([]);
+    const [productsLocal, setProductsLocal] = React.useState([]);
     const [categoryIndex, setCategoryIndex] = useState(0);
     
     // Reads product data directly from JSON
     useEffect(() => {
-        const localProducts = localStorage.getItem("produtos");
+        const localProducts = localStorage.getItem("products");
         if (localProducts) {
-            setProdutosLocais(JSON.parse(localProducts));
+            setProductsLocal(JSON.parse(localProducts));
         } else {
-            fetch('/data/produtos.json')
+            fetch('/data/products.json')
                 .then(res => res.json())
-                .then(data => setProdutosLocais(data))
-                .catch(() => setProdutosLocais([]));
+                .then(data => setProductsLocal(data))
+                .catch(() => setProductsLocal([]));
         }
         /* // Busca sempre do backend para garantir consistência
         fetch(process.env.REACT_APP_API_URL + '/produtos')
@@ -59,17 +59,16 @@ export default function SectorPage() {
         }
     }, []);
 
-    const marcasLocais = [...new Set(produtosLocais.map(p => p.marca.toLowerCase()))] // Gets all available brands
-    .map(marca => ({ id: marca, label: marca.charAt(0).toUpperCase() + marca.slice(1) }));
+    const brandsLocal = [...new Set(productsLocal.map(p => p.brand?.toLowerCase()))]
+        .map(brand => ({ id: brand, label: brand?.charAt(0).toUpperCase() + brand?.slice(1) }));
 
     // Function to ignore accents, used to handle the access origin
     const normalize = (str) =>
         str?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    // If there is no name, show all products
     const sectorProducts = name
-        ? produtosLocais.filter((p) => normalize(p.setorGeral) === normalize(name))
-        : produtosLocais;
+        ? productsLocal.filter((p) => normalize(p.generalSector) === normalize(name))
+        : productsLocal;
     
     // Product sorting based on the chosen order
     const orderedProducts = React.useMemo(() => {
@@ -93,15 +92,14 @@ export default function SectorPage() {
 
     // Brand and price filters
     const filteredProducts = orderedProducts.filter(product => {
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.marca.toLowerCase());
+        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand?.toLowerCase());
         const matchesMin = minPrice === '' || product.price >= Number(minPrice);
         const matchesMax = maxPrice === '' || product.price <= Number(maxPrice);
         return matchesBrand && matchesMin && matchesMax;
     });
 
-    // Gets all specific sectors within this general sector page
-    const setoresEspecificos = Array.from(
-        new Set(filteredProducts.map((p) => p.setorEspecifico))
+    const specificSectors = Array.from(
+        new Set(filteredProducts.map((p) => p.specificSector))
     );
 
     return (
@@ -113,7 +111,7 @@ export default function SectorPage() {
             <div className="main-content">
                 <Sidebar
                     items={sectorProducts}
-                    brands={marcasLocais}
+                    brands={brandsLocal}
                     selectedBrands={selectedBrands}
                     setSelectedBrands={setSelectedBrands}
                     minPrice={minPrice}
@@ -137,20 +135,20 @@ export default function SectorPage() {
                         </select>
                     </div>
                     <div className="sector-display">
-                        {setoresEspecificos.length === 0 ? (
+                        {specificSectors.length === 0 ? (
                             <p style={{ margin: "40px auto", fontWeight: "bold" }}>No products found.</p>
                         ) : (
-                            setoresEspecificos.map((setorEsp) => {
-                                const produtosSetorEsp = filteredProducts.filter(
-                                    (p) => p.setorEspecifico === setorEsp
+                            specificSectors.map((sector) => {
+                                const productsSector = filteredProducts.filter(
+                                    (p) => p.specificSector === sector
                                 );
-                                if (produtosSetorEsp.length === 0) return null;
+                                if (productsSector.length === 0) return null;
                                 return (
-                                    <section key={setorEsp}>
-                                        <h2 className="sector-name">{setorEsp}</h2>
+                                    <section key={sector}>
+                                        <h2 className="sector-name">{sector}</h2>
                                         <div className="product-display">
-                                            {produtosSetorEsp.map(produtosLocais => (
-                                                <ProductDisplay key={produtosLocais.id} product={produtosLocais}/>
+                                            {productsSector.map(product => (
+                                                <ProductDisplay key={product.id} product={product}/>
                                             ))}
                                         </div>
                                     </section>

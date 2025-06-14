@@ -105,14 +105,14 @@ export default function Security({ onBack }) {
 
     try {
       const userId = localStorage.getItem('userId');
-      await fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: form.email,
-          senha: form.password,
-          CPF: form.cpf,
-          telefone: form.phone,
+          password: form.password,
+          cpf: form.cpf,
+          phone: form.phone,
         }),
       });
       setMessage('Changes saved successfully!');

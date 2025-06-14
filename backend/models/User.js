@@ -2,31 +2,31 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true, required: true },
+  firstName: { type: String, required: true }, // first name
+  lastName: { type: String }, // last name
   email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
-  phone: { type: String, required: true },
-  cpf: { type: String, unique: true, sparse: true },
-  birthDate: { type: Date, required: true }
+  password: { type: String, required: true }, // password
+  phone: { type: String, required: true }, // phone number
+  cpf: { type: String, unique: true, sparse: true, required: true },
+  birthDate: { type: Date, required: true }, // birth date
 
   address: {
-    street: { type: String, required: true },
+    street: { type: String, required: true }, // street address
     number: { type: String, required: true },
     complement: { type: String },
-    district: { type: String, required: true },
+    district: { type: String, required: true }, // district/neighborhood
     city: { type: String, required: true },
     state: { type: String, required: true },
-    zipCode: { type: String, required: true }
+    zipCode: { type: String, required: true } // postal code
   },
 
-  wallet: {
-    money: { type: Number, default: 0 },
-    card: {
-      number: { type: String, required: true },
-      printedName: { type: String, required: true },
-      expiry: { type: Date, required: true },
-      cvv: { type: String, required: true }
-    }
+  card: {
+    cardHolder: { type: String }, // card holder name
+    cardNumber: { type: String }, // card number
+    expiry: { type: String }, // expiration date
+    cvv: { type: String },
+    cpf: { type: String },
+    installments: { type: Number } // number of installments
   },
 
   privacy: {

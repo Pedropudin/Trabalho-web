@@ -44,10 +44,10 @@ export default function Sidebar({
             <h4 className="product-category">Related Categories</h4>
                
             <ul>
-                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Perifericos")}>Peripherals</Link></li>
-                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Hardware")}>Hardware</Link></li>
-                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Celulares")}>Cell Phones</Link></li>
-                <li><Link to={ROUTES.PAG_SETOR.replace(":name","Computadores")}>Computers</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","peripherals")}>Peripherals</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","hardware")}>Hardware</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","cellphones")}>Cell Phones</Link></li>
+                <li><Link to={ROUTES.PAG_SETOR.replace(":name","computers")}>Computers</Link></li>
             </ul>
             
             <h4 className="filters">Filters</h4>

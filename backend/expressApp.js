@@ -7,10 +7,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rotas
-app.use('/api/produtos', require('./routes/products'));
-app.use('/api/usuarios', require('./routes/users'));
+// Routes
+app.use('/api/products', require('./routes/products'));
+app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/pedidos', require('./routes/orders'));
+app.use('/api/orders', require('./routes/orders'));
 
 module.exports = app;

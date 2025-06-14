@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({ // Schema a ser definido, conforme JSON final dos produtos
+const productSchema = new mongoose.Schema({ // Schema to be defined, as per the final JSON of the products
   id: Number,
   name: String,
   specificSector: String,
@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({ // Schema a ser definido, conforme J
   price: Number,
   inStock: Number,
   evaluation: String,
-  img: String,
+  image: String, // was img
   thumbs: [String],
   description: String,
   fullDescription: String,
