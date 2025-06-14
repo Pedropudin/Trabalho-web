@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import { Paper, Stack } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
-//import ROUTES from "../routes.js";
+import ROUTES from "../routes.js";
 
 /*
   Eletrocurte-se product page.
@@ -176,7 +176,7 @@ export default function ProductPage() {
                   </>
                 : 
                   <>
-                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(`/Checkout`)}}>BUY</button>
+                    <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(ROUTES.CHECKOUT)}}>BUY</button>
                     <Toaster/>
                     <button className="product-cart-button" onClick={() => handleAdicionarCarrinho(product.id)}>
                       ADD TO CART
