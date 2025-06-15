@@ -20,23 +20,15 @@ export default function ProductPage() {
   const { id } = useParams();  // Identifies the id from the url 
   const [productsLocal, setProductsLocal] = React.useState([]);
 
-  // Reads product data directly from JSON
+  // Reads product data directly from database
   useEffect(() => {
-      const localProducts = localStorage.getItem("products");
-      if (localProducts) {
-          setProductsLocal(JSON.parse(localProducts));
-      } else {
-          fetch('/data/products.json')
-              .then(res => res.json())
-              .then(data => setProductsLocal(data))
-              .catch(() => setProductsLocal([]));
-      }
-      /* // Always fetch from backend for consistency
-      fetch(process.env.REACT_APP_API_URL + '/products')
-          .then(res => res.json())
-          .then(data => setProductsLocal(data))
-          .catch(() => setProductsLocais([])); */
-  }, []);
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
+            .then(res => res.json())
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([])); 
+    }, []);
+  
   // Variables
   const product = productsLocal.find(p => String(p.id) === String(id));
 
@@ -172,7 +164,7 @@ export default function ProductPage() {
                   <>
                     <button className="product-purchase-button" onClick={() => toast.error("Product out of stock!")}>PRODUCT UNAVAILABLE</button>  
                     <Toaster/>
-                    <button className="product-cart-button" onClick={() => navigate(ROUTES.PAG_PESQUISA)}>BACK TO HOME</button>              
+                    <button className="product-cart-button" onClick={() => navigate(ROUTES.HOME_PAGE)}>BACK TO HOME</button>              
                   </>
                 : 
                   <>
@@ -194,9 +186,10 @@ export default function ProductPage() {
             <div className="text-specifications">
               <h2>Product Specifications</h2>
               <ul>
-                {product.specifications?.map((spec, i) => (
-                  <li key={i}>{spec}</li>
-                ))}
+                {(Array.isArray(product.specifications) ? product.specifications : [])
+                  .map((spec, i) => (
+                    <li key={i}>{spec}</li>
+                  ))}
               </ul>
             </div>
           </div>

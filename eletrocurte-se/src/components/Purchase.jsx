@@ -15,33 +15,24 @@ import StepLabel from "@mui/material/StepLabel";
 export default function Purchase({ onBack, onNext, steps }) {
 
     // Recupera todos os dados que nós temos, então: carrinho, dados pessoais e dados de pagamento (que podem diferir)
-    const [produtosLocais, setProdutosLocais] = React.useState([]); 
+    const [produtosLocal, setProductsLocal] = React.useState([]); 
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const personal = JSON.parse(localStorage.getItem("personal")) || {};
     const card = JSON.parse(localStorage.getItem("card")) || {};
 
-    //Lê dados dos produtos diretamento do JSON
+    // Fetch products from database when the component mounts
     useEffect(() => {
-        const localProducts = localStorage.getItem("produtos");
-        if (localProducts) {
-            setProdutosLocais(JSON.parse(localProducts));
-        } else {
-            fetch('/data/Produtos.json')
-                .then(res => res.json())
-                .then(data => setProdutosLocais(data))
-                .catch(() => setProdutosLocais([]));
-        }
-        /* // Busca sempre do backend para garantir consistência
-        fetch(process.env.REACT_APP_API_URL + '/produtos')
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
-            .then(data => setProdutosLocais(data))
-            .catch(() => setProdutosLocais([])); */
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([]));
     }, []);
 
     //Calcula o valor total do pedido, se baseando naquilo que está no carrinho
     const cartProducts = cart
         .map(item => {
-            const prod = produtosLocais.find(p => String(p.id) === String(item.id));
+            const prod = produtosLocal.find(p => String(p.id) === String(item.id));
             if (!prod) return null;
             return {
                 ...item,
@@ -69,12 +60,11 @@ export default function Purchase({ onBack, onNext, steps }) {
         ) return "Fill in all personal data.";
         if (
             !personal.address ||
-            !personal.address.street ||
-            !personal.address.number ||
-            !personal.address.district ||
-            !personal.address.city ||
-            !personal.address.state ||
-            !personal.address.zipCode
+            !personal.number ||
+            !personal.district ||
+            !personal.city ||
+            !personal.state ||
+            !personal.zipCode
         ) return "Fill in all address fields.";
         if (
             !card.cardHolder ||
@@ -85,7 +75,7 @@ export default function Purchase({ onBack, onNext, steps }) {
         ) return "Fill in all card data.";
         // Stock check
         for (const item of cart) {
-            const prod = produtosLocais.find(p => p.id === item.id);
+            const prod = produtosLocal.find(p => p.id === item.id);
             if (!prod || prod.inStock < item.quantity) return `Insufficient stock for product: ${item.name}`;
         }
         return "";
@@ -93,31 +83,32 @@ export default function Purchase({ onBack, onNext, steps }) {
 
     //Assim que o botão de finalizar compra é apertado, os itens que estvam no carrinho são retirados do estoque e o carrinho é esvaziado
     async function handlePurchase() {
+        console.log("handlePurchase called¹¹¹¹¹¹¹¹¹¹¹¹¹");
         const erroMsg = dadosValidos();
         if (erroMsg) {
             setErro(erroMsg);
             return;
         }
-
-        // Chamada à API para atualizar estoque e registrar pedido
+        // Chamada à API para atualizar estoque
         try {
-            await fetch(process.env.REACT_APP_API_URL + '/pedidos/finalizar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    itens: cart.map(item => ({
-                        id: item.id,
-                        quantity: item.quantity
-                    })),
-                    personal,
-                    card
-                })
-            });
+            // Update stock of bought products
+            for (const item of cart) {
+                const prod = produtosLocal.find(p => p.id === item.id);
+                console.log(prod)
+                if (prod) {
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${prod.id}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ inStock: prod.inStock - item.quantity })
+                    });
+                    const data = await response.json();
+                    console.log('Update response:', data);
+                }
+            }
         } catch (e) {
             setErro('Erro ao finalizar compra. Tente novamente.');
             return;
         }
-
         // Limpa carrinho após sucesso
         localStorage.setItem("cart", JSON.stringify([]));
         setErro('');
@@ -164,10 +155,10 @@ export default function Purchase({ onBack, onNext, steps }) {
                 <h3 className="purchase-section-title address">Address</h3>
                 <div className="purchase-section-content">
                     <div>
-                        {personal.address?.street}, {personal.address?.number} {personal.address?.complement && <span>- {personal.address.complement}</span>}
+                        {personal.address}, {personal.number} {personal.complement && <span>- {personal.complement}</span>}
                     </div>
                     <div>
-                        {personal.address?.district} - {personal.address?.city}/{personal.address?.state} - <b>ZIP:</b> {personal.address?.zipCode}
+                        {personal.district} - {personal.city}/{personal.state} - <b>ZIP:</b> {personal.zipCode}
                     </div>
                 </div>
             </section>
@@ -175,7 +166,7 @@ export default function Purchase({ onBack, onNext, steps }) {
                 <h3 className="purchase-section-title">Products</h3>
                 <ul className="purchase-products-list">
                     {cart.map(item => {
-                        const prod = produtosLocais.find(p => p.id === item.id);
+                        const prod = produtosLocal.find(p => p.id === item.id);
                         if (!prod) return null;
                         return (
                             <li key={item.id} className="purchase-product-item">

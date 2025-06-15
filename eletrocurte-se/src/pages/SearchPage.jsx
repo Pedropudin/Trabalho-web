@@ -23,21 +23,16 @@ export default function SearchPage() {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [productsLocal, setProductsLocal] = React.useState([]);
-
-    // Reads product data directly from JSON
+    
+    // Reads product data directly from database
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
-        if (localProducts) {
-            setProductsLocal(JSON.parse(localProducts));
-        } else {
-            fetch('/data/products.json')
-                .then(res => res.json())
-                .then(data => {
-                    setProductsLocal(data);
-                })
-                .catch(() => setProductsLocal([]));
-        }
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
+            .then(res => res.json())
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([])); 
     }, []);
+
     
     const validProducts = productsLocal.filter(
       p => p && p.name && p.brand && p.price !== undefined && p.inStock !== undefined
