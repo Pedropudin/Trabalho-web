@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import ROUTES from "../../routes";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -35,7 +35,7 @@ const SidebarElement = ({ collapsed, activeIndex, elementsList, onClickList, sty
             }}>
                 {
                     elementsList.map((value,index) => {
-                        if(index == activeIndex){
+                        if(index === activeIndex){
                             return <MenuItem key={index} active>{value}</MenuItem>
                         } else {
                             return <MenuItem key={index} onClick={onClickList[index]}>{value}</MenuItem>

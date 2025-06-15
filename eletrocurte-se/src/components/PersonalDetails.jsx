@@ -4,23 +4,20 @@ import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import CartOverview from "./CartOverview";
 
 /*
-  Página de dados do comprador.
-  - Exibida durante processo de conclusão de compra.
-  - Recolhe os dados de um cliente, como data de nascimento, email, nome, endereço.
-  - Botões de redirecionamento para tela anterior ou para a próxima etapa da conclusão do pedido.
+  Buyer details page.
+  - Displayed during the checkout process.
+  - Collects customer data such as birth date, email, name, address.
+  - Buttons to go back or proceed to the next step of the order.
 */
 
 export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
-
-    //Verifica se existe um arquivo locar existente, ou cria um vazio. 
-    const personalDetails = JSON.parse(localStorage.getItem("personal"))|| [];
-    
-    // Progresso
+    // Progress
     const activeStep = 1;
 
-    //Formulário de informações básicas do usuário
+    // User basic information form
     const [form, setForm] = useState({
         nome: "",
         sobrenome: "",
@@ -37,7 +34,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         cep: ""
     });
 
-    //Formatação de CPF
+    // CPF formatting
     function formatCPF(value) {
         value = value.replace(/\D/g, "").slice(0, 11);
         value = value.replace(/(\d{3})(\d)/, "$1.$2");
@@ -45,7 +42,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
         return value;
     }
-    //Formatação de data
+    // Date formatting
     function formatNascimento(value) {
         value = value.replace(/\D/g, "").slice(0, 8);
         if (value.length > 4) {
@@ -55,7 +52,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         }
         return value;
     }
-    //Formatação de número de telefone
+    // Phone number formatting
     function formatPhoneNumber(value) {
         value = value.replace(/\D/g, "").slice(0, 11); 
 
@@ -70,7 +67,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         return value;
     }
 
-    //Atualização do form sempre que o formulário for preenchido
+    // Updates the form whenever a field is filled
     function handleChange(e) {
         const { name, value } = e.target;
         let newValue = value;
@@ -93,17 +90,17 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         setForm({ ...form, [name]: newValue });
     }
 
-    //Envio dos dados para nosso "banco de dados"
+    // Sends the data to our "database"
     function handleSubmit(e) {
         e.preventDefault();
 
-        // Validação do nascimento (DD/MM/AAAA)
+        // Birth date validation (DD/MM/YYYY)
         const nascimento = form.nascimento;
         const nascimentoRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
         const match = nascimento.match(nascimentoRegex);
 
         if (!match) {
-            toast.error("Data de nascimento inválida. Use o formato DD/MM/AAAA.");
+            toast.error("Invalid birth date. Use the format DD/MM/YYYY.");
             return;
         }
 
@@ -112,15 +109,15 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         const ano = parseInt(match[3], 10);
 
         if (dia < 1 || dia > 31) {
-            toast.error("Dia de nascimento deve ser entre 01 e 31.");
+            toast.error("Birth day must be between 01 and 31.");
             return;
         }
         if (mes < 1 || mes > 12) {
-            toast.error("Mês de nascimento deve ser entre 01 e 12.");
+            toast.error("Birth month must be between 01 and 12.");
             return;
         }
         if (ano > 2025) {
-            toast.error("Ano de nascimento deve ser 2025 ou menor.");
+            toast.error("Birth year must be 2025 or less.");
             return;
         }
 
@@ -128,6 +125,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }
+
     return (
         <>
         <Toaster />
@@ -140,156 +138,147 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 ))}
             </Stepper>
         </div>
-        <form className="personal-details-form" onSubmit={handleSubmit}>
-            <h2>Dados Pessoais</h2>
-            <div style={{display: "flex", gap: 12}}>
+        <div className="main-content">
+            <form className="personal-details-form" onSubmit={handleSubmit}>
+                <h2>Personal Data</h2>
+                <div className="form-row">
+                    <input
+                        type="text"
+                        name="nome"
+                        placeholder="First Name"
+                        value={form.nome}
+                        onChange={handleChange}
+                        required
+                        pattern="[A-Za-zÀ-ÿ\s]+"
+                        title="Only letters are allowed"
+                    />
+                    <input
+                        type="text"
+                        name="sobrenome"
+                        placeholder="Last Name"
+                        value={form.sobrenome}
+                        onChange={handleChange}
+                        required
+                        pattern="[A-Za-zÀ-ÿ\s]+"
+                        title="Only letters are allowed"
+                    />
+                </div>
                 <input
-                    type="text"
-                    name="nome"
-                    placeholder="Nome"
-                    value={form.nome}
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={form.email}
                     onChange={handleChange}
                     required
-                    style={{flex: 1}}
-                    pattern="[A-Za-zÀ-ÿ\s]+"
-                    title="Apenas letras são permitidas"
                 />
                 <input
-                    type="text"
-                    name="sobrenome"
-                    placeholder="Sobrenome"
-                    value={form.sobrenome}
+                    type="tel"
+                    name="telefone"
+                    placeholder="Phone"
+                    value={form.telefone}
                     onChange={handleChange}
                     required
-                    style={{flex: 1}}
-                    pattern="[A-Za-zÀ-ÿ\s]+"
-                    title="Apenas letras são permitidas"
                 />
-            </div>
-            <input
-                type="email"
-                name="email"
-                placeholder="E-mail"
-                value={form.email}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 12}}
-            />
-            <input
-                type="tel"
-                name="telefone"
-                placeholder="Telefone"
-                value={form.telefone}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 12}}
-            />
-            <input
-                type="text"
-                name="cpf"
-                placeholder="CPF"
-                value={form.cpf}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 12}}
-                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-                title="Digite o CPF no formato 000.000.000-00"
-            />
-            <input
-                type="text"
-                name="nascimento"
-                placeholder="Nascimento"
-                value={form.nascimento}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 8}}
-                pattern="\d{2}/\d{2}/\d{4}"
-                title="Digite a data no formato DD/MM/AAAA"
-            />
-            <h3 style={{marginTop: 18}}>Endereço</h3>
-            <input
-                type="text"
-                name="endereco"
-                placeholder="Endereço"
-                value={form.endereco}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 8}}
-            />
-            <div style={{display: "flex", gap: 12, marginTop: 8}}>
+                <div className="cpf-nascimento-row">
+                    <input
+                        type="text"
+                        name="cpf"
+                        placeholder="CPF"
+                        value={form.cpf}
+                        onChange={handleChange}
+                        required
+                        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                        title="Enter CPF in the format 000.000.000-00"
+                    />
+                    <input
+                        type="text"
+                        name="nascimento"
+                        placeholder="Birth date"
+                        value={form.nascimento}
+                        onChange={handleChange}
+                        required
+                        pattern="\d{2}/\d{2}/\d{4}"
+                        title="Enter the date in the format DD/MM/YYYY"
+                    />
+                </div>
+                <h3>Address</h3>
                 <input
                     type="text"
-                    name="numero"
-                    placeholder="Número"
-                    value={form.numero}
+                    name="endereco"
+                    placeholder="Address"
+                    value={form.endereco}
                     onChange={handleChange}
                     required
-                    style={{flex: 1}}
                 />
+                <div className="form-row">
+                    <input
+                        type="text"
+                        name="numero"
+                        placeholder="Number"
+                        value={form.numero}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="complemento"
+                        placeholder="Complement"
+                        value={form.complemento}
+                        onChange={handleChange}
+                    />
+                </div>
                 <input
                     type="text"
-                    name="complemento"
-                    placeholder="Complemento"
-                    value={form.complemento}
+                    name="bairro"
+                    placeholder="Neighborhood"
+                    value={form.bairro}
                     onChange={handleChange}
                     required
-                    style={{flex: 2}}
                 />
-            </div>
-            <input
-                type="text"
-                name="bairro"
-                placeholder="Bairro"
-                value={form.bairro}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 8}}
-            />
-            <div style={{display: "flex", gap: 12, marginTop: 8}}>
-                <input
-                    type="text"
-                    name="cidade"
-                    placeholder="Cidade"
-                    value={form.cidade}
-                    onChange={handleChange}
-                    required
-                    style={{flex: 2}}
-                />
-                <input
-                    type="text"
-                    name="estado"
-                    placeholder="Estado"
-                    value={form.estado}
-                    onChange={handleChange}
-                    required
-                    style={{flex: 1}}
-                />
-                <input
-                    type="text"
-                    name="cep"
-                    placeholder="CEP"
-                    value={form.cep}
-                    onChange={handleChange}
-                    required
-                    style={{flex: 1}}
-                />
-            </div>
-            <div className="button-row">
-                <button
-                    type="button"
-                    className="back-button"
-                    onClick={onBack}
-                >
-                    Voltar
-                </button>
-                <button
-                    type="submit"
-                    className="submit-button"
-                >
-                    Próximo
-                </button>
-            </div>
-        </form>
+                <div className="form-row">
+                    <input
+                        type="text"
+                        name="cidade"
+                        placeholder="City"
+                        value={form.cidade}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="estado"
+                        placeholder="State"
+                        value={form.estado}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="cep"
+                        placeholder="ZIP code"
+                        value={form.cep}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="button-row">
+                    <button
+                        type="button"
+                        className="back-button"
+                        onClick={onBack}
+                    >
+                        Back
+                    </button>
+                    <button
+                        type="submit"
+                        className="submit-button"
+                    >
+                        Next
+                    </button>
+                </div>
+            </form>
+            <CartOverview />
+        </div>
         </>
     );
 }

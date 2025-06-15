@@ -7,10 +7,10 @@ import '../styles/Logout.css';
 import Footer from '../components/Footer';
 
 /*
-  Página de Logout do sistema.
-  - Exibe mensagem de sucesso, contagem regressiva e botão para voltar à Home.
-  - Remove flags de autenticação do localStorage e redireciona automaticamente.
-  - Layout centralizado e responsivo com Material-UI.
+  Logout page of the system.
+  - Displays success message, countdown and button to return to Home.
+  - Removes authentication flags from localStorage and redirects automatically.
+  - Centered and responsive layout using Material-UI.
 */
 
 export default function Logout() {
@@ -19,16 +19,16 @@ export default function Logout() {
   const intervalRef = useRef(null);
   const [countdown, setCountdown] = useState(10);
 
-  // Protege a tela de logout: se não está deslogando, redireciona para home
+  // Protect logout screen: if not logging out, redirect to home
   useEffect(() => {
-    // Se não acabou de sair, não deixa acessar esta página
+    // If not just logged out, block access to this page
     if (localStorage.getItem('isLoggedIn') === 'true') {
-      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+      navigate(ROUTES.HOME_PAGE, { replace: true });
     }
-    // Substitui o histórico para evitar voltar para logout
+    // Replace history to prevent going back to logout page
     window.history.replaceState({}, document.title, window.location.pathname);
 
-    // Remove flags de login ao sair e inicia contagem regressiva
+    // Remove login flags on logout and start countdown
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
     setCountdown(10);
@@ -48,46 +48,46 @@ export default function Logout() {
     };
   }, [navigate]);
 
-  // useEffect para redirecionar quando countdown chega a 0
-  React.useEffect(() => {
+  // useEffect to redirect when countdown reaches 0
+  useEffect(() => {
     if (countdown === 0) {
-      navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+      navigate(ROUTES.HOME_PAGE, { replace: true });
     }
   }, [countdown, navigate]);
 
-  // Handler para botão de retorno imediato
+  // Handler for immediate return button
   function handleHomeClick() {
     clearInterval(intervalRef.current);
-    navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+    navigate(ROUTES.HOME_PAGE, { replace: true });
   }
 
   return (
     <>
-      {/* Cabeçalho com logo centralizado */}
+      {/* Header with centered logo */}
       <HeaderLogs />
 
-      {/* Container principal centralizado com mensagem e botão */}
+      {/* Main centered container with message and button */}
       <Box sx={{ minHeight: '100vh', background: '#f5fafd', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 6 }}>
         <Paper elevation={6} sx={{ maxWidth: 420, width: '100%', p: { xs: 3, md: 5 }, borderRadius: 4, mt: 6, textAlign: 'center', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.10)' }}>
           <Typography variant="h4" sx={{ fontWeight: 700, color: '#004d66', mb: 2 }}>
             Logout
           </Typography>
           <Typography variant="h6" sx={{ color: '#007b99', mb: 2 }}>
-            Operação de saída efetuada com sucesso
+            Logout operation completed successfully
           </Typography>
           <Typography sx={{ color: '#333', mb: 2 }}>
-            Obrigado por nos visitar, volte sempre ;)
+            Thank you for visiting us, come back soon ;)
           </Typography>
           <Typography sx={{ color: '#555', mb: 2 }}>
-            Você será redirecionado em <span ref={timerRef}>{countdown}</span> segundos...
+            You will be redirected in <span ref={timerRef}>{countdown}</span> seconds...
           </Typography>
           <Button variant="contained" color="primary" onClick={handleHomeClick} sx={{ mt: 2, fontWeight: 600, borderRadius: 2, background: '#007b99', '&:hover': { background: '#004d66' } }}>
-            Voltar para a Home
+            Return to Home
           </Button>
         </Paper>
       </Box>
 
-      {/* Rodapé institucional */}
+      {/* Institutional footer */}
       <Footer />
     </>
   );

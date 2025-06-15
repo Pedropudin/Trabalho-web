@@ -10,7 +10,7 @@ const AdminHeader = ({ categoryIndex }) => {
     // Protege rotas de admin: se não está logado como admin, redireciona para home
     useEffect(() => {
         if (localStorage.getItem('userType') !== 'admin' || localStorage.getItem('isLoggedIn') !== 'true') {
-            navigate(ROUTES.PAGINA_INICIAL, { replace: true });
+            navigate(ROUTES.HOME_PAGE, { replace: true });
         }
     }, [navigate]);
 
@@ -32,7 +32,6 @@ const AdminHeader = ({ categoryIndex }) => {
     const handleLogout = () => {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userType');
-        // Protege o histórico e impede voltar para logout
         window.history.replaceState({}, document.title, window.location.pathname);
         navigate(ROUTES.LOGOUT, { replace: true });
     }

@@ -1,0 +1,112 @@
+/* RESET and base style for all elements */
+* {
+    margin: 0; /* Removes default margins */
+    padding: 0; /* Removes default paddings */
+    box-sizing: border-box; /* Makes width/height include padding and border */
+    font-family: Arial, sans-serif; /* Sets default font */
+}
+
+body {
+    background-color: #f4f4f4; /* Soft background color for the whole page */
+}
+
+/* MAIN HEADER */
+header {
+    background-color: #004d66; /* Institutional dark blue background */
+    color: white; /* White text for contrast */
+    padding: 10px; /* Inner spacing */
+}
+
+/* TOP NAVIGATION BAR */
+nav {
+    display: flex; /* Horizontal layout of items */
+    justify-content: space-between; /* Space items at the ends */
+    align-items: center; /* Vertically center */
+    padding: 10px;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    gap: 10px; /* Space between items */
+}
+
+/* PURCHASE SUMMARY OR PROMOTION SECTION */
+.compras {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    margin: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* PURCHASED PRODUCTS GALLERY */
+.produtos {
+    display: flex;
+    flex-wrap: wrap; /* Wraps when needed */
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* INDIVIDUAL PRODUCT CARD */
+.produto {
+  /* Removed: background, box-shadow, border-radius, padding, width, transition */
+  text-align: center; /* Centers card content */
+}
+
+.produto img {
+    width: 100px;
+    height: auto;
+}
+
+.preco {
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
+}
+
+/* --- RESPONSIVENESS FOR SCREENS UP TO 768PX --- */
+@media (max-width: 768px) {
+    /* Adjusts navigation and layout for tablets/phones */
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .compras {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .produtos {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .produto {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+/* --- RESPONSIVENESS FOR SCREENS UP TO 480PX --- */
+@media (max-width: 480px) {
+    .produto {
+        width: 100%;
+        max-width: 200px; /* Adjusts product size */
+    }
+
+    .compras {
+        text-align: center;
+        gap: 8px;
+    }
+
+    .produtos {
+        padding: 5px;
+        gap: 8px;
+    }
+
+    .produto img {
+        max-width: 100px; /* Adjusts product image size */
+    }
+}

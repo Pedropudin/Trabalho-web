@@ -1,10 +1,11 @@
+/* Payment details form container */
 .payment-details-form {
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(0,123,153,0.09);
     padding: 32px 28px 24px 28px;
     max-width: 480px;
-    margin: 80px auto;
+    margin-left: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,7 +20,7 @@
     letter-spacing: 1px;
 }
 
-/* Labels e campos do formulário */
+/* Labels and form fields */
 .payment-details-form label {
     font-size: 1rem;
     color: #007b99;
@@ -51,7 +52,7 @@
     background: #fff;
 }
 
-/* Inputs lado a lado */
+/* Inputs side by side */
 .payment-details-form .input-row {
     display: flex;
     gap: 12px;
@@ -66,7 +67,7 @@
     margin-bottom: 0;
 }
 
-/* Botões do formulário */
+/* Form buttons */
 .payment-details-form .button-row {
     display: flex;
     gap: 16px;

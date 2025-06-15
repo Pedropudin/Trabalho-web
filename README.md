@@ -64,6 +64,22 @@ Lá, cada página terá a sua explicação das funcionalidades associadas, o seu
 
 # Resultados de testes
 
+Os testes foram rodados individualmente, a partir dos componentes utilizados na aplicação e desenvolvidos no projeto. Foram realizadas verificações pela extensão jest do React para avaliar a consistência das funcionalidades esperadas como resposta ao usuário, enquanto utiliza o site em tempo real. Não foi alegado erro algum na execução das mesmas, dadas as funções e as manipulações que cada parte realiza na estrutura do trabalho como um todo. As respostas foram consistentes com o que foi desenvolvido e implementado, até o momento.
+
+Caso deseje averiguar os testes unitários, você pode rodar, considerando que o projeto é um App React, os seguintes comandos no terminal:
+
+### `npm test`
+
+Realiza a testagem padrão da biblioteca jest, via o script package.json do projeto
+
+### `npx jest --verbose`
+
+Realiza a testagem dos arquivos, mas usa flags mais amplas e mais flexíveis que as contidas no package.json (mais abrangência de teste é garantida).
+
+O "--verbose" é usado para detalhar os resultados do teste, tornando-o mais transparente ainda para o usuário.
+
+**Observação**: os testes devem ser feitos na pasta eletrocurte-se.
+
 # Usando React
 
 Esse projeto foi inicializado com [Create React App](https://github.com/facebook/create-react-app).

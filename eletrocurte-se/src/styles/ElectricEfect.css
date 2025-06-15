@@ -1,0 +1,45 @@
+/*
+  ElectricEfect.css
+  - CSS for electric particle visual effect.
+  - Defines styles for animated particles (circle, square, spark).
+  - Animation of scale and opacity to simulate electricity.
+  - Visual integration with the back-to-top button.
+*/
+
+.efeito-eletrico {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  z-index: 99999;
+  animation: eletricidade 0.5s ease-out;
+  transform: scale(0.5);
+}
+
+.btn-retorno > span {
+  position: relative;
+  display: inline-block;
+}
+
+/* Particle shapes */
+.circulo {
+  border-radius: 50%;
+  background-color: cyan;
+}
+
+.quadrado {
+  background-color: magenta;
+}
+
+.faisca {
+  transform: rotate(45deg);
+  background-color: yellow;
+  width: 6px;
+  height: 12px;
+}
+
+/* Electricity animation: scale and fade out */
+@keyframes eletricidade {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}

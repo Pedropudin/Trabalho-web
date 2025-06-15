@@ -4,42 +4,45 @@ import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import CartOverview from "./CartOverview";
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes';
 
 /*
-  Página de dados de pagamento.
-  - Exibida durante processo de conclusão de compra.
-  - Recolhe os dados de um cartão de crédito, como número, nome, cvv.
-  - Botões de redirecionamento para tela anterior ou para a próxima etapa da conclusão do pedido.
+  Payment details page.
+  - Displayed during the checkout process.
+  - Collects credit card data such as number, name, cvv.
+  - Buttons to go back or proceed to the next step of the order.
 */
 
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     const [form, setForm] = useState({
-        numero_cartao: "",
-        nome_cartao: "",
-        validade: "",
+        cardNumber: "",
+        cardHolder: "",
+        expiry: "",
         cvv: "",
         cpf: "",
-        parcelamento: "", 
+        installments: "", 
     });
 
-    //Vezes de parcelamento
+    // Installment options
     const vezesDeParcelamento = [
         1,2,3,4,5,6,7,8,9,10,11,12
     ];
 
-    // Progresso
+    // Progress
     const activeStep = 2;
 
-    //Formatação de CPF
+    // CPF formatting
     function formatCPF(value) {
         value = value.replace(/\D/g, "").slice(0, 11);
-        // Aplica a máscara
+        // Apply mask
         value = value.replace(/(\d{3})(\d)/, "$1.$2");
         value = value.replace(/(\d{3})(\d)/, "$1.$2");
         value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
         return value;
     }
-    //Formatação de data de validade
+    // Expiry date formatting
     function formatValidade(value) {
         value = value.replace(/\D/g, "").slice(0, 4);
         if (value.length > 2) {
@@ -47,70 +50,76 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         }
         return value;
     }
-    //Formatação de cartão
+    // Card number formatting
     function formatCartao(value) {
         value = value.replace(/\D/g, "").slice(0, 16);
         value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
         return value.trim();
     }
     
-    //Atualização do form sempre que o formulário for preenchido
+    // Updates the form whenever a field is filled
     function handleChange(e) {
         const { name, value } = e.target;
         let newValue = value;
 
-        //Formatação de dados
+        // Data formatting
         if (name === "cpf") {
             newValue = formatCPF(newValue);
-        }else if (name === "validade") {
+        } else if (name === "expiry") {
             newValue = formatValidade(newValue);
         } else if (name === "cvv") {
             newValue = newValue.replace(/\D/g, "").slice(0, 3);
-        } else if (name === "numero_cartao") {
+        } else if (name === "cardNumber") {
             newValue = formatCartao(newValue);
-        } else if (name === "nome_cartao") {
+        } else if (name === "cardHolder") {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
         }
 
         setForm({ ...form, [name]: newValue });
     }
     
-    //Envio do formulário
+    // Form submission
     function handleSubmit(e) {
-        e.preventDefault();//Grante controle do envio do formulário
+        e.preventDefault();//Ensures control of form submission
 
-        // Validação da validade (MM/AA)
-        const validade = form.validade;
-        const validadeRegex = /^(\d{2})\/(\d{2})$/;
-        const match = validade.match(validadeRegex);
+        // Expiry validation (MM/YY)
+        const expiry = form.expiry;
+        const expiryRegex = /^(\d{2})\/(\d{2})$/;
+        const match = expiry.match(expiryRegex);
 
-        if (!match) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Validade inválida. Use o formato MM/AA.");
+        if (!match) {//Warn if condition is not met
+            toast.error("Invalid expiry date. Use the format MM/YY.");
             return;
         }
 
-        //Separa mês e ano, a fim de garantir que cumprem regras básicas do calendário
-        const mes = parseInt(match[1], 10);
-        const ano = 2000 + parseInt(match[2], 10);
+        // Separate month and year to ensure they meet basic calendar rules
+        const month = parseInt(match[1], 10);
+        const year = 2000 + parseInt(match[2], 10);
 
-        if (mes < 1 || mes > 12) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Mês da validade deve ser entre 01 e 12.");
+        if (month < 1 || month > 12) {//Warn if condition is not met
+            toast.error("Expiry month must be between 01 and 12.");
             return;
         }
-        if (ano < 2025) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Ano da validade deve ser 2025 ou maior.");
+        if (year < 2025) {//Warn if condition is not met
+            toast.error("Expiry year must be 2025 or greater.");
             return;
         }
 
-        if (!form.parcelamento) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Escolha o número de parcelas.");
+        if (!form.installments) {//Warn if condition is not met
+            toast.error("Choose the number of installments.");
             return;
         }
-        //Salvamento no json local e envio
+        // Save to local json and submit
         localStorage.setItem("card", JSON.stringify(form));
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }
+
+    const navigate = useNavigate();
+
+    const handleVoltar = () => {
+        navigate(ROUTES.PROFILE);
+    };
 
     return (
        <>
@@ -124,41 +133,42 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 ))}
             </Stepper>
         </div>
+        <div className="main-content">
         <form className="payment-details-form" onSubmit={handleSubmit}>
-            <h2>Dados de Pagamento</h2>
-            <label htmlFor="numero_cartao"></label>
+            <h2>Payment Details</h2>
+            <label htmlFor="cardNumber"></label>
             <input
-                id="numero_cartao"
+                id="cardNumber"
                 type="text"
-                name="numero_cartao"
-                placeholder="Número do cartão"
-                value={form.numero_cartao}
+                name="cardNumber"
+                placeholder="Card number"
+                value={form.cardNumber}
                 onChange={handleChange}
                 required
                 maxLength={19}
                 inputMode="numeric"
                 pattern="\d{4} \d{4} \d{4} \d{4}"
-                title="Digite 16 números do cartão (formato: 0000 0000 0000 0000)"
+                title="Enter 16 card numbers (format: 0000 0000 0000 0000)"
             />
-            <label htmlFor="nome_cartao"></label>
+            <label htmlFor="cardHolder"></label>
             <input
-                id="nome_cartao"
+                id="cardHolder"
                 type="text"
-                name="nome_cartao"
-                placeholder="Nome impresso no cartão"
-                value={form.nome_cartao}
+                name="cardHolder"
+                placeholder="Name on card"
+                value={form.cardHolder}
                 onChange={handleChange}
                 required
             />
             <div className="input-row">
                 <div>
-                    <label htmlFor="validade"></label>
+                    <label htmlFor="expiry"></label>
                     <input
-                        id="validade"
+                        id="expiry"
                         type="text"
-                        name="validade"
-                        placeholder="MM/AA"
-                        value={form.validade}
+                        name="expiry"
+                        placeholder="MM/YY"
+                        value={form.expiry}
                         onChange={handleChange}
                         required
                         maxLength={5}
@@ -183,22 +193,22 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 id="cpf"
                 type="text"
                 name="cpf"
-                placeholder="CPF do titular"
+                placeholder="Cardholder CPF"
                 value={form.cpf}
                 onChange={handleChange}
                 required
             />
-            <label htmlFor="parcelamento"></label>
+            <label htmlFor="installments"></label>
             <select
-                id="parcelamento"
-                name="parcelamento"
-                value={form.parcelamento || ""}
+                id="installments"
+                name="installments"
+                value={form.installments || ""}
                 onChange={handleChange}
             >
-                <option value="" disabled>Escolha o número de parcelas</option>
+                <option value="" disabled>Choose the number of installments</option>
                 {vezesDeParcelamento.map((num) => (
                     <option key={num} value={num}>
-                        Em {num}x sem juros
+                        In {num}x without interest
                     </option>
                 ))}
             </select>
@@ -206,18 +216,20 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 <button
                     type="button"
                     className="back-button"
-                    onClick={onBack}
+                    onClick={handleVoltar}
                 >
-                    Voltar
+                    Back
                 </button>
                 <button
                     type="submit"
                     className="submit-button"
                 >
-                    Próximo
+                    Next
                 </button>
             </div>
         </form>
+        <CartOverview/>
+        </div>
     </>
     );
 }
