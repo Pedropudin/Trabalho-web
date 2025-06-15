@@ -13,12 +13,7 @@ const productSchema = new mongoose.Schema({ // Schema to be defined, as per the 
   thumbs: [String],
   description: String,
   fullDescription: String,
-  specifications: {
-    warranty: String,
-    model: String,
-    color: String,
-    voltage: String
-  }
+  specifications: mongoose.Schema.Types.Mixed // Accepts object or array
 });
 
 module.exports = mongoose.model('Product', productSchema);

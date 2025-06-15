@@ -1,3 +1,4 @@
+require('dotenv').config();
 const app = require('./expressApp');
 const mongoose = require('mongoose');
 const Admin = require('./models/Admin');

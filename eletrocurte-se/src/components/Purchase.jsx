@@ -99,7 +99,7 @@ export default function Purchase({ onBack, onNext, steps }) {
             return;
         }
 
-        // Chamada à API para atualizar estoque
+        // Chamada à API para atualizar estoque e registrar pedido
         try {
             await fetch(process.env.REACT_APP_API_URL + '/pedidos/finalizar', {
                 method: 'POST',
@@ -108,7 +108,9 @@ export default function Purchase({ onBack, onNext, steps }) {
                     itens: cart.map(item => ({
                         id: item.id,
                         quantity: item.quantity
-                    }))
+                    })),
+                    personal,
+                    card
                 })
             });
         } catch (e) {
@@ -117,7 +119,7 @@ export default function Purchase({ onBack, onNext, steps }) {
         }
 
         // Limpa carrinho após sucesso
-        localStorage.setItem("cart", JSON.stringify([])); //Limpa cart após a finalização da compra
+        localStorage.setItem("cart", JSON.stringify([]));
         setErro('');
 
         if (onNext) onNext();
