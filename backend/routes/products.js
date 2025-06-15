@@ -7,34 +7,56 @@ const path = require('path');
 
 // GET /api/products
 router.get('/', async (req, res) => {
-  const products = await Product.find();
-  res.json(products);
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch products.' });
+  }
 });
 
 // POST /api/products (protected)
 router.post('/', auth, async (req, res) => {
-  // Only admin can create product
-  if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
-  res.status(201).json(newProduct);q.body);
-});wait newProduct.save();
-  res.status(201).json(newProduct);
+  try {
+    if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.status(201).json(newProduct);
+  } catch (err) {
+    res.status(400).json({ error: 'Failed to create product.' });
+  }
+});
+
+// PUT /api/products/:id - update product by numeric id
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedProduct = await Product.findOneAndUpdate(
+      { id: Number(req.params.id) },
+      { $set: req.body },
+      { new: true }
+    );
+    if (!updatedProduct) return res.status(404).json({ error: 'Product not found.' });
+    res.json(updatedProduct);
+  } catch (err) {
+    res.status(400).json({ error: 'Failed to update product.' });
+  }
+});
+
 // GET /api/products/export (admin only)
 router.get('/export', auth, async (req, res) => {
-  if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });port (admin only)
-
-
-
-
-
-
-
-
-
-
-
-module.exports = router;// other endpoints (PUT, DELETE) as needed});  }    res.status(500).json({ error: 'Failed to export products.' });  } catch (err) {    res.json(products);    const products = await Product.find();  try {router.post('/import', auth, async (req, res) => {
-  if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
   try {
+    if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
+    const products = await Product.find();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to export products.' });
+  }
+});
+
+// POST /api/products/import (admin only)
+router.post('/import', auth, async (req, res) => {
+  try {
+    if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
     const filePath = path.join(__dirname, '..', '..', 'eletrocurte-se', 'public', 'data', 'products.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     if (!Array.isArray(data)) return res.status(400).json({ error: 'Invalid JSON format.' });
@@ -45,7 +67,5 @@ module.exports = router;// other endpoints (PUT, DELETE) as needed});  }    res.
     res.status(500).json({ error: 'Failed to import products.' });
   }
 });
-
-// other endpoints (PUT, DELETE) as needed
 
 module.exports = router;
