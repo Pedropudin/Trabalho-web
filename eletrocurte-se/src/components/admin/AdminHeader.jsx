@@ -5,9 +5,9 @@ import Header from "../Header";
 
 const AdminHeader = ({ categoryIndex }) => {
     const navigate = useNavigate();
-    const categories = ["Desempenho", "Pendências", "Hardware", "Peripherals", "Computers", "Phones"];
+    const categories = ["Performance", "Pending", "Hardware", "Peripherals", "Computers", "Phones"];
 
-    // Protege rotas de admin: se não está logado como admin, redireciona para home
+    // Protect admin routes: if not logged in as admin, redirect to home
     useEffect(() => {
         if (localStorage.getItem('userType') !== 'admin' || localStorage.getItem('isLoggedIn') !== 'true') {
             navigate(ROUTES.HOME_PAGE, { replace: true });
@@ -17,13 +17,13 @@ const AdminHeader = ({ categoryIndex }) => {
     function categoryNavigation(category) {
         switch (category) {
             case categories[0]:
-                navigate(ROUTES.DESEMPENHO);
+                navigate(ROUTES.PERFORMANCE);
                 break;
             case categories[1]:
-                navigate(ROUTES.PENDENCIAS);
+                navigate(ROUTES.PENDING);
                 break;
             default:
-                navigate(ROUTES.PAG_SETOR.replace(":name", category.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()));
+                navigate(ROUTES.SECTOR_PAGE.replace(":name", category.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()));
                 break;
         }
         return;
@@ -43,8 +43,8 @@ const AdminHeader = ({ categoryIndex }) => {
             useElementsMenu={[true, false, true]}
             adminContext={true}
             onCategoryClick={categoryNavigation}
-            onLogoClick={() => navigate(ROUTES.DESEMPENHO)}
-            onProfile={() => navigate(ROUTES.TIME)}
+            onLogoClick={() => navigate(ROUTES.PERFORMANCE)}
+            onProfile={() => navigate(ROUTES.TEAM)}
             onLogout={handleLogout}
         />
     );

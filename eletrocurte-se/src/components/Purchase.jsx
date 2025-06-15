@@ -5,16 +5,16 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
 /*
-  Tela de confirmação da compra
-  - Exibida como útlima etapa do processo de compra.
-  - Contém o botão para que o pagamento seja feito e outro para que retorne a tela anterior
-  - Quanto às informações, faz um resumo geral do produto: Total do pedido (qntidade de itens e preço), Endereço, Cartão e Dados pessoais -- todos inseridos nas etapas anteriores  
+  Purchase confirmation screen
+  - Displayed as the last step of the purchase process.
+  - Contains the button to make the payment and another to return to the previous screen
+  - As for the information, it gives a general summary of the product: Order total (quantity of items and price), Address, Card and Personal data -- all entered in previous steps  
 */
 
 
 export default function Purchase({ onBack, onNext, steps }) {
 
-    // Recupera todos os dados que nós temos, então: carrinho, dados pessoais e dados de pagamento (que podem diferir)
+    // Retrieves all the data we have: cart, personal data and payment data (which may differ)
     const [produtosLocal, setProductsLocal] = React.useState([]); 
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const personal = JSON.parse(localStorage.getItem("personal")) || {};
@@ -22,14 +22,14 @@ export default function Purchase({ onBack, onNext, steps }) {
 
     // Fetch products from database when the component mounts
     useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend for consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))
             .catch(() => setProductsLocal([]));
     }, []);
 
-    //Calcula o valor total do pedido, se baseando naquilo que está no carrinho
+    // Calculates the total order value, based on what is in the cart
     const cartProducts = cart
         .map(item => {
             const prod = produtosLocal.find(p => String(p.id) === String(item.id));
@@ -48,7 +48,7 @@ export default function Purchase({ onBack, onNext, steps }) {
 
     const [, setErro] = useState('');
 
-    // Checagem de dados obrigatórios
+    // Mandatory data check
     function dadosValidos() {
         if (!cart.length) return "The cart is empty.";
         if (
@@ -81,15 +81,15 @@ export default function Purchase({ onBack, onNext, steps }) {
         return "";
     }
 
-    //Assim que o botão de finalizar compra é apertado, os itens que estvam no carrinho são retirados do estoque e o carrinho é esvaziado
+    // As soon as the finish purchase button is pressed, the items in the cart are removed from stock and the cart is emptied
     async function handlePurchase() {
-        console.log("handlePurchase called¹¹¹¹¹¹¹¹¹¹¹¹¹");
+        console.log("handlePurchase called");
         const erroMsg = dadosValidos();
         if (erroMsg) {
             setErro(erroMsg);
             return;
         }
-        // Chamada à API para atualizar estoque
+        // API call to update stock
         try {
             // Update stock of bought products
             for (const item of cart) {
@@ -106,17 +106,17 @@ export default function Purchase({ onBack, onNext, steps }) {
                 }
             }
         } catch (e) {
-            setErro('Erro ao finalizar compra. Tente novamente.');
+            setErro('Error finishing purchase. Try again.');
             return;
         }
-        // Limpa carrinho após sucesso
+        // Clear cart after success
         localStorage.setItem("cart", JSON.stringify([]));
         setErro('');
 
         if (onNext) onNext();
     }
 
-    // Etapas do checkout
+    // Checkout steps
     const activeStep = 3;
 
     return (

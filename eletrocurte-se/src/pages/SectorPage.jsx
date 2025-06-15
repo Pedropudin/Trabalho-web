@@ -16,12 +16,12 @@ import React, { useState,useEffect } from 'react';
   - Has brand and price filter functionalities, as well as ascending/descending sorting by A-Z and price.
 */
 
-const categoryIndexRel = {
+/* const categoryIndexRel = {
     "hardware": 0,
     "peripherals": 1,
     "computers": 2,
     "cellphones": 3,
-};
+}; */
 
 export default function SectorPage() {
     const { name } = useParams(); 
@@ -30,11 +30,11 @@ export default function SectorPage() {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [productsLocal, setProductsLocal] = React.useState([]);
-    const [categoryIndex, setCategoryIndex] = useState(0);
+    const [categoryIndex] = useState(0);
     
     // Reads product data directly from database
     useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend to maintain consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))

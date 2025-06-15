@@ -14,11 +14,11 @@ import TermsConditions from './pages/TermsConditions';
 import Checkout from './pages/Checkout';
 import Logout from './pages/Logout';
 import ProfileEdition from './pages/ProfileEdition';
-import Desempenho from './pages/Desempenho';
-import Time from './pages/Time';
-import Vendas from './pages/Vendas';
-import Pendencias from './pages/Pendencias';
-import PaginaProdutoAdmin from './pages/PaginaProdutoAdmin';
+import Performance from './pages/Performance';
+import Team from './pages/Team';
+import Sales from './pages/Sales';
+import Pending from './pages/Pending';
+import AdminProductPage from './pages/AdminProductPage';
 import HomePage from './pages/HomePage';
 
 // Centralized routes
@@ -33,19 +33,19 @@ function AppRoutes() {
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.PROFILE} element={<Profile />} />
         <Route path={ROUTES.LOGOUT} element={<Logout />} />
-        <Route path={ROUTES.PAG_PRODUTO} element={<ProductPage />} />
-        <Route path={ROUTES.PAG_PESQUISA} element={<SearchPage />} />
+        <Route path={ROUTES.PRODUCT_PAGE} element={<ProductPage />} />
+        <Route path={ROUTES.SEARCH_PAGE} element={<SearchPage />} />
         <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
-        <Route path={ROUTES.PAG_SETOR} element={<SectorPage />} />
+        <Route path={ROUTES.SECTOR_PAGE} element={<SectorPage />} />
         <Route path={ROUTES.PURCHASE_HISTORY} element={<PurchaseHistory />} />
         <Route path={ROUTES.PROFILE_EDITION} element={<ProfileEdition />} />
         <Route path={ROUTES.PRODUCT_HISTORY} element={<ProductsHistory />} />
         <Route path={ROUTES.TERMS_CONDITIONS} element={<TermsConditions />} />
-        <Route path={ROUTES.DESEMPENHO} element={<Desempenho />} />
-        <Route path={ROUTES.TIME} element={<Time />} />
-        <Route path={ROUTES.VENDAS} element={<Vendas />} />
-        <Route path={ROUTES.PENDENCIAS} element={<Pendencias />} />
-        <Route path={ROUTES.PAG_PRODUTO_ADMIN} element={<PaginaProdutoAdmin />} />
+        <Route path={ROUTES.PERFORMANCE} element={<Performance />} />
+        <Route path={ROUTES.TEAM} element={<Team />} />
+        <Route path={ROUTES.SALES} element={<Sales />} />
+        <Route path={ROUTES.PENDING} element={<Pending />} />
+        <Route path={ROUTES.ADMIN_PRODUCT_PAGE} element={<AdminProductPage />} />
         <Route path={ROUTES.HOME_PAGE} element={<HomePage />} />
       </Routes>
     </>
@@ -55,7 +55,7 @@ function AppRoutes() {
 // Main app with router
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AppRoutes />
     </BrowserRouter>
   );

@@ -333,6 +333,8 @@ function Header({
           <SearchWrapper>
             <Search>
               <InputBase
+                id="header-search"
+                name="header-search"
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={handleSearchChange}
@@ -449,7 +451,7 @@ function Header({
             <CategoryLink
               key={cat}
               active={selectedCategory === cat ? 1 : 0}
-              to={ROUTES.PAG_SETOR.replace(
+              to={ROUTES.SECTOR_PAGE.replace(
                 ":name",
                 cat.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
               )}

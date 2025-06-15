@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import AdminHeader from "../components/admin/AdminHeader";
 import Card from "../components/Card";
-import Question from "../components/Pendencias/Question";
-import GenericInfoRedirect from "../components/Pendencias/GenericInfoRedirect";
+import Question from "../components/Pendencies/Question";
+import GenericInfoRedirect from "../components/Pendencies/GenericInfoRedirect";
 import ProductCard from '../components/Products/ProductCard';
 import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 import ReactPaginate from 'react-paginate';
-
 import "../styles/Pagination.css";
 
-const Pendencias = () => {
+const Pending = () => {
     const [questionsData, setQuestionsData] = useState(null);
     const [answersData, setAnswersData] = useState({});
     const [answersCompData, setAnswersCompData] = useState({});
@@ -212,4 +211,4 @@ const Pendencias = () => {
     );
 };
 
-export default Pendencias;
+export default Pending;

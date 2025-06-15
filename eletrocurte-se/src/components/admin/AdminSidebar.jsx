@@ -52,9 +52,9 @@ const AdminSidebar = ({ activeIndex=0, onClickList }) => {
     const [showSidebar, setShowSidebar] = useState(false);
     const elements = ["Dashboard", "Empregados", "Vendas"];
     const elementsFunctions = [
-        () => navigate(ROUTES.DESEMPENHO),
-        () => navigate(ROUTES.TIME),
-        () => navigate(ROUTES.VENDAS),
+        () => navigate(ROUTES.PERFORMANCE),
+        () => navigate(ROUTES.TEAM),
+        () => navigate(ROUTES.SALES),
     ]
     let s;
 

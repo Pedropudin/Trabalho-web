@@ -144,6 +144,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 <h2>Personal Data</h2>
                 <div className="form-row">
                     <input
+                        id="firstName"
                         type="text"
                         name="firstName"
                         placeholder="First Name"
@@ -154,6 +155,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         title="Only letters are allowed"
                     />
                     <input
+                        id="lastName"
                         type="text"
                         name="lastName"
                         placeholder="Last Name"
@@ -165,6 +167,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     />
                 </div>
                 <input
+                    id="email"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -173,6 +176,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     required
                 />
                 <input
+                    id="phone"
                     type="tel"
                     name="phone"
                     placeholder="Phone"
@@ -182,6 +186,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 />
                 <div className="cpf-nascimento-row">
                     <input
+                        id="cpf"
                         type="text"
                         name="cpf"
                         placeholder="CPF"
@@ -192,6 +197,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         title="Enter CPF in the format 000.000.000-00"
                     />
                     <input
+                        id="birthDate"
                         type="text"
                         name="birthDate"
                         placeholder="Birth date"
@@ -204,6 +210,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 </div>
                 <h3>Address</h3>
                 <input
+                    id="address"
                     type="text"
                     name="address"
                     placeholder="Address"
@@ -213,6 +220,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 />
                 <div className="form-row">
                     <input
+                        id="number"
                         type="text"
                         name="number"
                         placeholder="Number"
@@ -221,6 +229,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         required
                     />
                     <input
+                        id="complement"
                         type="text"
                         name="complement"
                         placeholder="Complement"
@@ -229,6 +238,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     />
                 </div>
                 <input
+                    id="district"
                     type="text"
                     name="district"
                     placeholder="Neighborhood"
@@ -238,6 +248,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 />
                 <div className="form-row">
                     <input
+                        id="city"
                         type="text"
                         name="city"
                         placeholder="City"
@@ -246,6 +257,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         required
                     />
                     <input
+                        id="state"
                         type="text"
                         name="state"
                         placeholder="State"
@@ -254,6 +266,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         required
                     />
                     <input
+                        id="zipCode"
                         type="text"
                         name="zipCode"
                         placeholder="ZIP code"

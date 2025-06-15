@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import AdminHeader from "../components/admin/AdminHeader";
 import Reputation from "../components/Dashboard/Reputation";
 import Card from "../components/Card";
-import "../styles/Desempenho.css"
+import "../styles/Performance.css"
 import "../styles/TextStyles.css"
 import AdminSidebar from "../components/admin/AdminSidebar";
 import Graph from "../components/Dashboard/Graph";
@@ -60,7 +60,7 @@ const SalesGraph = () => {
     );
 };
 
-const Desempenho = () => {
+const Performance = () => {
     const [data, setData] = useState(null);
 
     /* Provisory local data */
@@ -103,4 +103,4 @@ const Desempenho = () => {
     );
 };
 
-export default Desempenho;
+export default Performance;

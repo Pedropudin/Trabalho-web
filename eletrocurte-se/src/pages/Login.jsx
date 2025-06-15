@@ -124,9 +124,9 @@ export default function Login() {
   // Client form submission
   async function handleClient(e) {
     e.preventDefault();
-    const name = e.target['nome-cliente'].value.trim();
-    const email = e.target['email-cliente'].value.trim();
-    const password = e.target['senha-cliente'].value.trim();
+    const name = e.target.nome.value.trim();
+    const email = e.target.email.value.trim();
+    const password = e.target.senha.value.trim();
 
     if (await validateClient({ name, email, password })) {
       localStorage.setItem('isLoggedIn', 'true');
@@ -140,27 +140,27 @@ export default function Login() {
   // Admin form submission
   async function handleAdmin(e) {
     e.preventDefault();
-    const name = e.target['nome-admin'].value.trim();
-    const email = e.target['email-admin'].value.trim();
-    const password = e.target['senha-admin'].value.trim();
-    const token = e.target['token'].value.trim();
+    const name = e.target.nome.value.trim();
+    const email = e.target.email.value.trim();
+    const password = e.target.senha.value.trim();
+    const token = e.target.token.value.trim();
 
     if (await validateAdmin({ name, email, password, token })) {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userType', 'admin');
       localStorage.setItem('userName', name); // Save admin name
       showMessage("Admin login successful!", "success");
-      setTimeout(() => navigate(ROUTES.DESEMPENHO), 1500);
+      setTimeout(() => navigate(ROUTES.PERFORMANCE), 1500);
     }
   }
 
   // Registration form submission
   async function handleRegistration(e) {
     e.preventDefault();
-    const name = e.target['nome-cadastro'].value.trim();
-    const email = e.target['email-cadastro'].value.trim();
-    const password = e.target['senha-cadastro'].value.trim();
-    const confirmPassword = e.target['confirmar-senha-cadastro'].value.trim();
+    const name = e.target.nome.value.trim();
+    const email = e.target.email.value.trim();
+    const password = e.target.senha.value.trim();
+    const confirmPassword = e.target.confirmarSenha.value.trim();
     if (await validateRegistration({ name, email, password, confirmPassword })) {
       showMessage("Registration successful! Please log in to continue.", "success");
       setTab('login');

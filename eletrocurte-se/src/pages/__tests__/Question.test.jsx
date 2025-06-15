@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Question from '../../components/Pendencias/Question';
+import Question from '../../components/Pendencies/Question';
 import { MemoryRouter } from 'react-router-dom';
 
 const mockData = {

@@ -197,7 +197,14 @@ const HomePage = () => {
                     <Paper elevation={2} className="cta-extra" sx={{ maxWidth: 600, mx: 'auto', background: '#e3f2fd', borderRadius: 3, boxShadow: 2, p: { xs: 2, md: 4 }, textAlign: 'center', mb: 4 }}>
                         <Typography variant="h6" sx={{ color: '#004d66', mb: 2 }}>Receive exclusive offers!</Typography>
                         <form className="newsletter-form" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 8 }}>
-                            <input type="email" placeholder="Your email" required style={{ padding: '10px 16px', borderRadius: 6, border: '1px solid #b0bec5', fontSize: '1rem', flex: 1, minWidth: 0 }} />
+                            <input
+                                id="newsletter-email"
+                                name="newsletter-email"
+                                type="email"
+                                placeholder="Your email"
+                                required
+                                style={{ padding: '10px 16px', borderRadius: 6, border: '1px solid #b0bec5', fontSize: '1rem', flex: 1, minWidth: 0 }}
+                            />
                             <Button
                                 text="Subscribe"
                                 type={1}

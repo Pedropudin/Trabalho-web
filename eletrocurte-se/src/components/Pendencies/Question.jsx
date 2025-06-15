@@ -6,7 +6,6 @@ import ROUTES from "../../routes";
 import "../../styles/Question.css";
 
 const Answer = ({ value, change, submit }) => {
-
     return(
         <div className="answer-container">
             <span style={{fontWeight: 'bold'}} >Sua resposta:</span>
@@ -27,9 +26,9 @@ const Question = ({ data, style, answer, onAnswerChange }) => {
 
     const handleRedirectProduct = () => {
         if (data.product_id) {
-            navigate(ROUTES.PAG_PRODUTO.replace(":id", data.product_id));
+            navigate(ROUTES.PRODUCT_PAGE.replace(":id", data.product_id));
         } else {
-            alert("Faz nada ainda");
+            alert("Does nothing here");
         }
     };
 

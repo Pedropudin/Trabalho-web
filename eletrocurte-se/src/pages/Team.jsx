@@ -3,10 +3,9 @@ import AdminHeader from "../components/admin/AdminHeader";
 import AdminSidebar from "../components/admin/AdminSidebar";
 import TeamManager from "../components/Dashboard/TeamManager";
 import Footer from "../components/Footer";
+import "../styles/Team.css";
 
-import "../styles/Time.css";
-
-const Time = () => {
+const Team = () => {
     return(
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
             <AdminHeader categoryIndex={0}/>
@@ -22,4 +21,4 @@ const Time = () => {
     );
 };
 
-export default Time;
+export default Team;

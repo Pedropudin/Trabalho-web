@@ -4,7 +4,7 @@ import AdminSidebar from "../components/admin/AdminSidebar";
 import SellList from "../components/Dashboard/SellList";
 import Footer from "../components/Footer";
 
-const Vendas = () => {
+const Sales = () => {
     return(
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
             <AdminHeader categoryIndex={0}/>
@@ -29,4 +29,4 @@ const Vendas = () => {
    );
 };
 
-export default Vendas;
+export default Sales;
