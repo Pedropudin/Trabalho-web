@@ -457,6 +457,9 @@ function Header({
                 if (!isLoggedIn) {
                   e.preventDefault();
                   showMensagemCategoria('Please log in to filter by category!');
+                } else if(adminContext) {
+                  e.preventDefault();
+                  handleCategoryClick(cat);
                 } else {
                   handleCategoryClick(cat);
                 }

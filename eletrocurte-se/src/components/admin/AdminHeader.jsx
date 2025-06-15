@@ -5,7 +5,7 @@ import Header from "../Header";
 
 const AdminHeader = ({ categoryIndex }) => {
     const navigate = useNavigate();
-    const categories = ["Desempenho", "Pendências", "Hardware", "Peripherals", "Computers", "Phones"];
+    const categories = ["Performance", "Pending", "Hardware", "Peripherals", "Computers", "Phones"];
 
     // Protege rotas de admin: se não está logado como admin, redireciona para home
     useEffect(() => {
