@@ -47,6 +47,9 @@
     display: block;
     box-sizing: border-box;
   }
+  .admin {
+    flex-direction: column;
+  }
 }
 
 /* Até 600px: barra proporcional, mas com limite visual menor */

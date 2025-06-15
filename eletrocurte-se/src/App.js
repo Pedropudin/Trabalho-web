@@ -18,6 +18,7 @@ import Desempenho from './pages/Desempenho';
 import Time from './pages/Time';
 import Vendas from './pages/Vendas';
 import Pendencias from './pages/Pendencias';
+import PaginaProdutoAdmin from './pages/PaginaProdutoAdmin';
 import HomePage from './pages/HomePage';
 
 // Centralized routes
@@ -44,6 +45,7 @@ function AppRoutes() {
         <Route path={ROUTES.TIME} element={<Time />} />
         <Route path={ROUTES.VENDAS} element={<Vendas />} />
         <Route path={ROUTES.PENDENCIAS} element={<Pendencias />} />
+        <Route path={ROUTES.PAG_PRODUTO_ADMIN} element={<PaginaProdutoAdmin />} />
         <Route path={ROUTES.HOME_PAGE} element={<HomePage />} />
       </Routes>
     </>

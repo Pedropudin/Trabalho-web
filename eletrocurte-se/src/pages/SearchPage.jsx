@@ -2,6 +2,7 @@ import '../styles/SearchPage.css';
 import React, { useState, useEffect } from 'react';
 import {useParams } from "react-router-dom";
 import Header from '../components/Header';
+import AdminHeader from '../components/admin/AdminHeader';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import ScrollToTop from '../components/ScrollToTop';
@@ -82,7 +83,7 @@ export default function SearchPage() {
     
     return(
         <>
-            <Header/>
+            {localStorage.userType === "admin" ? <AdminHeader categoryIndex={99} /> : <Header/>}
             <div className="main-content">
                 <Sidebar
                     items={productsLocal}

@@ -16,6 +16,7 @@ const ROUTES = {
   TIME: '/admin/Time',
   VENDAS: '/admin/Vendas',
   PENDENCIAS: '/admin/Pendencias',
+  PAG_PRODUTO_ADMIN: '/admin/PaginaProduto/:id',
   HOME_PAGE: '/',
 };
 
