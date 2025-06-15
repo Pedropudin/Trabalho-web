@@ -178,7 +178,7 @@ function Header({
     if(adminContext) {
       setCategoryClassName("admin");
     }
-  }, [selectedCategoryIndex]);
+  }, [selectedCategoryIndex, adminContext, categories]);
   // Calculates the number of items in the cart from localStorage
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const [mensagemCategoria, setMensagemCategoria] = useState('');

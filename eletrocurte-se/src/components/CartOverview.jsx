@@ -5,7 +5,7 @@ import '../styles/Cart.css';
 // Cart summary component
 export default function CartOverview(){
    
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
+    const [cart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
     const [productsLocal, setProductsLocal] = useState([]);
 
     // Fetch products from JSON when the component mounts

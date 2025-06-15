@@ -1,9 +1,9 @@
-import '../styles/PaginaProduto.css';
+import '../styles/ProductPage.css';
 import React, { useState, useEffect } from 'react';
 import AdminHeader from '../components/admin/AdminHeader';
 import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
-import { Paper, Stack, TextField, Button, Typography, IconButton } from '@mui/material';
+import { Paper, Stack, TextField, Button, Typography } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import toast, { Toaster } from 'react-hot-toast';
