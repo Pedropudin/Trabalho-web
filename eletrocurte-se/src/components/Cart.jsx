@@ -35,35 +35,14 @@ export default function Cart({onNext}) {
         }
     }
 
-    // Fetch products from JSON when the component mounts
+    // Fetch products from database when the component mounts
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
-        if (localProducts) {
-            setProductsLocal(JSON.parse(localProducts));
-        } else {
-            fetch('/data/products.json')
-                .then(res => res.json())
-                .then(data => setProductsLocal(data))
-                .catch(() => setProductsLocal([]));
-        }
-        /* // Busca sempre do backend para garantir consistência
-        fetch(process.env.REACT_APP_API_URL + '/products')
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))
-            .catch(() => setProductsLocal([])); */
+            .catch(() => setProductsLocal([]));
     }, []);
-
-    /* // Cleans the cart of products that no longer exist
-    React.useEffect(() => {
-        const validIds = new Set(productsLocal.map(p => String(p.id)));
-        const filteredCart = cart.filter(item => validIds.has(String(item.id)));
-        if (filteredCart.length !== cart.length) {
-            setCart(filteredCart);
-            localStorage.setItem("cart", JSON.stringify(filteredCart));
-        }
-    // Runs only on mount and if productsLocal changes
-    // eslint-disable-next-line
-    }, [productsLocal]); */
 
     // Gets the stock of the product
     function getProductStock(productId) {
@@ -143,7 +122,7 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="empty-cart-btn"
-                        onClick={() => navigate(ROUTES.PAG_PESQUISA)}
+                        onClick={() => navigate(ROUTES.HOME_PAGE)}
                     >
                         Go to store
                     </button>
@@ -206,7 +185,7 @@ export default function Cart({onNext}) {
                     <button
                         type="button"
                         className="continue-btn"
-                        onClick={() => navigate(ROUTES.PAG_SETOR)}
+                        onClick={() => navigate(ROUTES.HOME_PAGE)}
                     >
                         Continue Shopping
                     </button>

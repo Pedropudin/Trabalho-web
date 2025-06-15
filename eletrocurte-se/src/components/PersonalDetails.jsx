@@ -19,19 +19,19 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     // User basic information form
     const [form, setForm] = useState({
-        nome: "",
-        sobrenome: "",
+        firstName: "",
+        lastName: "",
         email: "",
-        telefone: "",
+        phone: "",
         cpf: "",
-        nascimento: "",
-        endereco: "",
-        numero: "",
-        complemento: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
-        cep: ""
+        birthDate: "",
+        address: "",
+        number: "",
+        complement: "",
+        district: "",
+        city: "",
+        state: "",
+        zipCode: ""
     });
 
     // CPF formatting
@@ -43,7 +43,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         return value;
     }
     // Date formatting
-    function formatNascimento(value) {
+    function formatBirthDate(value) {
         value = value.replace(/\D/g, "").slice(0, 8);
         if (value.length > 4) {
             value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
@@ -74,17 +74,17 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
         if (name === "cpf") {
             newValue = formatCPF(newValue);
-        } else if (name === "nascimento") {
-            newValue = formatNascimento(newValue);
-        } else if (name === "numero") {
+        } else if (name === "birthDate") {
+            newValue = formatBirthDate(newValue);
+        } else if (name === "number") {
             newValue = newValue.replace(/\D/g, "").slice(0, 6);
-        } else if (name === "cep") {
+        } else if (name === "zipCode") {
             newValue = newValue.replace(/\D/g, "").slice(0, 8);
-        } else if (["nome", "sobrenome", "cidade", "estado", "bairro"].includes(name)) {
+        } else if (["firstName", "lastName", "city", "state", "district"].includes(name)) {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
-        } else if (name === "telefone") {
+        } else if (name === "phone") {
             newValue = formatPhoneNumber(newValue);
-        } else if (["endereco", "complemento"].includes(name)) {
+        } else if (["address", "complement"].includes(name)) {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ0-9\s]/g, "");
         }
         setForm({ ...form, [name]: newValue });
@@ -93,30 +93,31 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
     // Sends the data to our "database"
     function handleSubmit(e) {
         e.preventDefault();
+        console.log("Form submitted!");
 
         // Birth date validation (DD/MM/YYYY)
-        const nascimento = form.nascimento;
-        const nascimentoRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-        const match = nascimento.match(nascimentoRegex);
+        const birthDate = form.birthDate;
+        const birthDateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+        const match = birthDate.match(birthDateRegex);
 
         if (!match) {
             toast.error("Invalid birth date. Use the format DD/MM/YYYY.");
             return;
         }
 
-        const dia = parseInt(match[1], 10);
-        const mes = parseInt(match[2], 10);
-        const ano = parseInt(match[3], 10);
+        const day = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10);
+        const year = parseInt(match[3], 10);
 
-        if (dia < 1 || dia > 31) {
+        if (day < 1 || day > 31) {
             toast.error("Birth day must be between 01 and 31.");
             return;
         }
-        if (mes < 1 || mes > 12) {
+        if (month < 1 || month > 12) {
             toast.error("Birth month must be between 01 and 12.");
             return;
         }
-        if (ano > 2025) {
+        if (year > 2025) {
             toast.error("Birth year must be 2025 or less.");
             return;
         }
@@ -144,9 +145,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 <div className="form-row">
                     <input
                         type="text"
-                        name="nome"
+                        name="firstName"
                         placeholder="First Name"
-                        value={form.nome}
+                        value={form.firstName}
                         onChange={handleChange}
                         required
                         pattern="[A-Za-zÀ-ÿ\s]+"
@@ -154,9 +155,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     />
                     <input
                         type="text"
-                        name="sobrenome"
+                        name="lastName"
                         placeholder="Last Name"
-                        value={form.sobrenome}
+                        value={form.lastName}
                         onChange={handleChange}
                         required
                         pattern="[A-Za-zÀ-ÿ\s]+"
@@ -173,9 +174,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 />
                 <input
                     type="tel"
-                    name="telefone"
+                    name="phone"
                     placeholder="Phone"
-                    value={form.telefone}
+                    value={form.phone}
                     onChange={handleChange}
                     required
                 />
@@ -192,9 +193,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     />
                     <input
                         type="text"
-                        name="nascimento"
+                        name="birthDate"
                         placeholder="Birth date"
-                        value={form.nascimento}
+                        value={form.birthDate}
                         onChange={handleChange}
                         required
                         pattern="\d{2}/\d{2}/\d{4}"
@@ -204,59 +205,59 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 <h3>Address</h3>
                 <input
                     type="text"
-                    name="endereco"
+                    name="address"
                     placeholder="Address"
-                    value={form.endereco}
+                    value={form.address}
                     onChange={handleChange}
                     required
                 />
                 <div className="form-row">
                     <input
                         type="text"
-                        name="numero"
+                        name="number"
                         placeholder="Number"
-                        value={form.numero}
+                        value={form.number}
                         onChange={handleChange}
                         required
                     />
                     <input
                         type="text"
-                        name="complemento"
+                        name="complement"
                         placeholder="Complement"
-                        value={form.complemento}
+                        value={form.complement}
                         onChange={handleChange}
                     />
                 </div>
                 <input
                     type="text"
-                    name="bairro"
+                    name="district"
                     placeholder="Neighborhood"
-                    value={form.bairro}
+                    value={form.district}
                     onChange={handleChange}
                     required
                 />
                 <div className="form-row">
                     <input
                         type="text"
-                        name="cidade"
+                        name="city"
                         placeholder="City"
-                        value={form.cidade}
+                        value={form.city}
                         onChange={handleChange}
                         required
                     />
                     <input
                         type="text"
-                        name="estado"
+                        name="state"
                         placeholder="State"
-                        value={form.estado}
+                        value={form.state}
                         onChange={handleChange}
                         required
                     />
                     <input
                         type="text"
-                        name="cep"
+                        name="zipCode"
                         placeholder="ZIP code"
-                        value={form.cep}
+                        value={form.zipCode}
                         onChange={handleChange}
                         required
                     />
