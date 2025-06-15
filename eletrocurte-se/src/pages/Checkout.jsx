@@ -37,12 +37,11 @@ export default function Checkout() {
                 !personal.cpf ||
                 !personal.phone ||
                 !personal.address ||
-                !personal.address.street ||
-                !personal.address.number ||
-                !personal.address.district ||
-                !personal.address.city ||
-                !personal.address.state ||
-                !personal.address.zipCode
+                !personal.number ||
+                !personal.district ||
+                !personal.city ||
+                !personal.state ||
+                !personal.zipCode
             ) return;
         }
 

@@ -8,17 +8,13 @@ export default function CartOverview(){
     const [cart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
     const [productsLocal, setProductsLocal] = useState([]);
 
-    // Fetch products from JSON when the component mounts
+    // Fetch products from database when the component mounts
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
-        if (localProducts) {
-            setProductsLocal(JSON.parse(localProducts));
-        } else {
-            fetch('/data/Produtos.json')
-                .then(res => res.json())
-                .then(data => setProductsLocal(data))
-                .catch(() => setProductsLocal([]));
-        }
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
+            .then(res => res.json())
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([]));
     }, []);
 
     const cartProducts = cart

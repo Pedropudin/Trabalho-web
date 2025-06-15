@@ -32,31 +32,13 @@ export default function SectorPage() {
     const [productsLocal, setProductsLocal] = React.useState([]);
     const [categoryIndex, setCategoryIndex] = useState(0);
     
-    // Reads product data directly from JSON
+    // Reads product data directly from database
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
-        if (localProducts) {
-            setProductsLocal(JSON.parse(localProducts));
-        } else {
-            fetch('/data/products.json')
-                .then(res => res.json())
-                .then(data => setProductsLocal(data))
-                .catch(() => setProductsLocal([]));
-        }
-        /* // Busca sempre do backend para garantir consistência
-        fetch(process.env.REACT_APP_API_URL + '/produtos')
+        // Busca sempre do backend para garantir consistência
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
-            .then(data => setProdutosLocais(data))
-            .catch(() => setProdutosLocais([])); */
-    }, []);
-
-    useEffect(() => {
-        const cat = window.location.href.split('/')[4];
-        if(localStorage.userType === "admin") {
-            setCategoryIndex(categoryIndexRel[cat] + 2);
-        } else {
-            setCategoryIndex(categoryIndexRel[cat]);
-        }
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([])); 
     }, []);
 
     const brandsLocal = [...new Set(productsLocal.map(p => p.brand?.toLowerCase()))]
