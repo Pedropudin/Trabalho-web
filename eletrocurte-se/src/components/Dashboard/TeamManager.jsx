@@ -70,9 +70,9 @@ const TeamManager = () => {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                     <tr>
-                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Nome</th>
-                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Cargo</th>
-                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Contato</th>
+                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Name</th>
+                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Role</th>
+                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Contact</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -110,14 +110,14 @@ const TeamManager = () => {
                 }}
             >
                 <GroupAddIcon style={{color:"#fff"}}/>
-                Adicionar empregado
+                Add employee
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Editar Funcionário</DialogTitle>
+                <DialogTitle>Edit employee</DialogTitle>
                 <DialogContent>
                     <TextField
                         margin="dense"
-                        label="Nome"
+                        label="Name"
                         name="name"
                         value={editValues.name}
                         onChange={handleChange}
@@ -125,7 +125,7 @@ const TeamManager = () => {
                     />
                     <TextField
                         margin="dense"
-                        label="Cargo"
+                        label="Role"
                         name="role"
                         value={editValues.role}
                         onChange={handleChange}
@@ -141,8 +141,8 @@ const TeamManager = () => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancelar</Button>
-                    <Button onClick={handleSave} variant="contained" color="primary">Salvar</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleSave} variant="contained" color="primary">Save</Button>
                 </DialogActions>
             </Dialog>
         </Card>
