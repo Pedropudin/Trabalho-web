@@ -8,9 +8,9 @@ import "../../styles/Question.css";
 const Answer = ({ value, change, submit }) => {
     return(
         <div className="answer-container">
-            <span style={{fontWeight: 'bold'}} >Sua resposta:</span>
+            <span style={{fontWeight: 'bold'}} >Your Answer:</span>
             <textarea rows={5} cols={50} className="answer-box" value={value} onChange={e => change(e.target.value)}/>
-            <Button text={"Enviar"} onClick={submit} type={1} style={{marginTop: '10px'}}/>
+            <Button text={"Send"} onClick={submit} type={1} style={{marginTop: '10px'}}/>
         </div>
     );
 };
@@ -51,8 +51,8 @@ const Question = ({ data, style, answer, onAnswerChange }) => {
                 <div className="question-product-info">
                     <span className="product-name">{data.product_name}</span>
                     <div className="question-buttons-container">
-                        <Button type={1} text="Responder" onClick={handleAnswer}/>
-                        <Button type={1} text="Ver produto" onClick={handleRedirectProduct}/>
+                        <Button type={1} text="Answer" onClick={handleAnswer}/>
+                        <Button type={1} text="Check product" onClick={handleRedirectProduct}/>
                     </div>
                     <span className="question-date">{data.date}</span>
                 </div>
