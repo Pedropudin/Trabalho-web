@@ -12,61 +12,48 @@ const Footer = () => {
         pathname.replace(/\/+$/, '').toLowerCase() === ROUTES.TERMS_CONDITIONS.replace(/\/+$/, '').toLowerCase();
 
     return (
-        isTermsPage ? (
-            <footer>
-                <div className="rodape-conteudo">
-                    <p>000.000.000-00</p>
-                    <p>email@gmail.com</p>
-                    <p>Phone: (00) 00000-0000</p>
+        <footer>
+            <div className="rodape-conteudo">
+                <p>CNPJ: 12.345.678/0001-99</p>
+                <p>
+                    <a href="mailto:contact@eletrocurte-se.com" target="_blank" rel="noopener noreferrer">
+                        contact@eletrocurte-se.com
+                    </a>
+                </p>
+                <p>Phone: (11) 3567-4821</p>
+                {isTermsPage ? (
                     <p>
                         <Link to={ROUTES.PRESENTATION}>
                             About us!
                         </Link>
                     </p>
-                    <p>Address</p>
-                    <div className="social-icons">
-                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                            <FontAwesomeIcon icon={faInstagram} />
-                        </a>
-                        <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-                            <FontAwesomeIcon icon={faTwitter} />
-                        </a>
-                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                            <FontAwesomeIcon icon={faFacebook} />
-                        </a>
-                    </div>
-                </div>
-                <br />
-                <p className="copyright">Copyright &copy;2025</p>
-            </footer>
-        ) : (
-            <footer>
-                <div className="rodape-conteudo">
-                    <p>000.000.000-00</p>
-                    <p>email@gmail.com</p>
-                    <p>Phone: (00) 00000-0000</p>
+                ) : (
                     <p>
                         <Link to={ROUTES.TERMS_CONDITIONS}>
                             Terms and Conditions
                         </Link>
                     </p>
-                    <p>Address</p>
-                    <div className="social-icons">
-                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                            <FontAwesomeIcon icon={faInstagram} />
-                        </a>
-                        <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-                            <FontAwesomeIcon icon={faTwitter} />
-                        </a>
-                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                            <FontAwesomeIcon icon={faFacebook} />
-                        </a>
-                    </div>
+                )}
+                <p>
+                    <a href="https://www.google.com/maps?q=Av.+das+Nações,+1234" target="_blank" rel="noopener noreferrer">
+                        Av. das Nações, 1234
+                    </a>
+                </p>
+                <div className="social-icons">
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faInstagram} />
+                    </a>
+                    <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faTwitter} />
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faFacebook} />
+                    </a>
                 </div>
-                <br />
-                <p className="copyright">Copyright &copy;2025</p>
-            </footer>
-        )
+            </div>
+            <br />
+            <p className="copyright">Copyright &copy;2025</p>
+        </footer>
     );
 };
 

@@ -5,6 +5,7 @@ import ROUTES from '../routes';
 import ScrollToTop from '../components/ScrollToTop';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Footer from '../components/Footer';
 
 /*
   Terms and Conditions page for the portal.
@@ -131,35 +132,7 @@ export default function TermsConditions() {
       {/* Scroll to top button */}
       <ScrollToTop />
 
-      {/* Institutional footer and social networks */}
-      <footer>
-        <div className="rodape-conteudo">
-          <p>000.000.000-00</p>
-          <p>email@gmail.com</p>
-          <p>Phone: (00) 00000-0000</p>
-          <p>
-            <Link to={ROUTES.PRESENTATION}>
-              About us
-            </Link>
-          </p>
-          <p>Address</p>
-          <div className="social-icons">
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"></i>
-            </a>
-          </div>
-        </div>
-        <br />
-        <p className="copyright">
-          Copyright &copy;2025
-        </p>
-      </footer>
+      <Footer />
 
       <Snackbar
         open={snackbarOpen}
