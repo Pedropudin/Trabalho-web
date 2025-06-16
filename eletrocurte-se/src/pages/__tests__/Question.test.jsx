@@ -18,6 +18,6 @@ it('permite abrir resposta e enviar', () => {
       <Question data={mockData} answer="" onAnswerChange={() => {}} />
     </MemoryRouter>
   );
-  fireEvent.click(screen.getByText(/Responder/i));
-  expect(screen.getByText(/Sua resposta:/i)).toBeInTheDocument();
+  fireEvent.click(screen.getByText(/Answer/i));
+  expect(screen.getByText(/Your Answer:/i)).toBeInTheDocument();
 });

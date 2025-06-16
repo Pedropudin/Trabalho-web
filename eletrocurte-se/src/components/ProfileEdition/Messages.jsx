@@ -66,21 +66,21 @@ export default function Messages({ onVoltar }) {
   const [mensagens, setMensagens] = useState([
     {
       id: 1,
-      text: 'Promoção: Frete grátis para compras acima de R$ 200!',
+      text: 'Promotion: Free shipping for purchases over R$ 200!',
       data: new Date(),
       important: false,
       read: false,
     },
     {
       id: 2,
-      text: 'Seu pedido #12344 foi enviado.',
+      text: 'Your order #12344 has been shipped.',
       data: new Date(),
       important: true,
       read: false,
     },
     {
       id: 3,
-      text: 'Atualização de política de privacidade.',
+      text: 'Privacy policy update.',
       data: new Date(Date.now() - 86400000),
       important: false,
       read: true,
@@ -103,7 +103,7 @@ export default function Messages({ onVoltar }) {
     const timer = setTimeout(() => {
       const nova = {
         id: Date.now(),
-        text: 'Nova mensagem automática do administrador!',
+        text: 'New automatic message from the administrator!',
         data: new Date(),
         important: Math.random() > 0.5,
         read: false,
@@ -121,7 +121,7 @@ export default function Messages({ onVoltar }) {
     return () => clearTimeout(timer);
   }, []);
 
-  // Busca mensagens do backend ao carregar
+  // Fetches messages from the backend on load
   useEffect(() => {
     if (userId) {
       fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
@@ -150,7 +150,7 @@ export default function Messages({ onVoltar }) {
     setMensagens((prev) => [nova, ...prev]);
     setNovaMensagem('');
     setSnackbar(true);
-    // Salva no backend
+    // Save to backend
     if (userId) {
       fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/messages`, {
         method: 'POST',

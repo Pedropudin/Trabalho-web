@@ -49,3 +49,47 @@ curl -X PATCH http://localhost:5000/api/users/admin/ADMIN_ID \
 - Never share your JWT with others.
 - If you receive a 401 Unauthorized error, your token may be missing, invalid, or expired.
 - For security, always use HTTPS in production environments.
+
+===========================================================
+API URL Reference by Context
+===========================================================
+
+[AUTH]
+-------
+POST   /api/auth/login           - User login
+POST   /api/auth/register        - User registration
+POST   /api/auth/admin-login     - Admin login
+
+[USERS]
+--------
+POST   /api/users                - Create user
+GET    /api/users                - List all users
+GET    /api/users/:id            - Get user by id
+PATCH  /api/users/:id            - Update user (partial)
+DELETE /api/users/:id            - Delete user
+
+POST   /api/users/:id/messages   - Add message to user
+
+[ADMINS]
+---------
+POST   /api/users/create-admin   - Create admin (requires admin JWT)
+PATCH  /api/users/admin/:id      - Update admin (requires admin JWT)
+DELETE /api/users/admin/:id      - Delete admin (requires admin JWT)
+
+[PRODUCTS]
+-----------
+GET    /api/products                     - List all products
+POST   /api/products                     - Create product (admin only)
+PUT    /api/products/:id                 - Update product by numeric id (admin only)
+PUT    /api/products/:id                 - Update product by numeric id (unprotected, legacy)
+DELETE /api/products/:id                 - Delete product (admin only)
+GET    /api/products/export              - Export all products (admin only)
+POST   /api/products/import-json         - Import products from JSON file (admin only)
+POST   /api/products/import              - Import products via request body (admin only)
+
+[ORDERS]
+---------
+GET    /api/orders                       - List all orders
+POST   /api/orders/finish                - Create new order (checkout)
+
+===========================================================

@@ -15,30 +15,30 @@ function ask(question) {
 async function main() {
   await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-  const name = await ask('Nome do admin: ');
-  const email = await ask('Email do admin: ');
-  const password = await ask('Senha do admin: ');
-  const tokenStr = await ask('Token numérico do admin: ');
+  const name = await ask('Admin name: ');
+  const email = await ask('Admin email: ');
+  const password = await ask('Admin password: ');
+  const tokenStr = await ask('Admin numeric token: ');
   const token = Number(tokenStr);
 
   if (!name || !email || !password || !tokenStr || isNaN(token)) {
-    console.log('Todos os campos são obrigatórios e o token deve ser numérico.');
+    console.log('All fields are required and the token must be numeric.');
     rl.close();
     process.exit(1);
   }
 
   const exists = await Admin.findOne({ email });
   if (exists) {
-    console.log('Já existe um admin com esse email.');
+    console.log('An admin with this email already exists.');
     rl.close();
     process.exit(1);
   }
 
   try {
     await Admin.create({ name, email, password, token });
-    console.log('Admin criado com sucesso!');
+    console.log('Admin created successfully!');
   } catch (err) {
-    console.error('Erro ao criar admin:', err.message);
+    console.error('Error creating admin:', err.message);
   }
   rl.close();
   process.exit();

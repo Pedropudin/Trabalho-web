@@ -34,7 +34,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         zipCode: ""
     });
 
-    // Preenche automaticamente se usuário autenticado
+    // Automatically fills if user is authenticated
     React.useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId) {
@@ -151,7 +151,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         }
 
         localStorage.setItem("personal", JSON.stringify(form));
-        // Atualiza no backend se logado
+        // Updates in backend if logged in
         const userId = localStorage.getItem('userId');
         if (userId) {
             fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {

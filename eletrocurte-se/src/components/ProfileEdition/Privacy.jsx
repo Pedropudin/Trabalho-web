@@ -17,7 +17,7 @@ import { Switch, FormControlLabel, Typography, Button, Paper, Snackbar, Alert } 
 // - Layout with Paper, Typography, Switch, FormControlLabel, Button, Snackbar/Alert
 // - Inline CSS (sx) for spacing, width, and centering
 
-export default function Privacidade({ onVoltar }) {
+export default function Privacy({ onVoltar }) {
   // Initial state reads preferences from localStorage
   const [notificacoesEmail, setNotificacoesEmail] = useState(() => {
     const prefs = JSON.parse(localStorage.getItem('preferenciasPrivacidade'));

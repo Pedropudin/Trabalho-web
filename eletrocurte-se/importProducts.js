@@ -2,9 +2,9 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const path = require('path');
 
-// Use valores consistentes com o backend Express do projeto
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'COLOQUE_AQUI_SEU_JWT_ADMIN';
-const API_URL = process.env.API_URL || 'http://localhost:5000/api/products/import';
+// Use values consistent with the project's Express backend
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN // || 'PUT_YOUR_ADMIN_JWT_HERE';
+const API_URL = process.env.API_URL // || 'http://localhost:5000/api/products/import';
 
 if (!API_URL.startsWith('http')) {
   throw new Error('API_URL must be an absolute URL (e.g., http://localhost:5000/api/products/import)');

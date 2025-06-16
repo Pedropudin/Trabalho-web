@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // ProductDetailsModal.jsx
-// Modal para exibir detalhes do produto com opção de compra.
-// Usa Material-UI Dialog e mostra mensagens se usuário não estiver logado.
-// Exibe contagem atualizada do carrinho após adição.
+// Modal to display product details with purchase option.
+// Uses Material-UI Dialog and shows messages if user is not logged in.
+// Shows updated cart count after addition.
 // -----------------------------------------------------------------------------
 import React, { useState } from 'react';
 import {
@@ -27,7 +27,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
 
   if (!product) return null;
 
-  // Comentário do usuário logado (exemplo simplificado)
+  // Logged-in user comment (simplified example)
   const nomeUsuario = localStorage.getItem('nomeUsuario');
   const avaliacoes = nomeUsuario ? JSON.parse(localStorage.getItem(`avaliacoes_${nomeUsuario}`) || '{}') : {};
   const comentarioUsuario = product.id && avaliacoes[product.id]?.comentario;
@@ -54,7 +54,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
 
     if (existing) {
       if ((existing.quantity + 1) > stock) {
-        toast.error("Estoque insuficiente!");
+        toast.error("Insufficient stock!");
         return;
       }
       updatedCart = cart.map(item =>
@@ -65,7 +65,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(updatedCart));
-    toast.success('Produto adicionado ao carrinho!');
+    toast.success('Product added to cart!');
     window.dispatchEvent(new Event('cartUpdated'));
     window.forceCartUpdate && window.forceCartUpdate();
 
@@ -120,7 +120,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
             userSelect: 'none'
           }}
         >
-          Faça login para comprar o produto.
+          Please log in to purchase the product.
         </Box>
       )}
 
@@ -156,7 +156,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
                     startIcon={<ShoppingCartIcon />}
                     onClick={handleComprar}
                   >
-                    Comprar
+                    Buy
                   </Button>
                 )}
               </Box>
@@ -203,7 +203,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
               )}
               {product.data && (
                 <Typography variant="body2" color="text.secondary">
-                  Data: {product.data}
+                  Date: {product.data}
                 </Typography>
               )}
             </Box>
@@ -211,7 +211,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary" variant="contained">
-            Fechar
+            Close
           </Button>
         </DialogActions>
       </Dialog>

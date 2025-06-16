@@ -8,8 +8,8 @@ router.get('/', async (req, res) => {
   res.json(orders);
 });
 
-// Create new order (finalizar compra)
-router.post('/finalizar', async (req, res) => {
+// Create new order (finish payment)
+router.post('/finish', async (req, res) => {
   try {
     const { itens, personal, card } = req.body;
     const order = await Order.create({

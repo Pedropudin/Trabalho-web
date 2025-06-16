@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// ModalEndereco.jsx
+// AddressModal.jsx
 // Modal component for registering a new delivery address.
 // Uses Material-UI Stepper for step-by-step navigation (CEP, Address, Confirmation).
 // Fetches address data via ViaCEP API and validates fields.
@@ -7,14 +7,14 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
 
-const steps = ['CEP', 'Address', 'Confirm'];
+const steps = ['ZIP Code', 'Address', 'Confirm'];
 
 export default function AddressModal({ onSalvar }) {
-  // Current step in the Stepper (0: CEP, 1: Address, 2: Confirmation)
+  // Current step in the Stepper (0: ZIP Code, 1: Address, 2: Confirmation)
   const [activeStep, setActiveStep] = useState(0);
-  // Value of the CEP field
+  // Value of the ZIP Code field
   const [cep, setCep] = useState('');
-  // Indicates if the CEP data is being fetched
+  // Indicates if the ZIP Code data is being fetched
   const [carregando, setCarregando] = useState(false);
   // Address data returned from the API
   const [endereco, setEndereco] = useState(null);
@@ -25,7 +25,7 @@ export default function AddressModal({ onSalvar }) {
   // Error message for user feedback
   const [erro, setErro] = useState('');
 
-  // Fetch address data from the CEP using the ViaCEP API
+  // Fetch address data from the ZIP Code using the ViaCEP API
   const fetchCep = async () => {
     setCarregando(true);
     setErro('');
@@ -33,13 +33,13 @@ export default function AddressModal({ onSalvar }) {
       const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       const data = await res.json();
       if (data.erro) {
-        setErro('CEP not found.');
+        setErro('ZIP Code not found.');
         setEndereco(null);
       } else {
         setEndereco(data);
       }
     } catch {
-      setErro('Error fetching CEP.');
+      setErro('Error fetching ZIP Code.');
       setEndereco(null);
     }
     setCarregando(false);
@@ -48,9 +48,9 @@ export default function AddressModal({ onSalvar }) {
   // Move to the next step, validating fields as needed
   const handleNext = () => {
     if (activeStep === 0) {
-      // CEP validation (8 digits)
+      // ZIP Code validation (8 digits)
       if (!/^\d{8}$/.test(cep)) {
-        setErro('Enter a valid CEP (8 digits).');
+        setErro('Enter a valid ZIP Code (8 digits).');
         return;
       }
       fetchCep();
@@ -102,13 +102,13 @@ export default function AddressModal({ onSalvar }) {
       </Stepper>
       {/* Wraps all fields and buttons in a single form/container */}
       <form onSubmit={handleSubmit}>
-        {/* Step 0: CEP input */}
+        {/* Step 0: ZIP Code input */}
         {activeStep === 0 && (
           <TextField
-            label="CEP"
+            label="ZIP Code"
             value={cep}
             onChange={(e) => setCep(e.target.value.replace(/\D/g, '').slice(0, 8))}
-            placeholder="Enter CEP"
+            placeholder="Enter ZIP Code"
             fullWidth
             sx={{ mb: 2 }}
             disabled={carregando}

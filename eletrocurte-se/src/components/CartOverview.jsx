@@ -12,7 +12,7 @@ export default function CartOverview(){
 
     // Fetch products from database when the component mounts
     useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend for consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))

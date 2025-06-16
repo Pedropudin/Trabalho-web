@@ -44,11 +44,11 @@ router.patch('/:id', async (req, res) => {
     if (updates.password) {
       updates.password = await bcrypt.hash(updates.password, 10);
     }
-    // Se for addresses, selectedAddress, messages, purchaseHistory, privacy, address, card, atualize corretamente
+    // For addresses, selectedAddress, messages, purchaseHistory, privacy, address, card, update correctly
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found.' });
 
-    // Atualização profunda para arrays/objetos
+    // Deep update for arrays/objects
     if (updates.addresses) user.addresses = updates.addresses;
     if (updates.selectedAddress) user.selectedAddress = updates.selectedAddress;
     if (updates.messages) user.messages = updates.messages;

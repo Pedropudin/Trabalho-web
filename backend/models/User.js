@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     termsAccepted: { type: Boolean, default: false }
   },
 
-  // Histórico de compras do usuário
+  // User purchase history
   purchaseHistory: [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
     }
   ],
 
-  // Mensagens do usuário (ex: suporte, notificações)
+  // User messages (e.g., support, notifications)
   messages: [
     {
       text: String,
@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
     }
   ],
 
-  // Endereços múltiplos (além do principal em address)
+  // Multiple addresses (besides the main one in address)
   addresses: [
     {
       street: String,
@@ -71,7 +71,7 @@ const userSchema = new mongoose.Schema({
     }
   ],
   
-  // Endereço selecionado (opcional)
+  // Selected address (optional)
   selectedAddress: { type: String }
 });
 

@@ -198,7 +198,7 @@ function Header({
     window.forceCartUpdate = updateCartCount;
 
     function handleStorage(e) {
-      // Atualiza apenas se a chave do carrinho do usuário mudar
+      // Only update if the user's cart key changes
       const userId = localStorage.getItem('userId');
       const cartKey = userId ? `cart_${userId}` : 'cart';
       if (e.key === cartKey) updateCartCount();
