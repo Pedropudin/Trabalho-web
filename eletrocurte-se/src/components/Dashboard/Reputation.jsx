@@ -10,24 +10,24 @@ const NewCard = ({
  }) => {
     return(
         <div>
-            <Card title={"Reputação"} type={"card-horizontal"}>
+            <Card title={"Reputation"} type={"card-horizontal"}>
                 <DataDescription 
                     value={percentage}
                     valueColor="#5d7861"
-                    description={"Vendas com relação aos últimos 30 dias"}
+                    description={"Sales in the last 30 days"}
                     newStyle={{"width": "150px"}}
                 />
                 <DataDescription
                     value={complainings}
-                    description={"Reclamações nos últimos 30 dias"}
+                    description={"Complainings in the last 30 days"}
                 />
                 <DataDescription
                     value={late_send}
-                    description={"Despachos com atraso"}
+                    description={"Late dispatch"}
                 />
                 <DataDescription
                     value={new_users}
-                    description={"Usuários novos nos últimos 30 dias"}
+                    description={"New users in the last 30 days"}
                 />
             </Card>
         </div>

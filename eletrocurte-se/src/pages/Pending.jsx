@@ -118,7 +118,7 @@ const Pending = () => {
         <div>
             <AdminHeader categoryIndex={1} />
             <div className="content">
-                <Card title={"Perguntas"} type={"card-vertical"} >
+                <Card title={"Questions"} type={"card-vertical"} >
                     {currentQuestions.map((q) => {
                         return <Question
                             key={q.id}
@@ -132,15 +132,15 @@ const Pending = () => {
                 {questionsData && usePagination && <ReactPaginate
                     pageCount={Math.ceil(questionsData.length / questionsPerPage)}
                     onPageChange={handlePageChange}
-                    previousLabel="Anterior"
-                    nextLabel="Próxima"
+                    previousLabel="Previous"
+                    nextLabel="Next"
                     containerClassName="questions-pagination"
                     activeClassName="active"
                 /> }
                 <Card 
-                    title={"Reclamações"}
+                    title={"Complainings"}
                     type={"card-vertical"}
-                    description="Avaliações com 3 estrelas ou menos" 
+                    description="Reviews with 3 or more stars" 
                 >
                     {currentQuestionsComp.map((q) => {
                         return <Question 
@@ -154,8 +154,8 @@ const Pending = () => {
                 {complainingsData && usePaginationComp && <ReactPaginate
                     pageCount={Math.ceil(complainingsData.length / questionsPerPageComp)}    
                     onPageChange={handlePageChangeComp}
-                    previousLabel="Anterior"
-                    nextLabel="Próxima"
+                    previousLabel="Previous"
+                    nextLabel="Next"
                     containerClassName="questions-pagination"
                     activeClassName="active"
                 /> }
@@ -165,8 +165,8 @@ const Pending = () => {
                     flexWrap: 'wrap'
                 }} >
                     <Card
-                        title={"Envios pendentes"}
-                        description="Produtos que esperam para serem despachados"
+                        title={"Pending Shipments"}
+                        description="Products waiting to be sent"
                         type={"card-vertical"}
                     >
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
@@ -188,8 +188,8 @@ const Pending = () => {
                         </div>
                     </Card>
                     <Card
-                        title={"Atendimentos"}
-                        description="Conversas com clientes não finalizadas"
+                        title={"Services"}
+                        description="Unfinished client chats"
                         type={"card-vertical"}
                     >
                         {serviceData && serviceData.map((s, idx) => {
@@ -197,7 +197,7 @@ const Pending = () => {
                                 photo={s.person_photo}
                                 name={s.name} 
                                 description={s.person_name}
-                                buttonText="Abrir email"
+                                buttonText="Open email"
                                 style={{width: '400px'}}
                                 key={s.id || idx}
                             />
