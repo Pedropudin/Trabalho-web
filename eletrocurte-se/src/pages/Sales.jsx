@@ -19,7 +19,7 @@ const Sales = () => {
                         marginBottom: "12px",
                         letterSpacing: "1px"
                     }}>
-                        Produtos Vendidos
+                       Sold Products 
                     </h1>
                     <SellList />
                 </div>

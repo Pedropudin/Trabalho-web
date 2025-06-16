@@ -14,7 +14,7 @@ const DateSelector = ({ startDate, endDate, maxDate, onChange }) => {
     return (
         <div style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "10px" }}>
             <label>
-                Início:
+                Start:
                 <input
                     type="date"
                     value={startDate}
@@ -23,9 +23,8 @@ const DateSelector = ({ startDate, endDate, maxDate, onChange }) => {
                     style={inputStyle}
                 />
             </label>
-            <span>até</span>
             <label>
-                Fim:
+                End:
                 <input
                     type="date"
                     value={endDate}
