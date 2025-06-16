@@ -12,7 +12,7 @@ const Team = () => {
             <div style={{display:"flex", flex:"1"}}>
                 <AdminSidebar activeIndex={1}/>
                 <div className="content" style={{flex:"1", minHeight:"0"}}>
-                    <h1>Gerenciamento da Equipe</h1>
+                    <h1>Team Management</h1>
                     <TeamManager />
                 </div>
             </div>

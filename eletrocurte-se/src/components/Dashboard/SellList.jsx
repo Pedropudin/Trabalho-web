@@ -24,7 +24,7 @@ const SellList = () => {
     }, []);
 
     const handleFiscalInfo = (product) => {
-        alert(`Informação fiscal: ${product.fiscal_info}`);
+        alert(`Fiscal Information: ${product.fiscal_info}`);
     };
 
     const convertDate = (date) => {
@@ -52,7 +52,7 @@ const SellList = () => {
             maxWidth: "1100px",
             margin: "32px auto",
         }}>
-            {showAlert && <MessageAlert message={"A data de fim não pode ser antes da de início"} />}
+            {showAlert && <MessageAlert message={"The end date cannot be earlier than the start date"} />}
             <DateSelector startDate={startDate} endDate={endDate} maxDate={today} onChange={(start,end) => handleDate(start,end)} />
             <Card type="card-vertical" style={{ padding: 0 }}>
                 <div style={{ overflowX: "auto" }}>
@@ -65,10 +65,10 @@ const SellList = () => {
                     }}>
                         <thead>
                             <tr>
-                                <th style={{ width: 120, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Foto</th>
-                                <th style={{ width: 320, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "left" }}>Nome</th>
-                                <th style={{ width: 180, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Preço</th>
-                                <th style={{ width: 140, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Data da Venda</th>
+                                <th style={{ width: 120, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Picture</th>
+                                <th style={{ width: 320, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "left" }}>Name</th>
+                                <th style={{ width: 180, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Price</th>
+                                <th style={{ width: 140, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Day of sale</th>
                                 <th style={{ width: 140, padding: "12px 8px", borderBottom: "2px solid #007b99" }}></th>
                             </tr>
                         </thead>
@@ -114,7 +114,7 @@ const SellList = () => {
                                             <td style={{ padding: "12px 8px", textAlign: "center" }}>
                                                 <Button
                                                     type={1}
-                                                    text="Nota Fiscal"
+                                                    text="Invoice"
                                                     onClick={() => handleFiscalInfo(product)}
                                                     style={{
                                                         fontWeight: 600,
@@ -132,17 +132,17 @@ const SellList = () => {
                     </table>
                     {data && filteredProducts.length === 0 && (
                         <div style={{textAlign:"center", color:"#888", fontSize:"20px", margin:"40px 0px"}}>
-                            Não foi vendido nenhum produto no período escolhido.
+                            No product was sold in the specified period.
                         </div>
                     )}
                     {!data && (
                         <div style={{ textAlign: "center", color: "#888", margin: "40px 0" }}>
-                            Carregando produtos vendidos...
+                            Loading sold products...
                         </div>
                     )}
                     {data && data.length === 0 && (
                         <div style={{ textAlign: "center", color: "#888", margin: "40px 0" }}>
-                            Nenhum produto vendido neste período.
+                            No product sold in this period.
                         </div>
                     )}
                 </div>

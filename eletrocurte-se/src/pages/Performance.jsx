@@ -27,8 +27,8 @@ const PopularProduct = ({
 
     return(
         <Card
-            title={"Popularidade"}
-            description={"Produto mais vendido nos últimos 30 dias"}
+            title={"Popularity"}
+            description={"Most sold product in the last 30 days"}
             type={"card-horizontal"}
         >
             <div className="popular-container" >
@@ -36,11 +36,11 @@ const PopularProduct = ({
                 <div className="popular-text">
                     <span className="title-text">{name}</span>
                     <span style={priceStyle} >R$ {price}</span>
-                    <span className="description-text">{sold} unidades vendidas</span>
+                    <span className="description-text">{sold} products sold</span>
                 </div>
                 <div className="popular-text">
                     <span className="title-text">{stock}</span>
-                    <span className="description-text">Unidades em estoque</span>
+                    <span className="description-text">Products in stock</span>
                 </div>
             </div>
         </Card>
@@ -50,9 +50,9 @@ const PopularProduct = ({
 const SalesGraph = () => {
     return(
         <Card
-            title={"Vendas"}
+            title={"Sales"}
             type={"card-horizontal"}
-            description="Vendas nos últimos 30 dias"
+            description="Sales in the last 30 days"
             style={{width: "70%"}}
         >
             <Graph />

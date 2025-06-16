@@ -50,7 +50,7 @@ const SidebarElement = ({ collapsed, activeIndex, elementsList, onClickList, sty
 const AdminSidebar = ({ activeIndex=0, onClickList }) => {
     const navigate = useNavigate();
     const [showSidebar, setShowSidebar] = useState(false);
-    const elements = ["Dashboard", "Empregados", "Vendas"];
+    const elements = ["Dashboard", "Team", "Sales"];
     const elementsFunctions = [
         () => navigate(ROUTES.PERFORMANCE),
         () => navigate(ROUTES.TEAM),
