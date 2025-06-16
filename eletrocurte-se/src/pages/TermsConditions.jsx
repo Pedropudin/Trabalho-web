@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import '../styles/TermsConditions.css';
-import ROUTES from '../routes';
 import ScrollToTop from '../components/ScrollToTop';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
