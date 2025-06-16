@@ -1,0 +1,51 @@
+Backend Manipulation Rules (API Usage Guide)
+============================================
+
+1. Authentication and JWT Usage
+-------------------------------
+- Most protected endpoints (such as creating, updating, or deleting admins/products) require authentication via JWT (JSON Web Token).
+- You must obtain a valid JWT by logging in as an admin or user via the appropriate login endpoint (e.g., POST /api/auth/admin-login).
+- The JWT is returned in the response as a "token" field.
+
+2. Sending the JWT in Requests
+------------------------------
+- For all protected endpoints, include the JWT in the HTTP request header:
+  Authorization: Bearer <your_jwt_token>
+- Example (Insomnia/cURL):
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+3. JWT Expiration
+-----------------
+- JWT tokens are temporary and expire after a set period (e.g., 2 hours).
+- After expiration, you must log in again to obtain a new token.
+- Do not hardcode or reuse expired tokens.
+
+4. Creating Resources (POST)
+----------------------------
+- To create a new user: POST /api/users (no authentication required)
+- To create a new admin: POST /api/users/create-admin (requires admin JWT in header)
+
+5. Updating Resources (PATCH/PUT)
+---------------------------------
+- To update a user: PATCH /api/users/:id (no authentication required by default)
+- To update an admin: PATCH /api/users/admin/:id (requires admin JWT in header)
+- Only send the fields you want to update in the request body.
+
+6. Deleting Resources (DELETE)
+------------------------------
+- To delete a user: DELETE /api/users/:id
+- To delete an admin: DELETE /api/users/admin/:id (requires admin JWT in header)
+
+7. Example cURL Request with JWT
+-------------------------------
+curl -X PATCH http://localhost:5000/api/users/admin/ADMIN_ID \
+  -H "Authorization: Bearer <your_jwt_token>" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"New Name"}'
+
+8. General Notes
+----------------
+- Always check the API response for errors (e.g., "Access denied", "Token inválido", "Expired token").
+- Never share your JWT with others.
+- If you receive a 401 Unauthorized error, your token may be missing, invalid, or expired.
+- For security, always use HTTPS in production environments.

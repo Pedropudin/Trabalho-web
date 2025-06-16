@@ -108,6 +108,48 @@ const HomePage = () => {
         setSelectedProduct(null);
     };
 
+    // Add to cart logic
+    function handleAddToCart(product) {
+        if (!isLoggedIn) {
+            setMensagem('Log in to add products to cart!');
+            setTimeout(() => setMensagem(''), 3500);
+            return;
+        }
+        const userId = localStorage.getItem('userId');
+        const cartKey = userId ? `cart_${userId}` : 'cart';
+        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) {
+            if (existing.quantity + 1 > product.inStock) {
+                setMensagem('Maximum number of products reached. Out of stock!');
+                setTimeout(() => setMensagem(''), 3500);
+                return;
+            }
+            const updatedCart = cart.map(item =>
+                item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+            localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+        } else {
+            const updatedCart = [
+                ...cart,
+                {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                }
+            ];
+            localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+        }
+        window.dispatchEvent(new Event('cartUpdated'));
+        window.forceCartUpdate && window.forceCartUpdate();
+        setMensagem('Product added to cart!');
+        setTimeout(() => setMensagem(''), 2000);
+    }
+
     return (
         <>
             <Header
@@ -186,6 +228,7 @@ const HomePage = () => {
                                         isLoggedIn={isLoggedIn}
                                         pageType="home"
                                         showBuyButton={true}
+                                        onBuy={handleAddToCart}
                                     />
                                 </Grid>
                             ))

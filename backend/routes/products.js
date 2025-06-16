@@ -53,8 +53,8 @@ router.get('/export', auth, async (req, res) => {
   }
 });
 
-// POST /api/products/import (admin only)
-router.post('/import', auth, async (req, res) => {
+// Import products from JSON file (admin only)
+router.post('/import-json', auth, async (req, res) => {
   try {
     if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
     const filePath = path.join(__dirname, '..', '..', 'eletrocurte-se', 'public', 'data', 'products.json');
@@ -62,9 +62,23 @@ router.post('/import', auth, async (req, res) => {
     if (!Array.isArray(data)) return res.status(400).json({ error: 'Invalid JSON format.' });
     await Product.deleteMany({});
     await Product.insertMany(data);
-    res.json({ message: 'Products imported successfully.' });
+    res.json({ message: 'Products imported from JSON file successfully.' });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to import products.' });
+    res.status(500).json({ error: 'Failed to import products from JSON file.', details: err.message });
+  }
+});
+
+// Import products via request body (admin only)
+router.post('/import', auth, async (req, res) => {
+  try {
+    if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
+    const data = req.body;
+    if (!Array.isArray(data)) return res.status(400).json({ error: 'Invalid JSON format.' });
+    await Product.deleteMany({});
+    await Product.insertMany(data);
+    res.json({ message: 'Products imported from request body successfully.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to import products from request body.', details: err.message });
   }
 });
 

@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 const bcrypt = require('bcrypt');
+const auth = require('../middleware/authMiddleware');
 
 // CREATE user
 router.post('/', async (req, res) => {
@@ -90,6 +92,66 @@ router.delete('/:id', async (req, res) => {
     res.json({ message: 'User deleted.' });
   } catch (err) {
     res.status(400).json({ error: 'Error deleting user.' });
+  }
+});
+
+// CREATE admin (protected, only admin can create)
+router.post('/create-admin', auth, async (req, res) => {
+  console.log('POST /create-admin - req.user:', req.user);
+  try {
+    if (req.user.type !== 'admin') {
+      console.log('POST /create-admin - Acesso negado para:', req.user);
+      return res.status(403).json({ error: 'Access denied.' });
+    }
+    const { name, email, password, token } = req.body;
+    if (!name || !email || !password || !token) {
+      console.log('POST /create-admin - Campos obrigatórios faltando:', req.body);
+      return res.status(400).json({ error: 'Missing required fields.' });
+    }
+    const exists = await Admin.findOne({ email });
+    if (exists) {
+      console.log('POST /create-admin - Admin já existe:', email);
+      return res.status(409).json({ error: 'Admin with this email already exists.' });
+    }
+    await Admin.create({ name, email, password, token });
+    console.log('POST /create-admin - Admin criado:', email);
+    res.status(201).json({ message: 'Admin created successfully.' });
+  } catch (err) {
+    console.log('POST /create-admin - Erro:', err.message);
+    res.status(400).json({ error: 'Error creating admin.', details: err.message });
+  }
+});
+
+// DELETE admin (protected, only admin can delete)
+router.delete('/admin/:id', auth, async (req, res) => {
+  try {
+    if (req.user.type !== 'admin') {
+      return res.status(403).json({ error: 'Access denied.' });
+    }
+    const admin = await Admin.findByIdAndDelete(req.params.id);
+    if (!admin) return res.status(404).json({ error: 'Admin not found.' });
+    res.json({ message: 'Admin deleted.' });
+  } catch (err) {
+    res.status(400).json({ error: 'Error deleting admin.' });
+  }
+});
+
+// PATCH admin (protected, only admin can update)
+router.patch('/admin/:id', auth, async (req, res) => {
+  try {
+    if (req.user.type !== 'admin') {
+      return res.status(403).json({ error: 'Access denied.' });
+    }
+    const updates = req.body;
+    if (updates.password) {
+      const bcrypt = require('bcrypt');
+      updates.password = await bcrypt.hash(updates.password, 10);
+    }
+    const admin = await Admin.findByIdAndUpdate(req.params.id, updates, { new: true });
+    if (!admin) return res.status(404).json({ error: 'Admin not found.' });
+    res.json(admin);
+  } catch (err) {
+    res.status(400).json({ error: 'Error updating admin.' });
   }
 });
 

@@ -1,19 +1,20 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({ // Schema to be defined, as per the final JSON of the products
-  id: Number,
-  name: String,
-  specificSector: String,
-  generalSector: String,
-  brand: String,
-  price: Number,
-  inStock: Number,
-  evaluation: String,
-  image: String, // was img
+const productSchema = new mongoose.Schema({
+  id: { type: Number, unique: true, required: true },
+  name: { type: String, required: true },
+  description: { type: String },
+  fullDescription: { type: String },
+  price: { type: Number, required: true },
+  inStock: { type: Number, default: 0 },
+  image: { type: String },
   thumbs: [String],
-  description: String,
-  fullDescription: String,
-  specifications: mongoose.Schema.Types.Mixed // Accepts object or array
+  brand: { type: String },
+  category: { type: String },
+  generalSector: { type: String },
+  specificSector: { type: String },
+  specifications: [String],
+  evaluation: { type: Number },
 });
 
 module.exports = mongoose.model('Product', productSchema);

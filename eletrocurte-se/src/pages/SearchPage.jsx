@@ -76,6 +76,45 @@ export default function SearchPage() {
         return matchesBrand && matchesMin && matchesMax && matchesName;
     });
     
+    // Add to cart logic
+    function handleAddToCart(product) {
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            alert('Log in to add products to cart!');
+            return;
+        }
+        const userId = localStorage.getItem('userId');
+        const cartKey = userId ? `cart_${userId}` : 'cart';
+        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) {
+            if (existing.quantity + 1 > product.inStock) {
+                alert('Maximum number of products reached. Out of stock!');
+                return;
+            }
+            const updatedCart = cart.map(item =>
+                item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+            localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+        } else {
+            const updatedCart = [
+                ...cart,
+                {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                }
+            ];
+            localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+        }
+        window.dispatchEvent(new Event('cartUpdated'));
+        window.forceCartUpdate && window.forceCartUpdate();
+        alert('Product added to cart!');
+    }
+    
     return(
         <>
             {localStorage.userType === "admin" ? <AdminHeader categoryIndex={99} /> : <Header/>}
@@ -110,7 +149,7 @@ export default function SearchPage() {
                             <p style={{ margin: "40px auto", fontWeight: "bold" }}>No products found.</p>
                         ) : (
                             filteredProducts.map(produtos => (
-                                <ProductDisplay key={produtos.id} product={produtos} />
+                                <ProductDisplay key={produtos.id} product={produtos} onBuy={handleAddToCart} />
                             ))
                         )}
                     </nav>

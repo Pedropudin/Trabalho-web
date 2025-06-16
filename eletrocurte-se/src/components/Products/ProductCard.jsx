@@ -17,7 +17,7 @@ const CARD_WIDTH = 260;
 const CARD_HEIGHT = 420; // Increased height for more text space
 const IMG_HEIGHT = 90;   // Reduced image height to free space
 
-const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
+const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = false, onBuy }) => {
   // State to handle image load error
   const [imgError, setImgError] = useState(false);
   // State to display login required message
@@ -217,7 +217,19 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType }) => {
           </Box>
         </CardContent>
       </CardActionArea>
-      {/* Buy button removed from the card. Now only appears in the details modal. */}
+      {/* Buy button appears if showBuyButton is true */}
+      {showBuyButton && product.inStock > 0 && (
+        <button
+          className="product-display-purchase-button"
+          style={{ margin: 12, width: "90%" }}
+          onClick={e => {
+            e.stopPropagation();
+            if (onBuy) onBuy(product);
+          }}
+        >
+          Add to cart
+        </button>
+      )}
     </Card>
   );
 };
