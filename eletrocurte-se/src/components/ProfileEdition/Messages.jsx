@@ -61,31 +61,31 @@ const agruparMensagensPorData = (mensagens) => {
 };
 
 export default function Messages({ onVoltar }) {
+  const userId = localStorage.getItem('userId');
   // State with user message list
   const [mensagens, setMensagens] = useState([
     {
       id: 1,
-      texto: 'Promoção: Frete grátis para compras acima de R$ 200!',
+      text: 'Promoção: Frete grátis para compras acima de R$ 200!',
       data: new Date(),
-      importante: false,
-      lida: false,
+      important: false,
+      read: false,
     },
     {
       id: 2,
-      texto: 'Seu pedido #12344 foi enviado.',
+      text: 'Seu pedido #12344 foi enviado.',
       data: new Date(),
-      importante: true,
-      lida: false,
+      important: true,
+      read: false,
     },
     {
       id: 3,
-      texto: 'Atualização de política de privacidade.',
+      text: 'Atualização de política de privacidade.',
       data: new Date(Date.now() - 86400000),
-      importante: false,
-      lida: true,
+      important: false,
+      read: true,
     },
   ]);
-
   const [novaMensagem, setNovaMensagem] = useState(''); // State for new message input
   const [filtro, setFiltro] = useState('all'); // State for display filter
   const [mensagemEmDestaque, setMensagemEmDestaque] = useState(null); // Highlights newly arrived message
@@ -103,10 +103,10 @@ export default function Messages({ onVoltar }) {
     const timer = setTimeout(() => {
       const nova = {
         id: Date.now(),
-        texto: 'Nova mensagem automática do administrador!',
+        text: 'Nova mensagem automática do administrador!',
         data: new Date(),
-        importante: Math.random() > 0.5,
-        lida: false,
+        important: Math.random() > 0.5,
+        read: false,
       };
       setMensagens((prev) => [nova, ...prev]);
       setMensagemEmDestaque(nova.id);
@@ -121,33 +121,57 @@ export default function Messages({ onVoltar }) {
     return () => clearTimeout(timer);
   }, []);
 
+  // Busca mensagens do backend ao carregar
+  useEffect(() => {
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(user => {
+          if (Array.isArray(user.messages)) {
+            setMensagens(user.messages.map((m, i) => ({
+              ...m,
+              id: m.id || i + 1 // preserve id if exists, else fallback
+            })));
+          }
+        });
+    }
+  }, [userId]);
+
   // Adds a new message manually
   const adicionarMensagem = () => {
     if (!novaMensagem.trim()) return;
     const nova = {
       id: Date.now(),
-      texto: novaMensagem,
+      text: novaMensagem,
       data: new Date(),
-      importante: false,
-      lida: false,
+      important: false,
+      read: false,
     };
     setMensagens((prev) => [nova, ...prev]);
     setNovaMensagem('');
     setSnackbar(true);
+    // Salva no backend
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nova)
+      });
+    }
   };
 
   // Marks message as read on click
   const marcarComoLida = (id) => {
     setMensagens((prev) =>
-      prev.map((msg) => (msg.id === id ? { ...msg, lida: true } : msg))
+      prev.map((msg) => (msg.id === id ? { ...msg, read: true } : msg))
     );
   };
 
   // Filters messages according to the selected filter
   const mensagensFiltradas = mensagens.filter((msg) => {
     if (filtro === 'all') return true;
-    if (filtro === 'important') return msg.importante;
-    if (filtro === 'unread') return !msg.lida;
+    if (filtro === 'important') return msg.important;
+    if (filtro === 'unread') return !msg.read;
     return true;
   });
 
@@ -229,8 +253,8 @@ export default function Messages({ onVoltar }) {
                       sx={{
                         mt: 1,
                         p: 2,
-                        bgcolor: msg.id === mensagemEmDestaque ? 'primary.light' : msg.lida ? 'grey.100' : 'info.light',
-                        borderLeft: msg.importante ? '5px solid red' : 'none',
+                        bgcolor: msg.id === mensagemEmDestaque ? 'primary.light' : msg.read ? 'grey.100' : 'info.light',
+                        borderLeft: msg.important ? '5px solid red' : 'none',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
@@ -239,17 +263,17 @@ export default function Messages({ onVoltar }) {
                       onClick={() => marcarComoLida(msg.id)}
                     >
                       {/* Paper: highlights each message */}
-                      <Avatar sx={{ bgcolor: msg.importante ? 'error.main' : 'primary.main', width: 32, height: 32, fontSize: 18 }}>
+                      <Avatar sx={{ bgcolor: msg.important ? 'error.main' : 'primary.main', width: 32, height: 32, fontSize: 18 }}>
                         {/* Avatar: sender icon */}
                         A
                       </Avatar>
                       <Box flex={1}>
-                        <Typography variant="body2">{msg.texto}</Typography>
+                        <Typography variant="body2">{msg.text}</Typography>
                         <Box display="flex" justifyContent="space-between" mt={1}>
                           <Typography variant="caption">
                             {new Date(msg.data).toLocaleString()}
                           </Typography>
-                          {msg.importante && <Chip label="Important" size="small" color="error" />}
+                          {msg.important && <Chip label="Important" size="small" color="error" />}
                         </Box>
                       </Box>
                     </Paper>

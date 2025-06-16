@@ -14,7 +14,9 @@ import ROUTES from "../routes";
 export default function Cart({onNext}) {
     const navigate = useNavigate();
     
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem(cartKey)) || []);
     const [productsLocal, setProductsLocal] = useState([]);
 
     ///Verificação de usuário logado
@@ -89,10 +91,11 @@ export default function Cart({onNext}) {
 
     // Saves the cart to localStorage whenever it changes
     React.useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem(cartKey, JSON.stringify(cart));
         window.dispatchEvent(new Event('cartUpdated'));
         window.forceCartUpdate && window.forceCartUpdate();
-    }, [cart]);
+        // Poderia salvar no backend usando userId, se desejado
+    }, [cart, cartKey]);
 
     // Calculates the total number of items and total prices
     const cartProducts = cart

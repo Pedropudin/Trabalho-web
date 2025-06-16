@@ -23,8 +23,13 @@ router.post('/login', async (req, res) => {
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
+  const { email } = req.body;
+  const existing = await User.findOne({ email });
+  if (existing) {
+    return res.status(409).json({ error: 'Email already registered.' });
+  }
   // Receives data from frontend
-  const { firstName, lastName, email, password, phone, cpf, birthDate, address, card, privacy } = req.body;
+  const { firstName, lastName, password, phone, cpf, birthDate, address, card, privacy } = req.body;
   try {
     // Creates user with schema fields
     const user = new User({ firstName, lastName, email, password, phone, cpf, birthDate, address, card, privacy });

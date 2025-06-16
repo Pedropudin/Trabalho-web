@@ -34,13 +34,15 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
 
   const handleComprar = () => {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
     if (!isLoggedIn) {
       setShowLoginMsg(true);
       setTimeout(() => setShowLoginMsg(false), 2500);
       return;
     }
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     const id = product.id;
     const name = product.name;
     const price = parseFloat(String(product.price).replace(',', '.'));
@@ -62,7 +64,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
       updatedCart = [...cart, { id, name, price, image, quantity: 1 }];
     }
 
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart));
     toast.success('Produto adicionado ao carrinho!');
     window.dispatchEvent(new Event('cartUpdated'));
     window.forceCartUpdate && window.forceCartUpdate();

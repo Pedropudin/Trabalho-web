@@ -25,7 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddressModal from './AddressModal';
 import Alert from '@mui/material/Alert';
 
-export default function Addresses({ onBack }) {
+export default function Addresses({ onVoltar }) {
   // List of user addresses, persisted in localStorage.
   const [addresses, setAddresses] = useState(() => {
     // Fetches saved addresses or initializes with examples.
@@ -59,7 +59,7 @@ export default function Addresses({ onBack }) {
     localStorage.setItem('addresses', JSON.stringify(addresses));
     // Updates backend
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ addresses })
@@ -71,7 +71,7 @@ export default function Addresses({ onBack }) {
     localStorage.setItem('selectedAddress', selectedAddress);
     // Updates backend
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ selectedAddress })
@@ -86,13 +86,18 @@ export default function Addresses({ onBack }) {
 
   // Adds a new address to the list and selects it.
   const addAddress = (fullAddress) => {
-    // Formats the address if it's an object (AdressModal return).
-    const text = typeof fullAddress === 'object' && fullAddress !== null
-      ? `${fullAddress.street || ''}, ${fullAddress.number || ''} ${fullAddress.complement ? '- ' + fullAddress.complement : ''} - ${fullAddress.district || ''}, ${fullAddress.city || ''}/${fullAddress.state || ''}`.replace(/\s+/g, ' ').trim()
-      : fullAddress;
-    const newAddress = { id: `address${Date.now()}`, text };
+    // fullAddress deve ser um objeto com street, number, complement, district, city, state, zipCode
+    const text = `${fullAddress.street || ''}, ${fullAddress.number || ''} ${fullAddress.complement ? '- ' + fullAddress.complement : ''} - ${fullAddress.district || ''}, ${fullAddress.city || ''}/${fullAddress.state || ''}`.replace(/\s+/g, ' ').trim();
+    const newAddress = { id: `address${Date.now()}`, text, ...fullAddress };
     setAddresses([...addresses, newAddress]);
     setSelectedAddress(newAddress.id);
+    // Atualiza backend
+    const userId = localStorage.getItem('userId');
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ addresses: [...addresses, newAddress], selectedAddress: newAddress.id })
+    });
   };
 
   // Removes address by id and adjusts selection if necessary.
@@ -104,6 +109,13 @@ export default function Addresses({ onBack }) {
     } else if (filtered.length === 0) {
       setSelectedAddress('');
     }
+    // Atualiza backend
+    const userId = localStorage.getItem('userId');
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ addresses: filtered, selectedAddress: filtered[0]?.id || '' })
+    });
   };
 
   // Opens confirmation dialog to remove address.
@@ -199,7 +211,7 @@ export default function Addresses({ onBack }) {
         <Button
           variant="contained"
           color="primary"
-          onClick={onBack}
+          onClick={onVoltar}
           sx={{ width: '100%' }}
         >
           Confirm and Back to Profile

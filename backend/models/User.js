@@ -33,7 +33,46 @@ const userSchema = new mongoose.Schema({
     notification: { type: Boolean, default: false },
     sharedData: { type: Boolean, default: false },
     termsAccepted: { type: Boolean, default: false }
-  }
+  },
+
+  // Histórico de compras do usuário
+  purchaseHistory: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      name: String,
+      price: Number,
+      quantity: Number,
+      date: Date,
+      evaluation: Number,
+      comment: String
+    }
+  ],
+
+  // Mensagens do usuário (ex: suporte, notificações)
+  messages: [
+    {
+      text: String,
+      date: Date,
+      important: Boolean,
+      read: Boolean
+    }
+  ],
+
+  // Endereços múltiplos (além do principal em address)
+  addresses: [
+    {
+      street: String,
+      number: String,
+      complement: String,
+      district: String,
+      city: String,
+      state: String,
+      zipCode: String
+    }
+  ],
+  
+  // Endereço selecionado (opcional)
+  selectedAddress: { type: String }
 });
 
 // Hash password before saving

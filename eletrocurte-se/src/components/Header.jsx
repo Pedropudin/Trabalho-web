@@ -186,7 +186,9 @@ function Header({
 
   useEffect(() => {
     function updateCartCount() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const userId = localStorage.getItem('userId');
+      const cartKey = userId ? `cart_${userId}` : 'cart';
+      const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
       const total = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
       setCartItemsCount(total);
     }
@@ -196,7 +198,10 @@ function Header({
     window.forceCartUpdate = updateCartCount;
 
     function handleStorage(e) {
-      if (e.key === 'cart') updateCartCount();
+      // Atualiza apenas se a chave do carrinho do usuário mudar
+      const userId = localStorage.getItem('userId');
+      const cartKey = userId ? `cart_${userId}` : 'cart';
+      if (e.key === cartKey) updateCartCount();
     }
     window.addEventListener('storage', handleStorage);
     window.addEventListener('focus', updateCartCount);

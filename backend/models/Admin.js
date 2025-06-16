@@ -25,9 +25,11 @@ adminSchema.statics.ensureDefaultAdmin = async function () {
   const Admin = this;
   const exists = await Admin.findOne({ email: 'admin@eletrocurte-se.com' });
   if (!exists) {
-    const passwordHash = await bcrypt.hash('admin123', 10);
+    // Senha forte: pelo menos 8 caracteres, 1 maiúscula, 1 minúscula, 1 número, 1 especial
+    const strongPassword = 'Admin@1234';
+    const passwordHash = await bcrypt.hash(strongPassword, 10);
     await Admin.create({
-      name: '#admin',
+      name: 'admin01',
       email: 'admin@eletrocurte-se.com',
       password: passwordHash,
       token: 123456

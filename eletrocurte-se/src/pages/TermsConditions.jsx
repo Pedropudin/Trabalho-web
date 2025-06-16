@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/TermsConditions.css';
 import ROUTES from '../routes';
 import ScrollToTop from '../components/ScrollToTop';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 /*
   Terms and Conditions page for the portal.
@@ -12,6 +14,23 @@ import ScrollToTop from '../components/ScrollToTop';
 */
 
 export default function TermsConditions() {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  useEffect(() => {
+    // Marca termos como aceitos no localStorage
+    localStorage.setItem('termsAccepted', 'true');
+    // Atualiza no backend se usuário logado
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ privacy: { termsAccepted: true } })
+      });
+    }
+    setSnackbarOpen(true);
+  }, []);
+
   return (
     <>
       <main className="container-termos">
@@ -141,6 +160,17 @@ export default function TermsConditions() {
           Copyright &copy;2025
         </p>
       </footer>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3500}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity="info" sx={{ width: '100%' }}>
+          By accessing this page, you accept the Terms and Conditions of Use.
+        </Alert>
+      </Snackbar>
     </>
   );
 }

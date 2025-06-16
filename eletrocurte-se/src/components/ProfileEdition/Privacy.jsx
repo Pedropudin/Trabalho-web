@@ -47,13 +47,13 @@ export default function Privacidade({ onVoltar }) {
     // Also saves to the backend
     try {
       const userId = localStorage.getItem('userId');
-      await fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          privacidade: {
-            notificacao: notificacoesEmail,
-            dadosCompartilhados: compartilharDados
+          privacy: {
+            notification: notificacoesEmail,
+            sharedData: compartilharDados
           }
         })
       });

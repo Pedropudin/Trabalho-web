@@ -105,7 +105,7 @@ export default function Security({ onBack }) {
 
     try {
       const userId = localStorage.getItem('userId');
-      await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

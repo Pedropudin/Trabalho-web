@@ -79,9 +79,13 @@ export default function AddressModal({ onSalvar }) {
     e.preventDefault();
     if (activeStep === 2 && endereco) {
       onSalvar({
-        ...endereco,
-        numero,
-        complemento
+        street: endereco.logradouro,
+        number: numero,
+        complement: complemento,
+        district: endereco.bairro,
+        city: endereco.localidade,
+        state: endereco.uf,
+        zipCode: endereco.cep,
       });
     }
   };

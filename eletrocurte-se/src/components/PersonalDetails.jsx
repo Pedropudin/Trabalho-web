@@ -34,6 +34,34 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         zipCode: ""
     });
 
+    // Preenche automaticamente se usuário autenticado
+    React.useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    setForm(prev => ({
+                        ...prev,
+                        firstName: user.firstName || "",
+                        lastName: user.lastName || "",
+                        email: user.email || "",
+                        phone: user.phone || "",
+                        cpf: user.cpf || "",
+                        birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
+                        address: user.address?.street || "",
+                        number: user.address?.number || "",
+                        complement: user.address?.complement || "",
+                        district: user.address?.district || "",
+                        city: user.address?.city || "",
+                        state: user.address?.state || "",
+                        zipCode: user.address?.zipCode || ""
+                    }));
+                })
+                .catch(() => {});
+        }
+    }, []);
+
     // CPF formatting
     function formatCPF(value) {
         value = value.replace(/\D/g, "").slice(0, 11);
@@ -123,6 +151,31 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         }
 
         localStorage.setItem("personal", JSON.stringify(form));
+        // Atualiza no backend se logado
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    email: form.email,
+                    phone: form.phone,
+                    cpf: form.cpf,
+                    birthDate: new Date(`${year}-${month}-${day}`),
+                    address: {
+                        street: form.address,
+                        number: form.number,
+                        complement: form.complement,
+                        district: form.district,
+                        city: form.city,
+                        state: form.state,
+                        zipCode: form.zipCode
+                    }
+                })
+            });
+        }
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }

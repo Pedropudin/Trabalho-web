@@ -46,7 +46,9 @@ export default function ProductPage() {
 
   // When clicking "add to cart"
   function handleAdicionarCarrinho(productId) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     const existing = cart.find(item => item.id === productId);
     const stock = product.inStock;
 
@@ -60,7 +62,7 @@ export default function ProductPage() {
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
       toast.success('Product successfully added to cart!');
       window.dispatchEvent(new Event('cartUpdated'));
       window.forceCartUpdate && window.forceCartUpdate();
@@ -75,7 +77,7 @@ export default function ProductPage() {
           quantity: 1
         }
       ];
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
       toast.success('Product successfully added to cart!');
       window.dispatchEvent(new Event('cartUpdated'));
       window.forceCartUpdate && window.forceCartUpdate();
