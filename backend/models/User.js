@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   cpf: { type: String, unique: true, sparse: true, required: true },
   birthDate: { type: Date, required: true }, // birth date
 
-  address: {
+  address: [{
     street: { type: String, required: true }, // street address
     number: { type: String, required: true },
     complement: { type: String },
@@ -18,16 +18,15 @@ const userSchema = new mongoose.Schema({
     city: { type: String, required: true },
     state: { type: String, required: true },
     zipCode: { type: String, required: true } // postal code
-  },
+  }],
 
-  card: {
+  card: [{
     cardHolder: { type: String }, // card holder name
     cardNumber: { type: String }, // card number
     expiry: { type: String }, // expiration date
     cvv: { type: String },
     cpf: { type: String },
-    installments: { type: Number } // number of installments
-  },
+  }],
 
   privacy: {
     notification: { type: Boolean, default: false },

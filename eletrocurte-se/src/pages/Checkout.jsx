@@ -36,7 +36,7 @@ export default function Checkout() {
                 !personal.email ||
                 !personal.cpf ||
                 !personal.phone ||
-                !personal.address ||
+                !personal.street || 
                 !personal.number ||
                 !personal.district ||
                 !personal.city ||

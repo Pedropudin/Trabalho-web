@@ -80,40 +80,44 @@ export default function SearchPage() {
         <>
             {localStorage.userType === "admin" ? <AdminHeader categoryIndex={99} /> : <Header/>}
             <div className="main-content">
-                <Sidebar
-                    items={productsLocal}
-                    brands = {brandsLocal}
-                    selectedBrands={selectedBrands}
-                    setSelectedBrands={setSelectedBrands}
-                    minPrice={minPrice}
-                    setMinPrice={setMinPrice}
-                    maxPrice={maxPrice}
-                    setMaxPrice={setMaxPrice}
-                />
+                  <Sidebar
+                      items={productsLocal}
+                      brands = {brandsLocal}
+                      selectedBrands={selectedBrands}
+                      setSelectedBrands={setSelectedBrands}
+                      minPrice={minPrice}
+                      setMinPrice={setMinPrice}
+                      maxPrice={maxPrice}
+                      setMaxPrice={setMaxPrice}
+                  />
                 <div className="results">
-                    <div className="results-header-row">
-                        <h4>Results for "{!name ? "General" : name}"</h4>
-                        <select
-                            id="order-criteria"
-                            value={order}
-                            onChange={handleOrderChange}
-                            className="order-criterion"
-                        >
-                            <option value="alphabetical-asc">Name A-Z</option>
-                            <option value="alphabetical-desc">Name Z-A</option>
-                            <option value="high-price">Highest Price</option>
-                            <option value="low-price">Lowest Price</option>
-                        </select>
-                    </div>
-                    <nav className="product-display">
-                        {filteredProducts.length === 0 ? (
-                            <p style={{ margin: "40px auto", fontWeight: "bold" }}>No products found.</p>
-                        ) : (
-                            filteredProducts.map(produtos => (
-                                <ProductDisplay key={produtos.id} product={produtos} />
-                            ))
-                        )}
-                    </nav>
+                    {filteredProducts.length > 0 ? (
+                        <>
+                            <div className="results-header-row">
+                                <h4>Results for "{!name ? "General" : name}"</h4>
+                                <select
+                                    id="order-criteria"
+                                    value={order}
+                                    onChange={handleOrderChange}
+                                    className="order-criterion"
+                                >
+                                    <option value="alphabetical-asc">Name A-Z</option>
+                                    <option value="alphabetical-desc">Name Z-A</option>
+                                    <option value="high-price">Highest Price</option>
+                                    <option value="low-price">Lowest Price</option>
+                                </select>
+                            </div>
+                            <nav className="product-display">
+                                {filteredProducts.map(produtos => (
+                                    <ProductDisplay key={produtos.id} product={produtos} />
+                                ))}
+                            </nav>
+                        </>
+                    ) : (
+                        <div className="sector-display">
+                            <p className="no-products-message">No products found.</p>
+                        </div>
+                    )}
                 </div>
             </div>
             <ScrollToTop/>

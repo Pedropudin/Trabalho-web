@@ -1,235 +1,215 @@
-import React, { useState } from "react";
-import "../styles/PaymentDetails.css"
+import React, { useState, useEffect } from "react";
+import "../styles/PaymentDetails.css";
 import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import CartOverview from "./CartOverview";
-import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes';
 
 /*
   Payment details page.
   - Displayed during the checkout process.
-  - Collects credit card data such as number, name, cvv.
+  - Collects customer card data.
   - Buttons to go back or proceed to the next step of the order.
 */
 
+// --- Format Helpers ---
+function formatCardNumber(value) {
+    return value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+}
+function formatExpiry(value) {
+    value = value.replace(/\D/g, "").slice(0, 4);
+    if (value.length > 2) {
+        value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    }
+    return value;
+}
+function formatCVC(value) {
+    return value.replace(/\D/g, "").slice(0, 4);
+}
+
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
-    const [form, setForm] = useState({
-        cardNumber: "",
-        cardHolder: "",
-        expiry: "",
-        cvv: "",
-        cpf: "",
-        installments: "", 
-    });
-
-    // Installment options
-    const vezesDeParcelamento = [
-        1,2,3,4,5,6,7,8,9,10,11,12
-    ];
-
-    // Progress
+    // --- State ---
     const activeStep = 2;
+    const [form, setForm] = useState({
+        cardName: "",
+        cardNumber: "",
+        expiry: "",
+        cvc: ""
+    });
+    const [savedCards, setSavedCards] = useState([]);
 
-    // CPF formatting
-    function formatCPF(value) {
-        value = value.replace(/\D/g, "").slice(0, 11);
-        // Apply mask
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-        return value;
-    }
-    // Expiry date formatting
-    function formatValidade(value) {
-        value = value.replace(/\D/g, "").slice(0, 4);
-        if (value.length > 2) {
-            value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    // --- Effects ---
+    useEffect(() => {
+        // Get user id from localStorage
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user && user.id ? user.id : null;
+        if (!userId) {
+            setSavedCards([]);
+            return;
         }
-        return value;
-    }
-    // Card number formatting
-    function formatCartao(value) {
-        value = value.replace(/\D/g, "").slice(0, 16);
-        value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
-        return value.trim();
-    }
-    
-    // Updates the form whenever a field is filled
+        fetch(`http://localhost:5000/api/users/${userId}`)
+            .then(res => res.json())
+            .then(user => {
+                let cards = [];
+                if (Array.isArray(user.cards)) cards = user.cards;
+                else if (user.cards) cards = [user.cards];
+                setSavedCards(cards);
+                // Preenche automaticamente o formulário com o primeiro cartão salvo
+                if (cards.length > 0) {
+                    setForm(form => ({
+                        ...form,
+                        cardName: cards[0].cardName || "",
+                        cardNumber: cards[0].cardNumber || "",
+                        expiry: cards[0].expiry || "",
+                        cvc: cards[0].cvc || ""
+                    }));
+                }
+            })
+            .catch(() => setSavedCards([]));
+    }, []);
+
+    // --- Handlers ---
     function handleChange(e) {
         const { name, value } = e.target;
         let newValue = value;
 
-        // Data formatting
-        if (name === "cpf") {
-            newValue = formatCPF(newValue);
+        if (name === "cardNumber") {
+            newValue = formatCardNumber(newValue);
         } else if (name === "expiry") {
-            newValue = formatValidade(newValue);
-        } else if (name === "cvv") {
-            newValue = newValue.replace(/\D/g, "").slice(0, 3);
-        } else if (name === "cardNumber") {
-            newValue = formatCartao(newValue);
-        } else if (name === "cardHolder") {
-            newValue = newValue.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
+            newValue = formatExpiry(newValue);
+        } else if (name === "cvc") {
+            newValue = formatCVC(newValue);
         }
-
         setForm({ ...form, [name]: newValue });
     }
-    
-    // Form submission
+
     function handleSubmit(e) {
-        e.preventDefault();//Ensures control of form submission
-
-        // Expiry validation (MM/YY)
-        const expiry = form.expiry;
-        const expiryRegex = /^(\d{2})\/(\d{2})$/;
-        const match = expiry.match(expiryRegex);
-
-        if (!match) {//Warn if condition is not met
-            toast.error("Invalid expiry date. Use the format MM/YY.");
+        e.preventDefault();
+        // Simple validation
+        if (form.cardNumber.replace(/\s/g, "").length !== 16) {
+            toast.error("Card number must have 16 digits.");
             return;
         }
-
-        // Separate month and year to ensure they meet basic calendar rules
-        const month = parseInt(match[1], 10);
-        const year = 2000 + parseInt(match[2], 10);
-
-        if (month < 1 || month > 12) {//Warn if condition is not met
-            toast.error("Expiry month must be between 01 and 12.");
+        if (!/^\d{2}\/\d{2}$/.test(form.expiry)) {
+            toast.error("Expiry must be in MM/YY format.");
             return;
         }
-        if (year < 2025) {//Warn if condition is not met
-            toast.error("Expiry year must be 2025 or greater.");
+        if (form.cvc.length < 3) {
+            toast.error("CVC must have at least 3 digits.");
             return;
         }
-
-        if (!form.installments) {//Warn if condition is not met
-            toast.error("Choose the number of installments.");
-            return;
-        }
-        // Save to local json and submit
-        localStorage.setItem("card", JSON.stringify(form));
+        localStorage.setItem("payment", JSON.stringify(form));
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }
 
-    const navigate = useNavigate();
-
-    const handleVoltar = () => {
-        navigate(ROUTES.PROFILE);
-    };
-
+    // --- Render ---
     return (
-       <>
-        <Toaster />
-        <div style={{ width: "100%", margin: "32px 0" }}>
-            <Stepper activeStep={activeStep} alternativeLabel>
-                {steps.map((label) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-        </div>
-        <div className="main-content">
-        <form className="payment-details-form" onSubmit={handleSubmit}>
-            <h2>Payment Details</h2>
-            <label htmlFor="cardNumber"></label>
-            <input
-                id="cardNumber"
-                type="text"
-                name="cardNumber"
-                placeholder="Card number"
-                value={form.cardNumber}
-                onChange={handleChange}
-                required
-                maxLength={19}
-                inputMode="numeric"
-                pattern="\d{4} \d{4} \d{4} \d{4}"
-                title="Enter 16 card numbers (format: 0000 0000 0000 0000)"
-            />
-            <label htmlFor="cardHolder"></label>
-            <input
-                id="cardHolder"
-                type="text"
-                name="cardHolder"
-                placeholder="Name on card"
-                value={form.cardHolder}
-                onChange={handleChange}
-                required
-            />
-            <div className="input-row">
-                <div>
-                    <label htmlFor="expiry"></label>
+        <>
+            <Toaster />
+            <div style={{ width: "100%", margin: "32px 0" }}>
+                <Stepper activeStep={activeStep} alternativeLabel>
+                    {steps.map((label) => (
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+            </div>
+            <div className="main-content">
+                <form className="payment-details-form" onSubmit={handleSubmit}>
+                    <h2>Payment Data</h2>
                     <input
-                        id="expiry"
+                        id="cardName"
                         type="text"
-                        name="expiry"
-                        placeholder="MM/YY"
-                        value={form.expiry}
+                        name="cardName"
+                        placeholder="Name on Card"
+                        value={form.cardName}
                         onChange={handleChange}
                         required
-                        maxLength={5}
                     />
-                </div>
-                <div>
-                    <label htmlFor="cvv"></label>
                     <input
-                        id="cvv"
+                        id="cardNumber"
                         type="text"
-                        name="cvv"
-                        placeholder="CVV"
-                        value={form.cvv}
+                        name="cardNumber"
+                        placeholder="Card Number"
+                        value={form.cardNumber}
                         onChange={handleChange}
                         required
-                        maxLength={4}
+                        maxLength={19}
                     />
-                </div>
+                    <div className="form-row">
+                        <input
+                            id="expiry"
+                            type="text"
+                            name="expiry"
+                            placeholder="MM/YY"
+                            value={form.expiry}
+                            onChange={handleChange}
+                            required
+                            maxLength={5}
+                        />
+                        <input
+                            id="cvc"
+                            type="text"
+                            name="cvc"
+                            placeholder="CVC"
+                            value={form.cvc}
+                            onChange={handleChange}
+                            required
+                            maxLength={4}
+                        />
+                    </div>
+                    <div className="saved-card-select">
+                        <label>Select a saved card:</label>
+                        <select
+                            onChange={e => {
+                                const idx = e.target.value;
+                                if (idx !== "" && savedCards[idx]) {
+                                    const selected = savedCards[idx];
+                                    setForm(form => ({
+                                        ...form,
+                                        cardName: selected.cardName || "",
+                                        cardNumber: selected.cardNumber || "",
+                                        expiry: selected.expiry || "",
+                                        cvc: selected.cvc || ""
+                                    }));
+                                }
+                            }}
+                            defaultValue=""
+                        >
+                            <option value="">Select</option>
+                            {savedCards.length === 0 && (
+                                <option value="" disabled>
+                                    No saved cards
+                                </option>
+                            )}
+                            {savedCards.map((card, idx) => (
+                                <option value={idx} key={idx}>
+                                    {card.cardName} - **** **** **** {card.cardNumber?.slice(-4)}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="button-row">
+                        <button
+                            type="button"
+                            className="back-button"
+                            onClick={onBack}
+                        >
+                            Back
+                        </button>
+                        <button
+                            type="submit"
+                            className="submit-button"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </form>
+                <CartOverview />
             </div>
-            <label htmlFor="cpf"></label>
-            <input
-                id="cpf"
-                type="text"
-                name="cpf"
-                placeholder="Cardholder CPF"
-                value={form.cpf}
-                onChange={handleChange}
-                required
-            />
-            <label htmlFor="installments"></label>
-            <select
-                id="installments"
-                name="installments"
-                value={form.installments || ""}
-                onChange={handleChange}
-            >
-                <option value="" disabled>Choose the number of installments</option>
-                {vezesDeParcelamento.map((num) => (
-                    <option key={num} value={num}>
-                        In {num}x without interest
-                    </option>
-                ))}
-            </select>
-            <div className="button-row">
-                <button
-                    type="button"
-                    className="back-button"
-                    onClick={handleVoltar}
-                >
-                    Back
-                </button>
-                <button
-                    type="submit"
-                    className="submit-button"
-                >
-                    Next
-                </button>
-            </div>
-        </form>
-        <CartOverview/>
-        </div>
-    </>
+        </>
     );
 }

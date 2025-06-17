@@ -5,7 +5,6 @@
     box-shadow: 0 4px 24px rgba(0,123,153,0.09);
     padding: 32px 28px 24px 28px;
     max-width: 480px;
-    margin-left: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -163,8 +162,43 @@
 .main-content {
     display: flex;
     flex-direction: row;
-    align-items: flex-start; /* Ensures top alignment */
-    gap: 8px;                /* Adjust the value for desired spacing */
+    align-items: flex-start; 
+    gap: 8px;               
     width: 100%;
     justify-content: center;
+    align-items: center;
+}
+
+/* Style for the saved address dropdown section */
+.saved-address-select {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.saved-address-select label {
+    font-weight: 600;
+    color: #005f73;
+    margin-bottom: 6px;
+    font-size: 1rem;
+    letter-spacing: 0.2px;
+}
+
+.saved-address-select select {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px solid #e0f7fa;
+    border-radius: 5px;
+    background: #f7fafc;
+    color: #222;
+    font-size: 1rem;
+    margin-bottom: 0;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.saved-address-select select:focus {
+    border-color: #007b99;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.08);
+    background: #fff;
 }
