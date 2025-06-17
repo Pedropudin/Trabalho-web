@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Switch, FormControlLabel, Typography, Button, Paper, Snackbar, Alert } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Paper, Switch, FormControlLabel, Typography, Button, Snackbar, Alert } from '@mui/material';
 
 // Privacy Component
 // Allows the user to configure privacy preferences (notifications and data sharing)
@@ -7,97 +7,101 @@ import { Switch, FormControlLabel, Typography, Button, Paper, Snackbar, Alert } 
 // - onVoltar: function called when clicking to return to the profile
 //
 // States:
-// - notificacoesEmail: controls email notification permission
-// - compartilharDados: controls data sharing permission
+// - privacy: object controlling notification, data sharing, and terms acceptance
 // - snackbar: controls visual feedback
 //
 // Logic:
 // - Preferences are saved to and read from localStorage
-// - handleSalvar: displays feedback when saving preferences
+// - handleChange: updates state when toggling switches
+// - handleSave: saves preferences to backend and shows feedback
 // - Layout with Paper, Typography, Switch, FormControlLabel, Button, Snackbar/Alert
 // - Inline CSS (sx) for spacing, width, and centering
 
 export default function Privacy({ onVoltar }) {
   // Initial state reads preferences from localStorage
-  const [notificacoesEmail, setNotificacoesEmail] = useState(() => {
-    const prefs = JSON.parse(localStorage.getItem('privacyPreferences'));
-    return prefs?.notificacoesEmail ?? true;
+  const [privacy, setPrivacy] = useState({
+    notification: false,
+    sharedData: false,
+    termsAccepted: false
   });
 
-  const [compartilharDados, setCompartilharDados] = useState(() => {
-    const prefs = JSON.parse(localStorage.getItem('privacyPreferences'));
-    return prefs?.compartilharDados ?? false;
-  });
+  const [snackbar, setSnackbar] = useState({ open: false, msg: '', severity: 'info' }); // State for visual feedback
 
-  const [snackbar, setSnackbar] = useState(false); // State for visual feedback
-
-  // Update localStorage whenever preferences change
+  // Fetch user data from backend on mount
   useEffect(() => {
-    localStorage.setItem(
-      'privacyPreferences',
-      JSON.stringify({
-        notificacoesEmail,
-        compartilharDados
-      })
-    );
-  }, [notificacoesEmail, compartilharDados]);
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(user => setPrivacy(user.privacy || {}));
+    }
+  }, []);
 
-  // Display feedback when saving preferences
-  const handleSalvar = async () => {
-    // Also saves to the backend
-    try {
-      const userId = localStorage.getItem('userId');
-      await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+  // Update state when toggling switches
+  function handleChange(e) {
+    setPrivacy({ ...privacy, [e.target.name]: e.target.checked });
+  }
+
+  // Save preferences to backend and show feedback
+  function handleSave() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/privacy`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          privacy: {
-            notification: notificacoesEmail,
-            sharedData: compartilharDados
-          }
-        })
+        body: JSON.stringify(privacy)
+      }).then(() => {
+        setSnackbar({ open: true, msg: 'Preferences updated!', severity: 'success' });
       });
-    } catch {}
-    setSnackbar(true);
-  };
+    }
+  }
 
   return (
-    <Paper elevation={4} sx={{ p: 4, maxWidth: 420, mx: 'auto', borderRadius: 3 }}>
+    <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: 'auto', borderRadius: 3 }}>
       {/* Paper: visual container with shadow and rounded borders
-          elevation={4}: shadow level
+          elevation={3}: shadow level
           sx: padding, max width, centering, border radius */}
-      <Typography variant="h5" gutterBottom align="center">
-        {/* Typography: large centered title
+      <Typography variant="h5" mb={2}>
+        {/* Typography: large title
             variant="h5": large size
-            gutterBottom: bottom margin
-            align="center": center text */}
-        Privacy Settings
+            mb={2}: bottom margin */}
+        Privacy Preferences
       </Typography>
       <FormControlLabel
         control={
           <Switch
-            checked={notificacoesEmail}
-            onChange={() => setNotificacoesEmail((prev) => !prev)}
-            sx={{mt:2}}
+            checked={privacy.notification}
+            name="notification"
+            onChange={handleChange}
           />
         }
-        label="Allow email notifications"
+        label="Receive notifications"
       />
       <FormControlLabel
         control={
           <Switch
-            checked={compartilharDados}
-            onChange={() => setCompartilharDados((prev) => !prev)}
-            sx={{mt:2}}
+            checked={privacy.sharedData}
+            name="sharedData"
+            onChange={handleChange}
           />
         }
-        label="Share data with partners"
+        label="Share my data with partners"
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            checked={privacy.termsAccepted}
+            name="termsAccepted"
+            disabled
+          />
+        }
+        label="Accepted Terms and Conditions"
       />
       <Button
         variant="contained"
         color="primary"
-        onClick={handleSalvar}
         sx={{ mt: 2 }}
+        onClick={handleSave}
         fullWidth
       >
         {/* Button: main action button
@@ -105,31 +109,27 @@ export default function Privacy({ onVoltar }) {
             color="primary": main theme color
             sx: mt=2 (top margin)
             fullWidth: occupies full width */}
-        Save Preferences
+        Save
       </Button>
       <Button
         variant="outlined"
-        color="inherit"
+        sx={{ mt: 2, ml: 2 }}
         onClick={onVoltar}
-        sx={{ mt: 2 }}
         fullWidth
       >
         {/* Button: secondary button
             variant="outlined": visible border, transparent background
-            color="inherit": neutral color
-            sx: mt=2 (top margin)
+            sx: mt=2 (top margin), ml=2 (left margin)
             fullWidth: occupies full width */}
-        Confirm and return to Profile
+        Back
       </Button>
       <Snackbar
-        open={snackbar}
-        autoHideDuration={2500}
-        onClose={() => setSnackbar(false)}
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity="success" sx={{ width: '100%' }}>
-          Preferences saved successfully!
-        </Alert>
+        <Alert severity={snackbar.severity}>{snackbar.msg}</Alert>
       </Snackbar>
     </Paper>
   );

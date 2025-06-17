@@ -53,7 +53,7 @@ export default function PurchaseHistory() {
   // Only products paid and not yet reviewed by this user
   const produtosAguardando = produtos.filter(p =>
     p.payed &&
-    (!Array.isArray(p.reviews) || !p.reviews.some(r => r.usuario === nomeUsuario))
+    (!Array.isArray(p.reviews) || !p.reviews.some(r => r.username === nomeUsuario))
   );
 
   // Function called when reviewing a product

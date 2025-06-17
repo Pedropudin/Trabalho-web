@@ -44,6 +44,18 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         setSelectedCard(card || null);
     }, [selectedCardLast4, cards]);
 
+    // Atualiza cartão selecionado no backend
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId && selectedCardLast4) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/select-card`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ last4: selectedCardLast4 })
+            });
+        }
+    }, [selectedCardLast4]);
+
     // Calcula o valor total da compra
     useEffect(() => {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -67,7 +79,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     const vezesDeParcelamento = [1,2,3,4,5,6,7,8,9,10,11,12];
 
     // Submissão do pagamento
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setError('');
         if (!cards.length) {
@@ -86,11 +98,30 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
             return;
         }
         if ((selectedCard.balance ?? 0) < total) {
-            toast.error("Insufficient balance on the selected card.");
+            toast.error("Insufficient balance on the selected card. Please recharge your card in the Wallet.");
             setError("Insufficient balance.");
             return;
         }
-        // Atualiza saldo do cartão
+        // Subtrai saldo do cartão no backend
+        const userId = localStorage.getItem('userId');
+        try {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/cards/${selectedCard.last4}/debit`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: total })
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                toast.error(data.error || "Insufficient card balance. Please recharge your card in the Wallet.");
+                setError(data.error || "Insufficient card balance.");
+                return;
+            }
+        } catch {
+            toast.error("Error debiting card. Try again.");
+            setError("Error debiting card.");
+            return;
+        }
+        // Atualiza saldo local
         const updatedCards = cards.map(c =>
             c.last4 === selectedCard.last4
                 ? { ...c, balance: (c.balance ?? 0) - total }
@@ -198,7 +229,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                     >
                         {cards.map(card => (
                             <option key={card.last4} value={card.last4}>
-                                {card.brand} **** {card.last4} (Balance: R$ {(card.balance ?? 0).toFixed(2)})
+                                {card.brand} **** {card.last4} (Balance: ${Number(card.balance ?? 0).toFixed(2)})
                             </option>
                         ))}
                     </select>
@@ -213,12 +244,12 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                         <option value="" disabled>Choose the number of installments</option>
                         {vezesDeParcelamento.map((num) => (
                             <option key={num} value={num}>
-                                In {num}x of R$ {(total/num).toFixed(2)} without interest
+                                In {num}x of ${ (total/num).toFixed(2) } without interest
                             </option>
                         ))}
                     </select>
                     <div style={{ margin: "10px 0", color: "#007b99" }}>
-                        <b>Total purchase:</b> R$ {total.toFixed(2)}
+                        <b>Total purchase:</b> ${total.toFixed(2)}
                     </div>
                     {error && <div style={{ color: "#c00", marginBottom: 8 }}>{error}</div>}
                 </>

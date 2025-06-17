@@ -36,7 +36,7 @@ it('applies CPF mask and validates birth date', () => {
   const cpfInput = screen.getByPlaceholderText('CPF');
   fireEvent.change(cpfInput, { target: { value: '12345678901' } });
   expect(cpfInput.value).toBe('123.456.789-01');
-  const birthInput = screen.getByPlaceholderText('Data de nascimento');
+  const birthInput = screen.getByPlaceholderText('Birth date');
   fireEvent.change(birthInput, { target: { value: '01012000' } });
   expect(birthInput.value).toBe('01/01/2000');
 });

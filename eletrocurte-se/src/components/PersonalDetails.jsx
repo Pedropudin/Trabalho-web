@@ -39,9 +39,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         const userId = localStorage.getItem('userId');
         let addressData = {};
         // Fetch selected address from profile
-        const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
+        const addressArr = JSON.parse(localStorage.getItem('address') || '[]');
         const selectedAddressId = localStorage.getItem('selectedAddress');
-        const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+        const selectedAddress = addressArr.find(a => a.id === selectedAddressId);
         if (selectedAddress) {
             addressData = {
                 address: selectedAddress.street || "",
@@ -52,9 +52,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 state: selectedAddress.state || "",
                 zipCode: selectedAddress.zipCode || ""
             };
-        } else if (addresses.length > 0) {
+        } else if (addressArr.length > 0) {
             // fallback: get the first address if none selected
-            const a = addresses[0];
+            const a = addressArr[0];
             addressData = {
                 address: a.street || "",
                 number: a.number || "",
@@ -206,15 +206,16 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     phone: form.phone,
                     cpf: form.cpf,
                     birthDate: new Date(`${year}-${month}-${day}`),
-                    address: {
+                    address: [{
                         street: form.address,
                         number: form.number,
                         complement: form.complement,
                         district: form.district,
                         city: form.city,
                         state: form.state,
-                        zipCode: form.zipCode
-                    }
+                        zipCode: form.zipCode,
+                        id: localStorage.getItem('selectedAddress') || `address_${Date.now()}`
+                    }]
                 })
             });
         }

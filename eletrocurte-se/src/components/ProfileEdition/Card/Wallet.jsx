@@ -24,12 +24,12 @@ export default function Wallet({ onBack }) {
     return storedBalance ? parseFloat(storedBalance) : 0;
   });
 
-  // Initializes cards with localStorage, or with a default card
+  // Initializes cards with backend or localStorage
   const [cards, setCards] = useState(() => {
     const storedCards = localStorage.getItem('walletCards');
     return storedCards
       ? JSON.parse(storedCards)
-      : [{ brand: 'Visa', last4: '1234', number: '**** **** **** 1234' }];
+      : [];
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -50,6 +50,34 @@ export default function Wallet({ onBack }) {
 
   // Updates localStorage whenever cards change
   useEffect(() => {
+    localStorage.setItem('walletCards', JSON.stringify(cards));
+  }, [cards]);
+
+  useEffect(() => {
+    // Busca cartões do backend ao montar
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(user => {
+          if (user.card && Array.isArray(user.card)) {
+            setCards(user.card);
+            localStorage.setItem('walletCards', JSON.stringify(user.card));
+          }
+        });
+    }
+  }, []);
+
+  // Atualiza backend ao adicionar/remover cartão
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ card: cards })
+      });
+    }
     localStorage.setItem('walletCards', JSON.stringify(cards));
   }, [cards]);
 

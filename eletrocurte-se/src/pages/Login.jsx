@@ -41,11 +41,7 @@ export default function Login() {
   }
 
   // Client form validation
-  async function validateClient({ name, email, password }) {
-    if (!nameRegex.test(name)) {
-      showMessage("Client name must have at least 6 characters.", "error");
-      return false;
-    }
+  async function validateClient({ email, password }) {
     if (!emailRegex.test(email)) {
       showMessage("Please enter a valid email.", "error");
       return false;
@@ -130,11 +126,10 @@ export default function Login() {
   // Client form submission
   async function handleClient(e) {
     e.preventDefault();
-    const name = e.target.nome.value.trim();
     const email = e.target.email.value.trim();
     const password = e.target.senha.value.trim();
 
-    if (await validateClient({ name, email, password })) {
+    if (await validateClient({ email, password })) {
       try {
         // Login via backend
         const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
@@ -208,16 +203,17 @@ export default function Login() {
             phone: telefone,
             cpf,
             birthDate: birthDate ? new Date(birthDate) : undefined,
-            address: {
+            address: [{
               street: "-",
               number: "-",
               complement: "",
               district: "-",
               city: "-",
               state: "-",
-              zipCode: "-"
-            },
-            card: {},
+              zipCode: "-",
+              id: `address_${Date.now()}`
+            }],
+            card: [],
             privacy: {}
           })
         });
@@ -260,10 +256,6 @@ export default function Login() {
             <>
               <Tabs
                 value={userType}
-                // onChange receives (event, selectedValue).
-                // The first argument (event) is not used, so it’s named with an underscore (_).
-                // The second argument (v) is the selected tab value ('client' or 'admin').
-                // setUserType(v) updates the state to display the corresponding form.
                 onChange={(_, v) => setUserType(v)}
                 variant="fullWidth"
                 sx={{ mb: 2 }}
@@ -276,7 +268,7 @@ export default function Login() {
               {/* Client login form */}
               {userType === 'client' && (
                 <Box component="form" onSubmit={handleClient} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <TextField label="Name" id="nome-cliente" name="nome" required fullWidth size="small" placeholder="Ex: Abcdef" />
+                  {/* Removido campo Name */}
                   <TextField label="E-mail" id="email-cliente" name="email" required fullWidth size="small" type="email" placeholder="Ex: usuario@gmail.com" />
                   <TextField label="Password" id="senha-cliente" name="senha" required fullWidth size="small" type="password" placeholder="Ex: @Eletrocurte-se-100%" />
                   <Button type="submit" variant="contained" sx={{ background: '#007b99', color: '#fff', fontWeight: 600, borderRadius: 2, mt: 1, '&:hover': { background: '#004d66' } }}>
@@ -333,7 +325,23 @@ export default function Login() {
             <Box component="form" onSubmit={handleRegistration} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextField label="Full Name" id="nome-cadastro" name="nome" required fullWidth size="small" placeholder="Ex: Abcdef" />
               <TextField label="E-mail" id="email-cadastro" name="email" required fullWidth size="small" type="email" placeholder="Ex: usuario@gmail.com" />
-              <TextField label="Phone" id="telefone-cadastro" name="telefone" required fullWidth size="small" placeholder="(00) 00000-0000" />
+              <TextField
+                label="Phone"
+                id="telefone-cadastro"
+                name="telefone"
+                required
+                fullWidth
+                size="small"
+                placeholder="(00) 00000-0000"
+                inputProps={{ maxLength: 15 }}
+                onInput={e => {
+                  let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+                  if (v.length > 2) v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+                  if (v.length > 7) v = v.replace(/(\d{5})(\d{4})$/, '$1-$2');
+                  else if (v.length > 6) v = v.replace(/(\d{4})(\d{4})$/, '$1-$2');
+                  e.target.value = v;
+                }}
+              />
               <TextField label="CPF" id="cpf-cadastro" name="cpf" required fullWidth size="small" placeholder="000.000.000-00"
                 inputProps={{ maxLength: 14 }}
                 onInput={e => {

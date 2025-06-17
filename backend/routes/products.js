@@ -152,19 +152,24 @@ router.get('/:id/reviews', async (req, res) => {
 // POST /api/products/:id/reviews - add a review to a product
 router.post('/:id/reviews', async (req, res) => {
   try {
-    const { usuario, nota, comentario } = req.body;
-    if (!usuario || typeof nota !== 'number' || !comentario) {
+    // Accepts both { username, rating, comment } and { usuario, nota, comentario }
+    const { username, rating, comment, usuario, nota, comentario } = req.body;
+    const userField = username || usuario;
+    const ratingField = typeof rating === 'number' ? rating : typeof nota === 'number' ? nota : undefined;
+    const commentField = comment || comentario;
+    if (!userField || typeof ratingField !== 'number' || !commentField) {
       return res.status(400).json({ error: 'Missing required fields.' });
     }
     const product = await Product.findOne({ id: Number(req.params.id) });
     if (!product) return res.status(404).json({ error: 'Product not found.' });
 
     // Prevent duplicate review by same user
-    if (product.reviews && product.reviews.some(r => r.usuario === usuario)) {
+    if (product.reviews && product.reviews.some(r => (r.username || r.usuario) === userField)) {
       return res.status(409).json({ error: 'User has already reviewed this product.' });
     }
 
-    product.reviews.push({ usuario, nota, comentario });
+    // Always save as { username, rating, comment }
+    product.reviews.push({ username: userField, rating: ratingField, comment: commentField });
     await product.save();
     res.json(product.reviews);
   } catch (err) {

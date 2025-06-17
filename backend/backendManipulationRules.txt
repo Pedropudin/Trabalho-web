@@ -27,36 +27,31 @@ Backend Manipulation Rules (API Usage Guide)
 - Create a new order (checkout): POST /api/orders/finish (user JWT required)
 - Add a message to a user: POST /api/users/:id/messages
 - Add a product: POST /api/products (admin JWT required)
+- Add a card: POST /api/users/:id/cards
+- Add address: PATCH /api/users/:id (send address array)
 - Import products from JSON file: POST /api/products/import-json (admin JWT required)
 - Import products via request body: POST /api/products/import (admin JWT required)
 
 5. Updating Resources (PATCH/PUT)
 ---------------------------------
 - Update a user: PATCH /api/users/:id (no authentication required by default)
+- Update privacy: PATCH /api/users/:id/privacy
 - Update an admin: PATCH /api/users/admin/:id (requires admin JWT)
-- Update a product by numeric id: PUT /api/products/:id (admin JWT required)
-- Update a product by MongoDB _id: PUT /api/products/:id (admin JWT required)
+- Update a product by numeric id: PUT /api/products/:id (admin only)
+- Update a product by MongoDB _id: PUT /api/products/:id (admin only)
 - Mark product as visualized: PATCH /api/products/:id/visualize (public)
-  Body example:
-    {
-      "visualized": true,
-      "visualizedDate": "2024-06-20T12:34:56.789Z"
-    }
-  Description: Called when a product is viewed (e.g., opening modal/card). Updates "visualized" and "visualizedDate" in MongoDB.
-
 - Mark product as payed: PATCH /api/products/:id/pay (public)
-  Body example:
-    {
-      "payed": true,
-      "payedDate": "2024-06-20T12:34:56.789Z"
-    }
-  Description: Called when a purchase is completed. Updates "payed" and "payedDate" in MongoDB.
+- Update card array: PATCH /api/users/:id (send card array)
+- Update selected card: PATCH /api/users/:id (send selectedCard)
+- Update address array: PATCH /api/users/:id (send address array)
+- Update selected address: PATCH /api/users/:id (send selectedAddress)
+- Mark message as read/important: PATCH /api/users/:id/messages/:msgIdx
 
 6. Deleting Resources (DELETE)
 ------------------------------
 - Delete a user: DELETE /api/users/:id
 - Delete an admin: DELETE /api/users/admin/:id (requires admin JWT)
-- Delete a product: DELETE /api/products/:id (admin JWT required)
+- Delete a product: DELETE /api/products/:id (admin only)
 
 7. Product Reviews
 ------------------
@@ -72,15 +67,46 @@ Backend Manipulation Rules (API Usage Guide)
     - Only one review per user per product is allowed.
     - Returns 409 if user already reviewed.
 
-8. Example cURL Request with JWT
---------------------------------
+8. Cards (Wallet)
+-----------------
+- Add card: POST /api/users/:id/cards
+- Add balance: PATCH /api/users/:id (send updated card array)
+- Debit card after purchase: POST /api/users/:id/cards/:last4/debit
+- Delete card: PATCH /api/users/:id (send updated card array without the card)
+
+9. Addresses
+------------
+- Add address: PATCH /api/users/:id (send updated address array)
+- Delete address: PATCH /api/users/:id (send updated address array)
+- Update selected address: PATCH /api/users/:id (send selectedAddress)
+
+10. Orders
+----------
+- List all orders: GET /api/orders
+- Create new order: POST /api/orders/finish
+- Get user purchase history: GET /api/users/:id/orders
+- Add order to user history: POST /api/users/:id/orders
+
+11. Messages
+------------
+- Get user messages: GET /api/users/:id/messages
+- Add message: POST /api/users/:id/messages
+- Mark message as read/important: PATCH /api/users/:id/messages/:msgIdx
+
+12. Privacy
+-----------
+- Get privacy settings: GET /api/users/:id
+- Update privacy: PATCH /api/users/:id/privacy
+
+13. Example cURL Request with JWT
+---------------------------------
 curl -X PATCH http://localhost:5000/api/users/admin/ADMIN_ID \
   -H "Authorization: Bearer <your_jwt_token>" \
   -H "Content-Type: application/json" \
   -d '{"name":"New Name"}'
 
-9. General Notes
-----------------
+14. General Notes
+-----------------
 - Always check the API response for errors ("Access denied", "Invalid token", "Expired token").
 - Never share your JWT with others.
 - If you receive a 401 Unauthorized error, your token may be missing, invalid, or expired.
@@ -104,8 +130,16 @@ POST   /api/users                - Create user
 GET    /api/users                - List all users
 GET    /api/users/:id            - Get user by ID
 PATCH  /api/users/:id            - Update user (partial)
+PATCH  /api/users/:id/privacy    - Update privacy
 DELETE /api/users/:id            - Delete user
 POST   /api/users/:id/messages   - Add message to user
+GET    /api/users/:id/messages   - Get user messages
+PATCH  /api/users/:id/messages/:msgIdx - Mark message as read/important
+POST   /api/users/:id/cards      - Add card
+POST   /api/users/:id/cards/:last4/debit - Debit card after purchase
+PATCH  /api/users/:id            - Update cards, addresses, selectedCard, selectedAddress
+GET    /api/users/:id/orders     - Get user purchase history
+POST   /api/users/:id/orders     - Add order to user history
 
 [ADMINS]
 ---------

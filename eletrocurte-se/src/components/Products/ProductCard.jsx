@@ -198,10 +198,10 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
           <Box mt={1} mb={0} sx={{ textAlign: 'center' }}>
             <Typography variant="subtitle1" color="primary" sx={{ fontWeight: 600 }}>
               {typeof product.price === 'number'
-                ? `R$ ${product.price.toFixed(2).replace('.', ',')}`
-                : typeof product.preco === 'string' && product.preco.startsWith('R$')
+                ? `$${product.price.toFixed(2)}`
+                : typeof product.preco === 'string' && product.preco.startsWith('$')
                   ? product.preco
-                  : `R$ ${product.preco || product.price}`}
+                  : `$${product.preco || product.price}`}
             </Typography>
             {product.parcelamento && (
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>

@@ -29,22 +29,22 @@ export default function Addresses({ onVoltar }) {
   // List of user addresses, persisted in localStorage.
   const [addresses, setAddresses] = useState(() => {
     // Fetches saved addresses or initializes with examples.
-    const stored = localStorage.getItem('addresses');
+    const stored = localStorage.getItem('address');
     return stored ? JSON.parse(stored) : [
       {
         id: 'endereco1',
-        texto: 'Rua das Flores, 123 - Centro, São Paulo/SP'
+        text: 'Rua das Flores, 123 - Centro, São Paulo/SP'
       },
       {
         id: 'endereco2',
-        texto: 'Av. Brasil, 456 - Jardim, Rio de Janeiro/RJ'
+        text: 'Av. Brasil, 456 - Jardim, Rio de Janeiro/RJ'
       }
     ];
   });
 
   // ID of the currently selected delivery address.
   const [selectedAddress, setSelectedAddress] = useState(
-    localStorage.getItem('selectedAddress') || 'address1'
+    localStorage.getItem('selectedAddress') || (addresses[0]?.id || '')
   );
 
   // Controls display of the address registration modal.
@@ -56,13 +56,12 @@ export default function Addresses({ onVoltar }) {
 
   // Updates localStorage and backend whenever addresses change.
   useEffect(() => {
-    localStorage.setItem('addresses', JSON.stringify(addresses));
-    // Updates backend.
+    localStorage.setItem('address', JSON.stringify(addresses));
     const userId = localStorage.getItem('userId');
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ addresses })
+      body: JSON.stringify({ address: addresses })
     });
   }, [addresses]);
 
@@ -96,7 +95,7 @@ export default function Addresses({ onVoltar }) {
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ addresses: [...addresses, newAddress], selectedAddress: newAddress.id })
+      body: JSON.stringify({ address: [...addresses, newAddress], selectedAddress: newAddress.id })
     });
   };
 
@@ -114,7 +113,7 @@ export default function Addresses({ onVoltar }) {
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ addresses: filtered, selectedAddress: filtered[0]?.id || '' })
+      body: JSON.stringify({ address: filtered, selectedAddress: filtered[0]?.id || '' })
     });
   };
 

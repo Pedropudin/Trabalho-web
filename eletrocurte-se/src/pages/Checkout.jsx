@@ -30,9 +30,9 @@ export default function Checkout() {
 
         if (step === 2) {
             // Fetch address from profile
-            const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
+            const addressArr = JSON.parse(localStorage.getItem('address') || '[]');
             const selectedAddressId = localStorage.getItem('selectedAddress');
-            const selectedAddress = addresses.find(a => a.id === selectedAddressId) || addresses[0];
+            const selectedAddress = addressArr.find(a => a.id === selectedAddressId) || addressArr[0];
             if (!selectedAddress || !selectedAddress.street || !selectedAddress.number || !selectedAddress.city || !selectedAddress.state || !selectedAddress.zipCode) {
                 alert("No delivery address found in your profile. Please register an address in your profile before proceeding.");
                 return;

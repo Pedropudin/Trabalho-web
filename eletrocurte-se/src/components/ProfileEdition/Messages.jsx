@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -14,7 +14,11 @@ import {
   Snackbar,
   Alert,
   Avatar,
-  Skeleton
+  Skeleton,
+  List,
+  ListItem,
+  ListItemText,
+  Checkbox
 } from '@mui/material';
 
 // Message component
@@ -220,134 +224,50 @@ export default function Messages({ onVoltar }) {
   }
 
   return (
-    <Box maxWidth="md" mx="auto" mt={4}>
-      {/* Box: flexible container
-          maxWidth="md": medium max width
-          mx="auto": horizontally centers
-          mt={4}: top margin */}
-      <Card>
-        {/* Card: highlights the message content */}
-        <CardContent>
-          {/* CardContent: inner area of the Card */}
-          <Typography variant="h5" gutterBottom sx={{mb: 3}}>
-            {/* Typography: large title */}
-            Admin messages
-          </Typography>
-          <ToggleButtonGroup
-            value={filtro}
-            exclusive
-            onChange={(e, value) => value && setFiltro(value)}
-            sx={{ mb: 2 }}
+    <Paper elevation={3} sx={{ p: 4, maxWidth: 500, mx: 'auto', borderRadius: 3 }}>
+      <Typography variant="h5" mb={2}>
+        Messages
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ mb: 2 }}
+        onClick={adicionarMensagem}
+      >
+        New Message
+      </Button>
+      <List>
+        {mensagens.length === 0 && (
+          <Typography>No messages.</Typography>
+        )}
+        {mensagens.map((msg, idx) => (
+          <ListItem
+            key={idx}
+            sx={{
+              bgcolor: msg.read ? '#f5f5f5' : '#fffde7',
+              borderRadius: 2,
+              mb: 1
+            }}
           >
-            {/* ToggleButtonGroup: filter button group */}
-            <ToggleButton value="all" aria-label="All">All</ToggleButton>
-            <ToggleButton value="important" aria-label="Important">Important</ToggleButton>
-            <ToggleButton value="unread" aria-label="Unread">Unread</ToggleButton>
-          </ToggleButtonGroup>
-          {!hasMessages && (
-            <Typography variant="body1" color="text.secondary" align="center" sx={{ my: 4 }}>
-              No messages yet
-            </Typography>
-          )}
-          {hasMessages && Object.entries(agrupadas).map(([grupo, msgs]) => (
-            <Box key={grupo} mb={3}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                {/* Typography: subtitle for message group */}
-                {grupo}
-              </Typography>
-              <Divider />
-              {msgs.map((msg) => (
-                <Paper
-                  key={msg.id}
-                  elevation={msg.id === mensagemEmDestaque ? 6 : 1}
-                  sx={{
-                    mt: 1,
-                    p: 2,
-                    bgcolor: msg.id === mensagemEmDestaque ? 'primary.light' : msg.read ? 'grey.100' : 'info.light',
-                    borderLeft: msg.important ? '5px solid red' : 'none',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2
-                  }}
-                  onClick={() => marcarComoLida(msg.id)}
-                >
-                  {/* Paper: highlights each message */}
-                  <Avatar sx={{ bgcolor: msg.important ? 'error.main' : 'primary.main', width: 32, height: 32, fontSize: 18 }}>
-                    {/* Avatar: sender icon */}
-                    A
-                  </Avatar>
-                  <Box flex={1}>
-                    <Typography variant="body2">{msg.text}</Typography>
-                    <Box display="flex" justifyContent="space-between" mt={1}>
-                      <Typography variant="caption">
-                        {new Date(msg.data).toLocaleString()}
-                      </Typography>
-                      {msg.important && <Chip label="Important" size="small" color="error" />}
-                    </Box>
-                  </Box>
-                </Paper>
-              ))}
-            </Box>
-          ))}
-          <Box display="flex" gap={2} mt={4} flexDirection={{ xs: 'column', sm: 'row' }}>
-            <TextField
-              label="New message"
-              fullWidth
-              value={novaMensagem}
-              onChange={(e) => setNovaMensagem(e.target.value)}
-              variant="outlined"
-              multiline
-              minRows={3}
-              maxRows={6}
-              sx={{ flex: 1 }}
-              InputProps={{
-                style: { resize: 'vertical' }
-              }}
-              inputProps={{
-                'aria-label': 'New message'
-              }}
-              aria-label="New message"
-              // Garantees that the camp is always present after the loading state
-              data-testid="new-message-input"
+            <Checkbox
+              checked={!!msg.read}
+              onChange={() => marcarComoLida(msg.id)}
             />
-            <Button
-              variant="contained"
-              onClick={adicionarMensagem}
-              sx={{
-                minWidth: 120,
-                height: { xs: 48, sm: 'auto' },
-                alignSelf: { xs: 'flex-end', sm: 'unset' }
-              }}
-            >
-              Send
-            </Button>
-          </Box>
-          <Box mt={4} display="flex" justifyContent="center">
-            <Button
-              onClick={onVoltar || (() => window.location.assign('/profile'))}
-              variant="outlined"
-              sx={{
-                fontWeight: 600,
-                fontSize: 16,
-                px: 4,
-                py: 1.5,
-                borderRadius: 2,
-                background: '#fff',
-                borderColor: '#007b99',
-                color: '#007b99',
-                '&:hover': {
-                  background: '#e3f2fd',
-                  borderColor: '#004d66',
-                  color: '#004d66'
-                }
-              }}
-            >
-              Back to Profile
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
+            <ListItemText
+              primary={msg.text}
+              secondary={msg.data ? new Date(msg.data).toLocaleString() : ''}
+              sx={{ textDecoration: msg.read ? 'line-through' : 'none' }}
+            />
+          </ListItem>
+        ))}
+      </List>
+      <Button
+        variant="outlined"
+        sx={{ mt: 2 }}
+        onClick={onVoltar}
+      >
+        Back
+      </Button>
       <Snackbar
         open={snackbar}
         autoHideDuration={2500}
@@ -358,6 +278,6 @@ export default function Messages({ onVoltar }) {
           Message sent!
         </Alert>
       </Snackbar>
-    </Box>
+    </Paper>
   );
 }

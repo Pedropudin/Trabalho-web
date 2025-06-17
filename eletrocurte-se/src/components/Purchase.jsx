@@ -166,7 +166,7 @@ export default function Purchase({ onBack, onNext, steps }) {
                     <div><b>CVV:</b> {card.cvv}</div>
                     <div><b>CPF:</b> {card.cpf}</div>
                     <div><b>Expiry Date:</b> {card.expiry}</div>
-                    <div><b>Installments:</b> In {card.installments}x of ${(total/card.installments).toFixed(2)}</div>
+                    <div><b>Installments:</b> In {card.installments}x of ${ (total/card.installments).toFixed(2) }</div>
                 </div>
                 <h3 className="purchase-section-title address">Address</h3>
                 <div className="purchase-section-content">
@@ -191,7 +191,7 @@ export default function Purchase({ onBack, onNext, steps }) {
                                     <span className="purchase-product-qty">x{item.quantity}</span>
                                 </span>
                                 <span className="purchase-product-price">
-                                    ${(prod.price * item.quantity).toFixed(2)}
+                                    ${ (prod.price * item.quantity).toFixed(2) }
                                 </span>
                             </li>
                         );

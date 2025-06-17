@@ -257,7 +257,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
                 </Box>
               )}
               <Typography variant="subtitle1" color="primary" gutterBottom>
-                R$ {product.price}
+                ${product.price}
               </Typography>
               {product.category && (
                 <Typography variant="body2" color="text.secondary">

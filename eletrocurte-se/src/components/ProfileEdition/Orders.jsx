@@ -27,12 +27,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // - Visual feedback with Snackbar/Alert
 // - Inline CSS (sx) for spacing, width, and centering
 
-const pedidos = [
-  // Static array simulating user orders
-  { id: 12345, status: 'Delivered', data: '20/05/2025', detalhes: 'Order delivered successfully. Product: Fone HyperX.' },
-  { id: 12344, status: 'In transit', data: null, detalhes: 'Your order is on the way. Product: Mouse Logitech.' },
-  { id: 12343, status: 'Awaiting payment', data: null, detalhes: 'Awaiting payment confirmation. Product: Teclado Redragon.' },
-];
+// const pedidos = [
+//   // Static array simulating user orders
+//   { id: 12345, status: 'Delivered', data: '20/05/2025', detalhes: 'Order delivered successfully. Product: Fone HyperX.' },
+//   { id: 12344, status: 'In transit', data: null, detalhes: 'Your order is on the way. Product: Mouse Logitech.' },
+//   { id: 12343, status: 'Awaiting payment', data: null, detalhes: 'Awaiting payment confirmation. Product: Teclado Redragon.' },
+// ];
 
 // Maps order status to Chip color
 const statusColor = {
@@ -43,12 +43,21 @@ const statusColor = {
 
 export default function Orders({ onVoltar }) {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' }); // State for visual feedback
-  const [loading, setLoading] = useState(true); // Simulates initial loading
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulates initial loading (e.g., API request)
-    const timer = setTimeout(() => setLoading(false), 1200);
-    return () => clearTimeout(timer);
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/orders`)
+        .then(res => res.json())
+        .then(data => {
+          setOrders(Array.isArray(data) ? data : []);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   // Displays order details in the snackbar
@@ -78,7 +87,7 @@ export default function Orders({ onVoltar }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {pedidos.map((pedido) => (
+          {orders.map((pedido) => (
             <TableRow key={pedido.id}>
               <TableCell>{pedido.id}</TableCell>
               <TableCell>
