@@ -41,6 +41,24 @@ export default function Security({ onBack }) {
   const [validating, setValidating] = useState(false);
   const [snackbar, setSnackbar] = useState(false);
 
+  // Preenche os campos com dados do backend ao montar
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(user => {
+          setForm(prev => ({
+            ...prev,
+            email: user.email || '',
+            cpf: user.cpf || '',
+            phone: user.phone || '',
+            password: '' // nunca preenche senha por segurança
+          }));
+        });
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -61,7 +79,7 @@ export default function Security({ onBack }) {
   }
 
   const validateAllFields = () => {
-    if (!form.cpf || !form.email || !form.password || !form.phone) {
+    if (!form.cpf || !form.email || !form.phone) {
       return { valid: false, message: 'Please fill out all fields.' };
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
@@ -70,7 +88,7 @@ export default function Security({ onBack }) {
     if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(form.cpf)) {
       return { valid: false, message: 'Invalid CPF. Use format 000.000.000-00.' };
     }
-    if (!strongPassword.test(form.password)) {
+    if (form.password && !strongPassword.test(form.password)) {
       return {
         valid: false,
         message:
@@ -105,19 +123,22 @@ export default function Security({ onBack }) {
 
     try {
       const userId = localStorage.getItem('userId');
+      // Só envia senha se o usuário digitou
+      const patchBody = {
+        email: form.email,
+        cpf: form.cpf,
+        phone: form.phone,
+      };
+      if (form.password) patchBody.password = form.password;
       await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.password,
-          cpf: form.cpf,
-          phone: form.phone,
-        }),
+        body: JSON.stringify(patchBody),
       });
       setMessage('Changes saved successfully!');
       setMessageType('success');
       setSnackbar(true);
+      setForm(prev => ({ ...prev, password: '' })); // limpa senha após salvar
     } catch {
       setMessage('Failed to save changes to the server.');
       setMessageType('error');
@@ -161,6 +182,7 @@ export default function Security({ onBack }) {
           margin="normal"
           disabled={validating}
           helperText="Minimum 8 characters, including uppercase, lowercase, numbers, and special characters."
+          placeholder="Leave blank to keep current password"
         />
         <TextField
           label="CPF"

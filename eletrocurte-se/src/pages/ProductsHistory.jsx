@@ -32,7 +32,7 @@ export default function ProductsHistory() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        setProdutos(getProdutosByRoute(ROUTES.PRODUCT_HISTORY, data));
+        setProdutos(Array.isArray(data) ? data : []);
       });
   }, []);
 

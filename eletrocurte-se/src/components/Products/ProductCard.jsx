@@ -23,7 +23,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
   // State to display login required message
   const [showLoginMsg, setShowLoginMsg] = useState(false);
   // Select product image source
-  const imageSrc = !imgError ? (product.img || product.imagem || product.image) : null;
+  const imageSrc = !imgError ? (product.image || product.img || product.imagem) : null;
   // Check if on home page and user is not logged in
   const isHomeNotLogged = pageType === 'home' && !isLoggedIn;
 
@@ -41,29 +41,30 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
 
   // Shows floating message if user is not logged in
   React.useEffect(() => {
-    if (showLoginMsg) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'message show info';
-      msgDiv.style.position = 'fixed';
-      msgDiv.style.top = '20px';
-      msgDiv.style.left = '50%';
-      msgDiv.style.transform = 'translateX(-50%)';
-      msgDiv.style.zIndex = 9999;
-      msgDiv.style.background = '#2196F3';
-      msgDiv.style.color = '#fff';
-      msgDiv.style.padding = '12px 24px';
-      msgDiv.style.borderRadius = '8px';
-      msgDiv.style.fontWeight = 'bold';
-      msgDiv.textContent = 'Please log in to view product specifications.';
-      document.body.appendChild(msgDiv);
-      const timeout = setTimeout(() => {
-        msgDiv.remove();
-      }, 2500);
-      return () => {
-        clearTimeout(timeout);
-        msgDiv.remove();
-      };
-    }
+    // Remova todo este bloco para evitar mensagem duplicada
+    // if (showLoginMsg) {
+    //   const msgDiv = document.createElement('div');
+    //   msgDiv.className = 'message show info';
+    //   msgDiv.style.position = 'fixed';
+    //   msgDiv.style.top = '20px';
+    //   msgDiv.style.left = '50%';
+    //   msgDiv.style.transform = 'translateX(-50%)';
+    //   msgDiv.style.zIndex = 9999;
+    //   msgDiv.style.background = '#2196F3';
+    //   msgDiv.style.color = '#fff';
+    //   msgDiv.style.padding = '12px 24px';
+    //   msgDiv.style.borderRadius = '8px';
+    //   msgDiv.style.fontWeight = 'bold';
+    //   msgDiv.textContent = 'Please log in to view product specifications.';
+    //   document.body.appendChild(msgDiv);
+    //   const timeout = setTimeout(() => {
+    //     msgDiv.remove();
+    //   }, 2500);
+    //   return () => {
+    //     clearTimeout(timeout);
+    //     msgDiv.remove();
+    //   };
+    // }
   }, [showLoginMsg]);
 
   return (
@@ -119,7 +120,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
           {imageSrc ? (
             <img
               src={imageSrc}
-              alt={product.nome || product.name}
+              alt={product.name || product.nome}
               style={{
                 maxHeight: IMG_HEIGHT,
                 maxWidth: '80%',
@@ -163,14 +164,16 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
               mb: 1
             }}
           >
-            {product.nome || product.name}
+            {product.name || product.nome}
           </Typography>
           {/* Price and installment */}
           <Box mt={1} mb={0} sx={{ textAlign: 'center' }}>
             <Typography variant="subtitle1" color="primary" sx={{ fontWeight: 600 }}>
-              {typeof product.preco === 'string' && product.preco.startsWith('R$')
-                ? product.preco
-                : `R$ ${product.preco || product.price}`}
+              {typeof product.price === 'number'
+                ? `R$ ${product.price.toFixed(2).replace('.', ',')}`
+                : typeof product.preco === 'string' && product.preco.startsWith('R$')
+                  ? product.preco
+                  : `R$ ${product.preco || product.price}`}
             </Typography>
             {product.parcelamento && (
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
@@ -180,22 +183,26 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
           </Box>
           {/* Product rating */}
           <Box mt={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
-            {product.avaliacao !== undefined && (
+            {product.evaluation !== undefined && (
               <>
-                <Rating value={Number(product.avaliacao)} precision={1} readOnly size="small" />
+                <Rating value={Number(product.evaluation)} precision={1} readOnly size="small" />
                 <Typography variant="caption" color="text.secondary">
-                  {product.avaliacao}
+                  {product.evaluation}
                 </Typography>
               </>
             )}
           </Box>
           {/* Stock */}
           <Box mt={1} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1 }}>
-            {product.estoque !== undefined && (
+            {product.inStock !== undefined ? (
+              <Typography variant="caption" color={product.inStock > 0 ? 'success.main' : 'error.main'}>
+                {product.inStock > 0 ? `In stock: ${product.inStock}` : 'Unavailable'}
+              </Typography>
+            ) : product.estoque !== undefined ? (
               <Typography variant="caption" color={product.estoque > 0 ? 'success.main' : 'error.main'}>
                 {product.estoque > 0 ? `In stock: ${product.estoque}` : 'Unavailable'}
               </Typography>
-            )}
+            ) : null}
           </Box>
           {/* Additional details: brand, model, color, voltage, warranty */}
           <Box sx={{
@@ -206,19 +213,19 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
             width: '100%'
           }}>
             <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
-              {product.marca && `Brand: ${product.marca}`} {product.modelo && `| Model: ${product.modelo}`}
+              {product.brand || product.marca ? `Brand: ${product.brand || product.marca}` : ''} {product.model || product.modelo ? `| Model: ${product.model || product.modelo}` : ''}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
-              {product.cor && `Color: ${product.cor}`} {product.voltagem && `| Voltage: ${product.voltagem}`}
+              {product.color || product.cor ? `Color: ${product.color || product.cor}` : ''} {product.voltage || product.voltagem ? `| Voltage: ${product.voltage || product.voltagem}` : ''}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ width: '100%', textAlign: 'center', wordBreak: 'break-word' }}>
-              {product.garantia && `Warranty: ${product.garantia}`}
+              {product.warranty || product.garantia ? `Warranty: ${product.warranty || product.garantia}` : ''}
             </Typography>
           </Box>
         </CardContent>
       </CardActionArea>
       {/* Buy button appears if showBuyButton is true */}
-      {showBuyButton && product.inStock > 0 && (
+      {showBuyButton && (product.inStock > 0 || product.estoque > 0) && (
         <button
           className="product-display-purchase-button"
           style={{ margin: 12, width: "90%" }}

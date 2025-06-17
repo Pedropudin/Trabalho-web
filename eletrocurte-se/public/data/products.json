@@ -22,7 +22,7 @@
       "Leitura sequencial: 500MB/s",
       "Gravação sequencial: 450MB/s"
     ],
-    "avaliacao": 5
+    "evaluation": 5
   },
   {
     "id": 2,
@@ -47,7 +47,7 @@
       "Anti-ghosting: Sim",
       "Teclas multimídia: Sim"
     ],
-    "avaliacao": 5
+    "evaluation": 5
   },
   {
     "id": 3,
@@ -72,7 +72,7 @@
       "Botões programáveis: 6",
       "Conexão: USB"
     ],
-    "avaliacao": 4
+    "evaluation": 4
   },
   {
     "id": 4,
@@ -97,7 +97,7 @@
       "Tela: 15.6'' Full HD (1920x1080)",
       "Placa de vídeo: Intel Iris Xe Graphics"
     ],
-    "avaliacao": 4
+    "evaluation": 4
   },
   {
     "id": 5,
@@ -123,7 +123,7 @@
       "Câmera traseira: Tripla 108MP + 12MP + 10MP",
       "Câmera frontal: 12MP"
     ],
-    "avaliacao": 5
+    "evaluation": 5
   },
   {
     "id": 6,
@@ -148,7 +148,7 @@
       "Resposta de frequência: 20Hz - 20kHz",
       "Bateria: Até 40 horas de reprodução"
     ],
-    "avaliacao": 5
+    "evaluation": 5
   },
   {
     "id": 13,
@@ -173,7 +173,7 @@
       "Conectores frontais: 2x USB 3.0, Audio in/out",
       "Compatibilidade com refrigeração líquida: Sim"
     ],
-    "avaliacao": null
+    "evaluation": null
   },
   {
     "id": 14,
@@ -198,7 +198,7 @@
       "Compatibilidade: Windows, Mac, Chrome OS",
       "Lente: Vidro com revestimento anti-reflexo"
     ],
-    "avaliacao": 4
+    "evaluation": 4
   },
   {
     "id": 15,
@@ -224,7 +224,7 @@
       "Câmera traseira: Dupla 50MP + 12MP",
       "Câmera frontal: 32MP"
     ],
-    "avaliacao": 4.6
+    "evaluation": 4.6
   },
   {
     "id": 16,
@@ -249,7 +249,7 @@
       "Latência: 16-18-18-36",
       "Dissipador de calor: Alumínio"
     ],
-    "avaliacao": 5
+    "evaluation": 5
   },
   {
     "id": 20,
@@ -274,7 +274,7 @@
       "Antenas: 4 externas",
       "Portas LAN: 4 Gigabit"
     ],
-    "avaliacao": null
+    "evaluation": null
   },
   {
     "id": 21,
@@ -299,7 +299,7 @@
       "Impressão móvel: Sim",
       "Compatibilidade: Windows, Mac, Linux"
     ],
-    "avaliacao": 2
+    "evaluation": 2
   },
   {
     "id": 22,
@@ -325,7 +325,7 @@
       "Câmera traseira: Dupla 12MP",
       "Câmera frontal: 12MP"
     ],
-    "avaliacao": 4.9
+    "evaluation": 4.9
   },
   {
     "id": 23,
@@ -350,7 +350,7 @@
       "Memória RAM: DDR4 até 64GB",
       "Conectividade: USB 3.1, HDMI, Ethernet Gigabit"
     ],
-    "avaliacao": 4
+    "evaluation": 4
   },
   {
     "id": 24,
@@ -375,7 +375,7 @@
       "Bateria: Até 12 horas de reprodução",
       "Tecnologia PartyBoost: Sim"
     ],
-    "avaliacao": 4.8
+    "evaluation": 4.8
   },
   {
     "id": 25,
@@ -400,7 +400,7 @@
       "Velocidade de gravação: Até 15MB/s",
       "Design: Compacto com tampa deslizante"
     ],
-    "avaliacao": 5
+    "evaluation": 5
   },
   {
     "id": 26,
@@ -425,7 +425,7 @@
       "Ajustes: Altura do assento, apoio de braço e inclinação do encosto",
       "Rodízios: Sim, não agridem o piso"
     ],
-    "avaliacao": null
+    "evaluation": null
   },
   {
     "id": 27,
@@ -450,7 +450,7 @@
       "Proteções: Sobrecarrega, sobretensão e curto-circuito",
       "Conectores: ATX, EPS, PCIe, SATA e Molex"
     ],
-    "avaliacao": 3
+    "evaluation": 3
   },
   {
     "id": 28,
@@ -475,7 +475,7 @@
       "Compatibilidade: Intel e AMD",
       "Dimensões: 158 x 126 x 80 mm"
     ],
-    "avaliacao": null
+    "evaluation": null
   },
   {
     "id": 29,
@@ -500,7 +500,7 @@
       "Proteção: Contra sobretensões, subtensões e picos de tensão",
       "Dimensões: 27 x 10 x 15 cm"
     ],
-    "avaliacao": 4
+    "evaluation": 4
   },
   {
     "id": 30,
@@ -525,6 +525,6 @@
       "Cópia e digitalização: Sim",
       "Compatibilidade: Windows, Mac, Linux"
     ],
-    "avaliacao": 4
+    "evaluation": 4
   }
 ]

@@ -35,10 +35,10 @@ const HomePage = () => {
     }, []);
 
     useEffect(() => {
-        // Fetch featured products from history
-        fetch(process.env.PUBLIC_URL + '/data/products.json')
+        // Fetch featured products from backend (not static JSON)
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
-            .then(data => setProdutosHistorico(data.produtosHistorico || []));
+            .then(data => setProdutosHistorico(Array.isArray(data) ? data : []));
     }, []);
 
     function handleComeceAgora(e) {
@@ -121,8 +121,6 @@ const HomePage = () => {
         const existing = cart.find(item => item.id === product.id);
         if (existing) {
             if (existing.quantity + 1 > product.inStock) {
-                setMensagem('Maximum number of products reached. Out of stock!');
-                setTimeout(() => setMensagem(''), 3500);
                 return;
             }
             const updatedCart = cart.map(item =>
@@ -221,7 +219,7 @@ const HomePage = () => {
                             </Grid>
                         ) : (
                             produtosHistorico.slice(0, 12).map((produto, idx) => (
-                                <Grid key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                <Grid key={(produto.id || produto.name || produto.nome) + '-' + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <ProductCard 
                                         product={produto} 
                                         onClick={handleProductClick} 

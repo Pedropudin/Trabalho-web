@@ -40,7 +40,7 @@ export default function PurchaseHistory() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        let produtos = getProdutosByRoute(ROUTES.PURCHASE_HISTORY, data);
+        let produtos = Array.isArray(data) ? data : [];
         // Adds up to 4 real products from JSON without reviews, with recent dates (functionality test intention)
         const produtosSemAvaliacao = [];
         for (let i = 0; i < 4 && i < produtos.length; i++) {

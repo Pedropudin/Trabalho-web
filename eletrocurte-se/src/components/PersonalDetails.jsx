@@ -34,9 +34,38 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         zipCode: ""
     });
 
-    // Automatically fills if user is authenticated
+    // Busca endereço selecionado do perfil ao montar
     React.useEffect(() => {
         const userId = localStorage.getItem('userId');
+        let addressData = {};
+        // Busca endereço selecionado do perfil
+        const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
+        const selectedAddressId = localStorage.getItem('selectedAddress');
+        const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+        if (selectedAddress) {
+            addressData = {
+                address: selectedAddress.street || "",
+                number: selectedAddress.number || "",
+                complement: selectedAddress.complement || "",
+                district: selectedAddress.district || "",
+                city: selectedAddress.city || "",
+                state: selectedAddress.state || "",
+                zipCode: selectedAddress.zipCode || ""
+            };
+        } else if (addresses.length > 0) {
+            // fallback: pega o primeiro endereço se não houver seleção
+            const a = addresses[0];
+            addressData = {
+                address: a.street || "",
+                number: a.number || "",
+                complement: a.complement || "",
+                district: a.district || "",
+                city: a.city || "",
+                state: a.state || "",
+                zipCode: a.zipCode || ""
+            };
+        }
+        // Busca dados do usuário autenticado
         if (userId) {
             fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
                 .then(res => res.json())
@@ -49,16 +78,24 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         phone: user.phone || "",
                         cpf: user.cpf || "",
                         birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
-                        address: user.address?.street || "",
-                        number: user.address?.number || "",
-                        complement: user.address?.complement || "",
-                        district: user.address?.district || "",
-                        city: user.address?.city || "",
-                        state: user.address?.state || "",
-                        zipCode: user.address?.zipCode || ""
+                        ...addressData // sobrescreve endereço pelo do perfil
                     }));
                 })
-                .catch(() => {});
+                .catch(() => {
+                    setForm(prev => ({
+                        ...prev,
+                        ...addressData
+                    }));
+                });
+        } else {
+            setForm(prev => ({
+                ...prev,
+                ...addressData
+            }));
+        }
+        // Se não houver endereço cadastrado, alerta e impede avanço
+        if (!addressData.address || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding with the purchase.");
         }
     }, []);
 
@@ -147,6 +184,11 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         }
         if (year > 2025) {
             toast.error("Birth year must be 2025 or less.");
+            return;
+        }
+        // Checa se endereço está preenchido (impede avanço se não houver)
+        if (!form.address || !form.number || !form.city || !form.state || !form.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
             return;
         }
 

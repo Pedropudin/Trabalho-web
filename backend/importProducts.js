@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const fetch = require('node-fetch');
 const path = require('path');
@@ -11,7 +12,7 @@ if (!API_URL.startsWith('http')) {
 }
 
 async function importProducts() {
-  const filePath = path.join(__dirname, 'public', 'data', 'products.json');
+  const filePath = path.join(__dirname, '..', 'eletrocurte-se', 'public', 'data', 'products.json');
   const products = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
   if (!Array.isArray(products)) {
     console.error('products.json must contain an array of products.');

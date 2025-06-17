@@ -15,8 +15,6 @@ import Footer from '../components/Footer';
 export default function Profile() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  // Search username saved in different keys for compatibility
-  const nomeUsuario = localStorage.getItem('nomeUsuario') || localStorage.getItem('userName') || "User";
 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
@@ -40,7 +38,14 @@ export default function Profile() {
         <br />
         {/* Personalized greeting */}
         <h2>
-          Hello, <span id="nome-usuario" data-testid="nome-usuario">{nomeUsuario}</span>
+          Hello, <span id="nome-usuario" data-testid="nome-usuario">
+            {/* Mostra o nome do backend se disponível, senão fallback */}
+            {user?.firstName
+              ? user.firstName
+              : localStorage.getItem('userName') ||
+                localStorage.getItem('nomeUsuario') ||
+                "User"}
+          </span>
         </h2>
         {/* Grid of profile feature cards */}
         <div className="cards-grid">
