@@ -235,9 +235,9 @@ export default function Messages({ onVoltar }) {
                 sx={{ mb: 2 }}
               >
                 {/* ToggleButtonGroup: filter button group */}
-                <ToggleButton value="all">All</ToggleButton>
-                <ToggleButton value="important">Important</ToggleButton>
-                <ToggleButton value="unread">Unread</ToggleButton>
+                <ToggleButton value="all" aria-label="All">All</ToggleButton>
+                <ToggleButton value="important" aria-label="Important">Important</ToggleButton>
+                <ToggleButton value="unread" aria-label="Unread">Unread</ToggleButton>
               </ToggleButtonGroup>
               {Object.entries(agrupadas).map(([grupo, msgs]) => (
                 <Box key={grupo} mb={3}>

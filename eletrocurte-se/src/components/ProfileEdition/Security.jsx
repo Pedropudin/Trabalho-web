@@ -83,7 +83,7 @@ export default function Security({ onBack }) {
       return { valid: false, message: 'Please fill out all fields.' };
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      return { valid: false, message: 'Invalid email.' };
+      return { valid: false, message: 'Invalid email' };
     }
     if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(form.cpf)) {
       return { valid: false, message: 'Invalid CPF. Use format 000.000.000-00.' };
@@ -232,7 +232,7 @@ export default function Security({ onBack }) {
         </Button>
       </form>
       <Snackbar
-        open={snackbar}
+        open={snackbar || !!message}
         autoHideDuration={3000}
         onClose={() => setSnackbar(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ElectricEffect from '../../components/ElectricEffect';
 
-// Mock window.Audio para garantir que play retorna uma Promise
+// Mock window.Audio to guarantee that play returns a Promise
 beforeAll(() => {
   window.Audio = jest.fn().mockImplementation(() => ({
     play: jest.fn().mockReturnValue(Promise.resolve()),

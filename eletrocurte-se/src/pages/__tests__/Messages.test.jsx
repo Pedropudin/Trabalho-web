@@ -15,7 +15,7 @@ beforeEach(() => {
 
 it('renders admin messages and filter buttons', async () => {
   render(<Messages onVoltar={() => {}} />);
-  // Aguarda explicitamente o botão "All" aparecer
+  // Wait for the loading to finish and the "All" button to appear
   await screen.findByRole('button', { name: /All/i });
   expect(screen.getByRole('button', { name: /All/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Important/i })).toBeInTheDocument();
@@ -46,5 +46,7 @@ it('allows filtering and sending a new message', async () => {
   const input = await screen.findByLabelText(/New message/i);
   fireEvent.change(input, { target: { value: 'Test message' } });
   fireEvent.click(screen.getByText(/Send/i));
+  // Switch filter to "All" to ensure the message is visible
+  fireEvent.click(screen.getByRole('button', { name: /All/i }));
   expect(await screen.findByText('Test message')).toBeInTheDocument();
 });

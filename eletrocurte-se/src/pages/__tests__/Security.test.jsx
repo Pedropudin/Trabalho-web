@@ -22,6 +22,8 @@ it('renders security form and validates fields', async () => {
   expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument();
 
   fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'invalid-email' } });
+  fireEvent.change(screen.getByLabelText(/CPF/i), { target: { value: '123.456.789-00' } });
+  fireEvent.change(screen.getByLabelText(/Phone/i), { target: { value: '(11) 91234-5678' } });
   fireEvent.click(screen.getByText(/Save Changes/i));
   expect(await screen.findByText(/Invalid email/i)).toBeInTheDocument();
 });
