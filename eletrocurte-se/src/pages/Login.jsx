@@ -145,7 +145,7 @@ export default function Login() {
         if (!res.ok) {
           const data = await res.json();
           if (data.error === "Invalid credentials") {
-            showMessage("Usuário não encontrado ou senha incorreta. Deseja se cadastrar?", "error");
+            showMessage("User not found or incorrect password. Want to register?", "error");
             return;
           }
           showMessage("Invalid credentials.", "error");

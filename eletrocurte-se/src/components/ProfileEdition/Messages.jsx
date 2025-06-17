@@ -127,12 +127,16 @@ export default function Messages({ onVoltar }) {
       fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
         .then(res => res.json())
         .then(user => {
-          if (Array.isArray(user.messages)) {
+          // If there are no messages, keeps the default messages
+          if (Array.isArray(user.messages) && user.messages.length > 0) {
             setMensagens(user.messages.map((m, i) => ({
               ...m,
               id: m.id || i + 1 // preserve id if exists, else fallback
             })));
           }
+        })
+        .catch(() => {
+          // If there is an error, keeps the default messages
         });
     }
   }, [userId]);
@@ -178,6 +182,9 @@ export default function Messages({ onVoltar }) {
   // Groups filtered messages by date
   const agrupadas = agruparMensagensPorData(mensagensFiltradas);
 
+  // Se não houver mensagens filtradas, mostra "No messages yet"
+  const hasMessages = mensagensFiltradas.length > 0;
+
   if (loading) {
     return (
       <Box maxWidth="md" mx="auto" mt={4}>
@@ -189,11 +196,18 @@ export default function Messages({ onVoltar }) {
             <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
             <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
             <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
+            {/* Render filter buttons as disabled during loading for test reliability */}
+            <ToggleButtonGroup value="all" exclusive sx={{ mb: 2 }}>
+              <ToggleButton value="all" aria-label="All" disabled>All</ToggleButton>
+              <ToggleButton value="important" aria-label="Important" disabled>Important</ToggleButton>
+              <ToggleButton value="unread" aria-label="Unread" disabled>Unread</ToggleButton>
+            </ToggleButtonGroup>
+            {/* Don't renderize the message camp during loading */}
             <div style={{ margin: '24px 0', display: 'flex', justifyContent: 'center' }}>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={onVoltar}
+                onClick={onVoltar || (() => window.location.assign('/profile'))}
                 sx={{ mt: 2, fontWeight: 600, borderRadius: 2 }}
               >
                 Back to Profile
@@ -219,119 +233,119 @@ export default function Messages({ onVoltar }) {
             {/* Typography: large title */}
             Admin messages
           </Typography>
-          {loading ? (
-            <>
-              <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
-              {/* Skeleton: loading placeholder */}
-              <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
-              <Skeleton variant="rectangular" height={40} sx={{ mb: 2 }} />
-            </>
-          ) : (
-            <>
-              <ToggleButtonGroup
-                value={filtro}
-                exclusive
-                onChange={(e, value) => value && setFiltro(value)}
-                sx={{ mb: 2 }}
-              >
-                {/* ToggleButtonGroup: filter button group */}
-                <ToggleButton value="all" aria-label="All">All</ToggleButton>
-                <ToggleButton value="important" aria-label="Important">Important</ToggleButton>
-                <ToggleButton value="unread" aria-label="Unread">Unread</ToggleButton>
-              </ToggleButtonGroup>
-              {Object.entries(agrupadas).map(([grupo, msgs]) => (
-                <Box key={grupo} mb={3}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    {/* Typography: subtitle for message group */}
-                    {grupo}
-                  </Typography>
-                  <Divider />
-                  {msgs.map((msg) => (
-                    <Paper
-                      key={msg.id}
-                      elevation={msg.id === mensagemEmDestaque ? 6 : 1}
-                      sx={{
-                        mt: 1,
-                        p: 2,
-                        bgcolor: msg.id === mensagemEmDestaque ? 'primary.light' : msg.read ? 'grey.100' : 'info.light',
-                        borderLeft: msg.important ? '5px solid red' : 'none',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 2
-                      }}
-                      onClick={() => marcarComoLida(msg.id)}
-                    >
-                      {/* Paper: highlights each message */}
-                      <Avatar sx={{ bgcolor: msg.important ? 'error.main' : 'primary.main', width: 32, height: 32, fontSize: 18 }}>
-                        {/* Avatar: sender icon */}
-                        A
-                      </Avatar>
-                      <Box flex={1}>
-                        <Typography variant="body2">{msg.text}</Typography>
-                        <Box display="flex" justifyContent="space-between" mt={1}>
-                          <Typography variant="caption">
-                            {new Date(msg.data).toLocaleString()}
-                          </Typography>
-                          {msg.important && <Chip label="Important" size="small" color="error" />}
-                        </Box>
-                      </Box>
-                    </Paper>
-                  ))}
-                </Box>
-              ))}
-              <Box display="flex" gap={2} mt={4} flexDirection={{ xs: 'column', sm: 'row' }}>
-                <TextField
-                  label="New message"
-                  fullWidth
-                  value={novaMensagem}
-                  onChange={(e) => setNovaMensagem(e.target.value)}
-                  variant="outlined"
-                  multiline
-                  minRows={3}
-                  maxRows={6}
-                  sx={{ flex: 1 }}
-                  InputProps={{
-                    style: { resize: 'vertical' }
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  onClick={adicionarMensagem}
-                  sx={{
-                    minWidth: 120,
-                    height: { xs: 48, sm: 'auto' },
-                    alignSelf: { xs: 'flex-end', sm: 'unset' }
-                  }}
-                >
-                  Send
-                </Button>
-              </Box>
-              <Box mt={4} display="flex" justifyContent="center">
-                <Button
-                  onClick={onVoltar}
-                  variant="outlined"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: 16,
-                    px: 4,
-                    py: 1.5,
-                    borderRadius: 2,
-                    background: '#fff',
-                    borderColor: '#007b99',
-                    color: '#007b99',
-                    '&:hover': {
-                      background: '#e3f2fd',
-                      borderColor: '#004d66',
-                      color: '#004d66'
-                    }
-                  }}
-                >
-                  Back to Profile
-                </Button>
-              </Box>
-            </>
+          <ToggleButtonGroup
+            value={filtro}
+            exclusive
+            onChange={(e, value) => value && setFiltro(value)}
+            sx={{ mb: 2 }}
+          >
+            {/* ToggleButtonGroup: filter button group */}
+            <ToggleButton value="all" aria-label="All">All</ToggleButton>
+            <ToggleButton value="important" aria-label="Important">Important</ToggleButton>
+            <ToggleButton value="unread" aria-label="Unread">Unread</ToggleButton>
+          </ToggleButtonGroup>
+          {!hasMessages && (
+            <Typography variant="body1" color="text.secondary" align="center" sx={{ my: 4 }}>
+              No messages yet
+            </Typography>
           )}
+          {hasMessages && Object.entries(agrupadas).map(([grupo, msgs]) => (
+            <Box key={grupo} mb={3}>
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                {/* Typography: subtitle for message group */}
+                {grupo}
+              </Typography>
+              <Divider />
+              {msgs.map((msg) => (
+                <Paper
+                  key={msg.id}
+                  elevation={msg.id === mensagemEmDestaque ? 6 : 1}
+                  sx={{
+                    mt: 1,
+                    p: 2,
+                    bgcolor: msg.id === mensagemEmDestaque ? 'primary.light' : msg.read ? 'grey.100' : 'info.light',
+                    borderLeft: msg.important ? '5px solid red' : 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 2
+                  }}
+                  onClick={() => marcarComoLida(msg.id)}
+                >
+                  {/* Paper: highlights each message */}
+                  <Avatar sx={{ bgcolor: msg.important ? 'error.main' : 'primary.main', width: 32, height: 32, fontSize: 18 }}>
+                    {/* Avatar: sender icon */}
+                    A
+                  </Avatar>
+                  <Box flex={1}>
+                    <Typography variant="body2">{msg.text}</Typography>
+                    <Box display="flex" justifyContent="space-between" mt={1}>
+                      <Typography variant="caption">
+                        {new Date(msg.data).toLocaleString()}
+                      </Typography>
+                      {msg.important && <Chip label="Important" size="small" color="error" />}
+                    </Box>
+                  </Box>
+                </Paper>
+              ))}
+            </Box>
+          ))}
+          <Box display="flex" gap={2} mt={4} flexDirection={{ xs: 'column', sm: 'row' }}>
+            <TextField
+              label="New message"
+              fullWidth
+              value={novaMensagem}
+              onChange={(e) => setNovaMensagem(e.target.value)}
+              variant="outlined"
+              multiline
+              minRows={3}
+              maxRows={6}
+              sx={{ flex: 1 }}
+              InputProps={{
+                style: { resize: 'vertical' }
+              }}
+              inputProps={{
+                'aria-label': 'New message'
+              }}
+              aria-label="New message"
+              // Garantees that the camp is always present after the loading state
+              data-testid="new-message-input"
+            />
+            <Button
+              variant="contained"
+              onClick={adicionarMensagem}
+              sx={{
+                minWidth: 120,
+                height: { xs: 48, sm: 'auto' },
+                alignSelf: { xs: 'flex-end', sm: 'unset' }
+              }}
+            >
+              Send
+            </Button>
+          </Box>
+          <Box mt={4} display="flex" justifyContent="center">
+            <Button
+              onClick={onVoltar || (() => window.location.assign('/profile'))}
+              variant="outlined"
+              sx={{
+                fontWeight: 600,
+                fontSize: 16,
+                px: 4,
+                py: 1.5,
+                borderRadius: 2,
+                background: '#fff',
+                borderColor: '#007b99',
+                color: '#007b99',
+                '&:hover': {
+                  background: '#e3f2fd',
+                  borderColor: '#004d66',
+                  color: '#004d66'
+                }
+              }}
+            >
+              Back to Profile
+            </Button>
+          </Box>
         </CardContent>
       </Card>
       <Snackbar

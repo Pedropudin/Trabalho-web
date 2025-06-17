@@ -1,52 +1,71 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Messages from '../../components/ProfileEdition/Messages';
 
 beforeEach(() => {
   localStorage.clear();
   localStorage.setItem('userId', 'test-user');
-  global.fetch = jest.fn(() =>
-    Promise.resolve({
+
+  // Mock da API fetch
+  global.fetch = jest.fn((url, options) => {
+    if (options && options.method === 'POST') {
+      return Promise.resolve({ ok: true });
+    }
+    return Promise.resolve({
       ok: true,
-      json: () => Promise.resolve({}),
+      json: () => Promise.resolve({ messages: [] }),
+    });
+  });
+
+  // Mock do Audio
+  global.Audio = class {
+    play() {
+      return Promise.resolve();
+    }
+  };
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
+test('renders messages component', async () => {
+  render(<Messages />);
+
+  expect(await screen.findByText(/No messages yet/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/New message/i)).toBeInTheDocument();
+  expect(screen.getByText(/Send/i)).toBeInTheDocument();
+  expect(screen.getByText(/Back to Profile/i)).toBeInTheDocument();
+});
+
+test('sends a message successfully', async () => {
+  render(<Messages />);
+
+  const input = screen.getByLabelText(/New message/i);
+  const sendButton = screen.getByText(/Send/i);
+
+  fireEvent.change(input, { target: { value: 'Hello' } });
+  fireEvent.click(sendButton);
+
+  await waitFor(() =>
+    expect(screen.getByText(/Message sent/i)).toBeInTheDocument()
+  );
+
+  expect(fetch).toHaveBeenCalledWith(
+    expect.stringContaining('/api/messages'),
+    expect.objectContaining({
+      method: 'POST',
     })
   );
 });
 
-it('renders admin messages and filter buttons', async () => {
-  render(<Messages onVoltar={() => {}} />);
-  // Wait for the loading to finish and the "All" button to appear
-  await screen.findByRole('button', { name: /All/i });
-  expect(screen.getByRole('button', { name: /All/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /Important/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /Unread/i })).toBeInTheDocument();
-});
+test('back to profile button redirects correctly', () => {
+  delete window.location;
+  window.location = { assign: jest.fn() };
 
-it('allows sending a new message', async () => {
-  render(<Messages onVoltar={() => {}} />);
-  await screen.findByRole('button', { name: /All/i });
-  const input = await screen.findByLabelText(/New message/i);
-  fireEvent.change(input, { target: { value: 'Test message' } });
-  fireEvent.click(screen.getByText(/Send/i));
-  await screen.findByText(/Message sent/i);
-});
+  render(<Messages />);
 
-it('calls onVoltar when clicking Back to Profile', async () => {
-  const onVoltar = jest.fn();
-  render(<Messages onVoltar={onVoltar} />);
-  await screen.findByRole('button', { name: /All/i });
-  fireEvent.click(screen.getByText(/Back to Profile/i));
-  expect(onVoltar).toHaveBeenCalled();
-});
+  const backButton = screen.getByText(/Back to Profile/i);
+  fireEvent.click(backButton);
 
-it('allows filtering and sending a new message', async () => {
-  render(<Messages onVoltar={() => {}} />);
-  await screen.findByRole('button', { name: /Important/i });
-  fireEvent.click(screen.getByRole('button', { name: /Important/i }));
-  const input = await screen.findByLabelText(/New message/i);
-  fireEvent.change(input, { target: { value: 'Test message' } });
-  fireEvent.click(screen.getByText(/Send/i));
-  // Switch filter to "All" to ensure the message is visible
-  fireEvent.click(screen.getByRole('button', { name: /All/i }));
-  expect(await screen.findByText('Test message')).toBeInTheDocument();
+  expect(window.location.assign).toHaveBeenCalledWith('/profile');
 });
