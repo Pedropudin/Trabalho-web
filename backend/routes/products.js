@@ -106,4 +106,36 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+// PATCH /api/products/:id/visualize - update visualized and visualizedDate (public, for history)
+router.patch('/:id/visualize', async (req, res) => {
+  try {
+    const { visualized, visualizedDate } = req.body;
+    const updated = await Product.findOneAndUpdate(
+      { id: Number(req.params.id) },
+      { $set: { visualized: !!visualized, visualizedDate: visualizedDate || new Date() } },
+      { new: true }
+    );
+    if (!updated) return res.status(404).json({ error: 'Product not found.' });
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: 'Failed to update product visualization.' });
+  }
+});
+
+// PATCH /api/products/:id/pay - update payed and payedDate (public, for purchase)
+router.patch('/:id/pay', async (req, res) => {
+  try {
+    const { payed, payedDate } = req.body;
+    const updated = await Product.findOneAndUpdate(
+      { id: Number(req.params.id) },
+      { $set: { payed: !!payed, payedDate: payedDate || new Date() } },
+      { new: true }
+    );
+    if (!updated) return res.status(404).json({ error: 'Product not found.' });
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: 'Failed to update product payment.' });
+  }
+});
+
 module.exports = router;

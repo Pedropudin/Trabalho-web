@@ -14,7 +14,11 @@ const productSchema = new mongoose.Schema({
   generalSector: { type: String },
   specificSector: { type: String },
   specifications: [String],
-  evaluation: { type: Number },
+  evaluation: { type: Number, required: true, default: 0 }, // always starts as 0, only updated after user review
+  visualized: { type: Boolean, default: false },
+  payed: { type: Boolean, default: false },
+  visualizedDate: { type: Date, default: null },
+  payedDate: { type: Date, default: null }
 });
 
 module.exports = mongoose.model('Product', productSchema);

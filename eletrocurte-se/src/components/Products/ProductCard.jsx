@@ -36,6 +36,17 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
       setTimeout(() => setShowLoginMsg(false), 2500);
       return;
     }
+    // Atualiza visualized/visualizedDate no backend ao visualizar
+    if (product && product.id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/products/${product.id}/visualize`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          visualized: true,
+          visualizedDate: new Date().toISOString()
+        })
+      }).catch(() => {});
+    }
     if (onClick) onClick(product);
   };
 

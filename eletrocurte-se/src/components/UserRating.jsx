@@ -27,6 +27,15 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
   // Currently selected product
   const produto = produtosParaAvaliar[produtoAvaliacaoIdx] || {};
 
+  // Reset nota/comentario ao abrir modal para novo produto
+  React.useEffect(() => {
+    if (open) {
+      setNota(0);
+      setComentario('');
+      setErro('');
+    }
+  }, [open, produtoAvaliacaoIdx]);
+
   // Submit review if rating and comment are valid
   const handleSubmit = () => {
     if (nota < 1) {
@@ -178,7 +187,10 @@ const UserRating = ({ produtosAguardando = 1, produtosParaAvaliar = [], onAvalia
       {/* Product rating card for products awaiting review */}
       <AvaliacaoCard
         produtosAguardando={produtosAguardando}
-        produtosParaAvaliar={produtosParaAvaliar}
+        produtosParaAvaliar={produtosParaAvaliar.map(p => ({
+          ...p,
+          evaluation: p.evaluation ?? 0 // Garante nota zero por padrão
+        }))}
         onAvaliar={onAvaliar}
         produtoAvaliacaoIdx={produtoAvaliacaoIdx}
         setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}

@@ -22,7 +22,9 @@
       "Leitura sequencial: 500MB/s",
       "Gravação sequencial: 450MB/s"
     ],
-    "evaluation": 5
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 2,
@@ -31,7 +33,7 @@
     "fullDescription": "O Teclado Mecânico Redragon Kumara RGB é a escolha perfeita para quem busca desempenho e estilo. Com switches mecânicos Outemu Blue, proporciona uma resposta tátil e sonora, ideal para gamers e digitadores. Sua iluminação RGB é personalizável, permitindo uma infinidade de combinações de cores e efeitos. Além disso, seu design compacto economiza espaço na mesa e facilita o transporte.",
     "price": 249.9,
     "inStock": 8,
-    "image": "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e2e.jpg",
+    "image": "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e.jpg",
     "thumbs": [
       "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e.jpg",
       "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e.jpg"
@@ -47,7 +49,9 @@
       "Anti-ghosting: Sim",
       "Teclas multimídia: Sim"
     ],
-    "evaluation": 5
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 3,
@@ -72,7 +76,9 @@
       "Botões programáveis: 6",
       "Conexão: USB"
     ],
-    "evaluation": 4
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 4,
@@ -97,7 +103,9 @@
       "Tela: 15.6'' Full HD (1920x1080)",
       "Placa de vídeo: Intel Iris Xe Graphics"
     ],
-    "evaluation": 4
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 5,
@@ -123,7 +131,9 @@
       "Câmera traseira: Tripla 108MP + 12MP + 10MP",
       "Câmera frontal: 12MP"
     ],
-    "evaluation": 5
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 6,
@@ -148,7 +158,9 @@
       "Resposta de frequência: 20Hz - 20kHz",
       "Bateria: Até 40 horas de reprodução"
     ],
-    "evaluation": 5
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 13,
@@ -173,7 +185,9 @@
       "Conectores frontais: 2x USB 3.0, Audio in/out",
       "Compatibilidade com refrigeração líquida: Sim"
     ],
-    "evaluation": null
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 14,
@@ -198,7 +212,9 @@
       "Compatibilidade: Windows, Mac, Chrome OS",
       "Lente: Vidro com revestimento anti-reflexo"
     ],
-    "evaluation": 4
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 15,
@@ -224,7 +240,9 @@
       "Câmera traseira: Dupla 50MP + 12MP",
       "Câmera frontal: 32MP"
     ],
-    "evaluation": 4.6
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 16,
@@ -249,7 +267,9 @@
       "Latência: 16-18-18-36",
       "Dissipador de calor: Alumínio"
     ],
-    "evaluation": 5
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 20,
@@ -274,7 +294,9 @@
       "Antenas: 4 externas",
       "Portas LAN: 4 Gigabit"
     ],
-    "evaluation": null
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 21,
@@ -299,7 +321,9 @@
       "Impressão móvel: Sim",
       "Compatibilidade: Windows, Mac, Linux"
     ],
-    "evaluation": 2
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 22,
@@ -325,7 +349,9 @@
       "Câmera traseira: Dupla 12MP",
       "Câmera frontal: 12MP"
     ],
-    "evaluation": 4.9
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 23,
@@ -350,7 +376,9 @@
       "Memória RAM: DDR4 até 64GB",
       "Conectividade: USB 3.1, HDMI, Ethernet Gigabit"
     ],
-    "evaluation": 4
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 24,
@@ -375,7 +403,9 @@
       "Bateria: Até 12 horas de reprodução",
       "Tecnologia PartyBoost: Sim"
     ],
-    "evaluation": 4.8
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 25,
@@ -400,7 +430,9 @@
       "Velocidade de gravação: Até 15MB/s",
       "Design: Compacto com tampa deslizante"
     ],
-    "evaluation": 5
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 26,
@@ -425,7 +457,9 @@
       "Ajustes: Altura do assento, apoio de braço e inclinação do encosto",
       "Rodízios: Sim, não agridem o piso"
     ],
-    "evaluation": null
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 27,
@@ -450,7 +484,9 @@
       "Proteções: Sobrecarrega, sobretensão e curto-circuito",
       "Conectores: ATX, EPS, PCIe, SATA e Molex"
     ],
-    "evaluation": 3
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 28,
@@ -475,7 +511,9 @@
       "Compatibilidade: Intel e AMD",
       "Dimensões: 158 x 126 x 80 mm"
     ],
-    "evaluation": null
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 29,
@@ -500,7 +538,9 @@
       "Proteção: Contra sobretensões, subtensões e picos de tensão",
       "Dimensões: 27 x 10 x 15 cm"
     ],
-    "evaluation": 4
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   },
   {
     "id": 30,
@@ -525,6 +565,8 @@
       "Cópia e digitalização: Sim",
       "Compatibilidade: Windows, Mac, Linux"
     ],
-    "evaluation": 4
+    "evaluation": 0,
+    "visualized": false,
+    "payed": false
   }
 ]

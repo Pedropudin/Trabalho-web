@@ -41,6 +41,22 @@ export default function PurchaseHistory() {
       .then(res => res.json())
       .then(data => {
         let produtos = Array.isArray(data) ? data : [];
+        // Garante evaluation: 0 por padrão
+        produtos = produtos.map(p => ({
+          ...p,
+          evaluation: typeof p.evaluation === "number" ? p.evaluation : 0,
+          payed: p.payed ?? false,
+          payedDate: p.payedDate ?? null
+        }));
+        // Carrega histórico do localStorage (produtos comprados pelo usuário)
+        const payedHistory = JSON.parse(localStorage.getItem('payedHistory') || '[]');
+        payedHistory.forEach(hist => {
+          const idx = produtos.findIndex(prod => prod.id === hist.id);
+          if (idx !== -1) {
+            produtos[idx].payed = true;
+            produtos[idx].payedDate = hist.payedDate;
+          }
+        });
         // Adds up to 4 real products from JSON without reviews, with recent dates (functionality test intention)
         const produtosSemAvaliacao = [];
         for (let i = 0; i < 4 && i < produtos.length; i++) {
@@ -53,7 +69,7 @@ export default function PurchaseHistory() {
         }
         produtos = [...produtosSemAvaliacao, ...produtos];
 
-        // Applies reviews from the logged-in user, if any
+        // Aplica avaliações do usuário logado, se houver
         const nomeUsuario = localStorage.getItem('nomeUsuario');
         let avaliacoes = {};
         if (nomeUsuario) {
@@ -63,20 +79,19 @@ export default function PurchaseHistory() {
           if (avaliacoes[prod.id]) {
             return { ...prod, evaluation: avaliacoes[prod.id].nota, comment: avaliacoes[prod.id].comentario };
           }
-          return { ...prod, evaluation: prod.evaluation, comment: undefined };
+          return prod;
         });
-
         setProdutos(produtos);
       });
   }, []);
 
-  // Products awaiting review: have null or undefined review
-  const produtosAguardando = produtos.filter(p => p.evaluation == null);
+  // Products awaiting review: have null or undefined review AND payed: true
+  const produtosAguardando = produtos.filter(p => p.evaluation == null && p.payed);
 
   // Function called when reviewing a product
   const handleAvaliar = (nota, comentario, idx) => {
     setProdutos(produtosAntigos => {
-      // Updates the reviewed product with the rating and comment
+      // Atualiza apenas após avaliação do usuário
       const nomeUsuario = localStorage.getItem('nomeUsuario');
       let avaliacoes = {};
       if (nomeUsuario) {
@@ -98,23 +113,19 @@ export default function PurchaseHistory() {
     });
   };
 
-  // Dynamic date and grouping by year/month
-  const { produtosPorAnoMes } = useMemo(() => {
-    // Groups products by year and month
-    function agruparPorAnoMes(produtos) {
-      return produtos.reduce((acc, produto) => {
-        if (!produto.data) return acc;
-        // const [dia, mes, ano] = produto.data.split('/');
-        const [, mes, ano] = produto.data.split('/');
-        const chave = `${ano}-${mes}`;
-        if (!acc[chave]) acc[chave] = { ano, mes, produtos: [] };
-        acc[chave].produtos.push(produto);
-        return acc;
-      }, {});
-    }
-    const agrupados = agruparPorAnoMes(produtos);
-    return { produtosPorAnoMes: agrupados };
+  // Agrupa produtos comprados por data real (payedDate)
+  const produtosPorData = useMemo(() => {
+    const comprados = produtos.filter(p => p.payed && p.payedDate);
+    return comprados.reduce((acc, produto) => {
+      const date = new Date(produto.payedDate);
+      const key = date.toLocaleDateString('en-CA'); // YYYY-MM-DD
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(produto);
+      return acc;
+    }, {});
   }, [produtos]);
+
+  const hasPayed = Object.keys(produtosPorData).length > 0;
 
   // Utility function to render month/year header
   function renderCabecalhoMesAno(mes, ano) {
@@ -142,42 +153,22 @@ export default function PurchaseHistory() {
   return (
     <>
       <Header />
-      {/* Highlighted review section at the top, if there are products awaiting review */}
-      {produtosAguardando.length > 0 && (
-        <section className="avaliacao">
-          <img
-            src={produtosAguardando[produtoAvaliacaoIdx]?.image || "/imagens/raquete_elétrica2.jpeg"}
-            alt="Product awaiting review"
-            className="img-miniatura"
-          />
-          <p>
-            {produtosAguardando.length > 0
-              ? `${produtosAguardando.length} product${produtosAguardando.length > 1 ? 's' : ''} waiting for your review`
-              : 'All products have already been reviewed!'}
-          </p>
-          <UserRating
-            produtosAguardando={produtosAguardando.length}
-            imagem={produtosAguardando[produtoAvaliacaoIdx]?.img}
-            produtosParaAvaliar={produtosAguardando}
-            onAvaliar={handleAvaliar}
-            produtoAvaliacaoIdx={produtoAvaliacaoIdx}
-            setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}
-          />
-        </section>
+      {!hasPayed && (
+        <div style={{ width: "100%", textAlign: "center", margin: "40px auto", color: "#007b99", fontWeight: 600 }}>
+          You haven't purchased any products yet.<br />
+          Complete a purchase and see your history here!
+        </div>
       )}
-      {/* Products grouped by month/year of purchase */}
       <section className="produtos">
-        {Object.entries(produtosPorAnoMes)
-          .sort((a, b) => {
-            // Sorts by year and month descending (most recent first)
-            const [anoA, mesA] = a[0].split('-').map(Number);
-            const [anoB, mesB] = b[0].split('-').map(Number);
-            if (anoA !== anoB) return anoB - anoA;
-            return mesB - mesA;
-          })
-          .map(([chave, { ano, mes, produtos }]) => (
-            <div key={chave}>
-              {renderCabecalhoMesAno(mes, ano)}
+        {Object.entries(produtosPorData)
+          .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+          .map(([date, produtos]) => (
+            <div key={date}>
+              <section className="compras">
+                <p>
+                  Purchases made on {new Date(date).toLocaleDateString()}
+                </p>
+              </section>
               <div className="produtos">
                 {Array.isArray(produtos) ? produtos.map((produto, idx) => (
                   <ProductCard product={produto} onClick={handleProductClick} key={produto.name + idx} showBuyButton={false} />

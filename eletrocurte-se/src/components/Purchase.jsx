@@ -109,6 +109,22 @@ export default function Purchase({ onBack, onNext, steps }) {
             setErro('Error finishing purchase. Try again.');
             return;
         }
+        // Mark products as paid in the backend
+        try {
+            for (const item of cart) {
+                await fetch(`${process.env.REACT_APP_API_URL}/api/products/${item.id}/pay`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        payed: true,
+                        payedDate: new Date().toISOString()
+                    })
+                });
+            }
+        } catch (e) {
+            setErro('Error updating payment status. Try again.');
+            return;
+        }
         // Clear cart after success
         localStorage.setItem("cart", JSON.stringify([]));
         setErro('');

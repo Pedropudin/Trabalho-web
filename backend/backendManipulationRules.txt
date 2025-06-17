@@ -1,10 +1,10 @@
 Backend Manipulation Rules (API Usage Guide)
-============================================
+=============================================
 
 1. Authentication and JWT Usage
 -------------------------------
 - Most protected endpoints (such as creating, updating, or deleting admins/products) require authentication via JWT (JSON Web Token).
-- You must obtain a valid JWT by logging in as an admin or user via the appropriate login endpoint (e.g., POST /api/auth/admin-login).
+- Obtain a valid JWT by logging in as an admin or user via the appropriate login endpoint (e.g., POST /api/auth/admin-login).
 - The JWT is returned in the response as a "token" field.
 
 2. Sending the JWT in Requests
@@ -22,22 +22,40 @@ Backend Manipulation Rules (API Usage Guide)
 
 4. Creating Resources (POST)
 ----------------------------
-- To create a new user: POST /api/users (no authentication required)
-- To create a new admin: POST /api/users/create-admin (requires admin JWT in header)
+- Create a new user: POST /api/users (no authentication required)
+- Create a new admin: POST /api/users/create-admin (requires admin JWT)
+- Create a new order (checkout): POST /api/orders/finish (user JWT required)
+- Add a message to a user: POST /api/users/:id/messages
 
 5. Updating Resources (PATCH/PUT)
 ---------------------------------
-- To update a user: PATCH /api/users/:id (no authentication required by default)
-- To update an admin: PATCH /api/users/admin/:id (requires admin JWT in header)
-- Only send the fields you want to update in the request body.
+- Update a user: PATCH /api/users/:id (no authentication required by default)
+- Update an admin: PATCH /api/users/admin/:id (requires admin JWT)
+- Update a product: PUT /api/products/:id (requires admin JWT)
+- Mark product as visualized: PATCH /api/products/:id/visualize (public)
+  Body example:
+    {
+      "visualized": true,
+      "visualizedDate": "2024-06-20T12:34:56.789Z"
+    }
+  Description: Called when a product is viewed (e.g., opening modal/card). Updates "visualized" and "visualizedDate" in MongoDB.
+
+- Mark product as payed: PATCH /api/products/:id/pay (public)
+  Body example:
+    {
+      "payed": true,
+      "payedDate": "2024-06-20T12:34:56.789Z"
+    }
+  Description: Called when a purchase is completed. Updates "payed" and "payedDate" in MongoDB.
 
 6. Deleting Resources (DELETE)
 ------------------------------
-- To delete a user: DELETE /api/users/:id
-- To delete an admin: DELETE /api/users/admin/:id (requires admin JWT in header)
+- Delete a user: DELETE /api/users/:id
+- Delete an admin: DELETE /api/users/admin/:id (requires admin JWT)
+- Delete a product: DELETE /api/products/:id (requires admin JWT)
 
 7. Example cURL Request with JWT
--------------------------------
+--------------------------------
 curl -X PATCH http://localhost:5000/api/users/admin/ADMIN_ID \
   -H "Authorization: Bearer <your_jwt_token>" \
   -H "Content-Type: application/json" \
@@ -45,14 +63,16 @@ curl -X PATCH http://localhost:5000/api/users/admin/ADMIN_ID \
 
 8. General Notes
 ----------------
-- Always check the API response for errors (e.g., "Access denied", "Token inválido", "Expired token").
+- Always check the API response for errors ("Access denied", "Invalid token", "Expired token").
 - Never share your JWT with others.
 - If you receive a 401 Unauthorized error, your token may be missing, invalid, or expired.
 - For security, always use HTTPS in production environments.
+- The backend ensures consistency when updating "visualized", "visualizedDate", "payed", and "payedDate" fields in MongoDB.
 
-===========================================================
+============================================================
+
 API URL Reference by Context
-===========================================================
+============================================================
 
 [AUTH]
 -------
@@ -64,10 +84,9 @@ POST   /api/auth/admin-login     - Admin login
 --------
 POST   /api/users                - Create user
 GET    /api/users                - List all users
-GET    /api/users/:id            - Get user by id
+GET    /api/users/:id            - Get user by ID
 PATCH  /api/users/:id            - Update user (partial)
 DELETE /api/users/:id            - Delete user
-
 POST   /api/users/:id/messages   - Add message to user
 
 [ADMINS]
@@ -80,16 +99,35 @@ DELETE /api/users/admin/:id      - Delete admin (requires admin JWT)
 -----------
 GET    /api/products                     - List all products
 POST   /api/products                     - Create product (admin only)
-PUT    /api/products/:id                 - Update product by numeric id (admin only)
-PUT    /api/products/:id                 - Update product by numeric id (unprotected, legacy)
+PUT    /api/products/:id                 - Update product (admin only)
 DELETE /api/products/:id                 - Delete product (admin only)
+
+[PRODUCTS - Import/Export]
+--------------------------
 GET    /api/products/export              - Export all products (admin only)
 POST   /api/products/import-json         - Import products from JSON file (admin only)
 POST   /api/products/import              - Import products via request body (admin only)
+
+[PRODUCTS - Public Operations]
+------------------------------
+PATCH  /api/products/:id/visualize       - Mark product as visualized and set visualizedDate
+PATCH  /api/products/:id/pay             - Mark product as payed and set payedDate
 
 [ORDERS]
 ---------
 GET    /api/orders                       - List all orders
 POST   /api/orders/finish                - Create new order (checkout)
 
-===========================================================
+============================================================
+
+Notes on Product Interaction Endpoints
+--------------------------------------
+- PATCH /api/products/:id/visualize
+  Purpose: Called when a product is viewed (e.g., opening modal/card).
+  Behavior: Updates "visualized" to true and sets "visualizedDate" to current timestamp or provided ISO date.
+
+- PATCH /api/products/:id/pay
+  Purpose: Called when a purchase is completed.
+  Behavior: Updates "payed" to true and sets "payedDate" to current timestamp or provided ISO date.
+
+- These endpoints are designed to track user interactions for analytics (views) and status updates (purchases).
