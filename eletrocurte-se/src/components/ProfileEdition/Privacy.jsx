@@ -20,12 +20,12 @@ import { Switch, FormControlLabel, Typography, Button, Paper, Snackbar, Alert } 
 export default function Privacy({ onVoltar }) {
   // Initial state reads preferences from localStorage
   const [notificacoesEmail, setNotificacoesEmail] = useState(() => {
-    const prefs = JSON.parse(localStorage.getItem('preferenciasPrivacidade'));
+    const prefs = JSON.parse(localStorage.getItem('privacyPreferences'));
     return prefs?.notificacoesEmail ?? true;
   });
 
   const [compartilharDados, setCompartilharDados] = useState(() => {
-    const prefs = JSON.parse(localStorage.getItem('preferenciasPrivacidade'));
+    const prefs = JSON.parse(localStorage.getItem('privacyPreferences'));
     return prefs?.compartilharDados ?? false;
   });
 
@@ -34,7 +34,7 @@ export default function Privacy({ onVoltar }) {
   // Update localStorage whenever preferences change
   useEffect(() => {
     localStorage.setItem(
-      'preferenciasPrivacidade',
+      'privacyPreferences',
       JSON.stringify({
         notificacoesEmail,
         compartilharDados

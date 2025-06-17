@@ -48,7 +48,7 @@ export default function PurchaseHistory() {
           payed: p.payed ?? false,
           payedDate: p.payedDate ?? null
         }));
-        // Carrega histórico do localStorage (produtos comprados pelo usuário)
+        // Loads history from localStorage (products purchased by the user)
         const payedHistory = JSON.parse(localStorage.getItem('payedHistory') || '[]');
         payedHistory.forEach(hist => {
           const idx = produtos.findIndex(prod => prod.id === hist.id);
@@ -69,7 +69,7 @@ export default function PurchaseHistory() {
         }
         produtos = [...produtosSemAvaliacao, ...produtos];
 
-        // Aplica avaliações do usuário logado, se houver
+        // Applies reviews from the logged-in user, if any
         const nomeUsuario = localStorage.getItem('nomeUsuario');
         let avaliacoes = {};
         if (nomeUsuario) {

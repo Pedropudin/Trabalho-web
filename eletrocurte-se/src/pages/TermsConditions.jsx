@@ -16,9 +16,9 @@ export default function TermsConditions() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
-    // Marca termos como aceitos no localStorage
+    // Marks terms as accepted in localStorage
     localStorage.setItem('termsAccepted', 'true');
-    // Atualiza no backend se usuário logado
+    // Updates in backend if user is logged in
     const userId = localStorage.getItem('userId');
     if (userId) {
       fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {

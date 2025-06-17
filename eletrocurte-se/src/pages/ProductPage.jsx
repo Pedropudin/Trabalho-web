@@ -9,9 +9,9 @@ import ROUTES from "../routes.js";
 
 /*
   Eletrocurte-se product page.
-  - Displays the product acessed.
-  - Display the specifications and descriptions for the product. 
-  - Two buttons: 'Add to Cart', which adds a product to the cart but stays in the page, and 'Buy', which adds the product to the cart and redirects to the cart page.
+  - Displays the accessed product.
+  - Displays the specifications and descriptions for the product. 
+  - Two buttons: 'Add to Cart', which adds a product to the cart but stays on the page, and 'Buy', which adds the product to the cart and redirects to the cart page.
 */
 
 export default function ProductPage() {
@@ -22,7 +22,7 @@ export default function ProductPage() {
 
   // Reads product data directly from database
   useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend for consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))
@@ -151,12 +151,12 @@ export default function ProductPage() {
               <h2 className="product-price">
                 {Number.isFinite(Number(product.price))
                   ? `R$${Number(product.price).toFixed(2).replace('.', ',')}`
-                  : "Preço indisponível"}
+                  : "Price unavailable"}
               </h2>
               <p>
                 {Number.isFinite(Number(product.price))
                   ? `Up to 10x of R$ ${(Number(product.price) / 12).toFixed(2).replace('.', ',')} without interest on credit card.`
-                  : "Parcelamento indisponível"}
+                  : "Installment unavailable"}
               </p>
               <p>
                 {product.inStock > 0 ? <span className="product-in-stock">In stock ({product.inStock})</span> : <span className="product-unavailable-product-page">Out of stock</span>}

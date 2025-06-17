@@ -38,7 +38,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
     React.useEffect(() => {
         const userId = localStorage.getItem('userId');
         let addressData = {};
-        // Busca endereço selecionado do perfil
+        // Fetch selected address from profile
         const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
         const selectedAddressId = localStorage.getItem('selectedAddress');
         const selectedAddress = addresses.find(a => a.id === selectedAddressId);
@@ -53,7 +53,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 zipCode: selectedAddress.zipCode || ""
             };
         } else if (addresses.length > 0) {
-            // fallback: pega o primeiro endereço se não houver seleção
+            // fallback: get the first address if none selected
             const a = addresses[0];
             addressData = {
                 address: a.street || "",
@@ -65,7 +65,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 zipCode: a.zipCode || ""
             };
         }
-        // Busca dados do usuário autenticado
+        // Fetch user data if authenticated
         if (userId) {
             fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
                 .then(res => res.json())
@@ -78,7 +78,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         phone: user.phone || "",
                         cpf: user.cpf || "",
                         birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
-                        ...addressData // sobrescreve endereço pelo do perfil
+                        ...addressData // overwrite address with profile address
                     }));
                 })
                 .catch(() => {
@@ -93,7 +93,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 ...addressData
             }));
         }
-        // Se não houver endereço cadastrado, alerta e impede avanço
+        // If no address registered, alert and prevent advance
         if (!addressData.address || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
             toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding with the purchase.");
         }

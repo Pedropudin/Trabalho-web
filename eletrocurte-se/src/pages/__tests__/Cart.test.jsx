@@ -4,15 +4,15 @@ import Cart from '../../components/Cart';
 import { MemoryRouter } from 'react-router-dom';
 
 beforeEach(() => {
-  // Mock do localStorage para o carrinho
+  // Mock localStorage for the cart
   localStorage.setItem('cart', JSON.stringify([
     { id: 1, quantity: 2 }
   ]));
-  // Mock global do fetch para retornar o produto esperado
+  // Global fetch mock to return the expected product
   global.fetch = jest.fn(() =>
     Promise.resolve({
       json: () => Promise.resolve([
-        { id: 1, name: 'Produto Teste', price: 100, inStock: 10, img: '' }
+        { id: 1, name: 'Test Product', price: 100, inStock: 10, img: '' }
       ])
     })
   );
@@ -23,15 +23,15 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-it('exibe produtos no carrinho e permite aumentar quantidade', async () => {
+it('displays products in the cart and allows increasing quantity', async () => {
   render(
     <MemoryRouter>
       <Cart onNext={() => {}} />
     </MemoryRouter>
   );
-  expect(await screen.findByText('Produto Teste')).toBeInTheDocument();
+  expect(await screen.findByText('Test Product')).toBeInTheDocument();
   const plusBtn = screen.getAllByText('+')[0];
   fireEvent.click(plusBtn);
-  // Busca o span de quantidade do produto (evita ambiguidade)
+  // Looks for the product quantity span (avoids ambiguity)
   expect(screen.getByText((content, el) => el.className === 'product-qty' && content.includes('3'))).toBeInTheDocument();
 });

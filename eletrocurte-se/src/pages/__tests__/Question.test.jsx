@@ -5,14 +5,14 @@ import { MemoryRouter } from 'react-router-dom';
 
 const mockData = {
   product_photo: '',
-  product_name: 'Produto Teste',
+  product_name: 'Test Product',
   date: '01/01/2025',
-  question: 'Qual o prazo de entrega?',
-  person_name: 'Cliente',
+  question: 'What is the delivery time?',
+  person_name: 'Customer',
   person_photo: ''
 };
 
-it('permite abrir resposta e enviar', () => {
+it('allows opening answer and sending it', () => {
   render(
     <MemoryRouter>
       <Question data={mockData} answer="" onAnswerChange={() => {}} />

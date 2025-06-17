@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "name": "SSD Kingston A400 480GB",
-    "description": "SSD SATA III 2.5'' para upgrade de desempenho.",
-    "fullDescription": "O SSD Kingston A400 é uma solução de armazenamento de alta performance, ideal para dar um novo fôlego a notebooks e desktops antigos. Com interface SATA III e formato de 2.5 polegadas, é compatível com a maioria dos computadores. Seu tempo de acesso é praticamente instantâneo, o que significa que você poderá abrir arquivos e programas em questão de segundos. Além disso, ele é mais resistente a choques e quedas se comparado a um HD tradicional, garantindo maior segurança para os seus dados.",
+    "name": "Kingston A400 480GB SSD",
+    "description": "2.5'' SATA III SSD for performance upgrade.",
+    "fullDescription": "The Kingston A400 SSD is a high-performance storage solution, ideal for breathing new life into old notebooks and desktops. With a SATA III interface and 2.5-inch form factor, it is compatible with most computers. Its access time is virtually instant, meaning you can open files and programs in seconds. In addition, it is more resistant to shocks and drops compared to a traditional HDD, ensuring greater security for your data.",
     "price": 199.9,
     "inStock": 12,
     "image": "https://m.media-amazon.com/images/I/61rJkQYb8PL._AC_SL1500_.jpg",
@@ -16,11 +16,11 @@
     "generalSector": "computers",
     "specificSector": "storage",
     "specifications": [
-      "Capacidade: 480GB",
+      "Capacity: 480GB",
       "Interface: SATA III",
-      "Formato: 2.5 polegadas",
-      "Leitura sequencial: 500MB/s",
-      "Gravação sequencial: 450MB/s"
+      "Form factor: 2.5 inches",
+      "Sequential read: 500MB/s",
+      "Sequential write: 450MB/s"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -28,9 +28,9 @@
   },
   {
     "id": 2,
-    "name": "Teclado Mecânico Redragon Kumara RGB",
-    "description": "Teclado mecânico compacto com iluminação RGB.",
-    "fullDescription": "O Teclado Mecânico Redragon Kumara RGB é a escolha perfeita para quem busca desempenho e estilo. Com switches mecânicos Outemu Blue, proporciona uma resposta tátil e sonora, ideal para gamers e digitadores. Sua iluminação RGB é personalizável, permitindo uma infinidade de combinações de cores e efeitos. Além disso, seu design compacto economiza espaço na mesa e facilita o transporte.",
+    "name": "Redragon Kumara RGB Mechanical Keyboard",
+    "description": "Compact mechanical keyboard with RGB lighting.",
+    "fullDescription": "The Redragon Kumara RGB Mechanical Keyboard is the perfect choice for those seeking performance and style. With Outemu Blue mechanical switches, it provides a tactile and audible response, ideal for gamers and typists. Its RGB lighting is customizable, allowing for a myriad of color combinations and effects. In addition, its compact design saves desk space and facilitates transport.",
     "price": 249.9,
     "inStock": 8,
     "image": "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e.jpg",
@@ -43,11 +43,11 @@
     "generalSector": "computers",
     "specificSector": "keyboards",
     "specifications": [
-      "Tipo de switch: Mecânico Outemu Blue",
-      "Iluminação: RGB personalizável",
-      "Conexão: USB banhado a ouro",
-      "Anti-ghosting: Sim",
-      "Teclas multimídia: Sim"
+      "Switch type: Outemu Blue Mechanical",
+      "Lighting: Customizable RGB",
+      "Connection: Gold-plated USB",
+      "Anti-ghosting: Yes",
+      "Multimedia keys: Yes"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -55,9 +55,9 @@
   },
   {
     "id": 3,
-    "name": "Mouse Logitech G203 Lightsync",
-    "description": "Mouse gamer RGB de alta precisão.",
-    "fullDescription": "O Mouse Logitech G203 Lightsync é um mouse gamer que combina desempenho e estilo. Com sensor de alta precisão, oferece rastreamento confiável em qualquer superfície. Sua iluminação RGB é personalizável e pode ser sincronizada com outros dispositivos Logitech G. Além disso, possui botões programáveis que podem ser configurados para executar macros e comandos complexos com facilidade.",
+    "name": "Logitech G203 Lightsync Mouse",
+    "description": "High-precision RGB gaming mouse.",
+    "fullDescription": "The Logitech G203 Lightsync Mouse is a gaming mouse that combines performance and style. With a high-precision sensor, it offers reliable tracking on any surface. Its RGB lighting is customizable and can be synchronized with other Logitech G devices. In addition, it has programmable buttons that can be configured to execute macros and complex commands with ease.",
     "price": 139.9,
     "inStock": 20,
     "image": "https://m.media-amazon.com/images/I/61LtuGzXeaL._AC_SL1500_.jpg",
@@ -70,11 +70,11 @@
     "generalSector": "computers",
     "specificSector": "mice",
     "specifications": [
-      "Sensor: Óptico de alta precisão",
-      "Resolução: 200 a 8000 DPI",
-      "Iluminação: RGB Lightsync",
-      "Botões programáveis: 6",
-      "Conexão: USB"
+      "Sensor: High-precision optical",
+      "Resolution: 200 to 8000 DPI",
+      "Lighting: RGB Lightsync",
+      "Programmable buttons: 6",
+      "Connection: USB"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -82,9 +82,9 @@
   },
   {
     "id": 4,
-    "name": "Notebook Dell Inspiron 15",
-    "description": "Notebook com Intel i5, 8GB RAM, SSD 256GB.",
-    "fullDescription": "O Notebook Dell Inspiron 15 é a escolha ideal para quem busca um equipamento potente e confiável. Com processador Intel i5 de 11ª geração, 8GB de RAM e SSD de 256GB, ele oferece desempenho rápido para todas as suas tarefas. Seu design elegante e moderno, aliado a uma tela de 15.6'' Full HD, proporciona uma experiência visual incrível. Além disso, conta com uma bateria de longa duração, garantindo mobilidade e praticidade para o seu dia a dia.",
+    "name": "Dell Inspiron 15 Notebook",
+    "description": "Notebook with Intel i5, 8GB RAM, 256GB SSD.",
+    "fullDescription": "The Dell Inspiron 15 Notebook is the ideal choice for those seeking a powerful and reliable device. With an 11th generation Intel i5 processor, 8GB of RAM, and a 256GB SSD, it offers fast performance for all your tasks. Its elegant and modern design, coupled with a 15.6'' Full HD display, provides an incredible visual experience. In addition, it has a long-lasting battery, ensuring mobility and practicality for your daily life.",
     "price": 3499,
     "inStock": 5,
     "image": "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg",
@@ -97,11 +97,11 @@
     "generalSector": "computers",
     "specificSector": "laptops",
     "specifications": [
-      "Processador: Intel i5-1135G7",
-      "Memória RAM: 8GB DDR4",
-      "Armazenamento: SSD 256GB",
-      "Tela: 15.6'' Full HD (1920x1080)",
-      "Placa de vídeo: Intel Iris Xe Graphics"
+      "Processor: Intel i5-1135G7",
+      "RAM: 8GB DDR4",
+      "Storage: 256GB SSD",
+      "Display: 15.6'' Full HD (1920x1080)",
+      "Graphics: Intel Iris Xe Graphics"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -109,9 +109,9 @@
   },
   {
     "id": 5,
-    "name": "Smartphone Samsung Galaxy S23",
-    "description": "Smartphone topo de linha com câmera tripla.",
-    "fullDescription": "O Smartphone Samsung Galaxy S23 é o dispositivo perfeito para quem busca tecnologia de ponta e desempenho excepcional. Com um processador ultra-rápido, 12GB de RAM e 256GB de armazenamento interno, ele é capaz de executar qualquer tarefa com facilidade. Sua câmera tripla de 108MP + 12MP + 10MP garante fotos e vídeos com qualidade profissional, mesmo em condições de pouca luz. Além disso, conta com uma tela Dynamic AMOLED 2X de 6.1'' com taxa de atualização de 120Hz, proporcionando uma experiência visual impressionante.",
+    "name": "Samsung Galaxy S23 Smartphone",
+    "description": "High-end smartphone with triple camera.",
+    "fullDescription": "The Samsung Galaxy S23 Smartphone is the perfect device for those seeking cutting-edge technology and exceptional performance. With an ultra-fast processor, 12GB of RAM, and 256GB of internal storage, it can handle any task with ease. Its triple camera setup of 108MP + 12MP + 10MP ensures professional-quality photos and videos, even in low-light conditions. In addition, it features a 6.1'' Dynamic AMOLED 2X display with a 120Hz refresh rate, providing an impressive visual experience.",
     "price": 4299,
     "inStock": 7,
     "image": "https://m.media-amazon.com/images/I/71qZy8P6nGL._AC_SL1500_.jpg",
@@ -124,12 +124,12 @@
     "generalSector": "mobile",
     "specificSector": "smartphones",
     "specifications": [
-      "Processador: Snapdragon 8 Gen 2",
-      "Memória RAM: 12GB",
-      "Armazenamento: 256GB",
-      "Tela: 6.1'' Dynamic AMOLED 2X",
-      "Câmera traseira: Tripla 108MP + 12MP + 10MP",
-      "Câmera frontal: 12MP"
+      "Processor: Snapdragon 8 Gen 2",
+      "RAM: 12GB",
+      "Storage: 256GB",
+      "Display: 6.1'' Dynamic AMOLED 2X",
+      "Rear camera: Triple 108MP + 12MP + 10MP",
+      "Front camera: 12MP"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -137,9 +137,9 @@
   },
   {
     "id": 6,
-    "name": "Fone de Ouvido Bluetooth JBL Tune 510BT",
-    "description": "Fone de ouvido sem fio com bateria de longa duração.",
-    "fullDescription": "O Fone de Ouvido Bluetooth JBL Tune 510BT oferece liberdade sem fio e qualidade de som JBL. Com drivers de 32mm, proporciona graves profundos e som equilibrado. Sua bateria de longa duração garante até 40 horas de reprodução, e o carregamento rápido permite 2 horas de uso com apenas 5 minutos de carga. Além disso, conta com um design leve e confortável, ideal para ouvir música o dia todo.",
+    "name": "JBL Tune 510BT Bluetooth Headphones",
+    "description": "Wireless headphones with long battery life.",
+    "fullDescription": "The JBL Tune 510BT Bluetooth Headphones offer wireless freedom and JBL sound quality. With 32mm drivers, they provide deep bass and balanced sound. Their long-lasting battery guarantees up to 40 hours of playback, and the quick charge feature allows 2 hours of use with just 5 minutes of charging. In addition, they have a lightweight and comfortable design, ideal for listening to music all day long.",
     "price": 229.9,
     "inStock": 15,
     "image": "https://m.media-amazon.com/images/I/61pJ+Q4UqGL._AC_SL1500_.jpg",
@@ -152,11 +152,11 @@
     "generalSector": "audio",
     "specificSector": "headphones",
     "specifications": [
-      "Tipo: Over-ear",
-      "Conexão: Bluetooth",
+      "Type: Over-ear",
+      "Connection: Bluetooth",
       "Drivers: 32mm",
-      "Resposta de frequência: 20Hz - 20kHz",
-      "Bateria: Até 40 horas de reprodução"
+      "Frequency response: 20Hz - 20kHz",
+      "Battery: Up to 40 hours of playback"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -164,9 +164,9 @@
   },
   {
     "id": 13,
-    "name": "Gabinete Gamer NZXT H510",
-    "description": "Gabinete mid tower com painel lateral em vidro temperado.",
-    "fullDescription": "O Gabinete Gamer NZXT H510 combina estilo e funcionalidade. Com um design elegante e minimalista, é perfeito para quem deseja montar um PC com uma aparência clean e sofisticada. Seu painel lateral em vidro temperado permite uma visão clara dos componentes internos, enquanto o gerenciamento de cabos inteligente mantém tudo organizado. Além disso, conta com excelente fluxo de ar e suporte para refrigeração líquida, garantindo o desempenho ideal para os seus jogos.",
+    "name": "NZXT H510 Gaming Case",
+    "description": "Mid tower case with tempered glass side panel.",
+    "fullDescription": "The NZXT H510 Gaming Case combines style and functionality. With an elegant and minimalist design, it is perfect for those who want to build a PC with a clean and sophisticated look. Its tempered glass side panel allows a clear view of the internal components, while the intelligent cable management keeps everything organized. In addition, it has excellent airflow and support for liquid cooling, ensuring optimal performance for your games.",
     "price": 499,
     "inStock": 9,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -179,11 +179,11 @@
     "generalSector": "computers",
     "specificSector": "cases",
     "specifications": [
-      "Tipo: Mid Tower",
-      "Material: Aço e vidro temperado",
-      "Slots para expansão: 7",
-      "Conectores frontais: 2x USB 3.0, Audio in/out",
-      "Compatibilidade com refrigeração líquida: Sim"
+      "Type: Mid Tower",
+      "Material: Steel and tempered glass",
+      "Expansion slots: 7",
+      "Front connectors: 2x USB 3.0, Audio in/out",
+      "Compatibility with liquid cooling: Yes"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -191,9 +191,9 @@
   },
   {
     "id": 14,
-    "name": "Webcam Logitech C920 HD Pro",
-    "description": "Webcam Full HD 1080p com microfone estéreo.",
-    "fullDescription": "A Webcam Logitech C920 HD Pro é ideal para quem busca qualidade de imagem e som em chamadas de vídeo. Com resolução Full HD 1080p, proporciona imagens nítidas e detalhadas. Seu microfone estéreo com cancelamento de ruído garante um áudio claro e sem interferências. Além disso, é compatível com as principais plataformas de videoconferência e possui instalação simples e rápida.",
+    "name": "Logitech C920 HD Pro Webcam",
+    "description": "1080p Full HD webcam with stereo microphone.",
+    "fullDescription": "The Logitech C920 HD Pro Webcam is ideal for those seeking quality image and sound in video calls. With Full HD 1080p resolution, it provides sharp and detailed images. Its stereo microphone with noise cancellation ensures clear audio without interference. In addition, it is compatible with major video conferencing platforms and has simple and quick installation.",
     "price": 349.9,
     "inStock": 14,
     "image": "https://m.media-amazon.com/images/I/61pZy8P6nGL._AC_SL1500_.jpg",
@@ -206,11 +206,11 @@
     "generalSector": "computers",
     "specificSector": "webcams",
     "specifications": [
-      "Resolução: 1080p Full HD",
-      "Microfone: Estéreo com cancelamento de ruído",
-      "Conexão: USB",
-      "Compatibilidade: Windows, Mac, Chrome OS",
-      "Lente: Vidro com revestimento anti-reflexo"
+      "Resolution: 1080p Full HD",
+      "Microphone: Stereo with noise cancellation",
+      "Connection: USB",
+      "Compatibility: Windows, Mac, Chrome OS",
+      "Lens: Glass with anti-reflective coating"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -218,9 +218,9 @@
   },
   {
     "id": 15,
-    "name": "Celular Motorola Moto G84",
-    "description": "Celular com 256GB, câmera dupla e tela OLED.",
-    "fullDescription": "O Celular Motorola Moto G84 é a combinação perfeita de design elegante e desempenho poderoso. Com 256GB de armazenamento interno, você terá espaço de sobra para todos os seus aplicativos, fotos e vídeos. Sua câmera dupla de 50MP + 12MP permite capturar imagens incríveis com facilidade, enquanto a tela OLED de 6.55'' oferece cores vibrantes e pretos profundos. Além disso, conta com uma bateria de longa duração e carregamento rápido, para você ficar sempre conectado.",
+    "name": "Motorola Moto G84 Cell Phone",
+    "description": "Cell phone with 256GB, dual camera, and OLED display.",
+    "fullDescription": "The Motorola Moto G84 Cell Phone is the perfect combination of elegant design and powerful performance. With 256GB of internal storage, you will have plenty of space for all your apps, photos, and videos. Its dual camera of 50MP + 12MP allows you to capture amazing images with ease, while the 6.55'' OLED display offers vibrant colors and deep blacks. In addition, it has a long-lasting battery and fast charging, so you can stay connected all the time.",
     "price": 1899,
     "inStock": 10,
     "image": "https://m.media-amazon.com/images/I/61h5b6QwQwL._AC_SL1500_.jpg",
@@ -233,12 +233,12 @@
     "generalSector": "mobile",
     "specificSector": "smartphones",
     "specifications": [
-      "Processador: MediaTek Dimensity 8020",
-      "Memória RAM: 8GB",
-      "Armazenamento: 256GB",
-      "Tela: 6.55'' OLED",
-      "Câmera traseira: Dupla 50MP + 12MP",
-      "Câmera frontal: 32MP"
+      "Processor: MediaTek Dimensity 8020",
+      "RAM: 8GB",
+      "Storage: 256GB",
+      "Display: 6.55'' OLED",
+      "Rear camera: Dual 50MP + 12MP",
+      "Front camera: 32MP"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -246,9 +246,9 @@
   },
   {
     "id": 16,
-    "name": "Memória RAM Corsair Vengeance 16GB DDR4",
-    "description": "Módulo de memória DDR4 3200MHz para desktop.",
-    "fullDescription": "A Memória RAM Corsair Vengeance 16GB DDR4 é a escolha perfeita para quem busca desempenho e confiabilidade. Com tecnologia DDR4 e velocidade de 3200MHz, proporciona um aumento significativo na performance do seu computador, especialmente em tarefas que exigem alto poder de processamento, como jogos e edição de vídeos. Seu design com dissipador de calor em alumínio garante uma melhor dissipação do calor, aumentando a durabilidade do módulo.",
+    "name": "Corsair Vengeance 16GB DDR4 RAM",
+    "description": "DDR4 3200MHz memory module for desktop.",
+    "fullDescription": "The Corsair Vengeance 16GB DDR4 RAM is the perfect choice for those seeking performance and reliability. With DDR4 technology and 3200MHz speed, it provides a significant increase in the performance of your computer, especially in tasks that require high processing power, such as gaming and video editing. Its aluminum heat spreader design ensures better heat dissipation, increasing the durability of the module.",
     "price": 299.9,
     "inStock": 18,
     "image": "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg",
@@ -261,11 +261,11 @@
     "generalSector": "computers",
     "specificSector": "memory",
     "specifications": [
-      "Tipo: DDR4",
-      "Capacidade: 16GB",
-      "Velocidade: 3200MHz",
-      "Latência: 16-18-18-36",
-      "Dissipador de calor: Alumínio"
+      "Type: DDR4",
+      "Capacity: 16GB",
+      "Speed: 3200MHz",
+      "Latency: 16-18-18-36",
+      "Heat spreader: Aluminum"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -273,9 +273,9 @@
   },
   {
     "id": 20,
-    "name": "Roteador TP-Link Archer C6",
-    "description": "Roteador Gigabit Dual Band AC1200 com 4 antenas.",
-    "fullDescription": "O Roteador TP-Link Archer C6 é a solução ideal para quem busca uma conexão de internet rápida e estável. Com tecnologia Dual Band, oferece velocidades de até 1200Mbps, sendo 300Mbps na banda de 2.4GHz e 867Mbps na banda de 5GHz. Possui 4 antenas externas que garantem uma cobertura Wi-Fi ampla e estável, além de 4 portas LAN Gigabit para conexões com fio de alta velocidade. É perfeito para streaming de vídeos em 4K, jogos online e download de arquivos grandes.",
+    "name": "TP-Link Archer C6 Router",
+    "description": "AC1200 Dual Band Gigabit Router with 4 antennas.",
+    "fullDescription": "The TP-Link Archer C6 Router is the ideal solution for those seeking a fast and stable internet connection. With Dual Band technology, it offers speeds of up to 1200Mbps, with 300Mbps on the 2.4GHz band and 867Mbps on the 5GHz band. It has 4 external antennas that ensure wide and stable Wi-Fi coverage, in addition to 4 Gigabit LAN ports for high-speed wired connections. It is perfect for streaming 4K videos, online gaming, and downloading large files.",
     "price": 229,
     "inStock": 13,
     "image": "https://m.media-amazon.com/images/I/51wF7YDIQkL._AC_SL1000_.jpg",
@@ -288,11 +288,11 @@
     "generalSector": "networking",
     "specificSector": "routers",
     "specifications": [
-      "Padrão Wi-Fi: 802.11ac",
-      "Velocidade: Até 1200Mbps",
-      "Frequência: Dual Band 2.4GHz e 5GHz",
-      "Antenas: 4 externas",
-      "Portas LAN: 4 Gigabit"
+      "Wi-Fi standard: 802.11ac",
+      "Speed: Up to 1200Mbps",
+      "Frequency: Dual Band 2.4GHz and 5GHz",
+      "Antennas: 4 external",
+      "LAN ports: 4 Gigabit"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -300,9 +300,9 @@
   },
   {
     "id": 21,
-    "name": "Impressora HP DeskJet Ink Advantage 2774",
-    "description": "Impressora multifuncional Wi-Fi colorida.",
-    "fullDescription": "A Impressora HP DeskJet Ink Advantage 2774 é uma impressora multifuncional que oferece qualidade e praticidade. Com tecnologia de impressão térmica da HP e resolução de até 4800 x 1200 dpi, proporciona impressões com qualidade profissional. Possui conectividade Wi-Fi, permitindo imprimir de qualquer lugar da casa ou escritório, além de suporte para impressão móvel. É compacta e ideal para quem busca uma impressora eficiente e de fácil manuseio.",
+    "name": "HP DeskJet Ink Advantage 2774 Printer",
+    "description": "Color multifunction printer with Wi-Fi.",
+    "fullDescription": "The HP DeskJet Ink Advantage 2774 is a multifunction printer that offers quality and practicality. With HP's thermal inkjet technology and a resolution of up to 4800 x 1200 dpi, it provides professional-quality prints. It has Wi-Fi connectivity, allowing you to print from anywhere in the house or office, in addition to supporting mobile printing. It is compact and ideal for those seeking an efficient and easy-to-use printer.",
     "price": 399,
     "inStock": 8,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -315,11 +315,11 @@
     "generalSector": "office",
     "specificSector": "printers",
     "specifications": [
-      "Tecnologia de impressão: Térmica da HP",
-      "Resolução de impressão: Até 4800 x 1200 dpi",
-      "Conectividade: Wi-Fi, USB",
-      "Impressão móvel: Sim",
-      "Compatibilidade: Windows, Mac, Linux"
+      "Printing technology: HP thermal",
+      "Print resolution: Up to 4800 x 1200 dpi",
+      "Connectivity: Wi-Fi, USB",
+      "Mobile printing: Yes",
+      "Compatibility: Windows, Mac, Linux"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -327,9 +327,9 @@
   },
   {
     "id": 22,
-    "name": "Celular Apple iPhone 13",
-    "description": "iPhone 13 128GB, tela 6.1'' Super Retina XDR.",
-    "fullDescription": "O iPhone 13 da Apple é um smartphone que une design sofisticado e tecnologia de ponta. Com um corpo em alumínio e vidro, é resistente e elegante. Sua tela Super Retina XDR de 6.1'' oferece uma experiência visual imersiva, com cores vibrantes e contraste impressionante. O desempenho é garantido pelo chip A15 Bionic, que proporciona velocidade e eficiência energética. Além disso, o iPhone 13 conta com um sistema de câmeras duplo de 12MP, que permite fotos e vídeos com qualidade profissional.",
+    "name": "Apple iPhone 13",
+    "description": "iPhone 13 128GB, 6.1'' Super Retina XDR display.",
+    "fullDescription": "The Apple iPhone 13 is a smartphone that combines sophisticated design and cutting-edge technology. With an aluminum and glass body, it is resistant and elegant. Its 6.1'' Super Retina XDR display offers an immersive visual experience, with vibrant colors and impressive contrast. The performance is guaranteed by the A15 Bionic chip, which provides speed and energy efficiency. In addition, the iPhone 13 features a dual 12MP camera system, allowing for professional-quality photos and videos.",
     "price": 4999,
     "inStock": 6,
     "image": "https://m.media-amazon.com/images/I/71h5b6QwQwL._AC_SL1500_.jpg",
@@ -342,12 +342,12 @@
     "generalSector": "mobile",
     "specificSector": "smartphones",
     "specifications": [
-      "Processador: A15 Bionic",
-      "Memória RAM: 4GB",
-      "Armazenamento: 128GB",
-      "Tela: 6.1'' Super Retina XDR",
-      "Câmera traseira: Dupla 12MP",
-      "Câmera frontal: 12MP"
+      "Processor: A15 Bionic",
+      "RAM: 4GB",
+      "Storage: 128GB",
+      "Display: 6.1'' Super Retina XDR",
+      "Rear camera: Dual 12MP",
+      "Front camera: 12MP"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -355,9 +355,9 @@
   },
   {
     "id": 23,
-    "name": "Placa-mãe ASUS Prime B450M-GAMING/BR",
-    "description": "Placa-mãe AM4 mATX DDR4 HDMI USB 3.1.",
-    "fullDescription": "A Placa-mãe ASUS Prime B450M-GAMING/BR é uma placa-mãe de alto desempenho, ideal para quem deseja montar um PC para jogos ou tarefas que exigem muito do processador. Com chipset B450, é compatível com processadores AMD Ryzen de 1ª, 2ª e 3ª geração. Possui 4 slots para memória RAM DDR4, suportando até 64GB, e várias opções de conectividade, incluindo USB 3.1, HDMI e Ethernet Gigabit. Seu design robusto e recursos avançados de refrigeração garantem estabilidade e desempenho mesmo em situações de alta carga.",
+    "name": "ASUS Prime B450M-GAMING/BR Motherboard",
+    "description": "AM4 mATX DDR4 HDMI USB 3.1 motherboard.",
+    "fullDescription": "The ASUS Prime B450M-GAMING/BR Motherboard is a high-performance motherboard, ideal for those who want to build a PC for gaming or tasks that demand a lot from the processor. With B450 chipset, it is compatible with AMD Ryzen processors of 1st, 2nd, and 3rd generation. It has 4 slots for DDR4 RAM, supporting up to 64GB, and several connectivity options, including USB 3.1, HDMI, and Gigabit Ethernet. Its robust design and advanced cooling features ensure stability and performance even under heavy loads.",
     "price": 599,
     "inStock": 10,
     "image": "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg",
@@ -372,9 +372,9 @@
     "specifications": [
       "Chipset: AMD B450",
       "Socket: AM4",
-      "Formato: mATX",
-      "Memória RAM: DDR4 até 64GB",
-      "Conectividade: USB 3.1, HDMI, Ethernet Gigabit"
+      "Form factor: mATX",
+      "RAM: DDR4 up to 64GB",
+      "Connectivity: USB 3.1, HDMI, Gigabit Ethernet"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -382,9 +382,9 @@
   },
   {
     "id": 24,
-    "name": "Caixa de Som JBL Flip 6",
-    "description": "Caixa de som Bluetooth portátil à prova d'água.",
-    "fullDescription": "A Caixa de Som JBL Flip 6 é perfeita para quem busca qualidade de som e portabilidade. Com certificação IP67, é à prova d'água e poeira, podendo ser utilizada em qualquer lugar, sem se preocupar com os elementos. Sua bateria oferece até 12 horas de reprodução contínua, e o carregamento é feito de forma rápida e prática. Além disso, conta com tecnologia JBL PartyBoost, que permite conectar duas caixas compatíveis para um som ainda mais potente.",
+    "name": "JBL Flip 6 Speaker",
+    "description": "Portable Bluetooth speaker, waterproof.",
+    "fullDescription": "The JBL Flip 6 is perfect for those seeking sound quality and portability. With IP67 certification, it is waterproof and dustproof, and can be used anywhere without worrying about the elements. Its battery offers up to 12 hours of continuous playback, and charging is quick and practical. In addition, it features JBL PartyBoost technology, which allows you to connect two compatible speakers for even more powerful sound.",
     "price": 599.9,
     "inStock": 11,
     "image": "https://m.media-amazon.com/images/I/61pJ+Q4UqGL._AC_SL1500_.jpg",
@@ -397,11 +397,11 @@
     "generalSector": "audio",
     "specificSector": "speakers",
     "specifications": [
-      "Tipo: Portátil",
-      "Conexão: Bluetooth",
-      "Certificação: IP67 (à prova d'água e poeira)",
-      "Bateria: Até 12 horas de reprodução",
-      "Tecnologia PartyBoost: Sim"
+      "Type: Portable",
+      "Connection: Bluetooth",
+      "Certification: IP67 (waterproof and dustproof)",
+      "Battery: Up to 12 hours of playback",
+      "PartyBoost technology: Yes"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -409,9 +409,9 @@
   },
   {
     "id": 25,
-    "name": "Pen Drive Kingston 64GB USB 3.2",
-    "description": "Pen drive compacto de alta velocidade.",
-    "fullDescription": "O Pen Drive Kingston 64GB USB 3.2 é a solução ideal para quem precisa de um armazenamento extra de forma prática e rápida. Com interface USB 3.2, oferece velocidades de leitura e gravação muito superiores aos pen drives USB 2.0, permitindo transferir arquivos grandes em questão de segundos. Seu design compacto e leve facilita o transporte, e a tampa deslizante protege o conector USB quando não estiver em uso.",
+    "name": "Kingston 64GB USB 3.2 Pen Drive",
+    "description": "Compact high-speed pen drive.",
+    "fullDescription": "The Kingston 64GB USB 3.2 Pen Drive is the ideal solution for those who need extra storage quickly and practically. With USB 3.2 interface, it offers reading and writing speeds far superior to USB 2.0 pen drives, allowing you to transfer large files in seconds. Its compact and lightweight design makes it easy to transport, and the sliding cap protects the USB connector when not in use.",
     "price": 59.9,
     "inStock": 40,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -424,11 +424,11 @@
     "generalSector": "computers",
     "specificSector": "storage",
     "specifications": [
-      "Capacidade: 64GB",
+      "Capacity: 64GB",
       "Interface: USB 3.2",
-      "Velocidade de leitura: Até 100MB/s",
-      "Velocidade de gravação: Até 15MB/s",
-      "Design: Compacto com tampa deslizante"
+      "Read speed: Up to 100MB/s",
+      "Write speed: Up to 15MB/s",
+      "Design: Compact with sliding cap"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -436,9 +436,9 @@
   },
   {
     "id": 26,
-    "name": "Cadeira Gamer ThunderX3 EC3",
-    "description": "Cadeira ergonômica com apoio lombar e ajuste de altura.",
-    "fullDescription": "A Cadeira Gamer ThunderX3 EC3 foi desenvolvida para proporcionar o máximo conforto durante longas horas de uso. Com design ergonômico, oferece suporte adequado para a coluna e pescoço, ajudando a prevenir dores e desconfortos. Seu estofamento em espuma de alta densidade garante conforto e durabilidade, enquanto o revestimento em couro sintético é fácil de limpar e mantém a cadeira com aparência de nova por mais tempo. Além disso, conta com braços ajustáveis e rodízios que não agridem o piso.",
+    "name": "ThunderX3 EC3 Gaming Chair",
+    "description": "Ergonomic chair with lumbar support and height adjustment.",
+    "fullDescription": "The ThunderX3 EC3 Gaming Chair was developed to provide maximum comfort during long hours of use. With an ergonomic design, it offers proper support for the spine and neck, helping to prevent pain and discomfort. Its high-density foam padding ensures comfort and durability, while the synthetic leather upholstery is easy to clean and keeps the chair looking new for longer. In addition, it has adjustable arms and casters that do not damage the floor.",
     "price": 999,
     "inStock": 6,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -451,11 +451,11 @@
     "generalSector": "furniture",
     "specificSector": "gaming chairs",
     "specifications": [
-      "Tipo: Gamer",
-      "Material do revestimento: Couro sintético",
-      "Material do estofamento: Espuma de alta densidade",
-      "Ajustes: Altura do assento, apoio de braço e inclinação do encosto",
-      "Rodízios: Sim, não agridem o piso"
+      "Type: Gamer",
+      "Upholstery material: Synthetic leather",
+      "Padding material: High-density foam",
+      "Adjustments: Seat height, armrest, and backrest tilt",
+      "Casters: Yes, do not damage the floor"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -463,9 +463,9 @@
   },
   {
     "id": 27,
-    "name": "Fonte Corsair CV550 550W",
-    "description": "Fonte de alimentação 80 Plus Bronze para PC.",
-    "fullDescription": "A Fonte Corsair CV550 550W é uma fonte de alimentação confiável e eficiente, ideal para quem deseja montar um PC com componentes de qualidade. Com certificação 80 Plus Bronze, garante uma eficiência de pelo menos 85% em cargas típicas, o que significa menos desperdício de energia e menos calor gerado. Possui ventilador de 120mm com controle térmico, que proporciona um funcionamento silencioso e eficiente. Além disso, conta com proteção contra sobrecarga, sobretensão e curto-circuito, garantindo a segurança dos seus componentes.",
+    "name": "Corsair CV550 550W Power Supply",
+    "description": "80 Plus Bronze certified power supply for PC.",
+    "fullDescription": "The Corsair CV550 550W Power Supply is a reliable and efficient power supply, ideal for those who want to build a PC with quality components. With 80 Plus Bronze certification, it guarantees an efficiency of at least 85% under typical loads, which means less energy waste and less heat generated. It has a 120mm fan with thermal control, providing quiet and efficient operation. In addition, it has protection against overload, overvoltage, and short-circuit, ensuring the safety of your components.",
     "price": 349.9,
     "inStock": 10,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -478,11 +478,11 @@
     "generalSector": "computers",
     "specificSector": "power supplies",
     "specifications": [
-      "Potência: 550W",
-      "Certificação: 80 Plus Bronze",
-      "Ventilador: 120mm com controle térmico",
-      "Proteções: Sobrecarrega, sobretensão e curto-circuito",
-      "Conectores: ATX, EPS, PCIe, SATA e Molex"
+      "Power: 550W",
+      "Certification: 80 Plus Bronze",
+      "Fan: 120mm with thermal control",
+      "Protections: Overload, overvoltage, and short-circuit",
+      "Connectors: ATX, EPS, PCIe, SATA, and Molex"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -491,8 +491,8 @@
   {
     "id": 28,
     "name": "Cooler Master Hyper 212",
-    "description": "Cooler para processador com 4 heatpipes.",
-    "fullDescription": "O Cooler Master Hyper 212 é um dos coolers para processador mais renomados do mercado, conhecido por sua eficiência e baixo nível de ruído. Com 4 heatpipes de cobre, proporciona uma excelente condução de calor, mantendo o processador em temperaturas ideais mesmo em situações de alta carga. Seu design com ventilador de 120mm permite um fluxo de ar otimizado e pressão estática, garantindo um resfriamento eficaz. Além disso, é compatível com a maioria dos sockets de processadores Intel e AMD.",
+    "description": "Processor cooler with 4 heatpipes.",
+    "fullDescription": "The Cooler Master Hyper 212 is one of the most renowned processor coolers on the market, known for its efficiency and low noise level. With 4 copper heatpipes, it provides excellent heat conduction, keeping the processor at ideal temperatures even under heavy loads. Its design with a 120mm fan allows for optimized airflow and static pressure, ensuring effective cooling. In addition, it is compatible with most Intel and AMD processor sockets.",
     "price": 199.9,
     "inStock": 8,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -505,11 +505,11 @@
     "generalSector": "computers",
     "specificSector": "coolers",
     "specifications": [
-      "Tipo: Cooler a ar",
-      "Heatpipes: 4 de cobre",
-      "Ventilador: 120mm",
-      "Compatibilidade: Intel e AMD",
-      "Dimensões: 158 x 126 x 80 mm"
+      "Type: Air cooler",
+      "Heatpipes: 4 copper",
+      "Fan: 120mm",
+      "Compatibility: Intel and AMD",
+      "Dimensions: 158 x 126 x 80 mm"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -517,9 +517,9 @@
   },
   {
     "id": 29,
-    "name": "Estabilizador SMS Revolution Speedy 300VA",
-    "description": "Estabilizador bivolt para proteção de equipamentos.",
-    "fullDescription": "O Estabilizador SMS Revolution Speedy 300VA é ideal para proteger seus equipamentos eletrônicos contra variações de tensão. Com tecnologia de microprocessador, oferece uma proteção superior contra sobretensões, subtensões e picos de tensão. Possui 4 tomadas de saída, sendo 2 delas com proteção contra surto, e 1 entrada para cabo de rede. Seu design compacto e moderno permite que seja colocado em qualquer ambiente, sem ocupar muito espaço.",
+    "name": "SMS Revolution Speedy 300VA Stabilizer",
+    "description": "Bivolt stabilizer for equipment protection.",
+    "fullDescription": "The SMS Revolution Speedy 300VA Stabilizer is ideal for protecting your electronic equipment against voltage variations. With microprocessor technology, it offers superior protection against overvoltages, undervoltages, and voltage spikes. It has 4 output sockets, 2 of which have surge protection, and 1 input for network cable. Its compact and modern design allows it to be placed in any environment without taking up much space.",
     "price": 159.9,
     "inStock": 12,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -532,11 +532,11 @@
     "generalSector": "computers",
     "specificSector": "stabilizers",
     "specifications": [
-      "Potência: 300VA",
-      "Tensão de entrada: Bivolt",
-      "Tomadas de saída: 4 (2 com proteção contra surto)",
-      "Proteção: Contra sobretensões, subtensões e picos de tensão",
-      "Dimensões: 27 x 10 x 15 cm"
+      "Power: 300VA",
+      "Input voltage: Bivolt",
+      "Output sockets: 4 (2 with surge protection)",
+      "Protection: Against overvoltages, undervoltages, and voltage spikes",
+      "Dimensions: 27 x 10 x 15 cm"
     ],
     "evaluation": 0,
     "visualized": false,
@@ -544,9 +544,9 @@
   },
   {
     "id": 30,
-    "name": "Impressora Epson EcoTank L3250",
-    "description": "Impressora multifuncional tanque de tinta Wi-Fi.",
-    "fullDescription": "A Impressora Epson EcoTank L3250 é uma impressora multifuncional que utiliza a tecnologia de tanque de tinta, proporcionando uma impressão econômica e de alta qualidade. Com conectividade Wi-Fi, permite imprimir, copiar e digitalizar documentos de forma prática e rápida, diretamente do seu smartphone ou tablet. Seu design compacto e moderno se adapta a qualquer ambiente, e a instalação do sistema de tinta é simples e limpa, sem a necessidade de cartuchos.",
+    "name": "Epson EcoTank L3250 Printer",
+    "description": "Wi-Fi multifunction printer with ink tank.",
+    "fullDescription": "The Epson EcoTank L3250 is a multifunction printer that uses tank technology, providing economical and high-quality printing. With Wi-Fi connectivity, it allows you to print, copy, and scan documents quickly and practically, directly from your smartphone or tablet. Its compact and modern design fits into any environment, and the installation of the ink system is simple and clean, without the need for cartridges.",
     "price": 1299,
     "inStock": 7,
     "image": "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg",
@@ -559,11 +559,11 @@
     "generalSector": "office",
     "specificSector": "printers",
     "specifications": [
-      "Tecnologia de impressão: Tanque de tinta",
-      "Conectividade: Wi-Fi, USB",
-      "Impressão móvel: Sim",
-      "Cópia e digitalização: Sim",
-      "Compatibilidade: Windows, Mac, Linux"
+      "Printing technology: Ink tank",
+      "Connectivity: Wi-Fi, USB",
+      "Mobile printing: Yes",
+      "Copy and scan: Yes",
+      "Compatibility: Windows, Mac, Linux"
     ],
     "evaluation": 0,
     "visualized": false,

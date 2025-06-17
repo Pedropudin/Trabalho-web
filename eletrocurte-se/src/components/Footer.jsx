@@ -14,7 +14,7 @@ const Footer = () => {
     return (
         <footer>
             <div className="rodape-conteudo">
-                <p>CNPJ: 12.345.678/0001-99</p>
+                <p>Tax ID: 12.345.678/0001-99</p>
                 <p>
                     <a href="mailto:contact@eletrocurte-se.com" target="_blank" rel="noopener noreferrer">
                         contact@eletrocurte-se.com
@@ -36,7 +36,7 @@ const Footer = () => {
                 )}
                 <p>
                     <a href="https://www.google.com/maps?q=Av.+das+Nações,+1234" target="_blank" rel="noopener noreferrer">
-                        Av. das Nações, 1234
+                        1234 Nations Avenue
                     </a>
                 </p>
                 <div className="social-icons">

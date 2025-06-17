@@ -32,15 +32,15 @@ export default function ProductsHistory() {
     fetch(process.env.PUBLIC_URL + '/data/products.json')
       .then(res => res.json())
       .then(data => {
-        // Flags visualized: false por padrão
+        // Flags visualized: false by default
         const produtos = (Array.isArray(data) ? data : []).map(p => ({
           ...p,
           visualized: p.visualized ?? false,
           visualizedDate: p.visualizedDate ?? null
         }));
-        // Carrega histórico do localStorage (produtos visualizados pelo usuário)
+        // Loads history from localStorage (products viewed by the user)
         const visualizedHistory = JSON.parse(localStorage.getItem('visualizedHistory') || '[]');
-        // Atualiza flags para produtos visualizados
+        // Updates flags for viewed products
         visualizedHistory.forEach(hist => {
           const idx = produtos.findIndex(prod => prod.id === hist.id);
           if (idx !== -1) {

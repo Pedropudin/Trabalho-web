@@ -29,7 +29,7 @@ export default function Checkout() {
         }
 
         if (step === 2) {
-            // Busca endereço do perfil
+            // Fetch address from profile
             const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
             const selectedAddressId = localStorage.getItem('selectedAddress');
             const selectedAddress = addresses.find(a => a.id === selectedAddressId) || addresses[0];
