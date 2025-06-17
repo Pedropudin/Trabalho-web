@@ -20,4 +20,5 @@ it('allows opening answer and sending it', () => {
   );
   fireEvent.click(screen.getByText(/Answer/i));
   expect(screen.getByText(/Your Answer:/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/Type your answer here/i)).toBeInTheDocument();
 });

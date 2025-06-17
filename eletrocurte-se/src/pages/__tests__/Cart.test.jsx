@@ -32,6 +32,6 @@ it('displays products in the cart and allows increasing quantity', async () => {
   expect(await screen.findByText('Test Product')).toBeInTheDocument();
   const plusBtn = screen.getAllByText('+')[0];
   fireEvent.click(plusBtn);
-  // Looks for the product quantity span (avoids ambiguity)
+  // Busca pelo span de quantidade (classe 'product-qty')
   expect(screen.getByText((content, el) => el.className === 'product-qty' && content.includes('3'))).toBeInTheDocument();
 });

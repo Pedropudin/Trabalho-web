@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 describe('Profile', () => {
   beforeEach(() => {
-    localStorage.setItem('nomeUsuario', 'Maria');
+    localStorage.setItem('userName', 'Maria');
   });
 
   afterEach(() => {

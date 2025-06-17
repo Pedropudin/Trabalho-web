@@ -9,9 +9,9 @@ it('navigates when clicking a profile card', () => {
       <Profile />
     </MemoryRouter>
   );
-  // Adjust to search for the English text displayed on the card
+  // Busca por "Orders" ou "Pedidos" e pega o elemento pai com classe "card"
   const card = screen.getByText(/Orders|Pedidos/i).closest('.card');
   expect(card).toBeInTheDocument();
   fireEvent.click(card);
-  // Here you can mock useNavigate to check if it was called, if desired.
+  // Aqui poderia mockar useNavigate para verificar a navegação.
 });
