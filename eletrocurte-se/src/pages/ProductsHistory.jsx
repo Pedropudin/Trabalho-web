@@ -25,29 +25,16 @@ function getProdutosByRoute(route, data) {
 }
 
 export default function ProductsHistory() {
-  // State for products (simulating fetch)
+  // State for products (fetch from backend)
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + '/data/products.json')
+    // Fetch products from backend, not just localStorage
+    fetch(process.env.REACT_APP_API_URL + '/api/products')
       .then(res => res.json())
       .then(data => {
-        // Flags visualized: false by default
-        const produtos = (Array.isArray(data) ? data : []).map(p => ({
-          ...p,
-          visualized: p.visualized ?? false,
-          visualizedDate: p.visualizedDate ?? null
-        }));
-        // Loads history from localStorage (products viewed by the user)
-        const visualizedHistory = JSON.parse(localStorage.getItem('visualizedHistory') || '[]');
-        // Updates flags for viewed products
-        visualizedHistory.forEach(hist => {
-          const idx = produtos.findIndex(prod => prod.id === hist.id);
-          if (idx !== -1) {
-            produtos[idx].visualized = true;
-            produtos[idx].visualizedDate = hist.visualizedDate;
-          }
-        });
+        // Garantees visualized/visualizedDate from backend
+        const produtos = (Array.isArray(data) ? data : []).filter(p => p.visualized && p.visualizedDate);
         setProdutos(produtos);
       });
   }, []);

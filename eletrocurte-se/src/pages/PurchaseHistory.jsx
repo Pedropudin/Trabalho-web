@@ -37,83 +37,58 @@ export default function PurchaseHistory() {
   const [produtoAvaliacaoIdx, setProdutoAvaliacaoIdx] = useState(0);
 
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + '/data/products.json')
+    // Fetch products from backend, not only from localStorage
+    fetch(process.env.REACT_APP_API_URL + '/api/products')
       .then(res => res.json())
       .then(data => {
         let produtos = Array.isArray(data) ? data : [];
-        // Garante evaluation: 0 por padrão
-        produtos = produtos.map(p => ({
-          ...p,
-          evaluation: typeof p.evaluation === "number" ? p.evaluation : 0,
-          payed: p.payed ?? false,
-          payedDate: p.payedDate ?? null
-        }));
-        // Loads history from localStorage (products purchased by the user)
-        const payedHistory = JSON.parse(localStorage.getItem('payedHistory') || '[]');
-        payedHistory.forEach(hist => {
-          const idx = produtos.findIndex(prod => prod.id === hist.id);
-          if (idx !== -1) {
-            produtos[idx].payed = true;
-            produtos[idx].payedDate = hist.payedDate;
-          }
-        });
-        // Adds up to 4 real products from JSON without reviews, with recent dates (functionality test intention)
-        const produtosSemAvaliacao = [];
-        for (let i = 0; i < 4 && i < produtos.length; i++) {
-          const novoProduto = { ...produtos[i] };
-          delete novoProduto.evaluation;
-          // Different dates for each product
-          const dia = 10 + i;
-          novoProduto.data = `${dia.toString().padStart(2, '0')}/06/2024`;
-          produtosSemAvaliacao.push(novoProduto);
-        }
-        produtos = [...produtosSemAvaliacao, ...produtos];
-
-        // Applies reviews from the logged-in user, if any
-        const nomeUsuario = localStorage.getItem('nomeUsuario');
-        let avaliacoes = {};
-        if (nomeUsuario) {
-          avaliacoes = JSON.parse(localStorage.getItem(`avaliacoes_${nomeUsuario}`) || '{}');
-        }
-        produtos = produtos.map(prod => {
-          if (avaliacoes[prod.id]) {
-            return { ...prod, evaluation: avaliacoes[prod.id].nota, comment: avaliacoes[prod.id].comentario };
-          }
-          return prod;
-        });
+        // Only products that were paid and have a payedDate
+        produtos = produtos.filter(p => p.payed && p.payedDate);
         setProdutos(produtos);
       });
   }, []);
 
-  // Products awaiting review: have null or undefined review AND payed: true
-  const produtosAguardando = produtos.filter(p => p.evaluation == null && p.payed);
+  // Get logged-in username
+  const nomeUsuario = localStorage.getItem('nomeUsuario');
+  // Only products paid and not yet reviewed by this user
+  const produtosAguardando = produtos.filter(p =>
+    p.payed &&
+    (!Array.isArray(p.reviews) || !p.reviews.some(r => r.usuario === nomeUsuario))
+  );
 
   // Function called when reviewing a product
   const handleAvaliar = (nota, comentario, idx) => {
     setProdutos(produtosAntigos => {
-      // Atualiza apenas após avaliação do usuário
-      const nomeUsuario = localStorage.getItem('nomeUsuario');
-      let avaliacoes = {};
-      if (nomeUsuario) {
-        avaliacoes = JSON.parse(localStorage.getItem(`avaliacoes_${nomeUsuario}`) || '{}');
-      }
       const produtoAvaliado = produtosAguardando[idx];
-      if (produtoAvaliado) {
-        avaliacoes[produtoAvaliado.id] = { nota, comentario };
-        if (nomeUsuario) {
-          localStorage.setItem(`avaliacoes_${nomeUsuario}`, JSON.stringify(avaliacoes));
-        }
+      if (produtoAvaliado && nomeUsuario) {
+        // Send review to backend
+        fetch(`${process.env.REACT_APP_API_URL}/api/products/${produtoAvaliado.id}/reviews`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: nomeUsuario,
+            rating: nota,
+            comment: comentario
+          })
+        });
       }
-      return produtosAntigos.map((p, i) => {
+      // Locally update the product's reviews array for immediate feedback
+      return produtosAntigos.map((p) => {
         if (produtoAvaliado && p.id === produtoAvaliado.id) {
-          return { ...p, evaluation: nota, comment: comentario };
+          return {
+            ...p,
+            reviews: [
+              ...(Array.isArray(p.reviews) ? p.reviews : []),
+              { username: nomeUsuario, rating: nota, comment: comentario }
+            ]
+          };
         }
         return p;
       });
     });
   };
 
-  // Agrupa produtos comprados por data real (payedDate)
+  // Agrupy products payed in real date (payedDate)
   const produtosPorData = useMemo(() => {
     const comprados = produtos.filter(p => p.payed && p.payedDate);
     return comprados.reduce((acc, produto) => {
@@ -153,6 +128,65 @@ export default function PurchaseHistory() {
   return (
     <>
       <Header />
+      {/* Review bar for products awaiting user review */}
+      {produtosAguardando.length > 0 && (
+        <div
+          className="avaliacao"
+          style={{
+            margin: '20px auto 0 auto',
+            borderRadius: 10,
+            background: '#007b99',
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            maxWidth: 'calc(100% - 40px)',
+            minWidth: 220,
+            padding: 20,
+            boxSizing: 'border-box'
+          }}
+        >
+          <img
+            src={
+              // Always try to get a valid image from the product being reviewed
+              (() => {
+                // Use the current product selected for review, fallback to first
+                const idx = produtoAvaliacaoIdx >= 0 && produtoAvaliacaoIdx < produtosAguardando.length
+                  ? produtoAvaliacaoIdx
+                  : 0;
+                const prod = produtosAguardando[idx];
+                // Try all possible image fields, fallback to a placeholder/logo
+                return (
+                  (prod?.image && typeof prod.image === 'string' && prod.image.trim() !== '')
+                  || (prod?.img && typeof prod.img === 'string' && prod.img.trim() !== '')
+                  || (prod?.imagem && typeof prod.imagem === 'string' && prod.imagem.trim() !== '')
+                );
+              })()
+            }
+            alt="Review"
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: 8,
+              background: '#fff',
+              marginRight: 18,
+              objectFit: 'contain',
+              boxShadow: '0 2px 8px #0002'
+            }}
+          />
+          <p style={{ flex: 1, fontSize: '1.1rem', textAlign: 'center', margin: 0 }}>
+            {produtosAguardando.length} product{produtosAguardando.length > 1 ? 's' : ''} awaiting your review!
+          </p>
+          <UserRating
+            produtosAguardando={produtosAguardando.length}
+            produtosParaAvaliar={produtosAguardando}
+            onAvaliar={handleAvaliar}
+            produtoAvaliacaoIdx={produtoAvaliacaoIdx}
+            setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}
+          />
+        </div>
+      )}
       {!hasPayed && (
         <div style={{ width: "100%", textAlign: "center", margin: "40px auto", color: "#007b99", fontWeight: 600 }}>
           You haven't purchased any products yet.<br />

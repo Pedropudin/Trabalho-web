@@ -22,10 +22,27 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
   const [imgError, setImgError] = useState(false);
   // State to display login required message
   const [showLoginMsg, setShowLoginMsg] = useState(false);
+  // State to store product reviews
+  const [reviews, setReviews] = useState([]);
   // Select product image source
   const imageSrc = !imgError ? (product.image || product.img || product.imagem) : null;
   // Check if on home page and user is not logged in
   const isHomeNotLogged = pageType === 'home' && !isLoggedIn;
+
+  // Fetch public reviews on component mount
+  React.useEffect(() => {
+    if (product && product.id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/products/${product.id}/reviews`)
+        .then(res => res.json())
+        .then(data => setReviews(Array.isArray(data) ? data : []))
+        .catch(() => setReviews([]));
+    }
+  }, [product]);
+
+  // Calculates integer average rating
+  const avgRating = reviews.length
+    ? Math.round(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
+    : 0;
 
   // Handles card click: requires login on home, otherwise calls onClick
   const handleCardClick = (e) => {
@@ -194,14 +211,11 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
           </Box>
           {/* Product rating */}
           <Box mt={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
-            {product.evaluation !== undefined && (
-              <>
-                <Rating value={Number(product.evaluation)} precision={1} readOnly size="small" />
-                <Typography variant="caption" color="text.secondary">
-                  {product.evaluation}
-                </Typography>
-              </>
-            )}
+            <Rating value={avgRating} precision={1} readOnly size="small" />
+            <Typography variant="caption" color="text.secondary">
+              {avgRating > 0 ? `${avgRating}/5` : 'No ratings'}
+              {reviews.length > 0 && ` (${reviews.length})`}
+            </Typography>
           </Box>
           {/* Stock */}
           <Box mt={1} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1 }}>

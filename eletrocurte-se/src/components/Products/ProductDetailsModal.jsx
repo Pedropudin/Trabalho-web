@@ -19,18 +19,40 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ROUTES from '../../routes';
+import Rating from '@mui/material/Rating';
 
 const ProductDetailsModal = ({ open, onClose, product }) => {
   const navigate = useNavigate();
   const [cartCountPopup, setCartCountPopup] = useState(null);
   const [showLoginMsg, setShowLoginMsg] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
+  // Always call useEffect, never conditionally
+  React.useEffect(() => {
+    if (product && product.id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/products/${product.id}/reviews`)
+        .then(res => res.json())
+        .then(data => setReviews(Array.isArray(data) ? data : []))
+        .catch(() => setReviews([]));
+    } else {
+      setReviews([]);
+    }
+  }, [product]);
 
   if (!product) return null;
 
-  // Logged-in user comment (simplified example)
+  // Calculates the average rating of the reviews
+  const avgRating = reviews.length
+    ? Math.round(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
+    : 0;
+
+  // User rating (if logged in)
   const nomeUsuario = localStorage.getItem('nomeUsuario');
-  const avaliacoes = nomeUsuario ? JSON.parse(localStorage.getItem(`avaliacoes_${nomeUsuario}`) || '{}') : {};
-  const comentarioUsuario = product.id && avaliacoes[product.id]?.comentario;
+  const userReview = reviews.find(r => r.username === nomeUsuario);
+
+  // Comments to display (max. 5, expandable)
+  const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 5);
 
   const handleComprar = () => {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -173,6 +195,14 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
               <Typography variant="h6" gutterBottom>
                 {product.name}
               </Typography>
+              {/* Evaluation media */}
+              <Box display="flex" alignItems="center" gap={1} mb={1}>
+                <Rating value={avgRating} readOnly precision={1} />
+                <Typography variant="body2" color="text.secondary">
+                  {avgRating > 0 ? `${avgRating}/5` : 'No ratings yet'}
+                  {reviews.length > 0 && ` (${reviews.length} review${reviews.length > 1 ? 's' : ''})`}
+                </Typography>
+              </Box>
               {product.description && (
                 <Typography variant="body1" gutterBottom>
                   {product.description}
@@ -183,10 +213,48 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
                   {product.details}
                 </Typography>
               )}
-              {comentarioUsuario && (
-                <Typography variant="body2" color="secondary" gutterBottom sx={{ fontStyle: 'italic', mt: 1 }}>
-                  “{comentarioUsuario}”
-                </Typography>
+              {/* User comment highlight */}
+              {userReview && (
+                <Box sx={{ background: '#fffde7', borderRadius: 2, p: 1, mb: 1 }}>
+                  <Typography variant="body2" color="primary" sx={{ fontWeight: 600 }}>
+                    Your review:
+                  </Typography>
+                  <Rating value={Number(userReview.rating)} readOnly size="small" />
+                  <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
+                    “{userReview.comment}”
+                  </Typography>
+                </Box>
+              )}
+              {/* List of public comments */}
+              {visibleReviews.length > 0 && (
+                <Box mt={2}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                    Recent reviews
+                  </Typography>
+                  {visibleReviews.map((r, idx) => (
+                    <Box key={r.username + idx} sx={{ mb: 1.5, p: 1, borderRadius: 1, background: '#f7f7f7' }}>
+                      <Box display="flex" alignItems="center" gap={1}>
+                        <Rating value={Number(r.rating)} readOnly size="small" />
+                        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
+                          {r.username || 'User'}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2" sx={{ fontStyle: 'italic', ml: 1 }}>
+                        {r.comment}
+                      </Typography>
+                    </Box>
+                  ))}
+                  {reviews.length > 5 && !showAllReviews && (
+                    <Button size="small" onClick={() => setShowAllReviews(true)}>
+                      Show all reviews
+                    </Button>
+                  )}
+                  {showAllReviews && reviews.length > 5 && (
+                    <Button size="small" onClick={() => setShowAllReviews(false)}>
+                      Show less
+                    </Button>
+                  )}
+                </Box>
               )}
               <Typography variant="subtitle1" color="primary" gutterBottom>
                 R$ {product.price}

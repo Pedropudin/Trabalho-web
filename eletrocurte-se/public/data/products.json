@@ -22,9 +22,9 @@
       "Sequential read: 500MB/s",
       "Sequential write: 450MB/s"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 2,
@@ -49,9 +49,9 @@
       "Anti-ghosting: Yes",
       "Multimedia keys: Yes"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 3,
@@ -76,9 +76,9 @@
       "Programmable buttons: 6",
       "Connection: USB"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 4,
@@ -103,9 +103,9 @@
       "Display: 15.6'' Full HD (1920x1080)",
       "Graphics: Intel Iris Xe Graphics"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 5,
@@ -131,9 +131,9 @@
       "Rear camera: Triple 108MP + 12MP + 10MP",
       "Front camera: 12MP"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 6,
@@ -158,9 +158,9 @@
       "Frequency response: 20Hz - 20kHz",
       "Battery: Up to 40 hours of playback"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 13,
@@ -185,9 +185,9 @@
       "Front connectors: 2x USB 3.0, Audio in/out",
       "Compatibility with liquid cooling: Yes"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 14,
@@ -212,9 +212,9 @@
       "Compatibility: Windows, Mac, Chrome OS",
       "Lens: Glass with anti-reflective coating"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 15,
@@ -240,9 +240,9 @@
       "Rear camera: Dual 50MP + 12MP",
       "Front camera: 32MP"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 16,
@@ -267,9 +267,9 @@
       "Latency: 16-18-18-36",
       "Heat spreader: Aluminum"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 20,
@@ -294,9 +294,9 @@
       "Antennas: 4 external",
       "LAN ports: 4 Gigabit"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 21,
@@ -321,9 +321,9 @@
       "Mobile printing: Yes",
       "Compatibility: Windows, Mac, Linux"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 22,
@@ -349,9 +349,9 @@
       "Rear camera: Dual 12MP",
       "Front camera: 12MP"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 23,
@@ -376,9 +376,9 @@
       "RAM: DDR4 up to 64GB",
       "Connectivity: USB 3.1, HDMI, Gigabit Ethernet"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 24,
@@ -403,9 +403,9 @@
       "Battery: Up to 12 hours of playback",
       "PartyBoost technology: Yes"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 25,
@@ -430,9 +430,9 @@
       "Write speed: Up to 15MB/s",
       "Design: Compact with sliding cap"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 26,
@@ -457,9 +457,9 @@
       "Adjustments: Seat height, armrest, and backrest tilt",
       "Casters: Yes, do not damage the floor"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 27,
@@ -484,9 +484,9 @@
       "Protections: Overload, overvoltage, and short-circuit",
       "Connectors: ATX, EPS, PCIe, SATA, and Molex"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 28,
@@ -511,9 +511,9 @@
       "Compatibility: Intel and AMD",
       "Dimensions: 158 x 126 x 80 mm"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 29,
@@ -538,9 +538,9 @@
       "Protection: Against overvoltages, undervoltages, and voltage spikes",
       "Dimensions: 27 x 10 x 15 cm"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   },
   {
     "id": 30,
@@ -565,8 +565,8 @@
       "Copy and scan: Yes",
       "Compatibility: Windows, Mac, Linux"
     ],
-    "evaluation": 0,
     "visualized": false,
-    "payed": false
+    "payed": false,
+    "reviews": []
   }
 ]

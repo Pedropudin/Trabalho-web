@@ -138,4 +138,38 @@ router.patch('/:id/pay', async (req, res) => {
   }
 });
 
+// GET /api/products/:id/reviews - get all reviews for a product
+router.get('/:id/reviews', async (req, res) => {
+  try {
+    const product = await Product.findOne({ id: Number(req.params.id) });
+    if (!product) return res.status(404).json([]);
+    res.json(product.reviews || []);
+  } catch (err) {
+    res.status(500).json([]);
+  }
+});
+
+// POST /api/products/:id/reviews - add a review to a product
+router.post('/:id/reviews', async (req, res) => {
+  try {
+    const { usuario, nota, comentario } = req.body;
+    if (!usuario || typeof nota !== 'number' || !comentario) {
+      return res.status(400).json({ error: 'Missing required fields.' });
+    }
+    const product = await Product.findOne({ id: Number(req.params.id) });
+    if (!product) return res.status(404).json({ error: 'Product not found.' });
+
+    // Prevent duplicate review by same user
+    if (product.reviews && product.reviews.some(r => r.usuario === usuario)) {
+      return res.status(409).json({ error: 'User has already reviewed this product.' });
+    }
+
+    product.reviews.push({ usuario, nota, comentario });
+    await product.save();
+    res.json(product.reviews);
+  } catch (err) {
+    res.status(400).json({ error: 'Failed to add review.' });
+  }
+});
+
 module.exports = router;

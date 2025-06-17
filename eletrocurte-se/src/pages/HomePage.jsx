@@ -248,7 +248,7 @@ const HomePage = () => {
                             />
                             <Button
                                 text="Subscribe"
-                                type={1}
+                                type="submit"
                                 style={{
                                     background: '#ffb300',
                                     color: '#222',

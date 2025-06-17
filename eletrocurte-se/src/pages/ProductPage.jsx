@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
-import { Paper, Stack } from '@mui/material';
+import { Paper, Stack, Box } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 import ROUTES from "../routes.js";
+import Rating from '@mui/material/Rating';
 
 /*
   Eletrocurte-se product page.
@@ -43,6 +44,24 @@ export default function ProductPage() {
     }
   }, [product]);
 
+  const [reviews, setReviews] = useState([]);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
+  useEffect(() => {
+    if (product && product.id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/products/${product.id}/reviews`)
+        .then(res => res.json())
+        .then(data => setReviews(Array.isArray(data) ? data : []))
+        .catch(() => setReviews([]));
+    }
+  }, [product]);
+
+  const avgRating = reviews.length
+    ? Math.round(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
+    : 0;
+  const nomeUsuario = localStorage.getItem('nomeUsuario');
+  const userReview = reviews.find(r => r.username === nomeUsuario);
+  const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 5);
 
   // When clicking "add to cart"
   function handleAdicionarCarrinho(productId) {
@@ -193,6 +212,43 @@ export default function ProductPage() {
                     <li key={i}>{spec}</li>
                   ))}
               </ul>
+            </div>
+            {/* Public evaluations */}
+            <div className="product-reviews-section" style={{ marginTop: 32 }}>
+              <h2>Product Reviews</h2>
+              <Box display="flex" alignItems="center" gap={1} mb={1}>
+                <Rating value={avgRating} readOnly precision={1} />
+                <span style={{ color: "#555" }}>
+                  {avgRating > 0 ? `${avgRating}/5` : 'No ratings yet'}
+                  {reviews.length > 0 && ` (${reviews.length} review${reviews.length > 1 ? 's' : ''})`}
+                </span>
+              </Box>
+              {userReview && (
+                <Box sx={{ background: '#fffde7', borderRadius: 2, p: 1, mb: 1 }}>
+                  <b>Your review:</b>
+                  <Rating value={Number(userReview.rating)} readOnly size="small" />
+                  <span style={{ fontStyle: 'italic' }}>“{userReview.comment}”</span>
+                </Box>
+              )}
+              {visibleReviews.length > 0 && (
+                <Box>
+                  {visibleReviews.map((r, idx) => (
+                    <Box key={r.username + idx} sx={{ mb: 1.5, p: 1, borderRadius: 1, background: '#f7f7f7' }}>
+                      <Box display="flex" alignItems="center" gap={1}>
+                        <Rating value={Number(r.rating)} readOnly size="small" />
+                        <span style={{ fontWeight: 500 }}>{r.username || 'User'}</span>
+                      </Box>
+                      <span style={{ fontStyle: 'italic', marginLeft: 8 }}>{r.comment}</span>
+                    </Box>
+                  ))}
+                  {reviews.length > 5 && !showAllReviews && (
+                    <button onClick={() => setShowAllReviews(true)} style={{ marginTop: 8 }}>Show all reviews</button>
+                  )}
+                  {showAllReviews && reviews.length > 5 && (
+                    <button onClick={() => setShowAllReviews(false)} style={{ marginTop: 8 }}>Show less</button>
+                  )}
+                </Box>
+              )}
             </div>
           </div>
         </div>

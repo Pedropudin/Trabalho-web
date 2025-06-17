@@ -16,7 +16,7 @@ Backend Manipulation Rules (API Usage Guide)
 
 3. JWT Expiration
 -----------------
-- JWT tokens are temporary and expire after a set period (e.g., 2 hours).
+- JWT tokens are temporary and expire after a set period (2 hours).
 - After expiration, you must log in again to obtain a new token.
 - Do not hardcode or reuse expired tokens.
 
@@ -26,12 +26,16 @@ Backend Manipulation Rules (API Usage Guide)
 - Create a new admin: POST /api/users/create-admin (requires admin JWT)
 - Create a new order (checkout): POST /api/orders/finish (user JWT required)
 - Add a message to a user: POST /api/users/:id/messages
+- Add a product: POST /api/products (admin JWT required)
+- Import products from JSON file: POST /api/products/import-json (admin JWT required)
+- Import products via request body: POST /api/products/import (admin JWT required)
 
 5. Updating Resources (PATCH/PUT)
 ---------------------------------
 - Update a user: PATCH /api/users/:id (no authentication required by default)
 - Update an admin: PATCH /api/users/admin/:id (requires admin JWT)
-- Update a product: PUT /api/products/:id (requires admin JWT)
+- Update a product by numeric id: PUT /api/products/:id (admin JWT required)
+- Update a product by MongoDB _id: PUT /api/products/:id (admin JWT required)
 - Mark product as visualized: PATCH /api/products/:id/visualize (public)
   Body example:
     {
@@ -52,16 +56,30 @@ Backend Manipulation Rules (API Usage Guide)
 ------------------------------
 - Delete a user: DELETE /api/users/:id
 - Delete an admin: DELETE /api/users/admin/:id (requires admin JWT)
-- Delete a product: DELETE /api/products/:id (requires admin JWT)
+- Delete a product: DELETE /api/products/:id (admin JWT required)
 
-7. Example cURL Request with JWT
+7. Product Reviews
+------------------
+- Get all reviews for a product: GET /api/products/:id/reviews
+- Add a review to a product: POST /api/products/:id/reviews
+  Body example:
+    {
+      "username": "username",
+      "rating": 5,
+      "comment": "Great product!"
+    }
+  Notes:
+    - Only one review per user per product is allowed.
+    - Returns 409 if user already reviewed.
+
+8. Example cURL Request with JWT
 --------------------------------
 curl -X PATCH http://localhost:5000/api/users/admin/ADMIN_ID \
   -H "Authorization: Bearer <your_jwt_token>" \
   -H "Content-Type: application/json" \
   -d '{"name":"New Name"}'
 
-8. General Notes
+9. General Notes
 ----------------
 - Always check the API response for errors ("Access denied", "Invalid token", "Expired token").
 - Never share your JWT with others.
@@ -99,7 +117,8 @@ DELETE /api/users/admin/:id      - Delete admin (requires admin JWT)
 -----------
 GET    /api/products                     - List all products
 POST   /api/products                     - Create product (admin only)
-PUT    /api/products/:id                 - Update product (admin only)
+PUT    /api/products/:id                 - Update product by numeric id (admin only)
+PUT    /api/products/:id                 - Update product by MongoDB _id (admin only)
 DELETE /api/products/:id                 - Delete product (admin only)
 
 [PRODUCTS - Import/Export]
@@ -112,6 +131,11 @@ POST   /api/products/import              - Import products via request body (adm
 ------------------------------
 PATCH  /api/products/:id/visualize       - Mark product as visualized and set visualizedDate
 PATCH  /api/products/:id/pay             - Mark product as payed and set payedDate
+
+[PRODUCTS - Reviews]
+--------------------
+GET    /api/products/:id/reviews         - Get all reviews for a product
+POST   /api/products/:id/reviews         - Add a review to a product
 
 [ORDERS]
 ---------
@@ -130,4 +154,8 @@ Notes on Product Interaction Endpoints
   Purpose: Called when a purchase is completed.
   Behavior: Updates "payed" to true and sets "payedDate" to current timestamp or provided ISO date.
 
-- These endpoints are designed to track user interactions for analytics (views) and status updates (purchases).
+- POST /api/products/:id/reviews
+  Purpose: Add a user review to a product. Only one review per user per product.
+  Behavior: Adds a review if not already present for the user.
+
+- These endpoints are designed to track user interactions for analytics (views) and status updates (purchases), and to collect user feedback (reviews).
