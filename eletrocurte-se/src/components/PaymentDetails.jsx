@@ -71,10 +71,9 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         const userId = localStorage.getItem('userId');
         const cartKey = userId ? `cart_${userId}` : 'cart';
         const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-        const products = JSON.parse(localStorage.getItem("products")) || [];
         let sum = 0;
         for (const item of cart) {
-            const prod = products.find(p => String(p.id) === String(item.id));
+            const prod = cart.find(p => String(p.id) === String(item.id));
             if (prod) sum += Number(prod.price) * item.quantity;
         }
         setTotal(sum);
