@@ -1,4 +1,4 @@
-import '../styles/ProductCard.css';
+import '../styles/ProductDisplay.css';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Dialog from '@mui/material/Dialog';
