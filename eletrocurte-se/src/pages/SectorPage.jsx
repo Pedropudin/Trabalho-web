@@ -45,13 +45,11 @@ export default function SectorPage() {
             p => p && p.name && p.brand && p.price !== undefined && p.inStock !== undefined
         ), [productsLocal]
     );
-
     const sectorProducts = useMemo(() =>
         name
             ? validProducts.filter((p) => normalize(p.generalSector) === normalize(name))
             : validProducts
     , [validProducts, name]);
-
     const brandsLocal = useMemo(() =>
         [
             ...new Set(sectorProducts.map(p => p.brand?.toLowerCase()))
@@ -137,12 +135,8 @@ export default function SectorPage() {
                                 </select>
                             </div>
                                 {specificSectors.length > 0 ? (
-
-
-
                                     specificSectors.map((sector) => {
                                         const productsSector = filteredProducts.filter((p) => p.specificSector === sector);
-
 
                                         if (productsSector.length === 0) return null;
                                         return (
@@ -160,11 +154,13 @@ export default function SectorPage() {
                                         );
                                         })
                                     ) : (
-                                        <p className="sector-no-products-message">No products found.</p>
+                                        <div className="sector-display-all">
+                                            <p className="sector-no-products-message">No products found.</p>
+                                        </div>
                                 ) }
                         </>
                     ) : (
-                        <div className="sector-display">
+                        <div className="sector-display-all">
                             <p className="sector-no-products-message">No products found.</p>
                         </div>
                     )}

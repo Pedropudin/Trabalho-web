@@ -1,4 +1,4 @@
-import '../styles/ProductCard.css';
+import '../styles/ProductDisplay.css';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Dialog from '@mui/material/Dialog';
@@ -48,13 +48,13 @@ export default function ProductDisplay({product}) {
     return (
         <div className={`items${product.inStock > 0 ? '' : ' unavailable'}`}>
             <img
-                className="item-image"
+                className="product-item-image"
                 src={product.image}
                 alt={"Image of " + product.name}
                 style={product.inStock > 0 ? {} : { filter: "grayscale(100%)" }}
             />
-            <p className="item-name">{product.name}</p><br />
-            <p className="item-price">
+            <p className="product-item-name">{product.name}</p><br />
+            <p className="product-item-price">
                 {product.inStock > 0 ? "R$" + Number(product.price).toFixed(2) : "Product unavailable."}
             </p>
             {localStorage.userType === "admin" && <p className="item-stock">
