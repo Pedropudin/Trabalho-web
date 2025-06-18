@@ -155,11 +155,13 @@ export default function SectorPage() {
                                         );
                                         })
                                     ) : (
-                                        <p className="sector-no-products-message">No products found.</p>
+                                        <div className="sector-display-all">
+                                            <p className="sector-no-products-message">No products found.</p>
+                                        </div>
                                 ) }
                         </>
                     ) : (
-                        <div className="sector-display">
+                        <div className="sector-display-all">
                             <p className="sector-no-products-message">No products found.</p>
                         </div>
                     )}
