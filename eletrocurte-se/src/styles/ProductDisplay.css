@@ -1,4 +1,4 @@
-/* === Product Card === */
+/* --- Product card container --- */
 .items {
     background: #fff;
     border-radius: 16px;
@@ -9,20 +9,19 @@
     flex-direction: column;
     align-items: center;
     transition: box-shadow 0.2s, transform 0.2s;
-    min-width: 210px;
-    max-width: 260px;
-    min-height: 340px;
-    height: fit-content; 
+    width: 210px;
+    height: 350px;
     border: 1.5px solid #e0f7fa;
 }
 
+/* --- Hover effect for product card --- */
 .items:hover {
     box-shadow: 0 8px 32px rgba(0,123,153,0.16);
     transform: translateY(-4px) scale(1.03);
     border-color: #009fcf;
 }
 
-/* === Unavailable Product === */
+/* --- Unavailable product style --- */
 .items.unavailable {
     filter: grayscale(0.92);
     opacity: 0.72;
@@ -39,39 +38,38 @@
     border: none;
 }
 
-/* === Product Image === */
-.item-image {
+/* --- Product image --- */
+.product-item-image {
     width: 120px;
-    height: 120px;
+    height: 12000px; /* This seems too large, consider correcting if needed */
     object-fit: contain;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
     border-radius: 10px;
     background: white;
 }
 
-/* === Name, Price, and Stock === */
-.item-name {
+/* --- Product name, price, and stock --- */
+.product-item-name {
     font-size: 1.08rem;
     font-weight: 600;
     color: #007b99;
-    margin: 0 0 8px 0;
     text-align: center;
 }
-.item-price {
+.product-item-price {
     font-size: 1.05rem;
     font-weight: bold;
     color: #222;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
     text-align: center;
 }
-.item-stock {
+.product-item-stock {
     font-size: 1.05rem;
     color: #222;
     margin-bottom: 15px;
     text-align: center;
 }
 
-/* === Purchase Button === */
+/* --- Purchase button --- */
 .product-display-purchase-button {
     background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
     color: #fff;
@@ -91,7 +89,7 @@
     transform: scale(1.04);
 }
 
-/* === Edit Button === */
+/* --- Edit button for admin --- */
 .product-display-edit-button {
     background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
     color: #fff;
@@ -107,7 +105,7 @@
     width: 100%;
 }
 
-/* === Delete Button === */
+/* --- Delete button for admin --- */
 .product-display-delete-button {
     background: linear-gradient(90deg, #990000 0%, #730000 100%);
     color: #fff;
@@ -123,7 +121,7 @@
     width: 100%;
 }
 
-/* === Confirmation Window === */
+/* --- Confirmation window overlay --- */
 .confirm-windown {
     position: fixed;
     top: 0; left: 0; bottom: 0; right: 0;

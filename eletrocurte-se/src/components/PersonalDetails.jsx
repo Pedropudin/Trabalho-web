@@ -13,11 +13,9 @@ import CartOverview from "./CartOverview";
   - Buttons to go back or proceed to the next step of the order.
 */
 
-export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
-    // Progress
+export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token }) {
+    // --- State ---
     const activeStep = 1;
-
-    // User basic information form
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -25,7 +23,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         phone: "",
         cpf: "",
         birthDate: "",
-        address: "",
+        street: "",     
         number: "",
         complement: "",
         district: "",
@@ -33,114 +31,40 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         state: "",
         zipCode: ""
     });
+    const [savedAddresses, setSavedAddresses] = useState([]);
 
-    const userId = localStorage.getItem('userId');
-    const cartKey = userId ? `cart_${userId}` : 'cart';
-    const [, setCart] = useState([]);
-
-    // Busca endereço selecionado do perfil ao montar
-    React.useEffect(() => {
+    // --- Effects ---
+    useEffect(() => {
+        // Get user id from localStorage
         const userId = localStorage.getItem('userId');
-        let addressData = {};
-        // Fetch selected address from profile
-        const addressArr = JSON.parse(localStorage.getItem('address') || '[]');
-        const selectedAddressId = localStorage.getItem('selectedAddress');
-        const selectedAddress = addressArr.find(a => a.id === selectedAddressId);
-        if (selectedAddress) {
-            addressData = {
-                address: selectedAddress.street || "",
-                number: selectedAddress.number || "",
-                complement: selectedAddress.complement || "",
-                district: selectedAddress.district || "",
-                city: selectedAddress.city || "",
-                state: selectedAddress.state || "",
-                zipCode: selectedAddress.zipCode || ""
-            };
-        } else if (addressArr.length > 0) {
-            // fallback: get the first address if none selected
-            const a = addressArr[0];
-            addressData = {
-                address: a.street || "",
-                number: a.number || "",
-                complement: a.complement || "",
-                district: a.district || "",
-                city: a.city || "",
-                state: a.state || "",
-                zipCode: a.zipCode || ""
-            };
+        if (!userId) {
+            setSavedAddresses([]);
+            return;
         }
-        // Fetch user data if authenticated
-        if (userId) {
-            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
-                .then(res => res.json())
-                .then(user => {
-                    setForm(prev => ({
-                        ...prev,
-                        firstName: user.firstName || "",
-                        lastName: user.lastName || "",
-                        email: user.email || "",
-                        phone: user.phone || "",
-                        cpf: user.cpf || "",
-                        birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
-                        ...addressData // overwrite address with profile address
+        fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+            .then(res => res.json())
+            .then(user => {
+                let addresses = [];
+                if (Array.isArray(user.address)) addresses = user.address;
+                else if (user.address) addresses = [user.address];
+                setSavedAddresses(addresses);
+                if (addresses.length > 0) {
+                    setForm(form => ({
+                        ...form,
+                        street: addresses[0].street || "",
+                        number: addresses[0].number || "",
+                        complement: addresses[0].complement || "",
+                        district: addresses[0].district || "",
+                        city: addresses[0].city || "",
+                        state: addresses[0].state || "",
+                        zipCode: addresses[0].zipCode || ""
                     }));
-                })
-                .catch(() => {
-                    setForm(prev => ({
-                        ...prev,
-                        ...addressData
-                    }));
-                });
-        } else {
-            setForm(prev => ({
-                ...prev,
-                ...addressData
-            }));
-        }
-        // If no address registered, alert and prevent advance
-        if (!addressData.address || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
-            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding with the purchase.");
-        }
+                }
+            })
+            .catch(() => setSavedAddresses([]));
     }, []);
 
-    useEffect(() => {
-        setCart(JSON.parse(localStorage.getItem(cartKey)) || []);
-    }, [cartKey]);
-
-    // CPF formatting
-    function formatCPF(value) {
-        value = value.replace(/\D/g, "").slice(0, 11);
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-        return value;
-    }
-    // Date formatting
-    function formatBirthDate(value) {
-        value = value.replace(/\D/g, "").slice(0, 8);
-        if (value.length > 4) {
-            value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-        } else if (value.length > 2) {
-            value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-        }
-        return value;
-    }
-    // Phone number formatting
-    function formatPhoneNumber(value) {
-        value = value.replace(/\D/g, "").slice(0, 11); 
-
-        if (value.length > 2) {
-            value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
-        }
-        if (value.length > 10) {
-            value = value.replace(/(\d{5})(\d{4})$/, "$1-$2");
-        } else if (value.length > 6) {
-            value = value.replace(/(\d{4})(\d{4})$/, "$1-$2");
-        }
-        return value;
-    }
-
-    // Updates the form whenever a field is filled
+    // --- Handlers ---
     function handleChange(e) {
         const { name, value } = e.target;
         let newValue = value;
@@ -157,13 +81,12 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
         } else if (name === "phone") {
             newValue = formatPhoneNumber(newValue);
-        } else if (["address", "complement"].includes(name)) {
+        } else if (["street", "complement"].includes(name)) {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ0-9\s]/g, "");
         }
         setForm({ ...form, [name]: newValue });
     }
 
-    // Sends the data to our "database"
     function handleSubmit(e) {
         e.preventDefault();
         console.log("Form submitted!");
@@ -231,172 +154,207 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         if (onNext) onNext();
     }
 
+    // --- Render ---
     return (
         <>
-        <Toaster />
-        <div style={{ width: "100%", margin: "32px 0" }}>
-            <Stepper activeStep={activeStep} alternativeLabel>
-                {steps.map((label) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-        </div>
-        <div className="main-content">
-            <form className="personal-details-form" onSubmit={handleSubmit}>
-                <h2>Personal Data</h2>
-                <div className="form-row">
+            <Toaster />
+            <div style={{ width: "100%", margin: "32px 0" }}>
+                <Stepper activeStep={activeStep} alternativeLabel>
+                    {steps.map((label) => (
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+            </div>
+            <div className="main-content">
+                <form className="personal-details-form" onSubmit={handleSubmit}>
+                    <h2>Personal Data</h2>
+                    <div className="form-row">
+                        <input
+                            id="firstName"
+                            type="text"
+                            name="firstName"
+                            placeholder="First Name"
+                            value={form.firstName}
+                            onChange={handleChange}
+                            required
+                            pattern="[A-Za-zÀ-ÿ\s]+"
+                            title="Only letters are allowed"
+                        />
+                        <input
+                            id="lastName"
+                            type="text"
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={form.lastName}
+                            onChange={handleChange}
+                            required
+                            pattern="[A-Za-zÀ-ÿ\s]+"
+                            title="Only letters are allowed"
+                        />
+                    </div>
                     <input
-                        id="firstName"
-                        type="text"
-                        name="firstName"
-                        placeholder="First Name"
-                        value={form.firstName}
-                        onChange={handleChange}
-                        required
-                        pattern="[A-Za-zÀ-ÿ\s]+"
-                        title="Only letters are allowed"
-                    />
-                    <input
-                        id="lastName"
-                        type="text"
-                        name="lastName"
-                        placeholder="Last Name"
-                        value={form.lastName}
-                        onChange={handleChange}
-                        required
-                        pattern="[A-Za-zÀ-ÿ\s]+"
-                        title="Only letters are allowed"
-                    />
-                </div>
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    id="phone"
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    required
-                />
-                <div className="cpf-nascimento-row">
-                    <input
-                        id="cpf"
-                        type="text"
-                        name="cpf"
-                        placeholder="CPF"
-                        value={form.cpf}
-                        onChange={handleChange}
-                        required
-                        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-                        title="Enter CPF in the format 000.000.000-00"
-                    />
-                    <input
-                        id="birthDate"
-                        type="text"
-                        name="birthDate"
-                        placeholder="Birth date"
-                        value={form.birthDate}
-                        onChange={handleChange}
-                        required
-                        pattern="\d{2}/\d{2}/\d{4}"
-                        title="Enter the date in the format DD/MM/YYYY"
-                    />
-                </div>
-                <h3>Address</h3>
-                <input
-                    id="address"
-                    type="text"
-                    name="address"
-                    placeholder="Address"
-                    value={form.address}
-                    onChange={handleChange}
-                    required
-                />
-                <div className="form-row">
-                    <input
-                        id="number"
-                        type="text"
-                        name="number"
-                        placeholder="Number"
-                        value={form.number}
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={form.email}
                         onChange={handleChange}
                         required
                     />
                     <input
-                        id="complement"
-                        type="text"
-                        name="complement"
-                        placeholder="Complement"
-                        value={form.complement}
-                        onChange={handleChange}
-                    />
-                </div>
-                <input
-                    id="district"
-                    type="text"
-                    name="district"
-                    placeholder="Neighborhood"
-                    value={form.district}
-                    onChange={handleChange}
-                    required
-                />
-                <div className="form-row">
-                    <input
-                        id="city"
-                        type="text"
-                        name="city"
-                        placeholder="City"
-                        value={form.city}
+                        id="phone"
+                        type="tel"
+                        name="phone"
+                        placeholder="Phone"
+                        value={form.phone}
                         onChange={handleChange}
                         required
                     />
+                    <div className="cpf-nascimento-row">
+                        <input
+                            id="cpf"
+                            type="text"
+                            name="cpf"
+                            placeholder="CPF"
+                            value={form.cpf}
+                            onChange={handleChange}
+                            required
+                            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                            title="Enter CPF in the format 000.000.000-00"
+                        />
+                        <input
+                            id="birthDate"
+                            type="text"
+                            name="birthDate"
+                            placeholder="Birth date"
+                            value={form.birthDate}
+                            onChange={handleChange}
+                            required
+                            pattern="\d{2}/\d{2}/\d{4}"
+                            title="Enter the date in the format DD/MM/YYYY"
+                        />
+                    </div>
+                    <h3>Address</h3>
                     <input
-                        id="state"
+                        id="street"
                         type="text"
-                        name="state"
-                        placeholder="State"
-                        value={form.state}
+                        name="street"
+                        placeholder="Street"
+                        value={form.street}
                         onChange={handleChange}
                         required
                     />
+                    <div className="form-row">
+                        <input
+                            id="number"
+                            type="text"
+                            name="number"
+                            placeholder="Number"
+                            value={form.number}
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            id="complement"
+                            type="text"
+                            name="complement"
+                            placeholder="Complement"
+                            value={form.complement}
+                            onChange={handleChange}
+                        />
+                    </div>
                     <input
-                        id="zipCode"
+                        id="district"
                         type="text"
-                        name="zipCode"
-                        placeholder="ZIP code"
-                        value={form.zipCode}
+                        name="district"
+                        placeholder="Neighborhood"
+                        value={form.district}
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div className="button-row">
-                    <button
-                        type="button"
-                        className="back-button"
-                        onClick={onBack}
-                    >
-                        Back
-                    </button>
-                    <button
-                        type="submit"
-                        className="submit-button"
-                    >
-                        Next
-                    </button>
-                </div>
-            </form>
-            <CartOverview />
-        </div>
+                    <div className="form-row">
+                        <input
+                            id="city"
+                            type="text"
+                            name="city"
+                            placeholder="City"
+                            value={form.city}
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            id="state"
+                            type="text"
+                            name="state"
+                            placeholder="State"
+                            value={form.state}
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            id="zipCode"
+                            type="text"
+                            name="zipCode"
+                            placeholder="ZIP code"
+                            value={form.zipCode}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="saved-address-select">
+                        <label>Select a saved address:</label>
+                        <select
+                            onChange={e => {
+                                const idx = e.target.value;
+                                if (idx !== "" && savedAddresses[idx]) {
+                                    const selected = savedAddresses[idx];
+                                    setForm(form => ({
+                                        ...form,
+                                        street: selected.street || "",
+                                        number: selected.number || "",
+                                        complement: selected.complement || "",
+                                        district: selected.district || "",
+                                        city: selected.city || "",
+                                        state: selected.state || "",
+                                        zipCode: selected.zipCode || ""
+                                    }));
+                                }
+                            }}
+                            defaultValue=""
+                        >
+                            <option value="">Select</option>
+                            {savedAddresses.length === 0 && (
+                                <option value="" disabled>
+                                    No saved addresses
+                                </option>
+                            )}
+                            {savedAddresses.map((addr, idx) => (
+                                <option value={idx} key={idx}>
+                                    {addr.street}, {addr.number} - {addr.city}/{addr.state}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="button-row">
+                        <button
+                            type="button"
+                            className="back-button"
+                            onClick={onBack}
+                        >
+                            Back
+                        </button>
+                        <button
+                            type="submit"
+                            className="submit-button"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </form>
+                <CartOverview />
+            </div>
         </>
     );
 }

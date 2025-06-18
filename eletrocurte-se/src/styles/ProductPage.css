@@ -141,23 +141,26 @@ body {
     font-weight: 600;
     border-radius: 20px;
     margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;  
+    margin-right: auto; 
+    height: 40px;       
 }
 .product-unavailable-product-page{
     text-align: center;
     background-color: red;
     color: white; 
+    text-align: center;
     font-size: 1em;
     padding: 10px;
     width: 200px;
     font-weight: 600;
     border-radius: 20px;
     margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    display: flex;
+    justify-content: center;
 }
 
 /* Action buttons for purchase/cart */

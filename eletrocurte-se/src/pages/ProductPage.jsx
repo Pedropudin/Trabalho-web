@@ -129,7 +129,7 @@ export default function ProductPage() {
                   mb: 2,
                   borderRadius: 2,
                   overflow: "hidden",
-                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)" // subtle shadow
+                  boxShadow: "0 2px 10px 0 rgba(0,0,0,0.08)" 
                 }}
               >
                 <img
@@ -150,7 +150,7 @@ export default function ProductPage() {
                       p: 0.5,
                       cursor: "pointer",
                       background: mainImg === thumbUrl ? "#e3f2fd" : "#fff",
-                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)" // even more subtle shadow
+                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)" 
                     }}
                     onClick={() => {
                       if (mainImg !== thumbUrl) {
@@ -167,6 +167,17 @@ export default function ProductPage() {
             <div className="item-information">
               <h1 className="product-name-product-page">{product.name}</h1>
               <p className="product-description">{product.description}</p>
+              <Box mt={1} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
+                <Rating
+                  value={Number(product.evaluation) || 0}
+                  precision={0.5}
+                  readOnly
+                  size="small"
+                />
+                <Typography variant="caption" color="black">
+                  {Number(product.evaluation) ? Number(product.evaluation).toFixed(1) : "No ratings"}
+                </Typography>
+              </Box>
               <h2 className="product-price">
                 {Number.isFinite(Number(product.price))
                   ? `R$${Number(product.price).toFixed(2).replace('.', ',')}`
@@ -177,8 +188,8 @@ export default function ProductPage() {
                   ? `Up to 10x of R$ ${(Number(product.price) / 12).toFixed(2).replace('.', ',')} without interest on credit card.`
                   : "Installment unavailable"}
               </p>
-              <p>
-                {product.inStock > 0 ? <span className="product-in-stock">In stock ({product.inStock})</span> : <span className="product-unavailable-product-page">Out of stock</span>}
+              <p className="product-buttons">
+                {product.inStock > 0 ? <p className="product-in-stock">In stock ({product.inStock})</p> : <p className="product-unavailable-product-page">Out of stock</p>}
               </p>
               <div className="product-buttons">
                 {product.inStock <= 0 ? 
@@ -191,9 +202,7 @@ export default function ProductPage() {
                   <>
                     <button className="product-purchase-button" onClick={function(){handleAdicionarCarrinho(product.id); navigate(ROUTES.CHECKOUT)}}>BUY</button>
                     <Toaster/>
-                    <button className="product-cart-button" onClick={() => handleAdicionarCarrinho(product.id)}>
-                      ADD TO CART
-                    </button>              
+                    <button className="product-cart-button" onClick={() => handleAdicionarCarrinho(product.id)}>ADD TO CART</button>              
                   </>
                 }
               </div>
