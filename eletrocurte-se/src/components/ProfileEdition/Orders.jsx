@@ -107,6 +107,12 @@ export default function Orders({ onVoltar }) {
                     {pedido.itens.map((item, idx) => (
                       <li key={item.id + '-' + idx}>
                         {item.name || 'Product'} x{item.quantity}
+                        <span style={{ color: '#888', fontSize: 12, marginLeft: 8 }}>
+                          {pedido.createdAt ? ` | ${new Date(pedido.createdAt).toLocaleDateString()}` : ''}
+                        </span>
+                        <span style={{ color: '#888', fontSize: 12, marginLeft: 8 }}>
+                          {pedido.status ? ` | ${pedido.status}` : ''}
+                        </span>
                       </li>
                     ))}
                   </ul>

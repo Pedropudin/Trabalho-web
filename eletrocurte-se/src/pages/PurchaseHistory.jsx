@@ -34,7 +34,7 @@ export default function PurchaseHistory() {
     })
       .then(res => res.json())
       .then(data => {
-        // Flatten orders into products with payed/payedDate
+        // Cross-adaptation: flatten orders into products, each with order info
         const produtosComprados = [];
         (Array.isArray(data) ? data : []).forEach(order => {
           (order.itens || []).forEach(item => {
