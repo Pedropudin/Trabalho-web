@@ -26,6 +26,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET all admins
+router.get('/admins', async (req, res) => {
+  try {
+    const admins = await Admin.find();
+    console.log(admins);
+    res.json({ employees: admins });
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching admins.' });
+  }
+});
+
 // READ one user
 router.get('/:id', async (req, res) => {
   try {
