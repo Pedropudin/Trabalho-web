@@ -53,15 +53,18 @@
 
 /* --- Product grid display --- */
 .sector-product-display {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin: 20px auto;
     width: 100%;
     min-height: 400px;
-    padding-left: 60px;
+    border-left: none;
+    padding-left: 0;
 }
 .sector-display-all {
+    display: flex;
+    flex-direction: column;
     padding-left: 60px;
     border-left: 2px solid #ccc;
 }
