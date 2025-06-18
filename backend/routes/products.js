@@ -109,12 +109,37 @@ router.delete('/:id', auth, async (req, res) => {
 // PATCH /api/products/:id/visualize - update visualized and visualizedDate (public, for history)
 router.patch('/:id/visualize', async (req, res) => {
   try {
-    const { visualized, visualizedDate } = req.body;
+    const { visualized, visualizedDate, userId } = req.body;
     const updated = await Product.findOneAndUpdate(
       { id: Number(req.params.id) },
       { $set: { visualized: !!visualized, visualizedDate: visualizedDate || new Date() } },
       { new: true }
     );
+    // Add to user's viewedProducts history if userId provided
+    if (userId) {
+      const user = await require('../models/User').findById(userId);
+      if (user) {
+        // Remove duplicates (by productId or id)
+        user.viewedProducts = user.viewedProducts.filter(
+          vp => String(vp.id) !== String(updated.id)
+        );
+        // Add new viewed product at the start (now with price and more fields)
+        user.viewedProducts.unshift({
+          productId: updated._id,
+          id: updated.id,
+          name: updated.name,
+          image: updated.image,
+          price: updated.price,
+          brand: updated.brand,
+          category: updated.category,
+          inStock: updated.inStock,
+          visualizedDate: visualizedDate || new Date()
+        });
+        // Limit history to last 50
+        user.viewedProducts = user.viewedProducts.slice(0, 50);
+        await user.save();
+      }
+    }
     if (!updated) return res.status(404).json({ error: 'Product not found.' });
     res.json(updated);
   } catch (err) {

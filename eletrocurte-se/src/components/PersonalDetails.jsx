@@ -41,10 +41,12 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
     // Busca endereço selecionado do perfil ao montar
     React.useEffect(() => {
         const userId = localStorage.getItem('userId');
+        const addressKey = userId ? `address_${userId}` : 'address';
+        const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
         let addressData = {};
         // Busca endereço selecionado do perfil
-        const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
-        const selectedAddressId = localStorage.getItem('selectedAddress');
+        const addresses = JSON.parse(localStorage.getItem(addressKey) || '[]');
+        const selectedAddressId = localStorage.getItem(selectedAddressKey);
         const selectedAddress = addresses.find(a => a.id === selectedAddressId);
         if (selectedAddress) {
             addressData = {

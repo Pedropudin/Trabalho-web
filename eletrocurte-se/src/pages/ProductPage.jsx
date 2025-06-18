@@ -46,7 +46,7 @@ export default function ProductPage() {
 
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
-  const [validUsernames, setValidUsernames] = useState([]);
+  const [, setValidUsernames] = useState([]);
 
   useEffect(() => {
     // Fetch all users to validate names

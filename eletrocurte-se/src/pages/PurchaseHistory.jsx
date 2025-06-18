@@ -26,13 +26,13 @@ export default function PurchaseHistory() {
 
   // Refetch products after review to keep reviews in sync
   const fetchProdutos = React.useCallback(() => {
-    fetch(process.env.REACT_APP_API_URL + '/api/products')
+    const userId = localStorage.getItem('userId');
+    if (!userId) return setProdutos([]);
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
       .then(res => res.json())
-      .then(data => {
-        let produtos = Array.isArray(data) ? data : [];
-        // Only products that were paid and have a payedDate
-        produtos = produtos.filter(p => p.payed && p.payedDate);
-        setProdutos(produtos);
+      .then(user => {
+        // Supondo que o backend tenha um campo purchaseHistory (array de produtos comprados)
+        setProdutos(Array.isArray(user.purchaseHistory) ? user.purchaseHistory : []);
       });
   }, []);
 

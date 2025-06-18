@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
   purchaseHistory: [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-      productName: String, // <-- Adicionado: nome do produto associado
+      productName: String,
       name: String,
       price: Number,
       quantity: Number,
@@ -70,7 +70,18 @@ const userSchema = new mongoose.Schema({
   ],
 
   // Selected address (optional)
-  selectedAddress: { type: String }
+  selectedAddress: { type: String },
+
+  // Viewed products history (array of objects)
+  viewedProducts: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      id: Number, // product numeric id for easy lookup
+      name: String,
+      image: String,
+      visualizedDate: Date
+    }
+  ]
 });
 
 // Hash password before saving

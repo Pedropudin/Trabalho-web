@@ -2,7 +2,7 @@
 // Addresses.jsx
 // User delivery address management component.
 // Allows viewing, selecting, adding, and removing addresses, with persistence
-// in localStorage. Uses Material-UI for UI and dialogs. Integrated with AddressModal
+// in localStorage and backend. Uses Material-UI for UI and dialogs. Integrated with AddressModal
 // for registering new addresses.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
@@ -26,26 +26,12 @@ import AddressModal from './AddressModal';
 import Alert from '@mui/material/Alert';
 
 export default function Addresses({ onVoltar }) {
-  // List of user addresses, persisted in localStorage.
-  const [addresses, setAddresses] = useState(() => {
-    // Fetches saved addresses or initializes with examples.
-    const stored = localStorage.getItem('addresses');
-    return stored ? JSON.parse(stored) : [
-      {
-        id: 'endereco1',
-        text: 'Rua das Flores, 123 - Centro, São Paulo/SP'
-      },
-      {
-        id: 'endereco2',
-        text: 'Av. Brasil, 456 - Jardim, Rio de Janeiro/RJ'
-      }
-    ];
-  });
-
-  // ID of the currently selected delivery address.
-  const [selectedAddress, setSelectedAddress] = useState(
-    localStorage.getItem('selectedAddress') || (addresses[0]?.id || '')
-  );
+  // Loads addresses from localStorage or initializes with examples.
+  const userId = localStorage.getItem('userId');
+  const addressKey = userId ? `address_${userId}` : 'address';
+  const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState('');
 
   // Controls display of the address registration modal.
   const [modalAberto, setModalAberto] = useState(false);
@@ -54,33 +40,59 @@ export default function Addresses({ onVoltar }) {
   // State for confirmation message when changing address.
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
 
-  // Updates localStorage and backend whenever addresses change.
+  // Fetch addresses from backend on mount
   useEffect(() => {
-    localStorage.setItem('addresses', JSON.stringify(addresses));
-    const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address: addresses }) // <-- CORRIGIDO
-    });
-  }, [addresses]);
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(user => {
+          const backendAddresses = Array.isArray(user.address) ? user.address : [];
+          setAddresses(backendAddresses);
+          localStorage.setItem(addressKey, JSON.stringify(backendAddresses));
+          const selAddr = user.selectedAddress || (backendAddresses[0]?.id || '');
+          setSelectedAddress(selAddr);
+          localStorage.setItem(selectedAddressKey, selAddr);
+        });
+    }
+  }, [userId, addressKey, selectedAddressKey]);
 
-  // Updates localStorage and backend whenever the selected address changes.
+  // Syncs addresses to localStorage and backend whenever addresses change.
   useEffect(() => {
-    localStorage.setItem('selectedAddress', selectedAddress);
-    // Updates backend.
-    const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ selectedAddress })
-    });
-  }, [selectedAddress]);
+    localStorage.setItem(addressKey, JSON.stringify(addresses));
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: addresses })
+      });
+    }
+  }, [addresses, addressKey, userId]);
 
-  // When changing the selected address, shows confirmation message.
+  // Syncs selected address to localStorage and backend whenever it changes.
+  useEffect(() => {
+    localStorage.setItem(selectedAddressKey, selectedAddress);
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selectedAddress })
+      });
+    }
+  }, [selectedAddress, selectedAddressKey, userId]);
+
+  // When changing the selected address, shows confirmation message and updates backend.
   const handleChangeAddress = (e) => {
     setSelectedAddress(e.target.value);
     setSnackbar({ open: true, message: 'Delivery location changed successfully!' });
+    // Also update selectedAddress in backend
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selectedAddress: e.target.value })
+      });
+    }
   };
 
   // Adds a new address to the list and selects it.
@@ -90,13 +102,15 @@ export default function Addresses({ onVoltar }) {
     const newAddress = { id: `address${Date.now()}`, text, ...fullAddress };
     setAddresses([...addresses, newAddress]);
     setSelectedAddress(newAddress.id);
-    // Updates backend.
+    // Updates backend with new address array and selectedAddress
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address: [...addresses, newAddress], selectedAddress: newAddress.id }) // <-- CORRIGIDO
-    });
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: [...addresses, newAddress], selectedAddress: newAddress.id })
+      });
+    }
   };
 
   // Removes address by id and adjusts selection if necessary.
@@ -108,13 +122,15 @@ export default function Addresses({ onVoltar }) {
     } else if (filtered.length === 0) {
       setSelectedAddress('');
     }
-    // Updates backend.
+    // Updates backend with new address array and selectedAddress
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address: filtered, selectedAddress: filtered[0]?.id || '' }) // <-- CORRIGIDO
-    });
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: filtered, selectedAddress: filtered[0]?.id || '' })
+      });
+    }
   };
 
   // Opens confirmation dialog to remove address.

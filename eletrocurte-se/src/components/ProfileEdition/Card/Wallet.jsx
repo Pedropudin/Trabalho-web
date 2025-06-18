@@ -25,12 +25,7 @@ export default function Wallet({ onBack }) {
   });
 
   // Initializes cards with backend or localStorage
-  const [cards, setCards] = useState(() => {
-    const storedCards = localStorage.getItem('walletCards');
-    return storedCards
-      ? JSON.parse(storedCards)
-      : [];
-  });
+  const [cards, setCards] = useState([]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -63,6 +58,9 @@ export default function Wallet({ onBack }) {
           if (user.card && Array.isArray(user.card)) {
             setCards(user.card);
             localStorage.setItem('walletCards', JSON.stringify(user.card));
+          } else {
+            setCards([]);
+            localStorage.setItem('walletCards', JSON.stringify([]));
           }
         });
     }
