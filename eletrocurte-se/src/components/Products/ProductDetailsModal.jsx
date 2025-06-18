@@ -27,7 +27,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
   const [showLoginMsg, setShowLoginMsg] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
-  const [validUsernames, setValidUsernames] = useState([]);
+  const [, setValidUsernames] = useState([]);
 
   // Always call useEffect, never conditionally
   React.useEffect(() => {

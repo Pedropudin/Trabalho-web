@@ -55,22 +55,31 @@ router.patch('/:id', async (req, res) => {
     if (updates.password) {
       updates.password = await bcrypt.hash(updates.password, 10);
     }
-    // For addresses, selectedAddress, messages, purchaseHistory, privacy, address, card, update correctly
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found.' });
 
-    // Deep update for arrays/objects
-    if (updates.address) {
+    if ('address' in updates) {
       if (Array.isArray(updates.address)) {
-        user.address = updates.address;
-      } else if (typeof updates.address === 'object') {
-        // If it comes an object (e.g: updating a single address), add or replace by id
-        const idx = user.address.findIndex(a => a.id === updates.address.id);
-        if (idx >= 0) user.address[idx] = updates.address;
-        else user.address.push(updates.address);
+        user.address = updates.address
+          .filter(a => !!a && typeof a === 'object')
+          .map(a => ({
+            ...a,
+            id: a.id || `address${Date.now()}_${Math.floor(Math.random()*10000)}`
+          }));
+      } else if (typeof updates.address === 'object' && updates.address !== null) {
+        const addr = {
+          ...updates.address,
+          id: updates.address.id || `address${Date.now()}_${Math.floor(Math.random()*10000)}`
+        };
+        const idx = user.address.findIndex(a => a.id === addr.id);
+        if (idx >= 0) user.address[idx] = addr;
+        else user.address.push(addr);
       }
     }
-    if (updates.selectedAddress) user.selectedAddress = updates.selectedAddress;
+    if ('selectedAddress' in updates) {
+      user.selectedAddress = updates.selectedAddress;
+    }
+
     if (updates.messages) user.messages = updates.messages;
     if (updates.purchaseHistory) user.purchaseHistory = updates.purchaseHistory;
     if (updates.privacy) user.privacy = { ...user.privacy, ...updates.privacy };
@@ -78,7 +87,6 @@ router.patch('/:id', async (req, res) => {
       if (Array.isArray(updates.card)) {
         user.card = updates.card;
       } else if (typeof updates.card === 'object') {
-        // Adiciona ou atualiza cartão pelo last4
         const idx = user.card.findIndex(c => c.last4 === updates.card.last4);
         if (idx >= 0) user.card[idx] = updates.card;
         else user.card.push(updates.card);
@@ -297,6 +305,17 @@ router.post('/:id/orders', async (req, res) => {
     res.json(user.purchaseHistory);
   } catch (err) {
     res.status(400).json({ error: 'Error adding order.' });
+  }
+});
+
+// GET /api/users/:id/viewed-products - get user's viewed products history
+router.get('/:id/viewed-products', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json([]);
+    res.json(user.viewedProducts || []);
+  } catch (err) {
+    res.status(500).json([]);
   }
 });
 

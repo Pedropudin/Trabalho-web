@@ -5,7 +5,6 @@ import Footer from '../components/Footer';
 import ProductCard from '../components/Products/ProductCard';
 import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 import ScrollToTop from '../components/ScrollToTop';
-import ROUTES from '../routes';
 
 /*
   Page for user's viewed products history.
@@ -13,61 +12,58 @@ import ROUTES from '../routes';
   - Details modal always includes buy button.
 */
 
-function getProdutosByRoute(route, data) {
-  switch (route) {
-    case ROUTES.PURCHASE_HISTORY:
-      return data.produtosHistorico || [];
-    case ROUTES.PRODUCT_HISTORY:
-      return data.produtosVisualizados || [];
-    default:
-      return [];
-  }
-}
-
 export default function ProductsHistory() {
   // State for products (fetch from backend)
   const [produtos, setProdutos] = useState([]);
+  const [produtosBanco, setProdutosBanco] = useState([]);
 
   useEffect(() => {
-    // Fetch products from backend, not just localStorage
-    fetch(process.env.REACT_APP_API_URL + '/api/products')
+    // Fetch products visualized by user from backend
+    const userId = localStorage.getItem('userId');
+    if (!userId) return setProdutos([]);
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/viewed-products`)
       .then(res => res.json())
       .then(data => {
-        // Garantees visualized/visualizedDate from backend
-        const produtos = (Array.isArray(data) ? data : []).filter(p => p.visualized && p.visualizedDate);
-        setProdutos(produtos);
+        setProdutos(Array.isArray(data) ? data : []);
       });
+    fetch(`${process.env.REACT_APP_API_URL}/api/products`)
+      .then(res => res.json())
+      .then(data => setProdutosBanco(Array.isArray(data) ? data : []));
   }, []);
 
-  // Agrupa produtos visualizados por data real (visualizedDate)
+  const produtosBancoMap = useMemo(() => {
+    const map = {};
+    produtosBanco.forEach(p => {
+      map[String(p.id)] = p;
+    });
+    return map;
+  }, [produtosBanco]);
+
   const produtosPorData = useMemo(() => {
-    // Só produtos visualizados
-    const visualizados = produtos.filter(p => p.visualized && p.visualizedDate);
-    // Agrupa por data (YYYY-MM-DD)
-    return visualizados.reduce((acc, produto) => {
+    const visualizados = produtos.filter(p => p.visualizedDate);
+    const visualizadosCorrigidos = visualizados.map(p => {
+      const banco = produtosBancoMap[String(p.id)];
+      return {
+        ...p,
+        price: banco?.price ?? p.price ?? 0,
+        image: banco?.image || p.image,
+        name: banco?.name || p.name,
+        brand: banco?.brand || p.brand,
+        category: banco?.category || p.category,
+        inStock: banco?.inStock ?? p.inStock,
+      };
+    });
+    return visualizadosCorrigidos.reduce((acc, produto) => {
       const date = new Date(produto.visualizedDate);
       const key = date.toLocaleDateString('en-CA'); // YYYY-MM-DD
       if (!acc[key]) acc[key] = [];
       acc[key].push(produto);
       return acc;
     }, {});
-  }, [produtos]);
+  }, [produtos, produtosBancoMap]);
 
   // Mensagem se não houver produtos visualizados
   const hasVisualized = Object.keys(produtosPorData).length > 0;
-
-  // Utility function to render month/year header
-  function renderMonthYearHeader(month, year) {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'];
-    return (
-      <section className="compras">
-        <p>
-          Products viewed in {months[parseInt(month, 10) - 1]} {year}
-        </p>
-      </section>
-    );
-  }
 
   // State for details modal
   const [selectedProduct, setSelectedProduct] = useState(null);

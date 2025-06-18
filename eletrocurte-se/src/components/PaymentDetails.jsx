@@ -31,10 +31,20 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
 
     // Busca cartões cadastrados e saldo
     useEffect(() => {
-        const storedCards = JSON.parse(localStorage.getItem('walletCards') || '[]');
-        setCards(storedCards);
-        if (storedCards.length > 0) {
-            setSelectedCardLast4(storedCards[0].last4);
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    const backendCards = Array.isArray(user.card) ? user.card : [];
+                    setCards(backendCards);
+                    localStorage.setItem('walletCards', JSON.stringify(backendCards));
+                    if (backendCards.length > 0) {
+                        setSelectedCardLast4(backendCards[0].last4);
+                    }
+                });
+        } else {
+            setCards([]);
         }
     }, []);
 
@@ -48,10 +58,10 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId && selectedCardLast4) {
-            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/select-card`, {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ last4: selectedCardLast4 })
+                body: JSON.stringify({ selectedCard: selectedCardLast4 })
             });
         }
     }, [selectedCardLast4]);
