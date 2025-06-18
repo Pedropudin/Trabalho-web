@@ -11,14 +11,16 @@ import StepLabel from "@mui/material/StepLabel";
   - As for the information, it gives a general summary of the product: Order total (quantity of items and price), Address, Card and Personal data -- all entered in previous steps  
 */
 
-
 export default function Purchase({ onBack, onNext, steps }) {
-
     // Retrieves all the data we have: cart, personal data and payment data (which may differ)
-    const [produtosLocal, setProductsLocal] = React.useState([]); 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     const personal = JSON.parse(localStorage.getItem("personal")) || {};
     const card = JSON.parse(localStorage.getItem("card")) || {};
+
+    // Fix: define produtosLocal and setProductsLocal
+    const [produtosLocal, setProductsLocal] = useState([]);
 
     // Fetch products from database when the component mounts
     useEffect(() => {
@@ -94,15 +96,13 @@ export default function Purchase({ onBack, onNext, steps }) {
             // Update stock of bought products
             for (const item of cart) {
                 const prod = produtosLocal.find(p => p.id === item.id);
-                console.log(prod)
                 if (prod) {
                     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${prod.id}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ inStock: prod.inStock - item.quantity })
                     });
-                    const data = await response.json();
-                    console.log('Update response:', data);
+                    await response.json();
                 }
             }
         } catch (e) {
@@ -125,8 +125,38 @@ export default function Purchase({ onBack, onNext, steps }) {
             setErro('Error updating payment status. Try again.');
             return;
         }
+
+        // Create order in backend and add to user purchase history 
+        try {
+            // Create order in backend
+            const orderRes = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/finish`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    itens: cartProducts.map(item => ({
+                        id: item.id,
+                        quantity: item.quantity,
+                        name: item.name,
+                        price: item.price
+                    })),
+                    personal,
+                    card
+                })
+            });
+            const order = await orderRes.json();
+            // Add order to user's purchase history
+            await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)
+            });
+        } catch (e) {
+            setErro('Error saving order. Try again.');
+            return;
+        }
+
         // Clear cart after success
-        localStorage.setItem("cart", JSON.stringify([]));
+        localStorage.setItem(cartKey, JSON.stringify([]));
         setErro('');
 
         if (onNext) onNext();
@@ -166,7 +196,7 @@ export default function Purchase({ onBack, onNext, steps }) {
                     <div><b>CVV:</b> {card.cvv}</div>
                     <div><b>CPF:</b> {card.cpf}</div>
                     <div><b>Expiry Date:</b> {card.expiry}</div>
-                    <div><b>Installments:</b> In {card.installments}x of ${(total/card.installments).toFixed(2)}</div>
+                    <div><b>Installments:</b> In {card.installments}x of ${ (total/card.installments).toFixed(2) }</div>
                 </div>
                 <h3 className="purchase-section-title address">Address</h3>
                 <div className="purchase-section-content">
@@ -191,7 +221,7 @@ export default function Purchase({ onBack, onNext, steps }) {
                                     <span className="purchase-product-qty">x{item.quantity}</span>
                                 </span>
                                 <span className="purchase-product-price">
-                                    ${(prod.price * item.quantity).toFixed(2)}
+                                    ${ (prod.price * item.quantity).toFixed(2) }
                                 </span>
                             </li>
                         );
