@@ -38,8 +38,26 @@ const TeamManager = () => {
         setOpen(true);
     };
 
-    const handleRemove = (emp) => {
-        setData(data.filter(e => e.id !== emp.id));
+    const handleRemove = async (emp) => {
+        // Try to remove from backend
+        try {
+            const response = await fetch(
+                process.env.REACT_APP_API_URL + '/api/users/admin/' + emp._id,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("Token")
+                    }
+                }
+            );
+            if (response.ok) {
+                setData(data.filter(e => e._id !== emp._id));
+            } else {
+                alert("Failed to remove admin.");
+            }
+        } catch (err) {
+            alert("Error removing admin.");
+        }
     }
 
     const handleClose = () => {
