@@ -300,7 +300,27 @@ router.post('/:id/orders', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found.' });
-    user.purchaseHistory.push(req.body);
+    const Product = require('../models/Product');
+    let order = req.body;
+    if (Array.isArray(order.itens)) {
+      // Para cada item, busque snapshot do produto
+      order.itens = await Promise.all(order.itens.map(async (item) => {
+        const prod = await Product.findOne({ id: Number(item.id) });
+        return {
+          id: item.id,
+          quantity: item.quantity,
+          name: prod?.name || item.name,
+          price: prod?.price || item.price,
+          image: prod?.image || "",
+          brand: prod?.brand || "",
+          category: prod?.category || "",
+          payed: true,
+          payedDate: new Date(),
+        };
+      }));
+    }
+    user.purchaseHistory = user.purchaseHistory || [];
+    user.purchaseHistory.push(order);
     await user.save();
     res.json(user.purchaseHistory);
   } catch (err) {

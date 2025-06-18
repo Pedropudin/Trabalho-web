@@ -1,51 +1,57 @@
-01001-000 // Praça da Sé, Sé, São Paulo/SP
-01311-000 // Avenida Paulista, Bela Vista, São Paulo/SP
-02011-000 // Rua Voluntários da Pátria, Santana, São Paulo/SP
-04001-001 // Avenida Paulista, Paraíso, São Paulo/SP
-05001-100 // Rua Caiubi, Perdizes, São Paulo/SP
-06010-000 // Rua Dona Primitiva Vianco, Centro, Osasco/SP
-07010-000 // Avenida Tiradentes, Centro, Guarulhos/SP
-08010-000 // Avenida Nordestina, Vila Nova Curuçá, São Paulo/SP
-11010-001 // Avenida Conselheiro Nébias, Encruzilhada, Santos/SP
-12010-000 // Rua Quinze de Novembro, Centro, Taubaté/SP
-13010-000 // Avenida Francisco Glicério, Centro, Campinas/SP
-14010-080 // Rua General Osório, Centro, Ribeirão Preto/SP
-15010-020 // Rua Bernardino de Campos, Centro, São José do Rio Preto/SP
-16010-000 // Rua Bandeirantes, Centro, Araçatuba/SP
-17010-110 // Rua Gustavo Maciel, Centro, Bauru/SP
-18010-000 // Rua São Bento, Centro, Sorocaba/SP
-19010-000 // Rua Cardoso de Almeida, Centro, Presidente Prudente/SP
-20010-000 // Rua da Assembleia, Centro, Rio de Janeiro/RJ
-21010-000 // Avenida Brasil, Ramos, Rio de Janeiro/RJ
-22010-000 // Avenida Atlântica, Copacabana, Rio de Janeiro/RJ
-23010-000 // Estrada do Campinho, Campo Grande, Rio de Janeiro/RJ
-24010-000 // Rua Visconde do Rio Branco, Centro, Niterói/RJ
-25010-000 // Rua Primeiro de Março, Centro, Duque de Caxias/RJ
-26010-000 // Rua Coronel Francisco Soares, Centro, Nova Iguaçu/RJ
-29010-000 // Avenida Jerônimo Monteiro, Centro, Vitória/ES
-29100-000 // Avenida Central, Centro, Vila Velha/ES
-29200-000 // Rua Henrique Coutinho, Centro, Guarapari/ES
-29300-000 // Rua Pedro de Oliveira, Centro, Cachoeiro de Itapemirim/ES
-30010-000 // Avenida Amazonas, Centro, Belo Horizonte/MG
-30110-000 // Rua dos Tupis, Centro, Belo Horizonte/MG
-30210-000 // Avenida do Contorno, Floresta, Belo Horizonte/MG
-30310-000 // Rua Guaicuí, Prado, Belo Horizonte/MG
-30410-000 // Rua Platina, Prado, Belo Horizonte/MG
-30510-000 // Avenida Tereza Cristina, Nova Suíssa, Belo Horizonte/MG
-30610-000 // Avenida Waldyr Soeiro Emrich, Betânia, Belo Horizonte/MG
-30710-000 // Rua Padre Eustáquio, Padre Eustáquio, Belo Horizonte/MG
-30810-000 // Rua Úrsula Paulino, Betânia, Belo Horizonte/MG
-31010-000 // Avenida dos Andradas, Santa Efigênia, Belo Horizonte/MG
-31110-000 // Rua Itapecerica, Lagoinha, Belo Horizonte/MG
-31210-000 // Rua Jacuí, Ipiranga, Belo Horizonte/MG
-31310-000 // Rua Desembargador Barcelos, Nova Suíssa, Belo Horizonte/MG
-31410-000 // Rua Conselheiro Lafaiete, Sagrada Família, Belo Horizonte/MG
-31510-000 // Avenida Pedro I, Planalto, Belo Horizonte/MG
-31610-000 // Rua Padre Pedro Pinto, Venda Nova, Belo Horizonte/MG
-31710-000 // Avenida Vilarinho, Venda Nova, Belo Horizonte/MG
-31810-000 // Rua Padre Pedro Pinto, Venda Nova, Belo Horizonte/MG
-31910-000 // Avenida Cristiano Machado, Cidade Nova, Belo Horizonte/MG
-32010-000 // Rua Prefeito Gil Diniz, Centro, Contagem/MG
-32110-000 // Avenida João César de Oliveira, Eldorado, Contagem/MG
-32210-000 // Rua Rio Comprido, Riacho das Pedras, Contagem/MG
-32310-000 // Avenida General David Sarnoff, Cidade Industrial, Contagem/MG
+01001-000 // Praça da Sé, Sé, São Paulo/SP  
+01311-000 // Avenida Paulista, Bela Vista, São Paulo/SP  
+02011-000 // Rua Voluntários da Pátria, Santana, São Paulo/SP  
+05001-100 // Rua Caiubi, Perdizes, São Paulo/SP  
+06010-000 // Rua Dona Primitiva Vianco, Centro, Osasco/SP  
+07010-000 // Avenida Tiradentes, Centro, Guarulhos/SP  
+08010-000 // Avenida Nordestina, Vila Nova Curuçá, São Paulo/SP  
+11015-002 // Avenida Conselheiro Nébias, Encruzilhada, Santos/SP  
+12010-000 // Rua Quinze de Novembro, Centro, Taubaté/SP  
+13010-000 // Avenida Francisco Glicério, Centro, Campinas/SP  
+14010-080 // Rua General Osório, Centro, Ribeirão Preto/SP  
+15010-020 // Rua Bernardino de Campos, Centro, São José do Rio Preto/SP  
+16010-000 // Rua Bandeirantes, Centro, Araçatuba/SP  
+17010-110 // Rua Gustavo Maciel, Centro, Bauru/SP  
+18010-000 // Rua São Bento, Centro, Sorocaba/SP  
+19010-000 // Rua Cardoso de Almeida, Centro, Presidente Prudente/SP  
+20010-000 // Rua da Assembleia, Centro, Rio de Janeiro/RJ  
+21010-000 // Avenida Brasil, Ramos, Rio de Janeiro/RJ  
+22010-000 // Avenida Atlântica, Copacabana, Rio de Janeiro/RJ  
+23010-000 // Estrada do Campinho, Campo Grande, Rio de Janeiro/RJ  
+24010-000 // Rua Visconde do Rio Branco, Centro, Niterói/RJ  
+25010-000 // Rua Primeiro de Março, Centro, Duque de Caxias/RJ  
+26010-000 // Rua Coronel Francisco Soares, Centro, Nova Iguaçu/RJ  
+29010-000 // Avenida Jerônimo Monteiro, Centro, Vitória/ES  
+29100-000 // Avenida Central, Centro, Vila Velha/ES  
+29200-000 // Rua Henrique Coutinho, Centro, Guarapari/ES  
+29300-000 // Rua Pedro de Oliveira, Centro, Cachoeiro de Itapemirim/ES  
+30010-000 // Avenida Amazonas, Centro, Belo Horizonte/MG  
+30110-000 // Rua dos Tupis, Centro, Belo Horizonte/MG  
+30210-000 // Avenida do Contorno, Floresta, Belo Horizonte/MG  
+30410-000 // Rua Platina, Prado, Belo Horizonte/MG  
+30510-000 // Avenida Tereza Cristina, Nova Suíssa, Belo Horizonte/MG  
+30710-000 // Rua Padre Eustáquio, Padre Eustáquio, Belo Horizonte/MG  
+31010-000 // Avenida dos Andradas, Santa Efigênia, Belo Horizonte/MG  
+32010-000 // Rua Prefeito Gil Diniz, Centro, Contagem/MG  
+32110-000 // Avenida João César de Oliveira, Eldorado, Contagem/MG  
+32310-000 // Avenida General David Sarnoff, Cidade Industrial, Contagem/MG  
+
+60060-540 // Rua Major Facundo, Centro, Fortaleza/CE  
+70040-010 // Praça dos Três Poderes, Esplanada, Brasília/DF  
+71505-090 // SHIN QI 5, Lago Norte, Brasília/DF  
+80010-000 // Rua XV de Novembro, Centro, Curitiba/PR  
+80250-070 // Avenida República Argentina, Água Verde, Curitiba/PR  
+88010-400 // Rua Conselheiro Mafra, Centro, Florianópolis/SC  
+89010-000 // Rua XV de Novembro, Centro, Blumenau/SC  
+90010-150 // Rua Sete de Setembro, Centro Histórico, Porto Alegre/RS  
+90450-070 // Avenida Carlos Gomes, Auxiliadora, Porto Alegre/RS  
+69005-070 // Rua dos Andradas, Centro, Manaus/AM  
+64000-400 // Avenida Frei Serafim, Centro, Teresina/PI  
+59010-200 // Avenida Rio Branco, Cidade Alta, Natal/RN  
+58010-040 // Praça Dom Adauto, Centro, João Pessoa/PB  
+40020-000 // Avenida Sete de Setembro, Centro, Salvador/BA  
+40140-110 // Rua da Paciência, Rio Vermelho, Salvador/BA  
+69058-070 // Avenida Torquato Tapajós, Flores, Manaus/AM  
+64018-440 // Rua Desembargador Pires de Castro, Centro, Teresina/PI  
+66013-080 // Avenida Presidente Vargas, Campina, Belém/PA  
+69075-351 // Rua Pará, Vieiralves, Manaus/AM  

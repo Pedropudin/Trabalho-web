@@ -40,18 +40,17 @@ export default function Orders({ onVoltar }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Poll orders from backend every 5 seconds
+  // Poll orders from backend every 5 seconds for status updates
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     let interval;
-    function fetchOrders() {
+    async function fetchOrders() {
       if (userId) {
-        fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/orders`)
-          .then(res => res.json())
-          .then(data => {
-            setOrders(Array.isArray(data) ? data : []);
-            setLoading(false);
-          });
+        // Remove referência ao token, chamada pública
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/user/${userId}`);
+        const data = await res.json();
+        setOrders(Array.isArray(data) ? data : []);
+        setLoading(false);
       } else {
         setLoading(false);
       }
@@ -92,6 +91,7 @@ export default function Orders({ onVoltar }) {
           <TableRow>
             <TableCell>Order ID</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>Products</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -100,6 +100,19 @@ export default function Orders({ onVoltar }) {
               <TableCell>{pedido._id || pedido.id}</TableCell>
               <TableCell>
                 <Chip label={pedido.status || "pending"} color={statusColor[(pedido.status || "pending").toLowerCase()] || 'info'} />
+              </TableCell>
+              <TableCell>
+                {Array.isArray(pedido.itens) && pedido.itens.length > 0 ? (
+                  <ul style={{ margin: 0, paddingLeft: 16 }}>
+                    {pedido.itens.map((item, idx) => (
+                      <li key={item.id + '-' + idx}>
+                        {item.name || 'Product'} x{item.quantity}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span>No products</span>
+                )}
               </TableCell>
             </TableRow>
           ))}

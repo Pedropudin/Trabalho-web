@@ -216,7 +216,10 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             return;
         }
 
-        localStorage.setItem("personal", JSON.stringify(form));
+        const addressString = `${form.street}, ${form.number}${form.complement ? ' - ' + form.complement : ''} - ${form.district}, ${form.city}/${form.state}`.replace(/\s+/g, ' ').trim();
+        const formWithAddress = { ...form, address: addressString };
+
+        localStorage.setItem("personal", JSON.stringify(formWithAddress));
         // Updates in backend if logged in
         const userId = localStorage.getItem('userId');
         if (userId) {
@@ -241,7 +244,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     });
                 });
         }
-        if (onSubmit) onSubmit(form);
+        if (onSubmit) onSubmit(formWithAddress);
         if (onNext) onNext();
     }
 

@@ -27,12 +27,27 @@ export default function PurchaseHistory() {
   // Refetch products after review to keep reviews in sync
   const fetchProdutos = React.useCallback(() => {
     const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
     if (!userId) return setProdutos([]);
-    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/orders/user/${userId}`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
       .then(res => res.json())
-      .then(user => {
-        // Supondo que o backend tenha um campo purchaseHistory (array de produtos comprados)
-        setProdutos(Array.isArray(user.purchaseHistory) ? user.purchaseHistory : []);
+      .then(data => {
+        // Flatten orders into products with payed/payedDate
+        const produtosComprados = [];
+        (Array.isArray(data) ? data : []).forEach(order => {
+          (order.itens || []).forEach(item => {
+            produtosComprados.push({
+              ...item,
+              payed: true,
+              payedDate: order.createdAt,
+              orderStatus: order.status,
+              orderId: order._id || order.id
+            });
+          });
+        });
+        setProdutos(produtosComprados);
       });
   }, []);
 

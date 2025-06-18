@@ -48,8 +48,7 @@ export default function Wallet({ onBack }) {
     localStorage.setItem('walletCards', JSON.stringify(cards));
   }, [cards]);
 
-  useEffect(() => {
-    // Busca cartões do backend ao montar
+  function fetchCardsFromBackend() {
     const userId = localStorage.getItem('userId');
     if (userId) {
       fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
@@ -64,20 +63,17 @@ export default function Wallet({ onBack }) {
           }
         });
     }
+  }
+
+  useEffect(() => {
+    fetchCardsFromBackend();
   }, []);
 
-  // Atualiza backend ao adicionar/remover cartão
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ card: cards })
-      });
+    if (!modalOpen) {
+      fetchCardsFromBackend();
     }
-    localStorage.setItem('walletCards', JSON.stringify(cards));
-  }, [cards]);
+  }, [modalOpen]);
 
   function handleDeleteCard(last4) {
     setCardToDelete(last4);
