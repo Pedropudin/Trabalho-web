@@ -66,21 +66,18 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token
     // --- Effects ---
     useEffect(() => {
         // Get user id from localStorage
-        const user = JSON.parse(localStorage.getItem('user'));
-        const userId = user?.id;
-        console.log(user + " " + userId)
+        const userId = localStorage.getItem('userId');
         if (!userId) {
             setSavedAddresses([]);
             return;
         }
-        fetch(`http://localhost:5000/api/users/${userId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
             .then(res => res.json())
             .then(user => {
                 let addresses = [];
                 if (Array.isArray(user.address)) addresses = user.address;
                 else if (user.address) addresses = [user.address];
                 setSavedAddresses(addresses);
-                // Preenche automaticamente o formulário com o primeiro endereço salvo
                 if (addresses.length > 0) {
                     setForm(form => ({
                         ...form,

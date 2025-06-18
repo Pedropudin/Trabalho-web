@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   cpf: { type: String, unique: true, sparse: true, required: true },
   birthDate: { type: Date, required: true }, // birth date
 
-  address: [{
+  address: {
     street: { type: String, required: true }, // street address
     number: { type: String, required: true },
     complement: { type: String },
@@ -18,21 +18,61 @@ const userSchema = new mongoose.Schema({
     city: { type: String, required: true },
     state: { type: String, required: true },
     zipCode: { type: String, required: true } // postal code
-  }],
+  },
 
-  card: [{
+  card: {
     cardHolder: { type: String }, // card holder name
     cardNumber: { type: String }, // card number
     expiry: { type: String }, // expiration date
     cvv: { type: String },
     cpf: { type: String },
-  }],
+    installments: { type: Number } // number of installments
+  },
 
   privacy: {
     notification: { type: Boolean, default: false },
     sharedData: { type: Boolean, default: false },
     termsAccepted: { type: Boolean, default: false }
-  }
+  },
+
+  // User purchase history
+  purchaseHistory: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      name: String,
+      price: Number,
+      quantity: Number,
+      date: Date,
+      evaluation: Number,
+      comment: String
+    }
+  ],
+
+  // User messages (e.g., support, notifications)
+  messages: [
+    {
+      text: String,
+      date: Date,
+      important: Boolean,
+      read: Boolean
+    }
+  ],
+
+  // Multiple addresses (besides the main one in address)
+  addresses: [
+    {
+      street: String,
+      number: String,
+      complement: String,
+      district: String,
+      city: String,
+      state: String,
+      zipCode: String
+    }
+  ],
+  
+  // Selected address (optional)
+  selectedAddress: { type: String }
 });
 
 // Hash password before saving
