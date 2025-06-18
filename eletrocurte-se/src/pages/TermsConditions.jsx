@@ -1,8 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import '../styles/TermsConditions.css';
-import ROUTES from '../routes';
 import ScrollToTop from '../components/ScrollToTop';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import Footer from '../components/Footer';
 
 /*
   Terms and Conditions page for the portal.
@@ -12,6 +13,23 @@ import ScrollToTop from '../components/ScrollToTop';
 */
 
 export default function TermsConditions() {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  useEffect(() => {
+    // Marks terms as accepted in localStorage
+    localStorage.setItem('termsAccepted', 'true');
+    // Updates in backend if user is logged in
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ privacy: { termsAccepted: true } })
+      });
+    }
+    setSnackbarOpen(true);
+  }, []);
+
   return (
     <>
       <main className="container-termos">
@@ -112,35 +130,18 @@ export default function TermsConditions() {
       {/* Scroll to top button */}
       <ScrollToTop />
 
-      {/* Institutional footer and social networks */}
-      <footer>
-        <div className="rodape-conteudo">
-          <p>000.000.000-00</p>
-          <p>email@gmail.com</p>
-          <p>Phone: (00) 00000-0000</p>
-          <p>
-            <Link to={ROUTES.PRESENTATION}>
-              About us
-            </Link>
-          </p>
-          <p>Address</p>
-          <div className="social-icons">
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-facebook"></i>
-            </a>
-          </div>
-        </div>
-        <br />
-        <p className="copyright">
-          Copyright &copy;2025
-        </p>
-      </footer>
+      <Footer />
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3500}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity="info" sx={{ width: '100%' }}>
+          By accessing this page, you accept the Terms and Conditions of Use.
+        </Alert>
+      </Snackbar>
     </>
   );
 }

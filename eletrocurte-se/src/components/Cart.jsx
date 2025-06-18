@@ -14,18 +14,20 @@ import ROUTES from "../routes";
 export default function Cart({onNext}) {
     const navigate = useNavigate();
     
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem(cartKey)) || []);
     const [productsLocal, setProductsLocal] = useState([]);
 
-    ///Verificação de usuário logado
+    // User authentication check
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Verifica autenticação ao carregar a página
+        // Checks authentication on page load
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, []);
 
-    //Function that verifies if the user is logged in before proceeding with the payment
+    // Function that verifies if the user is logged in before proceeding with the payment
     function handleLogin(e) {
         if (!isLoggedIn) {
             toast.error('Login to pay!');
@@ -37,7 +39,7 @@ export default function Cart({onNext}) {
 
     // Fetch products from database when the component mounts
     useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend for consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))
@@ -93,10 +95,11 @@ export default function Cart({onNext}) {
 
     // Saves the cart to localStorage whenever it changes
     React.useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem(cartKey, JSON.stringify(cart));
         window.dispatchEvent(new Event('cartUpdated'));
         window.forceCartUpdate && window.forceCartUpdate();
-    }, [cart]);
+        // Could save to backend using userId, if desired
+    }, [cart, cartKey]);
 
     // Calculates the total number of items and total prices
     const cartProducts = cart

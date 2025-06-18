@@ -35,10 +35,10 @@ const HomePage = () => {
     }, []);
 
     useEffect(() => {
-        // Fetch featured products from history
-        fetch(process.env.PUBLIC_URL + '/data/products.json')
+        // Fetch featured products from backend (not static JSON)
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
-            .then(data => setProdutosHistorico(data.produtosHistorico || []));
+            .then(data => setProdutosHistorico(Array.isArray(data) ? data : []));
     }, []);
 
     function handleComeceAgora(e) {
@@ -107,6 +107,46 @@ const HomePage = () => {
         setModalOpen(false);
         setSelectedProduct(null);
     };
+
+    // Add to cart logic
+    function handleAddToCart(product) {
+        if (!isLoggedIn) {
+            setMensagem('Log in to add products to cart!');
+            setTimeout(() => setMensagem(''), 3500);
+            return;
+        }
+        const userId = localStorage.getItem('userId');
+        const cartKey = userId ? `cart_${userId}` : 'cart';
+        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) {
+            if (existing.quantity + 1 > product.inStock) {
+                return;
+            }
+            const updatedCart = cart.map(item =>
+                item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+            localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+        } else {
+            const updatedCart = [
+                ...cart,
+                {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                }
+            ];
+            localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+        }
+        window.dispatchEvent(new Event('cartUpdated'));
+        window.forceCartUpdate && window.forceCartUpdate();
+        setMensagem('Product added to cart!');
+        setTimeout(() => setMensagem(''), 2000);
+    }
 
     return (
         <>
@@ -179,13 +219,14 @@ const HomePage = () => {
                             </Grid>
                         ) : (
                             produtosHistorico.slice(0, 12).map((produto, idx) => (
-                                <Grid key={produto.nome + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                <Grid key={(produto.id || produto.name || produto.nome) + '-' + idx} sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <ProductCard 
                                         product={produto} 
                                         onClick={handleProductClick} 
                                         isLoggedIn={isLoggedIn}
                                         pageType="home"
                                         showBuyButton={true}
+                                        onBuy={handleAddToCart}
                                     />
                                 </Grid>
                             ))
@@ -207,7 +248,7 @@ const HomePage = () => {
                             />
                             <Button
                                 text="Subscribe"
-                                type={1}
+                                type="submit"
                                 style={{
                                     background: '#ffb300',
                                     color: '#222',

@@ -41,10 +41,10 @@ const Question = ({ data, style, answer, onAnswerChange }) => {
 
     return(
         <div>
-            {showConfirmation && <MessageAlert message={"Resposta enviada"} />}
+            {showConfirmation && <MessageAlert message={"Answer sent"} />}
             <div className="question-container" style={style} >
                 {data.product_photo && data.product_photo !== "" ? (
-                  <img src={data.product_photo} alt={data.product_name || "Produto"} style={{width: '10%'}} />
+                  <img src={data.product_photo} alt={data.product_name || "Product"} style={{width: '10%'}} />
                 ) : (
                   <img src="/logo-sem-borda.png" alt="Logo" style={{width: '10%'}} />
                 )}
@@ -62,7 +62,7 @@ const Question = ({ data, style, answer, onAnswerChange }) => {
                 <div className="question-person-info">
                     <span className="question-person-name">{data.person_name}</span>
                     {data.person_photo && data.person_photo !== "" ? (
-                      <img src={data.person_photo} alt={data.person_name || "Pessoa"} style={{height: '80%'}} />
+                      <img src={data.person_photo} alt={data.person_name || "Person"} style={{height: '80%'}} />
                     ) : (
                       <img src="/logo-sem-borda.png" alt="Logo" style={{height: '80%'}} />
                     )}

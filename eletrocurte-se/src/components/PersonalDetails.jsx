@@ -13,35 +13,124 @@ import CartOverview from "./CartOverview";
   - Buttons to go back or proceed to the next step of the order.
 */
 
-// --- Format Helpers ---
-function formatCPF(value) {
-    value = value.replace(/\D/g, "").slice(0, 11);
-    value = value.replace(/(\d{3})(\d)/, "$1.$2");
-    value = value.replace(/(\d{3})(\d)/, "$1.$2");
-    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-    return value;
-}
-function formatBirthDate(value) {
-    value = value.replace(/\D/g, "").slice(0, 8);
-    if (value.length > 4) {
-        value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-    } else if (value.length > 2) {
-        value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
+    // Progress
+    const activeStep = 1;
+
+    // User basic information form
+    const [form, setForm] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        cpf: "",
+        birthDate: "",
+        address: "",
+        number: "",
+        complement: "",
+        district: "",
+        city: "",
+        state: "",
+        zipCode: ""
+    });
+
+    // Busca endereço selecionado do perfil ao montar
+    React.useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        let addressData = {};
+        // Fetch selected address from profile
+        const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
+        const selectedAddressId = localStorage.getItem('selectedAddress');
+        const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+        if (selectedAddress) {
+            addressData = {
+                address: selectedAddress.street || "",
+                number: selectedAddress.number || "",
+                complement: selectedAddress.complement || "",
+                district: selectedAddress.district || "",
+                city: selectedAddress.city || "",
+                state: selectedAddress.state || "",
+                zipCode: selectedAddress.zipCode || ""
+            };
+        } else if (addresses.length > 0) {
+            // fallback: get the first address if none selected
+            const a = addresses[0];
+            addressData = {
+                address: a.street || "",
+                number: a.number || "",
+                complement: a.complement || "",
+                district: a.district || "",
+                city: a.city || "",
+                state: a.state || "",
+                zipCode: a.zipCode || ""
+            };
+        }
+        // Fetch user data if authenticated
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    setForm(prev => ({
+                        ...prev,
+                        firstName: user.firstName || "",
+                        lastName: user.lastName || "",
+                        email: user.email || "",
+                        phone: user.phone || "",
+                        cpf: user.cpf || "",
+                        birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
+                        ...addressData // overwrite address with profile address
+                    }));
+                })
+                .catch(() => {
+                    setForm(prev => ({
+                        ...prev,
+                        ...addressData
+                    }));
+                });
+        } else {
+            setForm(prev => ({
+                ...prev,
+                ...addressData
+            }));
+        }
+        // If no address registered, alert and prevent advance
+        if (!addressData.address || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding with the purchase.");
+        }
+    }, []);
+
+    // CPF formatting
+    function formatCPF(value) {
+        value = value.replace(/\D/g, "").slice(0, 11);
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        return value;
     }
-    return value;
-}
-function formatPhoneNumber(value) {
-    value = value.replace(/\D/g, "").slice(0, 11); 
-    if (value.length > 2) {
-        value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+    // Date formatting
+    function formatBirthDate(value) {
+        value = value.replace(/\D/g, "").slice(0, 8);
+        if (value.length > 4) {
+            value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+        } else if (value.length > 2) {
+            value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+        }
+        return value;
     }
-    if (value.length > 10) {
-        value = value.replace(/(\d{5})(\d{4})$/, "$1-$2");
-    } else if (value.length > 6) {
-        value = value.replace(/(\d{4})(\d{4})$/, "$1-$2");
+    // Phone number formatting
+    function formatPhoneNumber(value) {
+        value = value.replace(/\D/g, "").slice(0, 11); 
+
+        if (value.length > 2) {
+            value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+        }
+        if (value.length > 10) {
+            value = value.replace(/(\d{5})(\d{4})$/, "$1-$2");
+        } else if (value.length > 6) {
+            value = value.replace(/(\d{4})(\d{4})$/, "$1-$2");
+        }
+        return value;
     }
-    return value;
-}
 
 export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token }) {
     // --- State ---
@@ -147,8 +236,38 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token
             toast.error("Birth year must be 2025 or less.");
             return;
         }
+        // Checa se endereço está preenchido (impede avanço se não houver)
+        if (!form.address || !form.number || !form.city || !form.state || !form.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+            return;
+        }
 
         localStorage.setItem("personal", JSON.stringify(form));
+        // Updates in backend if logged in
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    email: form.email,
+                    phone: form.phone,
+                    cpf: form.cpf,
+                    birthDate: new Date(`${year}-${month}-${day}`),
+                    address: {
+                        street: form.address,
+                        number: form.number,
+                        complement: form.complement,
+                        district: form.district,
+                        city: form.city,
+                        state: form.state,
+                        zipCode: form.zipCode
+                    }
+                })
+            });
+        }
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }

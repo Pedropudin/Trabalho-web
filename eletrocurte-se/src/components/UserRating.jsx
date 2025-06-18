@@ -27,8 +27,17 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
   // Currently selected product
   const produto = produtosParaAvaliar[produtoAvaliacaoIdx] || {};
 
+  // Reset nota/comentario ao abrir modal para novo produto
+  React.useEffect(() => {
+    if (open) {
+      setNota(0);
+      setComentario('');
+      setErro('');
+    }
+  }, [open, produtoAvaliacaoIdx]);
+
   // Submit review if rating and comment are valid
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (nota < 1) {
       setErro('Please select a star rating before submitting.');
       return;
@@ -36,6 +45,20 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
     if (comentario.trim() === '') {
       setErro('Please write a comment before submitting.');
       return;
+    }
+    // Send evaluation to backend
+    const produto = produtosParaAvaliar[produtoAvaliacaoIdx];
+    const nomeUsuario = localStorage.getItem('nomeUsuario');
+    if (produto && produto.id && nomeUsuario) {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/products/${produto.id}/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: nomeUsuario,
+          rating: nota,
+          comment: comentario
+        })
+      });
     }
     onAvaliar(nota, comentario, produtoAvaliacaoIdx);
     setNota(0);
@@ -178,7 +201,10 @@ const UserRating = ({ produtosAguardando = 1, produtosParaAvaliar = [], onAvalia
       {/* Product rating card for products awaiting review */}
       <AvaliacaoCard
         produtosAguardando={produtosAguardando}
-        produtosParaAvaliar={produtosParaAvaliar}
+        produtosParaAvaliar={produtosParaAvaliar.map(p => ({
+          ...p,
+          evaluation: p.evaluation ?? 0 // Garante nota zero por padrão
+        }))}
         onAvaliar={onAvaliar}
         produtoAvaliacaoIdx={produtoAvaliacaoIdx}
         setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}
