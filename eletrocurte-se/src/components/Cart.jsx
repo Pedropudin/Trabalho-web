@@ -58,13 +58,17 @@ export default function Cart({onNext}) {
 
     // Increases quantity in the cart, always checking if there is stock
     function handleIncrease(productId) {
+        let toastShown = false;
         setCart(prev =>
             prev.map(item => {
                 if (item.id === productId) {
                     const stock = getProductStock(productId);
                     if (item.quantity + 1 > stock) {
-                        toast.error ("Maximum number of products reached. Error: Out of stock!");
-                        return item;
+                        if (!toastShown) {
+                            toast.error("Maximum number of products reached. Error: Out of stock!");
+                            toastShown = true;
+                        }
+                        return item; 
                     }
                     return { ...item, quantity: item.quantity + 1 };
                 }

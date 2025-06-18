@@ -5,8 +5,6 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import CartOverview from "./CartOverview";
-import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes';
 
 /*
   Payment details page.
@@ -16,6 +14,21 @@ import ROUTES from '../routes';
   - If insufficient balance, blocks advance.
   - Cardholder CPF is auto-filled from personal data and cannot be edited here.
 */
+
+// --- Format Helpers ---
+function formatCardNumber(value) {
+    return value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+}
+function formatExpiry(value) {
+    value = value.replace(/\D/g, "").slice(0, 4);
+    if (value.length > 2) {
+        value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    }
+    return value;
+}
+function formatCVC(value) {
+    return value.replace(/\D/g, "").slice(0, 4);
+}
 
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     // Cards from wallet
@@ -111,12 +124,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         if (onNext) onNext();
     }
 
-    const navigate = useNavigate();
-
-    const handleVoltar = () => {
-        navigate(ROUTES.PROFILE);
-    };
-
+    // --- Render ---
     return (
        <>
         <Toaster />
