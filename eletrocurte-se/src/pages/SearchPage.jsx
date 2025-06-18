@@ -26,7 +26,6 @@ export default function SearchPage() {
     
     // Reads product data directly from database
     useEffect(() => {
-        // Busca sempre do backend para garantir consistência
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))

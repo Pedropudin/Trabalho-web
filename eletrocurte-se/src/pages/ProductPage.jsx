@@ -46,6 +46,15 @@ export default function ProductPage() {
 
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [validUsernames, setValidUsernames] = useState([]);
+
+  useEffect(() => {
+    // Fetch all users to validate names
+    fetch(process.env.REACT_APP_API_URL + '/api/users')
+      .then(res => res.json())
+      .then(users => setValidUsernames(users.map(u => u.firstName).filter(Boolean)))
+      .catch(() => setValidUsernames([]));
+  }, []);
 
   useEffect(() => {
     if (product && product.id) {
@@ -56,12 +65,15 @@ export default function ProductPage() {
     }
   }, [product]);
 
-  const avgRating = reviews.length
-    ? Math.round(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
+  // Show all reviews
+  const filteredReviews = reviews; // Show all reviews
+
+  const avgRating = filteredReviews.length
+    ? Math.round(filteredReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / filteredReviews.length)
     : 0;
   const nomeUsuario = localStorage.getItem('nomeUsuario');
-  const userReview = reviews.find(r => r.username === nomeUsuario);
-  const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 5);
+  const userReview = filteredReviews.find(r => r.username === nomeUsuario);
+  const visibleReviews = showAllReviews ? filteredReviews : filteredReviews.slice(0, 5);
 
   // When clicking "add to cart"
   function handleAdicionarCarrinho(productId) {
@@ -220,7 +232,7 @@ export default function ProductPage() {
                 <Rating value={avgRating} readOnly precision={1} />
                 <span style={{ color: "#555" }}>
                   {avgRating > 0 ? `${avgRating}/5` : 'No ratings yet'}
-                  {reviews.length > 0 && ` (${reviews.length} review${reviews.length > 1 ? 's' : ''})`}
+                  {filteredReviews.length > 0 && ` (${filteredReviews.length} review${filteredReviews.length > 1 ? 's' : ''})`}
                 </span>
               </Box>
               {userReview && (
@@ -233,12 +245,26 @@ export default function ProductPage() {
               {visibleReviews.length > 0 && (
                 <Box>
                   {visibleReviews.map((r, idx) => (
-                    <Box key={r.username + idx} sx={{ mb: 1.5, p: 1, borderRadius: 1, background: '#f7f7f7' }}>
-                      <Box display="flex" alignItems="center" gap={1}>
+                    <Box
+                      key={r.username + idx}
+                      sx={{
+                        mb: 1.5,
+                        p: 1,
+                        borderRadius: 1,
+                        background: '#f7f7f7',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        flexWrap: 'wrap'
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 90 }}>
                         <Rating value={Number(r.rating)} readOnly size="small" />
-                        <span style={{ fontWeight: 500 }}>{r.username || 'User'}</span>
+                        <span style={{ color: "#888", fontWeight: 500, fontSize: 13 }}>
+                          @{r.username || 'User'}
+                        </span>
                       </Box>
-                      <span style={{ fontStyle: 'italic', marginLeft: 8 }}>{r.comment}</span>
+                      <span style={{ fontStyle: 'italic', marginLeft: 8, marginTop: 4, flex: 1 }}>{r.comment}</span>
                     </Box>
                   ))}
                   {reviews.length > 5 && !showAllReviews && (

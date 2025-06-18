@@ -1,12 +1,14 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams } from "react-router-dom";
 import "../styles/SectorPage.css";
+
+// Components
 import AdminHeader from "../components/admin/AdminHeader";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from "../components/Sidebar";
 import ScrollToTop from "../components/ScrollToTop";
 import ProductDisplay from "../components/ProductDisplay";
-import { useParams } from "react-router-dom";
-import React, { useState,useEffect } from 'react';
 
 /*
   Eletrocurte-se sector page.
@@ -16,45 +18,51 @@ import React, { useState,useEffect } from 'react';
   - Has brand and price filter functionalities, as well as ascending/descending sorting by A-Z and price.
 */
 
-/* const categoryIndexRel = {
-    "hardware": 0,
-    "peripherals": 1,
-    "computers": 2,
-    "cellphones": 3,
-}; */
-
 export default function SectorPage() {
-    const { name } = useParams(); 
+    // --- Hooks & State ---
+    const { name } = useParams();
     const [order, setOrder] = useState("");
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
-    const [productsLocal, setProductsLocal] = React.useState([]);
-    const [categoryIndex] = useState(0);
-    
-    // Reads product data directly from database
+    const [productsLocal, setProductsLocal] = useState([]);
+
+    // --- Fetch from database ---
     useEffect(() => {
-        // Always fetch from backend to maintain consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))
-            .catch(() => setProductsLocal([])); 
+            .catch(() => setProductsLocal([]));
     }, []);
 
-    const brandsLocal = [...new Set(productsLocal.map(p => p.brand?.toLowerCase()))]
-        .map(brand => ({ id: brand, label: brand?.charAt(0).toUpperCase() + brand?.slice(1) }));
-
-    // Function to ignore accents, used to handle the access origin
+    // --- Utils ---
     const normalize = (str) =>
         str?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    const sectorProducts = name
-        ? productsLocal.filter((p) => normalize(p.generalSector) === normalize(name))
-        : productsLocal;
-    
-    // Product sorting based on the chosen order
-    const orderedProducts = React.useMemo(() => {
-        let products = [...sectorProducts];
+    // --- Derived Data ---
+    const validProducts = useMemo(() =>
+        productsLocal.filter(
+            p => p && p.name && p.brand && p.price !== undefined && p.inStock !== undefined
+        ), [productsLocal]
+    );
+
+    const sectorProducts = useMemo(() =>
+        name
+            ? validProducts.filter((p) => normalize(p.generalSector) === normalize(name))
+            : validProducts
+    , [validProducts, name]);
+
+    const brandsLocal = useMemo(() =>
+        [
+            ...new Set(sectorProducts.map(p => p.brand?.toLowerCase()))
+        ].map(brand => ({
+            id: brand,
+            label: brand?.charAt(0).toUpperCase() + brand?.slice(1)
+        })), [sectorProducts]);
+
+    // --- Product Ordering ---
+    const orderedProducts = useMemo(() => {
+        const products = [...sectorProducts];
         products.sort((a, b) => {
             if (a.inStock > 0 && b.inStock === 0) return -1;
             if (a.inStock === 0 && b.inStock > 0) return 1;
@@ -72,72 +80,94 @@ export default function SectorPage() {
         return products;
     }, [order, sectorProducts]);
 
-    // Brand and price filters
-    const filteredProducts = orderedProducts.filter(product => {
-        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand?.toLowerCase());
-        const matchesMin = minPrice === '' || product.price >= Number(minPrice);
-        const matchesMax = maxPrice === '' || product.price <= Number(maxPrice);
-        return matchesBrand && matchesMin && matchesMax;
-    });
+    // --- Filtering ---
+    const filteredProducts = useMemo(() =>
+        orderedProducts.filter(product => {
+            const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand?.toLowerCase());
+            const matchesMin = minPrice === '' || product.price >= Number(minPrice);
+            const matchesMax = maxPrice === '' || product.price <= Number(maxPrice);
+            return matchesBrand && matchesMin && matchesMax;
+        })
+    , [orderedProducts, selectedBrands, minPrice, maxPrice]);
 
-    const specificSectors = Array.from(
-        new Set(filteredProducts.map((p) => p.specificSector))
-    );
+    const specificSectors = useMemo(() =>
+        Array.from(new Set(filteredProducts.map((p) => p.specificSector)))
+    , [filteredProducts]);
 
+    // --- Handlers ---
+    function handleOrderChange(e) {
+        setOrder(e.target.value);
+    }
+
+    // --- Render ---
     return (
         <>
-            {console.log(categoryIndex)}
-            {localStorage.userType === "admin" 
-                ? <AdminHeader categoryIndex={categoryIndex} /> 
-                : <Header />}
-            <div className="main-content">
-                <Sidebar
-                    items={sectorProducts}
-                    brands={brandsLocal}
-                    selectedBrands={selectedBrands}
-                    setSelectedBrands={setSelectedBrands}
-                    minPrice={minPrice}
-                    setMinPrice={setMinPrice}
-                    maxPrice={maxPrice}
-                    setMaxPrice={setMaxPrice}
-                />
-                <div className="results">
-                    <div className="results-header-row">
-                        <h4>Results for "{!name ? "General" : name}"</h4>
-                        <select
-                            id="order-criteria"
-                            value={order}
-                            onChange={e => setOrder(e.target.value)}
-                            className="order-criterion"
-                        >
-                            <option value="alphabetical-asc">Name A-Z</option>
-                            <option value="alphabetical-desc">Name Z-A</option>
-                            <option value="high-price">Highest Price</option>
-                            <option value="low-price">Lowest Price</option>
-                        </select>
-                    </div>
-                    <div className="sector-display">
-                        {specificSectors.length === 0 ? (
-                            <p style={{ margin: "40px auto", fontWeight: "bold" }}>No products found.</p>
-                        ) : (
-                            specificSectors.map((sector) => {
-                                const productsSector = filteredProducts.filter(
-                                    (p) => p.specificSector === sector
-                                );
-                                if (productsSector.length === 0) return null;
-                                return (
-                                    <section key={sector}>
-                                        <h2 className="sector-name">{sector}</h2>
-                                        <div className="product-display">
-                                            {productsSector.map(product => (
-                                                <ProductDisplay key={product.id} product={product}/>
-                                            ))}
-                                        </div>
-                                    </section>
-                                );
-                            })
-                        )}
-                    </div>
+            {localStorage.userType === "admin"
+                ? <AdminHeader categoryIndex={99} />
+                : <Header />
+            }
+            <div className="sector-main-content">
+                <div className="sector-sidebar">
+                    <Sidebar
+                        items={orderedProducts}
+                        brands={brandsLocal}
+                        selectedBrands={selectedBrands}
+                        setSelectedBrands={setSelectedBrands}
+                        minPrice={minPrice}
+                        setMinPrice={setMinPrice}
+                        maxPrice={maxPrice}
+                        setMaxPrice={setMaxPrice}
+                    />
+                </div>
+                <div className="sector-results">
+                    {filteredProducts.length > 0 ? (
+                        <>
+                            <div className="sector-results-header-row">
+                                <h4>Results for "{!name ? "General" : name}"</h4>
+                                <select
+                                    id="order-criteria"
+                                    value={order}
+                                    onChange={handleOrderChange}
+                                    className="sector-order-criterion"
+                                >
+                                    <option value="alphabetical-asc">Name A-Z</option>
+                                    <option value="alphabetical-desc">Name Z-A</option>
+                                    <option value="high-price">Highest Price</option>
+                                    <option value="low-price">Lowest Price</option>
+                                </select>
+                            </div>
+                                {specificSectors.length > 0 ? (
+
+
+
+                                    specificSectors.map((sector) => {
+                                        const productsSector = filteredProducts.filter((p) => p.specificSector === sector);
+
+
+                                        if (productsSector.length === 0) return null;
+                                        return (
+                                            <div key={sector} className="sector-display-all">
+                                                <h2 className="sector-name">{sector}</h2>
+                                                <div className="sector-products-row">
+                                                    <div className="vertical-line"></div>
+                                                    <div className="sector-product-display">
+                                                        {productsSector.map(product => (
+                                                            <ProductDisplay key={product.id} product={product} />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                        })
+                                    ) : (
+                                        <p className="sector-no-products-message">No products found.</p>
+                                ) }
+                        </>
+                    ) : (
+                        <div className="sector-display">
+                            <p className="sector-no-products-message">No products found.</p>
+                        </div>
+                    )}
                 </div>
             </div>
             <ScrollToTop />

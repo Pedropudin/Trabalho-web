@@ -168,12 +168,27 @@ export default function Login() {
     const token = e.target.token.value.trim();
 
     if (await validateAdmin({ name, email, password, token })) {
-      // Admin login: keep local only (ou implemente rota backend se necessário)
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userType', 'admin');
-      localStorage.setItem('userName', name);
-      showMessage("Admin login successful!", "success");
-      setTimeout(() => navigate(ROUTES.PERFORMANCE), 1500);
+      try {
+        // Login via backend (real admin authentication)
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/admin-login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, token })
+        });
+        if (!res.ok) {
+          showMessage("Invalid admin credentials.", "error");
+          return;
+        }
+        const data = await res.json();
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userType', 'admin');
+        localStorage.setItem('userName', data.admin.name);
+        localStorage.setItem('userId', data.admin.id);
+        showMessage("Admin login successful!", "success");
+        setTimeout(() => navigate(ROUTES.PERFORMANCE), 1500);
+      } catch {
+        showMessage("Admin login failed. Try again.", "error");
+      }
     }
   }
 
@@ -189,7 +204,7 @@ export default function Login() {
     const birthDate = e.target.dataNascimento.value.trim();
     if (await validateRegistration({ name, email, password, confirmPassword })) {
       try {
-        // Cadastro via backend
+        // Register via backend
         const [firstName, ...lastArr] = name.split(' ');
         const lastName = lastArr.join(' ');
         const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
@@ -203,16 +218,7 @@ export default function Login() {
             phone: telefone,
             cpf,
             birthDate: birthDate ? new Date(birthDate) : undefined,
-            address: [{
-              street: "-",
-              number: "-",
-              complement: "",
-              district: "-",
-              city: "-",
-              state: "-",
-              zipCode: "-",
-              id: `address_${Date.now()}`
-            }],
+            address: [], // Corrigido: não cria endereço default inválido
             card: [],
             privacy: {}
           })

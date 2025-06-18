@@ -250,9 +250,6 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                             </option>
                         ))}
                     </select>
-                    <div style={{ margin: "10px 0", color: "#007b99" }}>
-                        <b>Total purchase:</b> ${total.toFixed(2)}
-                    </div>
                     {error && <div style={{ color: "#c00", marginBottom: 8 }}>{error}</div>}
                 </>
             )}

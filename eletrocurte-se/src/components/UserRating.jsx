@@ -46,20 +46,6 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
       setErro('Please write a comment before submitting.');
       return;
     }
-    // Send evaluation to backend
-    const produto = produtosParaAvaliar[produtoAvaliacaoIdx];
-    const nomeUsuario = localStorage.getItem('nomeUsuario');
-    if (produto && produto.id && nomeUsuario) {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/products/${produto.id}/reviews`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: nomeUsuario,
-          rating: nota,
-          comment: comentario
-        })
-      });
-    }
     onAvaliar(nota, comentario, produtoAvaliacaoIdx);
     setNota(0);
     setComentario('');

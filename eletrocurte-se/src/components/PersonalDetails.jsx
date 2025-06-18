@@ -25,7 +25,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         phone: "",
         cpf: "",
         birthDate: "",
-        address: "",
+        street: "",
         number: "",
         complement: "",
         district: "",
@@ -42,13 +42,13 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
     React.useEffect(() => {
         const userId = localStorage.getItem('userId');
         let addressData = {};
-        // Fetch selected address from profile
-        const addressArr = JSON.parse(localStorage.getItem('address') || '[]');
+        // Busca endereço selecionado do perfil
+        const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
         const selectedAddressId = localStorage.getItem('selectedAddress');
-        const selectedAddress = addressArr.find(a => a.id === selectedAddressId);
+        const selectedAddress = addresses.find(a => a.id === selectedAddressId);
         if (selectedAddress) {
             addressData = {
-                address: selectedAddress.street || "",
+                street: selectedAddress.street || "",
                 number: selectedAddress.number || "",
                 complement: selectedAddress.complement || "",
                 district: selectedAddress.district || "",
@@ -56,11 +56,10 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 state: selectedAddress.state || "",
                 zipCode: selectedAddress.zipCode || ""
             };
-        } else if (addressArr.length > 0) {
-            // fallback: get the first address if none selected
-            const a = addressArr[0];
+        } else if (addresses.length > 0) {
+            const a = addresses[0];
             addressData = {
-                address: a.street || "",
+                street: a.street || "",
                 number: a.number || "",
                 complement: a.complement || "",
                 district: a.district || "",
@@ -82,7 +81,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         phone: user.phone || "",
                         cpf: user.cpf || "",
                         birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
-                        ...addressData // overwrite address with profile address
+                        ...addressData
                     }));
                 })
                 .catch(() => {
@@ -97,9 +96,8 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 ...addressData
             }));
         }
-        // If no address registered, alert and prevent advance
-        if (!addressData.address || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
-            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding with the purchase.");
+        if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
         }
     }, []);
 
@@ -195,7 +193,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             return;
         }
         // Checa se endereço está preenchido (impede avanço se não houver)
-        if (!form.address || !form.number || !form.city || !form.state || !form.zipCode) {
+        if (!form.street || !form.number || !form.city || !form.state || !form.zipCode) {
             toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
             return;
         }
@@ -215,7 +213,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                     cpf: form.cpf,
                     birthDate: new Date(`${year}-${month}-${day}`),
                     address: [{
-                        street: form.address,
+                        street: form.street,
                         number: form.number,
                         complement: form.complement,
                         district: form.district,
@@ -314,11 +312,11 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 </div>
                 <h3>Address</h3>
                 <input
-                    id="address"
+                    id="street"
                     type="text"
-                    name="address"
-                    placeholder="Address"
-                    value={form.address}
+                    name="street"
+                    placeholder="Street"
+                    value={form.street}
                     onChange={handleChange}
                     required
                 />

@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
   purchaseHistory: [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      productName: String, // <-- Adicionado: nome do produto associado
       name: String,
       price: Number,
       quantity: Number,

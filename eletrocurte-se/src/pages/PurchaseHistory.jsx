@@ -24,8 +24,8 @@ export default function PurchaseHistory() {
   // State to control the index of the product selected for review
   const [produtoAvaliacaoIdx, setProdutoAvaliacaoIdx] = useState(0);
 
-  useEffect(() => {
-    // Fetch products from backend, not only from localStorage
+  // Refetch products after review to keep reviews in sync
+  const fetchProdutos = React.useCallback(() => {
     fetch(process.env.REACT_APP_API_URL + '/api/products')
       .then(res => res.json())
       .then(data => {
@@ -36,6 +36,10 @@ export default function PurchaseHistory() {
       });
   }, []);
 
+  useEffect(() => {
+    fetchProdutos();
+  }, [fetchProdutos]);
+
   // Get logged-in username
   const nomeUsuario = localStorage.getItem('nomeUsuario');
   // Only products paid and not yet reviewed by this user
@@ -44,36 +48,36 @@ export default function PurchaseHistory() {
     (!Array.isArray(p.reviews) || !p.reviews.some(r => r.username === nomeUsuario))
   );
 
+  const produtosAguardandoPadronizados = produtosAguardando.map(p => ({
+    ...p,
+    img: p.image || p.img || p.imagem || '/logo-sem-borda.png',
+    nome: p.name || p.nome || 'Product',
+    preco: typeof p.price === 'number'
+      ? `R$${Number(p.price).toFixed(2).replace('.', ',')}`
+      : p.preco || '',
+    data: p.payedDate
+      ? new Date(p.payedDate).toLocaleDateString()
+      : (p.data || '')
+  }));
+
   // Function called when reviewing a product
   const handleAvaliar = (nota, comentario, idx) => {
-    setProdutos(produtosAntigos => {
-      const produtoAvaliado = produtosAguardando[idx];
-      if (produtoAvaliado && nomeUsuario) {
-        // Send review to backend
-        fetch(`${process.env.REACT_APP_API_URL}/api/products/${produtoAvaliado.id}/reviews`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: nomeUsuario,
-            rating: nota,
-            comment: comentario
-          })
-        });
-      }
-      // Locally update the product's reviews array for immediate feedback
-      return produtosAntigos.map((p) => {
-        if (produtoAvaliado && p.id === produtoAvaliado.id) {
-          return {
-            ...p,
-            reviews: [
-              ...(Array.isArray(p.reviews) ? p.reviews : []),
-              { username: nomeUsuario, rating: nota, comment: comentario }
-            ]
-          };
-        }
-        return p;
+    const produtoAvaliado = produtosAguardando[idx];
+    if (produtoAvaliado && nomeUsuario) {
+      // Send review to backend
+      fetch(`${process.env.REACT_APP_API_URL}/api/products/${produtoAvaliado.id}/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: nomeUsuario,
+          rating: nota,
+          comment: comentario
+        })
+      }).then(() => {
+        // Refetch products to update reviews state
+        fetchProdutos();
       });
-    });
+    }
   };
 
   // Agrupy products payed in real date (payedDate)
@@ -125,18 +129,14 @@ export default function PurchaseHistory() {
         >
           <img
             src={
-              // Always try to get a valid image from the product being reviewed
               (() => {
-                // Use the current product selected for review, fallback to first
-                const idx = produtoAvaliacaoIdx >= 0 && produtoAvaliacaoIdx < produtosAguardando.length
+                const idx = produtoAvaliacaoIdx >= 0 && produtoAvaliacaoIdx < produtosAguardandoPadronizados.length
                   ? produtoAvaliacaoIdx
                   : 0;
-                const prod = produtosAguardando[idx];
-                // Try all possible image fields, fallback to a placeholder/logo
+                const prod = produtosAguardandoPadronizados[idx];
                 return (
-                  (prod?.image && typeof prod.image === 'string' && prod.image.trim() !== '')
-                  || (prod?.img && typeof prod.img === 'string' && prod.img.trim() !== '')
-                  || (prod?.imagem && typeof prod.imagem === 'string' && prod.imagem.trim() !== '')
+                  (prod?.img && typeof prod.img === 'string' && prod.img.trim() !== '')
+                  || '/logo-sem-borda.png'
                 );
               })()
             }
@@ -152,11 +152,12 @@ export default function PurchaseHistory() {
             }}
           />
           <p style={{ flex: 1, fontSize: '1.1rem', textAlign: 'center', margin: 0 }}>
-            {produtosAguardando.length} product{produtosAguardando.length > 1 ? 's' : ''} awaiting your review!
+            {produtosAguardandoPadronizados.length} product{produtosAguardandoPadronizados.length > 1 ? 's' : ''} awaiting your review!
           </p>
+          {/* UserRating só aparece se houver produtos aguardando avaliação */}
           <UserRating
-            produtosAguardando={produtosAguardando.length}
-            produtosParaAvaliar={produtosAguardando}
+            produtosAguardando={produtosAguardandoPadronizados.length}
+            produtosParaAvaliar={produtosAguardandoPadronizados}
             onAvaliar={handleAvaliar}
             produtoAvaliacaoIdx={produtoAvaliacaoIdx}
             setProdutoAvaliacaoIdx={setProdutoAvaliacaoIdx}

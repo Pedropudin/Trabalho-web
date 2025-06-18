@@ -140,7 +140,8 @@ export default function Purchase({ onBack, onNext, steps }) {
                         price: item.price
                     })),
                     personal,
-                    card
+                    card,
+                    status: "pending" // <-- Adicionado: status inicial do pedido
                 })
             });
             const order = await orderRes.json();
