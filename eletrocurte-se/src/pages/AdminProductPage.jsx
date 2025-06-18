@@ -98,6 +98,54 @@ export default function AdminProductPage() {
       });
   };
 
+  // Image upload handler: prompt for URL and add to thumbs or set as main image if none
+  const handleUploadImage = () => {
+    const url = window.prompt("Enter image URL:");
+    if (url && url.trim()) {
+      setEditProduct(prev => {
+        const cleanUrl = url.trim();
+        // If no main image, set this as main image
+        if (!prev.image) {
+          return {
+            ...prev,
+            image: cleanUrl,
+            thumbs: [...(prev.thumbs || [])]
+          };
+        }
+        // If already in thumbs or as main image, do nothing
+        if (prev.image === cleanUrl || (prev.thumbs || []).includes(cleanUrl)) {
+          return prev;
+        }
+        return {
+          ...prev,
+          thumbs: [...(prev.thumbs || []), cleanUrl]
+        };
+      });
+    }
+  };
+
+  // Image delete handler: remove from thumbs or main image, update accordingly
+  const handleRemoveImage = (url) => {
+    setEditProduct(prev => {
+      // If deleting main image
+      if (prev.image === url) {
+        const newThumbs = [...(prev.thumbs || [])];
+        // Promote first thumb to main image if available
+        const newImage = newThumbs.length > 0 ? newThumbs[0] : "";
+        return {
+          ...prev,
+          image: newImage,
+          thumbs: newThumbs.filter(t => t !== newImage)
+        };
+      }
+      // If deleting from thumbs
+      return {
+        ...prev,
+        thumbs: (prev.thumbs || []).filter(t => t !== url)
+      };
+    });
+  };
+
   if (loading) {
     return (
       <>
@@ -122,12 +170,6 @@ export default function AdminProductPage() {
     );
   }
 
-  /*
-    TODO:
-    - Missing Image Upload and delete handlers
-    - Style buttons
-  */
-
   return (
     <>
       <AdminHeader />
@@ -135,7 +177,7 @@ export default function AdminProductPage() {
         <div className="products">
           <div className="item">
             <div className="item-images" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <Button onClick={() => console.log("Upload photo")} style={{
+              <Button onClick={handleUploadImage} style={{
                 gap: "10px"
               }}>
                 Add image
@@ -155,33 +197,51 @@ export default function AdminProductPage() {
               >
                 <img
                   className="product-image"
-                  src={editProduct.img}
+                  src={editProduct.image}
                   alt={editProduct.name}
                   style={{ width: "100%", height: "100%", objectFit: "contain" }}
                 />
-                <Button onClick={() => console.log("Remove image")} style={{
-                  position:"absolute",
-                  right:"0", top:"0",
-                  backgroundColor: "rgb(228, 0, 0)",
-                  width: "fit-content"
-                }}>
-                  <DeleteIcon />
-                </Button>
+                {/* Remove main image if it exists */}
+                {editProduct.image && (
+                  <Button onClick={e => {
+                    e.stopPropagation();
+                    handleRemoveImage(editProduct.image);
+                  }} style={{
+                    position:"absolute",
+                    right:"0", top:"0",
+                    backgroundColor: "rgb(228, 0, 0)",
+                    width: "fit-content"
+                  }}>
+                    <DeleteIcon />
+                  </Button>
+                )}
               </Paper>
               <Stack direction="row" spacing={2}>
                 {(editProduct.thumbs || []).map((thumbUrl, i) => (
                   <Paper
                     key={i}
-                    elevation={editProduct.img === thumbUrl ? 3 : 1}
+                    elevation={editProduct.image === thumbUrl ? 3 : 1}
                     sx={{
-                      border: editProduct.img === thumbUrl ? '0 solid #1976d2' : '0 solid #eee',
+                      border: editProduct.image === thumbUrl ? '0 solid #1976d2' : '0 solid #eee',
                       borderRadius: 2,
                       p: 0.5,
                       cursor: "pointer",
-                      background: editProduct.img === thumbUrl ? "#e3f2fd" : "#fff",
-                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)"
+                      background: editProduct.image === thumbUrl ? "#e3f2fd" : "#fff",
+                      boxShadow: "0 0 4px 0 rgba(0,0,0,0.07)",
+                      position: "relative"
                     }}
-                    onClick={() => setEditProduct(prev => ({ ...prev, img: thumbUrl }))}
+                    onClick={() => {
+                      setEditProduct(prev => {
+                        // Move selected thumb to main image, demote current main image to thumbs
+                        if (prev.image === thumbUrl) return prev;
+                        const newThumbs = [prev.image, ...(prev.thumbs || []).filter(t => t !== thumbUrl)];
+                        return {
+                          ...prev,
+                          image: thumbUrl,
+                          thumbs: newThumbs.filter(Boolean)
+                        };
+                      });
+                    }}
                   >
                     <img src={thumbUrl} alt={`Thumbnail of ${editProduct.name}`} style={{ width: 56, height: 56, objectFit: "contain" }} />
                   </Paper>
