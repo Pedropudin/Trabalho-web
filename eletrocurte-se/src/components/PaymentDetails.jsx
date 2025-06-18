@@ -44,7 +44,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         setSelectedCard(card || null);
     }, [selectedCardLast4, cards]);
 
-    // Atualiza cartão selecionado no backend
+    // Update the selected card in backend
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId && selectedCardLast4) {
@@ -56,9 +56,11 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         }
     }, [selectedCardLast4]);
 
-    // Calcula o valor total da compra
+    // Calculate the total amount of the shop
     useEffect(() => {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const userId = localStorage.getItem('userId');
+        const cartKey = userId ? `cart_${userId}` : 'cart';
+        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
         const products = JSON.parse(localStorage.getItem("products")) || [];
         let sum = 0;
         for (const item of cart) {
@@ -78,7 +80,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     const [installments, setInstallments] = useState("");
     const vezesDeParcelamento = [1,2,3,4,5,6,7,8,9,10,11,12];
 
-    // Submissão do pagamento
+    // Payment Submission
     async function handleSubmit(e) {
         e.preventDefault();
         setError('');
@@ -102,7 +104,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
             setError("Insufficient balance.");
             return;
         }
-        // Subtrai saldo do cartão no backend
+        // Subtract the amount of the selected card used for the shop
         const userId = localStorage.getItem('userId');
         try {
             const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/cards/${selectedCard.last4}/debit`, {
@@ -121,7 +123,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
             setError("Error debiting card.");
             return;
         }
-        // Atualiza saldo local
+        // Update local amount
         const updatedCards = cards.map(c =>
             c.last4 === selectedCard.last4
                 ? { ...c, balance: (c.balance ?? 0) - total }
@@ -132,10 +134,10 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         // Salva dados do pagamento
         localStorage.setItem("card", JSON.stringify({
             cardHolder: selectedCard.nameOnCard || "",
-            cardNumber: selectedCard.number || "",
+            cardNumber: selectedCard.cardNumber || selectedCard.number || "",
             cpf: cpf,
             expiry: selectedCard.expiry || "",
-            cvv: selectedCard.CVV || "",
+            cvv: selectedCard.cvv || selectedCard.CVV || "",
             installments
         }));
         if (onSubmit) onSubmit();
@@ -184,7 +186,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                         id="cardNumber"
                         type="text"
                         name="cardNumber"
-                        value={selectedCard?.number || ""}
+                        value={selectedCard?.cardNumber || selectedCard?.number || ""}
                         disabled
                         required
                         placeholder="Card Number"
@@ -204,7 +206,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                         id="cvv"
                         type="text"
                         name="cvv"
-                        value={selectedCard?.CVV || ""}
+                        value={selectedCard?.cvv || selectedCard?.CVV || ""}
                         disabled
                         required
                         placeholder="CVV"

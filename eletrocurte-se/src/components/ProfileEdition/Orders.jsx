@@ -1,48 +1,49 @@
+// -----------------------------------------------------------------------------
+// Orders.jsx
+// User orders/history component for profile edition.
+// - Fetches and displays the user's orders from the backend.
+// - Shows order status (pending, in transit, delivered), creation date, and details.
+// - If no orders, displays a friendly message.
+// - Uses Material-UI Table, Accordion, Chip, Skeleton, Snackbar for UI/UX.
+// - Props:
+//    - onVoltar: function called when clicking "Back to Profile".
+// - State:
+//    - orders: array of user orders
+//    - loading: loading state for skeleton
+//    - snackbar: feedback for details
+// - Consistency: All data is fetched from backend, no sidebar or mock data.
+// ----------------------------------------------------------------------------/
+
 import React, { useState, useEffect } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip, Button, Typography, Accordion, AccordionSummary, AccordionDetails, Snackbar, Alert, Skeleton
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Paper, 
+  Chip,
+  Button, 
+  Typography, 
+  Accordion, 
+  AccordionSummary, 
+  AccordionDetails, 
+  Snackbar, 
+  Alert, 
+  Skeleton
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-// Orders Component
-// Displays a list of the user's orders with status, date, and details
-// Props:
-// - onVoltar: function called when clicking to return to the profile
-//
-// Data:
-// - pedidos: static array simulating user orders
-// - statusColor: maps order status to Chip color
-//
-// States:
-// - snackbar: controls visual feedback
-// - loading: simulates initial loading
-//
-// Functions:
-// - handleShowDetails: displays order details in the snackbar
-//
-// Logic:
-// - Shows Skeleton while loading
-// - Table displays ID, status (with colored Chip), date, and details (Accordion)
-// - Button to go back to the profile
-// - Visual feedback with Snackbar/Alert
-// - Inline CSS (sx) for spacing, width, and centering
-
-// const pedidos = [
-//   // Static array simulating user orders
-//   { id: 12345, status: 'Delivered', data: '20/05/2025', detalhes: 'Order delivered successfully. Product: Fone HyperX.' },
-//   { id: 12344, status: 'In transit', data: null, detalhes: 'Your order is on the way. Product: Mouse Logitech.' },
-//   { id: 12343, status: 'Awaiting payment', data: null, detalhes: 'Awaiting payment confirmation. Product: Teclado Redragon.' },
-// ];
-
 // Maps order status to Chip color
 const statusColor = {
-  'Delivered': 'success',
-  'In transit': 'warning',
-  'Awaiting payment': 'info',
+  'delivered': 'success',
+  'in transit': 'warning',
+  'pending': 'info',
 };
 
 export default function Orders({ onVoltar }) {
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' }); // State for visual feedback
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' });
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -62,8 +63,24 @@ export default function Orders({ onVoltar }) {
 
   // Displays order details in the snackbar
   const handleShowDetails = (pedido) => {
-    setSnackbar({ open: true, message: `Order details #${pedido.id}: ${pedido.detalhes}`, severity: 'info' });
+    setSnackbar({ open: true, message: `Order details #${pedido._id || pedido.id}: ${pedido.detalhes || JSON.stringify(pedido.itens)}`, severity: 'info' });
   };
+
+  // Displays friendly message if no orders exist
+  if (!loading && (!orders || orders.length === 0)) {
+    return (
+      <Paper elevation={3} sx={{ maxWidth: 600, margin: '40px auto', p: 4, textAlign: 'center', borderRadius: 3 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>My Orders</Typography>
+        <Typography variant="body1" sx={{ color: '#007b99', fontWeight: 600 }}>
+          You haven't purchased any products yet.<br />
+          Complete a purchase and your orders will appear here!
+        </Typography>
+        <Button variant="contained" color="primary" sx={{ mt: 4, width: '100%' }} onClick={onVoltar}>
+          Back to Profile
+        </Button>
+      </Paper>
+    );
+  }
 
   return (
     <TableContainer component={Paper} sx={{ maxWidth: 600, margin: 'auto', mt: 4, mb: 4 }}>
@@ -82,20 +99,23 @@ export default function Orders({ onVoltar }) {
           <TableRow>
             <TableCell>Order ID</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Delivery Date</TableCell>
+            <TableCell>
+              {/* This column shows the order creation date, not delivery date */}
+              Order Date
+            </TableCell>
             <TableCell>Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {orders.map((pedido) => (
-            <TableRow key={pedido.id}>
-              <TableCell>{pedido.id}</TableCell>
+            <TableRow key={pedido._id || pedido.id}>
+              <TableCell>{pedido._id || pedido.id}</TableCell>
               <TableCell>
-                <Chip label={pedido.status} color={statusColor[pedido.status]} />
+                <Chip label={pedido.status} color={statusColor[pedido.status] || 'default'} />
                 {/* Chip: displays order status with corresponding color */}
               </TableCell>
               <TableCell>
-                {pedido.data ? pedido.data : '-'}
+                {pedido.createdAt ? new Date(pedido.createdAt).toLocaleString() : '-'}
               </TableCell>
               <TableCell>
                 <Accordion sx={{ boxShadow: 'none' }}>
@@ -104,7 +124,15 @@ export default function Orders({ onVoltar }) {
                     <Typography variant="body2">View details</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography variant="body2">{pedido.detalhes}</Typography>
+                    <Typography variant="body2">
+                      {pedido.itens && Array.isArray(pedido.itens)
+                        ? pedido.itens.map((item, idx) => (
+                            <div key={idx}>
+                              {item.name} x{item.quantity} - ${item.price}
+                            </div>
+                          ))
+                        : JSON.stringify(pedido.itens)}
+                    </Typography>
                     <Button size="small" onClick={() => handleShowDetails(pedido)} sx={{ mt: 1 }}>
                       Notify
                     </Button>

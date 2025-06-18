@@ -57,7 +57,7 @@ export default function Privacy({ onVoltar }) {
   }
 
   return (
-    <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: 'auto', borderRadius: 3 }}>
+    <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: 'auto', borderRadius: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {/* Paper: visual container with shadow and rounded borders
           elevation={3}: shadow level
           sx: padding, max width, centering, border radius */}
@@ -76,6 +76,7 @@ export default function Privacy({ onVoltar }) {
           />
         }
         label="Receive notifications"
+        sx={{ alignSelf: 'flex-start', mb: 1 }}
       />
       <FormControlLabel
         control={
@@ -86,6 +87,7 @@ export default function Privacy({ onVoltar }) {
           />
         }
         label="Share my data with partners"
+        sx={{ alignSelf: 'flex-start', mb: 1 }}
       />
       <FormControlLabel
         control={
@@ -96,26 +98,25 @@ export default function Privacy({ onVoltar }) {
           />
         }
         label="Accepted Terms and Conditions"
+        sx={{ alignSelf: 'flex-start', mb: 2 }}
       />
       <Button
         variant="contained"
         color="primary"
-        sx={{ mt: 2 }}
+        sx={{ mt: 2, width: '100%' }}
         onClick={handleSave}
-        fullWidth
       >
         {/* Button: main action button
             variant="contained": filled background
             color="primary": main theme color
             sx: mt=2 (top margin)
             fullWidth: occupies full width */}
-        Save
+        Save Preferences
       </Button>
       <Button
         variant="outlined"
-        sx={{ mt: 2, ml: 2 }}
+        sx={{ mt: 2, width: '100%' }}
         onClick={onVoltar}
-        fullWidth
       >
         {/* Button: secondary button
             variant="outlined": visible border, transparent background
@@ -129,7 +130,9 @@ export default function Privacy({ onVoltar }) {
         onClose={() => setSnackbar({ ...snackbar, open: false })}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity={snackbar.severity}>{snackbar.msg}</Alert>
+        <Alert severity="success" sx={{ width: '100%' }}>
+          Preferences saved successfully!
+        </Alert>
       </Snackbar>
     </Paper>
   );

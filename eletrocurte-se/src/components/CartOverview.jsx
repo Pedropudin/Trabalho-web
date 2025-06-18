@@ -4,10 +4,9 @@ import '../styles/Cart.css';
 
 // Cart summary component
 export default function CartOverview(){
-   
     const userId = localStorage.getItem('userId');
     const cartKey = userId ? `cart_${userId}` : 'cart';
-    const [cart] = useState(JSON.parse(localStorage.getItem(cartKey)) || []);
+    const [cart, setCart] = useState([]);
     const [productsLocal, setProductsLocal] = useState([]);
 
     // Fetch products from database when the component mounts
@@ -18,6 +17,11 @@ export default function CartOverview(){
             .then(data => setProductsLocal(data))
             .catch(() => setProductsLocal([]));
     }, []);
+
+    // Always get cart from localStorage on mount and when userId changes
+    useEffect(() => {
+        setCart(JSON.parse(localStorage.getItem(cartKey)) || []);
+    }, [cartKey]);
 
     const cartProducts = cart
     .map(item => {

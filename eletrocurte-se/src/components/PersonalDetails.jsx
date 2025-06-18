@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/PersonalDetails.css"
 import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
@@ -33,6 +33,10 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         state: "",
         zipCode: ""
     });
+
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const [cart, setCart] = useState([]);
 
     // Busca endereço selecionado do perfil ao montar
     React.useEffect(() => {
@@ -98,6 +102,10 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding with the purchase.");
         }
     }, []);
+
+    useEffect(() => {
+        setCart(JSON.parse(localStorage.getItem(cartKey)) || []);
+    }, [cartKey]);
 
     // CPF formatting
     function formatCPF(value) {
