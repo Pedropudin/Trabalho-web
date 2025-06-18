@@ -27,21 +27,6 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// PUT /api/products/:id - update product by numeric id
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedProduct = await Product.findOneAndUpdate(
-      { id: Number(req.params.id) },
-      { $set: req.body },
-      { new: true }
-    );
-    if (!updatedProduct) return res.status(404).json({ error: 'Product not found.' });
-    res.json(updatedProduct);
-  } catch (err) {
-    res.status(400).json({ error: 'Failed to update product.' });
-  }
-});
-
 // GET /api/products/export (admin only)
 router.get('/export', auth, async (req, res) => {
   try {

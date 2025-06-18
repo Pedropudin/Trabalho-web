@@ -92,7 +92,7 @@ export default function ProductDisplay({product}) {
                 <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
                     <button
                         className="product-display-edit-button"
-                        onClick={() => navigate(`/admin/PaginaProduto/${product.id}`)} 
+                        onClick={() => navigate(`/admin/ProductPage/${product.id}`)} 
                     >
                         Edit
                     </button>

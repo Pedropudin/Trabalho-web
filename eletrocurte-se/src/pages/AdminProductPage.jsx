@@ -12,35 +12,26 @@ import "../styles/AdminProductPage.css";
 export default function AdminProductPage() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [produtosLocais, setProdutosLocais] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Editable fields
   const [editProduct, setEditProduct] = useState(null);
 
   useEffect(() => {
-    const localProducts = localStorage.getItem("products");
-    if (localProducts) {
-      const products = JSON.parse(localProducts);
-      setProdutosLocais(products);
-      const found = products.find(p => String(p.id) === String(id));
-      setEditProduct(found ? { ...found } : null);
-      setLoading(false);
-    } else {
-      fetch('/data/produtos.json')
-        .then(res => res.json())
-        .then(data => {
-          setProdutosLocais(data);
-          const found = data.find(p => String(p.id) === String(id));
-          setEditProduct(found ? { ...found } : null);
-          setLoading(false);
-        })
-        .catch(() => {
-          setProdutosLocais([]);
-          setEditProduct(null);
-          setLoading(false);
-        });
-    }
+    // Fetch product directly from backend by id
+    setLoading(true);
+    fetch(process.env.REACT_APP_API_URL + '/api/products')
+      .then(res => res.json())
+      .then(products => {
+        const found = products.find(p => String(p.id) === String(id) || String(p._id) === String(id));
+        setEditProduct(found ? { ...found } : null);
+        setLoading(false);
+        console.log(found);
+      })
+      .catch(() => {
+        setEditProduct(null);
+        setLoading(false);
+      });
   }, [id]);
 
   // Handle input changes
@@ -83,12 +74,28 @@ export default function AdminProductPage() {
       toast.error("Name and price are required.");
       return;
     }
-    const updatedProducts = produtosLocais.map(p =>
-      String(p.id) === String(editProduct.id) ? editProduct : p
-    );
-    localStorage.setItem("products", JSON.stringify(updatedProducts));
-    toast.success("Product updated successfully!");
-    setTimeout(() => navigate("/PaginaPesquisa"), 1200);
+    const adminToken = localStorage.getItem('Token');
+    // Prefer MongoDB _id if present, fallback to numeric id
+    const productId = editProduct._id || editProduct.id;
+    console.log(editProduct);
+    fetch(process.env.REACT_APP_API_URL + `/api/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + adminToken
+      },
+      body: JSON.stringify(editProduct)
+    })
+      .then(res => {
+        if (res.ok) {
+          window.location.reload();
+        } else {
+          toast.error("Failed to update product.");
+        }
+      })
+      .catch(() => {
+        toast.error("Failed to update product.");
+      });
   };
 
   if (loading) {
