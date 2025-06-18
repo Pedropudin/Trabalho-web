@@ -17,15 +17,15 @@ import { Switch, FormControlLabel, Typography, Button, Paper, Snackbar, Alert } 
 // - Layout with Paper, Typography, Switch, FormControlLabel, Button, Snackbar/Alert
 // - Inline CSS (sx) for spacing, width, and centering
 
-export default function Privacidade({ onVoltar }) {
+export default function Privacy({ onVoltar }) {
   // Initial state reads preferences from localStorage
   const [notificacoesEmail, setNotificacoesEmail] = useState(() => {
-    const prefs = JSON.parse(localStorage.getItem('preferenciasPrivacidade'));
+    const prefs = JSON.parse(localStorage.getItem('privacyPreferences'));
     return prefs?.notificacoesEmail ?? true;
   });
 
   const [compartilharDados, setCompartilharDados] = useState(() => {
-    const prefs = JSON.parse(localStorage.getItem('preferenciasPrivacidade'));
+    const prefs = JSON.parse(localStorage.getItem('privacyPreferences'));
     return prefs?.compartilharDados ?? false;
   });
 
@@ -34,7 +34,7 @@ export default function Privacidade({ onVoltar }) {
   // Update localStorage whenever preferences change
   useEffect(() => {
     localStorage.setItem(
-      'preferenciasPrivacidade',
+      'privacyPreferences',
       JSON.stringify({
         notificacoesEmail,
         compartilharDados
@@ -47,13 +47,13 @@ export default function Privacidade({ onVoltar }) {
     // Also saves to the backend
     try {
       const userId = localStorage.getItem('userId');
-      await fetch(`${process.env.REACT_APP_API_URL}/usuarios/${userId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          privacidade: {
-            notificacao: notificacoesEmail,
-            dadosCompartilhados: compartilharDados
+          privacy: {
+            notification: notificacoesEmail,
+            sharedData: compartilharDados
           }
         })
       });

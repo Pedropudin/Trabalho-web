@@ -5,12 +5,14 @@ import '../styles/Cart.css';
 // Cart summary component
 export default function CartOverview(){
    
-    const [cart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const [cart] = useState(JSON.parse(localStorage.getItem(cartKey)) || []);
     const [productsLocal, setProductsLocal] = useState([]);
 
     // Fetch products from database when the component mounts
     useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend for consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))

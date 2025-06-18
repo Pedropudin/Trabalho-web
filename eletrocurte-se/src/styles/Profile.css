@@ -1,86 +1,86 @@
-/* === RESET E ESTILOS GERAIS === */
+/* === RESET AND GENERAL STYLES === */
 * {
-  margin: 0; /* Remove margem padrão dos navegadores */
-  padding: 0; /* Remove padding padrão */
-  box-sizing: border-box; /* Faz com que width/height incluam padding e borda */
-  font-family: Arial, sans-serif; /* Define a fonte padrão legível e sem serifa */
+  margin: 0; /* Removes default browser margin */
+  padding: 0; /* Removes default padding */
+  box-sizing: border-box; /* Makes width/height include padding and border */
+  font-family: Arial, sans-serif; /* Sets a clean, readable sans-serif font */
 }
 
 body {
-  background-color: #f4f4f4; /* Cor de fundo clara, neutra e agradável */
+  background-color: #f4f4f4; /* Light, neutral, and pleasant background color */
 }
 
 
-/* === CABEÇALHO === */
+/* === HEADER === */
 header {
-  background-color: #004d66; /* Azul escuro institucional para destaque visual */
-  color: white; /* Contraste com o fundo escuro */
-  padding: 10px; /* Espaçamento interno para não colar nas bordas */
+  background-color: #004d66; /* Dark institutional blue for visual emphasis */
+  color: white; /* Contrast with dark background */
+  padding: 10px; /* Inner spacing to avoid sticking to edges */
 }
 
 
-/* === NAVEGAÇÃO PRINCIPAL === */
+/* === MAIN NAVIGATION === */
 nav {
-  display: flex; /* Ativa layout flexível horizontal */
-  justify-content: space-between; /* Espaça logo, busca e botões */
-  align-items: center; /* Alinha itens verticalmente */
-  padding: 10px; /* Espaço interno uniforme */
-  flex-wrap: wrap; /* Quebra para próxima linha em telas pequenas */
-  gap: 10px; /* Espaço entre os elementos filhos */
+  display: flex; /* Enables horizontal flex layout */
+  justify-content: space-between; /* Spaces logo, search, and buttons */
+  align-items: center; /* Vertically aligns items */
+  padding: 10px; /* Uniform inner spacing */
+  flex-wrap: wrap; /* Wraps to the next line on small screens */
+  gap: 10px; /* Space between child elements */
 }
 
-/* === TÍTULO PRINCIPAL DA PÁGINA === */
+/* === MAIN PAGE TITLE === */
 .body-content h2 {
-  text-align: center; /* Centraliza o título */
+  text-align: center; /* Centers the title */
 }
 
-/* === BARRA DE PESQUISA === */
+/* === SEARCH BAR === */
 .search-bar {
   background-color: white;
-  border-radius: 8px; /* Cantos arredondados */
-  display: flex; /* Coloca input e ícone lado a lado */
+  border-radius: 8px; /* Rounded corners */
+  display: flex; /* Places input and icon side by side */
   align-items: center;
   padding: 10px;
-  width: 260px; /* Largura padrão */
+  width: 260px; /* Default width */
 }
 
 .search-bar input {
-  border: none; /* Remove borda padrão */
+  border: none; /* Removes default border */
   font-size: 16px;
-  flex: 1; /* Ocupa o espaço restante */
-  outline: none; /* Remove contorno azul ao focar */
+  flex: 1; /* Takes up the remaining space */
+  outline: none; /* Removes blue outline on focus */
 }
 
-/* === GRID DE CARDS === */
+/* === CARD GRID === */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsivo */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid */
   gap: 20px;
-  max-width: 1200px; /* Limite máximo */
-  margin: 20px auto; /* Centraliza horizontalmente */
+  max-width: 1200px; /* Maximum width */
+  margin: 20px auto; /* Centers horizontally */
   padding: 0 20px;
 }
 
-/* Em telas maiores, força 3 colunas fixas */
+/* On larger screens, forces 3 fixed columns */
 @media (min-width: 900px) {
   .cards-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* === ESTILO INDIVIDUAL DOS CARDS === */
+/* === INDIVIDUAL CARD STYLE === */
 .card {
   background-color: #fff;
   border-radius: 12px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .card i {
-  color: #007b99; /* Ícone com cor de destaque */
+  color: #007b99; /* Highlight color for icons */
   margin-bottom: 12px;
 }
 
@@ -97,25 +97,25 @@ nav {
 }
 
 .card:hover {
-  transform: translateY(-4px); /* Elevação ao passar o mouse */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Aumenta sombra */
+  transform: translateY(-4px); /* Slight lift on hover */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Stronger shadow on hover */
 }
 
-/* === CARD DESTACADO (ocupando coluna específica) === */
+/* === WIDE CARD (occupies specific column) === */
 .wide-card {
-  grid-column: 2; /* Ocupa a coluna central */
+  grid-column: 2; /* Occupies the center column */
 }
 
 @media (max-width: 900px) {
   .wide-card {
-    grid-column: span 1; /* Em telas pequenas, ocupa toda a linha */
+    grid-column: span 1; /* On small screens, spans the full width */
   }
 }
 
-/* === RESPONSIVIDADE: AJUSTES PARA TELAS PEQUENAS (até 768px) === */
+/* === RESPONSIVENESS: ADJUSTMENTS FOR SMALL SCREENS (up to 768px) === */
 @media (max-width: 768px) {
   nav {
-    flex-direction: column; /* Logo, busca e botões empilhados */
+    flex-direction: column; /* Stacks logo, search, and buttons vertically */
   }
 
   .search-bar {

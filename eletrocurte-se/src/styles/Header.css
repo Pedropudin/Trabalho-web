@@ -1,17 +1,17 @@
 /*
   Header.css
-  - CSS para o cabeçalho principal do Eletrocurte-se.
-  - Garante responsividade do menu hamburguer, barra de pesquisa e logo.
-  - Ajusta layout do Toolbar e InputBase em diferentes larguras de tela.
-  - Mantém identidade visual e usabilidade em mobile e desktop.
+  - CSS for the main header of Eletrocurte-se.
+  - Ensures responsiveness for hamburger menu, search bar, and logo.
+  - Adjusts layout of Toolbar and InputBase for different screen widths.
+  - Maintains visual identity and usability on mobile and desktop.
 */
 
-/* Toggle (menu hamburguer) sempre no canto superior esquerdo em todas as proporções responsivas */
+/* Toggle (hamburger menu) always in the top left corner for all responsive sizes */
 .MuiToolbar-root {
   position: relative;
 }
 
-/* Até 768px: toggle no canto, barra de pesquisa proporcional e com limite visual */
+/* Up to 768px: toggle in the corner, proportional search bar with visual limit */
 @media (max-width: 768px) {
   .MuiIconButton-root[aria-label="menu"] {
     position: absolute !important;
@@ -52,7 +52,7 @@
   }
 }
 
-/* Até 600px: barra proporcional, mas com limite visual menor */
+/* Up to 600px: proportional bar, but with smaller visual limit */
 @media (max-width: 600px) {
   .MuiInputBase-root {
     width: 99% !important;

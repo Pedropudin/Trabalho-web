@@ -25,34 +25,36 @@ function getProdutosByRoute(route, data) {
 }
 
 export default function ProductsHistory() {
-  // State for products (simulating fetch)
+  // State for products (fetch from backend)
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + '/data/products.json')
+    // Fetch products from backend, not just localStorage
+    fetch(process.env.REACT_APP_API_URL + '/api/products')
       .then(res => res.json())
       .then(data => {
-        setProdutos(getProdutosByRoute(ROUTES.PRODUCT_HISTORY, data));
+        // Garantees visualized/visualizedDate from backend
+        const produtos = (Array.isArray(data) ? data : []).filter(p => p.visualized && p.visualizedDate);
+        setProdutos(produtos);
       });
   }, []);
 
-  // Dynamic date and grouping by year/month
-  const { produtosPorAnoMes } = useMemo(() => {
-    // Groups products by year and month
-    function groupByYearMonth(produtos) {
-      return produtos.reduce((acc, produto) => {
-        if (!produto.data) return acc;
-        // const [day, month, year] = produto.data.split('/');
-        const [, month, year] = produto.data.split('/');
-        const key = `${year}-${month}`;
-        if (!acc[key]) acc[key] = { year, month, produtos: [] };
-        acc[key].produtos.push(produto);
-        return acc;
-      }, {});
-    }
-    const grouped = groupByYearMonth(produtos);
-    return { produtosPorAnoMes: grouped };
+  // Agrupa produtos visualizados por data real (visualizedDate)
+  const produtosPorData = useMemo(() => {
+    // Só produtos visualizados
+    const visualizados = produtos.filter(p => p.visualized && p.visualizedDate);
+    // Agrupa por data (YYYY-MM-DD)
+    return visualizados.reduce((acc, produto) => {
+      const date = new Date(produto.visualizedDate);
+      const key = date.toLocaleDateString('en-CA'); // YYYY-MM-DD
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(produto);
+      return acc;
+    }, {});
   }, [produtos]);
+
+  // Mensagem se não houver produtos visualizados
+  const hasVisualized = Object.keys(produtosPorData).length > 0;
 
   // Utility function to render month/year header
   function renderMonthYearHeader(month, year) {
@@ -84,19 +86,22 @@ export default function ProductsHistory() {
   return (
     <>
       <Header />
-      {/* Products grouped by view month/year */}
       <section className="produtos">
-        {Object.entries(produtosPorAnoMes)
-          .sort((a, b) => {
-            // Sort by year and month descending (most recent first)
-            const [yearA, monthA] = a[0].split('-').map(Number);
-            const [yearB, monthB] = b[0].split('-').map(Number);
-            if (yearA !== yearB) return yearB - yearA;
-            return monthB - monthA;
-          })
-          .map(([key, { year, month, produtos }], idx) => (
-            <div key={key}>
-              {renderMonthYearHeader(month, year)}
+        {!hasVisualized && (
+          <div style={{ width: "100%", textAlign: "center", margin: "40px auto", color: "#007b99", fontWeight: 600 }}>
+            You haven't viewed any products yet.<br />
+            Browse the store and click on products to see your history here!
+          </div>
+        )}
+        {Object.entries(produtosPorData)
+          .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+          .map(([date, produtos], idx) => (
+            <div key={date}>
+              <section className="compras">
+                <p>
+                  Products viewed on {new Date(date).toLocaleDateString()}
+                </p>
+              </section>
               <div className="produtos">
                 {Array.isArray(produtos) ? produtos.map((produto, idx) => (
                   <ProductCard product={produto} onClick={handleCardClick} key={(produto.id || produto.nome) + '-' + idx} showBuyButton={true} />

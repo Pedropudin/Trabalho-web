@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/PaymentDetails.css";
+import "../styles/PaymentDetails.css"
 import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -8,9 +8,11 @@ import CartOverview from "./CartOverview";
 
 /*
   Payment details page.
-  - Displayed during the checkout process.
-  - Collects customer card data.
-  - Buttons to go back or proceed to the next step of the order.
+  - User must select a registered card from wallet.
+  - Shows card balance and checks if it's enough for the purchase.
+  - If no card, instructs user to register one in the wallet.
+  - If insufficient balance, blocks advance.
+  - Cardholder CPF is auto-filled from personal data and cannot be edited here.
 */
 
 // --- Format Helpers ---
@@ -29,187 +31,225 @@ function formatCVC(value) {
 }
 
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
-    // --- State ---
-    const activeStep = 2;
-    const [form, setForm] = useState({
-        cardName: "",
-        cardNumber: "",
-        expiry: "",
-        cvc: ""
-    });
-    const [savedCards, setSavedCards] = useState([]);
+    // Cards from wallet
+    const [cards, setCards] = useState([]);
+    const [selectedCardLast4, setSelectedCardLast4] = useState('');
+    const [selectedCard, setSelectedCard] = useState(null);
+    const [error, setError] = useState('');
+    const [total, setTotal] = useState(0);
+    const [cpf, setCpf] = useState('');
 
-    // --- Effects ---
+    // Progress
+    const activeStep = 2;
+
+    // Busca cartões cadastrados e saldo
     useEffect(() => {
-        // Get user id from localStorage
-        const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user && user.id ? user.id : null;
-        if (!userId) {
-            setSavedCards([]);
-            return;
+        const storedCards = JSON.parse(localStorage.getItem('walletCards') || '[]');
+        setCards(storedCards);
+        if (storedCards.length > 0) {
+            setSelectedCardLast4(storedCards[0].last4);
         }
-        fetch(`http://localhost:5000/api/users/${userId}`)
-            .then(res => res.json())
-            .then(user => {
-                let cards = [];
-                if (Array.isArray(user.cards)) cards = user.cards;
-                else if (user.cards) cards = [user.cards];
-                setSavedCards(cards);
-                // Preenche automaticamente o formulário com o primeiro cartão salvo
-                if (cards.length > 0) {
-                    setForm(form => ({
-                        ...form,
-                        cardName: cards[0].cardName || "",
-                        cardNumber: cards[0].cardNumber || "",
-                        expiry: cards[0].expiry || "",
-                        cvc: cards[0].cvc || ""
-                    }));
-                }
-            })
-            .catch(() => setSavedCards([]));
     }, []);
 
-    // --- Handlers ---
-    function handleChange(e) {
-        const { name, value } = e.target;
-        let newValue = value;
+    // Atualiza cartão selecionado
+    useEffect(() => {
+        const card = cards.find(c => c.last4 === selectedCardLast4);
+        setSelectedCard(card || null);
+    }, [selectedCardLast4, cards]);
 
-        if (name === "cardNumber") {
-            newValue = formatCardNumber(newValue);
-        } else if (name === "expiry") {
-            newValue = formatExpiry(newValue);
-        } else if (name === "cvc") {
-            newValue = formatCVC(newValue);
+    // Calcula o valor total da compra
+    useEffect(() => {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const products = JSON.parse(localStorage.getItem("products")) || [];
+        let sum = 0;
+        for (const item of cart) {
+            const prod = products.find(p => String(p.id) === String(item.id));
+            if (prod) sum += Number(prod.price) * item.quantity;
         }
-        setForm({ ...form, [name]: newValue });
-    }
+        setTotal(sum);
+    }, []);
 
+    // Busca CPF do usuário (personal data)
+    useEffect(() => {
+        const personal = JSON.parse(localStorage.getItem("personal") || "{}");
+        setCpf(personal.cpf || "");
+    }, []);
+
+    // Formulário para parcelas
+    const [installments, setInstallments] = useState("");
+    const vezesDeParcelamento = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+    // Submissão do pagamento
     function handleSubmit(e) {
         e.preventDefault();
-        // Simple validation
-        if (form.cardNumber.replace(/\s/g, "").length !== 16) {
-            toast.error("Card number must have 16 digits.");
+        setError('');
+        if (!cards.length) {
+            toast.error("No card registered. Please register a card in your Wallet before proceeding.");
+            setError("No card registered.");
             return;
         }
-        if (!/^\d{2}\/\d{2}$/.test(form.expiry)) {
-            toast.error("Expiry must be in MM/YY format.");
+        if (!selectedCard) {
+            toast.error("Select a card to proceed.");
+            setError("Select a card.");
             return;
         }
-        if (form.cvc.length < 3) {
-            toast.error("CVC must have at least 3 digits.");
+        if (!installments) {
+            toast.error("Choose the number of installments.");
+            setError("Choose installments.");
             return;
         }
-        localStorage.setItem("payment", JSON.stringify(form));
-        if (onSubmit) onSubmit(form);
+        if ((selectedCard.balance ?? 0) < total) {
+            toast.error("Insufficient balance on the selected card.");
+            setError("Insufficient balance.");
+            return;
+        }
+        // Atualiza saldo do cartão
+        const updatedCards = cards.map(c =>
+            c.last4 === selectedCard.last4
+                ? { ...c, balance: (c.balance ?? 0) - total }
+                : c
+        );
+        setCards(updatedCards);
+        localStorage.setItem('walletCards', JSON.stringify(updatedCards));
+        // Salva dados do pagamento
+        localStorage.setItem("card", JSON.stringify({
+            cardHolder: selectedCard.nameOnCard || "",
+            cardNumber: selectedCard.number || "",
+            cpf: cpf,
+            expiry: selectedCard.expiry || "",
+            cvv: selectedCard.CVV || "",
+            installments
+        }));
+        if (onSubmit) onSubmit();
         if (onNext) onNext();
     }
 
     // --- Render ---
     return (
-        <>
-            <Toaster />
-            <div style={{ width: "100%", margin: "32px 0" }}>
-                <Stepper activeStep={activeStep} alternativeLabel>
-                    {steps.map((label) => (
-                        <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
-            </div>
-            <div className="main-content">
-                <form className="payment-details-form" onSubmit={handleSubmit}>
-                    <h2>Payment Data</h2>
+       <>
+        <Toaster />
+        <div style={{ width: "100%", margin: "32px 0" }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map((label) => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+        </div>
+        <div className="main-content">
+        <form className="payment-details-form" onSubmit={handleSubmit}>
+            <h2>Payment Details</h2>
+            {cards.length === 0 ? (
+                <div style={{ color: "#c00", marginBottom: 24 }}>
+                    No card registered. Please register a card in your <b>Wallet</b> before proceeding.
+                </div>
+            ) : (
+                <>
+                    <label htmlFor="cardHolder">Cardholder Name</label>
                     <input
-                        id="cardName"
+                        id="cardHolder"
                         type="text"
-                        name="cardName"
-                        placeholder="Name on Card"
-                        value={form.cardName}
-                        onChange={handleChange}
+                        name="cardHolder"
+                        value={selectedCard?.nameOnCard || ""}
+                        disabled
                         required
+                        placeholder="Cardholder Name"
                     />
+                    <label htmlFor="cardNumber">Card Number</label>
                     <input
                         id="cardNumber"
                         type="text"
                         name="cardNumber"
-                        placeholder="Card Number"
-                        value={form.cardNumber}
-                        onChange={handleChange}
+                        value={selectedCard?.number || ""}
+                        disabled
                         required
-                        maxLength={19}
+                        placeholder="Card Number"
                     />
-                    <div className="form-row">
-                        <input
-                            id="expiry"
-                            type="text"
-                            name="expiry"
-                            placeholder="MM/YY"
-                            value={form.expiry}
-                            onChange={handleChange}
-                            required
-                            maxLength={5}
-                        />
-                        <input
-                            id="cvc"
-                            type="text"
-                            name="cvc"
-                            placeholder="CVC"
-                            value={form.cvc}
-                            onChange={handleChange}
-                            required
-                            maxLength={4}
-                        />
+                    <label htmlFor="expiry">Expiry</label>
+                    <input
+                        id="expiry"
+                        type="text"
+                        name="expiry"
+                        value={selectedCard?.expiry || ""}
+                        disabled
+                        required
+                        placeholder="MM/YY"
+                    />
+                    <label htmlFor="cvv">CVV</label>
+                    <input
+                        id="cvv"
+                        type="text"
+                        name="cvv"
+                        value={selectedCard?.CVV || ""}
+                        disabled
+                        required
+                        placeholder="CVV"
+                    />
+                    <label htmlFor="cpf">Cardholder CPF</label>
+                    <input
+                        id="cpf"
+                        type="text"
+                        name="cpf"
+                        value={cpf}
+                        disabled
+                        required
+                        placeholder="Cardholder CPF"
+                    />
+                    <label htmlFor="cardSelect">Select a card</label>
+                    <select
+                        id="cardSelect"
+                        name="cardSelect"
+                        value={selectedCardLast4}
+                        onChange={e => setSelectedCardLast4(e.target.value)}
+                        required
+                    >
+                        {cards.map(card => (
+                            <option key={card.last4} value={card.last4}>
+                                {card.brand} **** {card.last4} (Balance: R$ {(card.balance ?? 0).toFixed(2)})
+                            </option>
+                        ))}
+                    </select>
+                    <label htmlFor="installments">Installments</label>
+                    <select
+                        id="installments"
+                        name="installments"
+                        value={installments || ""}
+                        onChange={e => setInstallments(e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>Choose the number of installments</option>
+                        {vezesDeParcelamento.map((num) => (
+                            <option key={num} value={num}>
+                                In {num}x of R$ {(total/num).toFixed(2)} without interest
+                            </option>
+                        ))}
+                    </select>
+                    <div style={{ margin: "10px 0", color: "#007b99" }}>
+                        <b>Total purchase:</b> R$ {total.toFixed(2)}
                     </div>
-                    <div className="saved-card-select">
-                        <label>Select a saved card:</label>
-                        <select
-                            onChange={e => {
-                                const idx = e.target.value;
-                                if (idx !== "" && savedCards[idx]) {
-                                    const selected = savedCards[idx];
-                                    setForm(form => ({
-                                        ...form,
-                                        cardName: selected.cardName || "",
-                                        cardNumber: selected.cardNumber || "",
-                                        expiry: selected.expiry || "",
-                                        cvc: selected.cvc || ""
-                                    }));
-                                }
-                            }}
-                            defaultValue=""
-                        >
-                            <option value="">Select</option>
-                            {savedCards.length === 0 && (
-                                <option value="" disabled>
-                                    No saved cards
-                                </option>
-                            )}
-                            {savedCards.map((card, idx) => (
-                                <option value={idx} key={idx}>
-                                    {card.cardName} - **** **** **** {card.cardNumber?.slice(-4)}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="button-row">
-                        <button
-                            type="button"
-                            className="back-button"
-                            onClick={onBack}
-                        >
-                            Back
-                        </button>
-                        <button
-                            type="submit"
-                            className="submit-button"
-                        >
-                            Next
-                        </button>
-                    </div>
-                </form>
-                <CartOverview />
+                    {error && <div style={{ color: "#c00", marginBottom: 8 }}>{error}</div>}
+                </>
+            )}
+            <div className="button-row">
+                <button
+                    type="button"
+                    className="back-button"
+                    onClick={handleVoltar}
+                >
+                    Back
+                </button>
+                <button
+                    type="submit"
+                    className="submit-button"
+                    disabled={cards.length === 0}
+                >
+                    Next
+                </button>
             </div>
-        </>
+        </form>
+        <CartOverview/>
+        </div>
+    </>
     );
 }

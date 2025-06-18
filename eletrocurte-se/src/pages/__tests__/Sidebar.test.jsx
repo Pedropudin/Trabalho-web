@@ -3,8 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Sidebar from '../../components/Sidebar';
 import { MemoryRouter } from 'react-router-dom';
 
-it('permite selecionar filtro de marca', () => {
-  const brands = [{ id: 'marca1', label: 'Marca1' }];
+it('allows selecting brand filter', () => {
+  const brands = [{ id: 'brand1', label: 'Brand1' }];
   const setSelectedBrands = jest.fn();
   render(
     <MemoryRouter>
@@ -20,6 +20,6 @@ it('permite selecionar filtro de marca', () => {
       />
     </MemoryRouter>
   );
-  fireEvent.click(screen.getByLabelText('Marca1'));
+  fireEvent.click(screen.getByLabelText('Brand1'));
   expect(setSelectedBrands).toHaveBeenCalled();
 });

@@ -5,27 +5,27 @@ import { MemoryRouter } from 'react-router-dom';
 
 describe('Profile', () => {
   beforeEach(() => {
-    localStorage.setItem('nomeUsuario', 'Maria');
+    localStorage.setItem('userName', 'Maria');
   });
 
   afterEach(() => {
     localStorage.clear();
   });
 
-  it('exibe o nome do usuário salvo', () => {
+  it('displays the saved user name', () => {
     render(
       <MemoryRouter>
         <Profile />
       </MemoryRouter>
     );
 
-    // Verifica se o nome está no elemento com data-testid
+    // Checks if the name is in the element with data-testid
     expect(screen.getByTestId('nome-usuario')).toHaveTextContent('Maria');
 
-    // Verifica se a saudação "Hello," aparece
+    // Checks if the greeting "Hello," appears
     expect(screen.getByText(/Hello,/i)).toBeInTheDocument();
 
-    // Verifica se o nome do usuário também aparece como texto
+    // Checks if the user name also appears as text
     expect(screen.getByText('Maria')).toBeInTheDocument();
   });
 });
