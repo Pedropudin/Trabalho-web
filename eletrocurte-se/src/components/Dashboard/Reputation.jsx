@@ -21,10 +21,10 @@ const NewCard = ({
                     value={complainings}
                     description={"Complainings in the last 30 days"}
                 />*/}
-                <DataDescription
+                {/*<DataDescription
                     value={late_send}
                     description={"Late dispatch"}
-                />
+                />*/}
                 <DataDescription
                     value={new_users}
                     description={"New users in the last 30 days"}

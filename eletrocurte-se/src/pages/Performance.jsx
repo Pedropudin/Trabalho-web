@@ -63,6 +63,8 @@ const SalesGraph = () => {
 const Performance = () => {
     const [data, setData] = useState(null);
     const [newUsers, setNewUsers] = useState(0);
+    const [salesLast30Days, setSalesLast30Days] = useState(0);
+    const [salesLast60Days, setSalesLast60Days] = useState(0);
 
     /* Provisory local data */
     useEffect(() => {
@@ -84,7 +86,35 @@ const Performance = () => {
                 }).length;
                 setNewUsers(count);
             }
-        })
+        });
+
+        // Fetch orders and count sales in last 30 days
+        fetch(process.env.REACT_APP_API_URL + '/api/orders')
+        .then(resp => resp.json())
+        .then(orderData => {
+            if (Array.isArray(orderData)) {
+                const now = new Date();
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(now.getDate() - 30);
+                const salesCount = orderData.filter(order => {
+                    if (order.status !== "delivered" || !order.updatedAt) return false;
+                    const updatedAt = new Date(order.updatedAt);
+                    return updatedAt >= thirtyDaysAgo;
+                }).length;
+                setSalesLast30Days(salesCount);
+            }
+            if (Array.isArray(orderData)) {
+                const now = new Date();
+                const sixtyDaysAgo = new Date();
+                sixtyDaysAgo.setDate(now.getDate() - 60);
+                const salesCount = orderData.filter(order => {
+                    if (order.status !== "delivered" || !order.updatedAt) return false;
+                    const updatedAt = new Date(order.updatedAt);
+                    return updatedAt >= sixtyDaysAgo;
+                }).length;
+                setSalesLast60Days(salesCount);
+            }
+        });
     }, []);
 
     return(
@@ -95,7 +125,9 @@ const Performance = () => {
                 <div style={{ flex: 1, minHeight: 0 }}>
                     <div className="content">
                         { data && <Reputation
-                            percentage={data.sales_percentage}
+                            // percentage={(salesLast30Days/(salesLast60Days-salesLast30Days) + 1) * 100}
+                            percentage={salesLast30Days}
+                            // Using total number instead of percentage
                             complainings={data.complainings}
                             late_send={data.late_send}
                             new_users={newUsers}
