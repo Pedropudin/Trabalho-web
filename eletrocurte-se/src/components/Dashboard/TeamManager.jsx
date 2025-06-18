@@ -51,13 +51,30 @@ const TeamManager = () => {
         setEditValues({ ...editValues, [e.target.name]: e.target.value });
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (isAdding) {
-            const newId = data && data.length > 0 ? Math.max(...data.map(emp => emp.id || 0)) + 1 : 1;
-            setData([
-                ...data,
-                { id: newId, ...editValues }
-            ]);
+            try {
+                const response = await fetch(process.env.REACT_APP_API_URL + '/api/users/create-admin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem("Token")
+                    },
+                    body: JSON.stringify(editValues)
+                });
+                if (response.ok) {
+                    const newAdmin = await response.json();
+                    setData([
+                        ...(data || []),
+                        // Use backend response if it returns the new admin, otherwise fallback to editValues
+                        newAdmin.employee || { ...editValues, id: newAdmin.id || (data && data.length > 0 ? Math.max(...data.map(emp => emp.id || 0)) + 1 : 1) }
+                    ]);
+                } else {
+                    alert("Failed to add admin.");
+                }
+            } catch (err) {
+                alert("Error adding admin.");
+            }
         } else {
             setData(data.map(emp =>
                 emp.id === selectedEmp.id ? { ...emp, ...editValues } : emp
@@ -124,19 +141,35 @@ const TeamManager = () => {
                         onChange={handleChange}
                         fullWidth
                     />
-                    <TextField
+                    {/*<TextField
                         margin="dense"
                         label="Role"
                         name="role"
                         value={editValues.role}
                         onChange={handleChange}
                         fullWidth
-                    />
+                    />*/}
                     <TextField
                         margin="dense"
                         label="Email"
                         name="email"
                         value={editValues.email}
+                        onChange={handleChange}
+                        fullWidth
+                    />
+                    <TextField
+                        margin="dense"
+                        label="Password"
+                        name="password"
+                        value={editValues.password}
+                        onChange={handleChange}
+                        fullWidth
+                    />
+                    <TextField
+                        margin="dense"
+                        label="Token"
+                        name="token"
+                        value={editValues.token}
                         onChange={handleChange}
                         fullWidth
                     />
