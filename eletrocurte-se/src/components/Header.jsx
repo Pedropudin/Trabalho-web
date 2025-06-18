@@ -383,7 +383,7 @@ function Header({
                 '&:hover': { background: 'rgba(0,123,153,0.15)' },
               }}
             >
-              {isLoggedIn ? (
+              {isLoggedIn && cartItemsCount > 0? (
                 <Badge
                   badgeContent={normalizeCartCount(cartItemsCount)}
                   color="secondary"
