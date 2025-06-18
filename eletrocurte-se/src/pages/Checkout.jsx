@@ -57,14 +57,12 @@ export default function Checkout() {
                 !personal.email ||
                 !personal.cpf ||
                 !personal.phone ||
-                (!personal.address && (
-                    !personal.street ||
-                    !personal.number ||
-                    !personal.district ||
-                    !personal.city ||
-                    !personal.state ||
-                    !personal.zipCode
-                ))
+                !personal.street ||
+                !personal.number ||
+                !personal.district ||
+                !personal.city ||
+                !personal.state ||
+                !personal.zipCode
             ) {
                 alert("Fill in all personal and address data before proceeding.");
                 return;

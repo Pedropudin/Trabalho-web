@@ -31,6 +31,7 @@ export default function Logout() {
     // Remove login flags on logout and start countdown
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
+    
     setCountdown(10);
     if (timerRef.current) timerRef.current.textContent = 10;
     intervalRef.current = setInterval(() => {
