@@ -7,7 +7,6 @@ import '../styles/UserRating.css';
 import ProductCard from '../components/Products/ProductCard';
 import ProductDetailsModal from '../components/Products/ProductDetailsModal';
 import ScrollToTop from '../components/ScrollToTop';
-import ROUTES from '../routes';
 
 /*
   User purchase history page.
@@ -15,17 +14,6 @@ import ROUTES from '../routes';
   - Allows rating products that haven't been rated yet.
   - Details modal without purchase button.
 */
-
-function getProdutosByRoute(route, data) {
-  switch (route) {
-    case ROUTES.PURCHASE_HISTORY:
-      return data.produtosHistorico || [];
-    case ROUTES.PRODUCT_HISTORY:
-      return data.produtosVisualizados || [];
-    default:
-      return [];
-  }
-}
 
 export default function PurchaseHistory() {
   // Gets products from the history via products.js
@@ -101,18 +89,6 @@ export default function PurchaseHistory() {
   }, [produtos]);
 
   const hasPayed = Object.keys(produtosPorData).length > 0;
-
-  // Utility function to render month/year header
-  function renderCabecalhoMesAno(mes, ano) {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return (
-      <section className="compras">
-        <p>
-          Purchases made in {months[parseInt(mes, 10) - 1]} {ano}
-        </p>
-      </section>
-    );
-  }
 
   // Function to open details of the reviewed product
   const handleProductClick = (product) => {

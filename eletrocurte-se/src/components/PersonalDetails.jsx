@@ -36,7 +36,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     const userId = localStorage.getItem('userId');
     const cartKey = userId ? `cart_${userId}` : 'cart';
-    const [cart, setCart] = useState([]);
+    const [, setCart] = useState([]);
 
     // Busca endereço selecionado do perfil ao montar
     React.useEffect(() => {
