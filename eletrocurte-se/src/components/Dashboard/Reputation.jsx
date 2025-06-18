@@ -17,10 +17,10 @@ const NewCard = ({
                     description={"Sales in the last 30 days"}
                     newStyle={{"width": "150px"}}
                 />
-                <DataDescription
+                {/*<DataDescription
                     value={complainings}
                     description={"Complainings in the last 30 days"}
-                />
+                />*/}
                 <DataDescription
                     value={late_send}
                     description={"Late dispatch"}

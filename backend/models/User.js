@@ -71,7 +71,7 @@ const userSchema = new mongoose.Schema({
 
   // Selected address (optional)
   selectedAddress: { type: String }
-});
+}, { timestamps: true });
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {

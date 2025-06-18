@@ -62,15 +62,28 @@ const SalesGraph = () => {
 
 const Performance = () => {
     const [data, setData] = useState(null);
+    const [newUsers, setNewUsers] = useState(0);
 
     /* Provisory local data */
     useEffect(() => {
-        fetch('/data/dashboard.json')
+        fetch(process.env.REACT_APP_API_URL + '/api/users')
         .then((resp) => {
             return resp.json();
         })
         .then(dash_data => {
             setData(dash_data);
+
+            // Calculate users created in last 30 days
+            if (Array.isArray(dash_data)) {
+                const now = new Date();
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(now.getDate() - 30);
+                const count = dash_data.filter(user => {
+                    const createdAt = new Date(user.createdAt);
+                    return createdAt >= thirtyDaysAgo;
+                }).length;
+                setNewUsers(count);
+            }
         })
     }, []);
 
@@ -85,9 +98,9 @@ const Performance = () => {
                             percentage={data.sales_percentage}
                             complainings={data.complainings}
                             late_send={data.late_send}
-                            new_users={data.new_users}
+                            new_users={newUsers}
                         /> }        
-                        { data && <PopularProduct
+                        { data && data.product_popular && <PopularProduct
                             name={data.product_popular.name}
                             photo={data.product_popular.photo}
                             price={data.product_popular.price}
