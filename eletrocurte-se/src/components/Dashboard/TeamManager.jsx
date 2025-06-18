@@ -94,9 +94,30 @@ const TeamManager = () => {
                 alert("Error adding admin.");
             }
         } else {
-            setData(data.map(emp =>
-                emp.id === selectedEmp.id ? { ...emp, ...editValues } : emp
-            ));
+            // Update admin info in backend
+            try {
+                const response = await fetch(
+                    process.env.REACT_APP_API_URL + '/api/users/admin/' + selectedEmp._id,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem("Token")
+                        },
+                        body: JSON.stringify(editValues)
+                    }
+                );
+                if (response.ok) {
+                    const updatedAdmin = await response.json();
+                    setData(data.map(emp =>
+                        emp._id === selectedEmp._id ? updatedAdmin : emp
+                    ));
+                } else {
+                    alert("Failed to update admin.");
+                }
+            } catch (err) {
+                alert("Error updating admin.");
+            }
         }
         handleClose();
     };
