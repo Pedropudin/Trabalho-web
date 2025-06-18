@@ -1,4 +1,4 @@
-/* Reset and main layout */
+/* --- Reset and main layout --- */
 * {
     margin: 0;
     padding: 0;
@@ -6,120 +6,126 @@
     font-family: Arial, sans-serif;
     text-decoration: none;
 }
-.main-content {
+
+/* --- Main content container --- */
+.sector-main-content {
     display: flex;
-    align-items: stretch;
-    flex: 1;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: stretch;
     gap: 50px;
     margin: 40px auto;
     padding: 12px;
-    box-sizing: border-box;
     width: 100%;
     max-width: 1200px;
-    height: auto;
     min-height: 500px;
+    height: auto;
 }
 
-/* Results and filters area */
-.results select, .results h4{
-    display: inherit;
-    flex-direction: row;
-}
-.results {
-    display: flex;
-    flex-direction: column;
-    text-align: start;
-    align-items: flex-start;
-    padding: 10px;
-    box-sizing: border-box;
-    width: 100%;
-}
-.search-results {
+/* --- Results and filters area --- */
+.sector-results {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
-    box-sizing: border-box;
-}
-
-/* Sector grid */
-.sector-display {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 30px;
-    margin: 20px auto;
-    padding: 10px;
     width: 100%;
 }
-.sector-name{
-    font-weight: bold;
-    text-align: start;
-}
 
-/* Sorting */
-.order-criterion {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-.results-header-row {
+/* --- Header and sorting --- */
+.sector-results-header-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
+    gap: 20px;
     width: 100%;
     margin-bottom: 16px;
-    gap: 20px;
 }
 
-/* Responsive for mobile */
+.sector-results-header-row h4 {
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+}
+.sector-name {
+    font-weight: bold;
+    text-align: start;
+}
+
+.sector-order-criterion {
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* --- Product grid display --- */
+.sector-product-display {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin: 20px auto;
+    padding-left: 60px;
+    width: 100%
+}
+
+.sector-display-all {
+    padding-left: 60px;
+    border-left: 2px solid #ccc;
+}
+
+/* --- No products found message --- */
+.sector-no-products-message {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+}
+
+/* --- Responsive styles for mobile --- */
 @media (max-width: 768px) {
-    *{
-        max-width: 100%;
-    }
-    .product-display {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        justify-items: center;
-    }
-    .main-content {
+    .sector-main-content {
         flex-direction: column;
         gap: 20px;
         margin: 16px auto;
         padding: 8px;
+        width: 100%;
         min-height: unset;
     }
-    .results {
+
+    .sector-results {
         width: 100%;
         padding: 8px;
     }
-    .results-header-row {
+
+    .sector-results-header-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
-    .product-display {
+
+    .sector-product-display, .sector-display-all {
         grid-template-columns: 1fr;
         gap: 20px;
         justify-items: center;
         margin: 10px 0;
         padding: 0;
+        width: 100%;
+        border-left: 0;
     }
-}
-@media (max-width: 768px) {
-    .main-content {
-        flex-direction: column;
+
+    .sector-display-all {
+        border-left: 0;
+        margin: 10px 0;
     }
-    .results {
-        width: 80%;
-        padding: 8px 0 0 0;
-    }
-}
-@media (max-width: 768px) {
-    .main-content {
-        min-height: 500px;
+
+    .sector-sidebar {
+        justify-items: center;
+        margin-bottom: 16px;
     }
 }
