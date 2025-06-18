@@ -8,6 +8,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import ROUTES from "../routes.js";
 import Rating from '@mui/material/Rating';
 
+// Import dependencies and styles
+
 /*
   Eletrocurte-se product page.
   - Displays the accessed product.
@@ -18,32 +20,46 @@ import Rating from '@mui/material/Rating';
 export default function ProductPage() {
   // Variables
   const navigate = useNavigate();
-  const { id } = useParams();  // Identifies the id from the url 
+  const { id } = useParams();  // Identifies the id from the URL
   const [productsLocal, setProductsLocal] = React.useState([]);
 
-  // Reads product data directly from database
+  // Fetch product data from the backend
   useEffect(() => {
-        // Always fetch from backend for consistency
-        fetch(process.env.REACT_APP_API_URL + '/api/products')
-            .then(res => res.json())
-            .then(data => setProductsLocal(data))
-            .catch(() => setProductsLocal([])); 
-    }, []);
-  
-  // Variables
+    fetch(process.env.REACT_APP_API_URL + '/api/products')
+      .then(res => res.json())
+      .then(data => setProductsLocal(data))
+      .catch(() => setProductsLocal([])); 
+  }, []);
+
+  // Find the product based on the URL id
   const product = productsLocal.find(p => String(p.id) === String(id));
 
-  // Updates images after receiving data
+  // Manage product images
   const [mainImg, setMainImg] = useState();
   const [thumbs, setThumbs] = useState([]);
 
   useEffect(() => {
     if (product) {
-      setMainImg(product.image);
-      setThumbs(product.thumbs || []);
+      // Validate and set thumbnails
+      if (Array.isArray(product.thumbs)) {
+        const validThumbs = product.thumbs.filter(
+          (thumb) => typeof thumb === "string" && thumb.trim() !== ""
+        );
+        setThumbs(validThumbs);
+      } else {
+        setThumbs([]); 
+      }
+
+      // Validate and set main image
+      if (typeof product.image === "string" && product.image.trim() !== "") {
+        setMainImg(product.image);
+      } else {
+        setMainImg(null);
+      }
     }
   }, [product]);
 
+  // Manage reviews
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [, setValidUsernames] = useState([]);
@@ -58,6 +74,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (product && product.id) {
+      // Fetch reviews for the product
       fetch(`${process.env.REACT_APP_API_URL}/api/products/${product.id}/reviews`)
         .then(res => res.json())
         .then(data => setReviews(Array.isArray(data) ? data : []))
@@ -65,17 +82,18 @@ export default function ProductPage() {
     }
   }, [product]);
 
-  // Show all reviews
+  // Filter and calculate average rating
   const filteredReviews = reviews; // Show all reviews
-
   const avgRating = filteredReviews.length
     ? Math.round(filteredReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / filteredReviews.length)
     : 0;
+
+  // Get user-specific review
   const nomeUsuario = localStorage.getItem('nomeUsuario');
   const userReview = filteredReviews.find(r => r.username === nomeUsuario);
   const visibleReviews = showAllReviews ? filteredReviews : filteredReviews.slice(0, 5);
 
-  // When clicking "add to cart"
+  // Handle adding product to cart
   function handleAdicionarCarrinho(productId) {
     const userId = localStorage.getItem('userId');
     const cartKey = userId ? `cart_${userId}` : 'cart';
@@ -84,10 +102,12 @@ export default function ProductPage() {
     const stock = product.inStock;
 
     if (existing) {
+      // Check stock availability
       if (existing.quantity + 1 > stock) {
         toast.error("Maximum number of products reached. Error: Out of stock!");
         return;
       }
+      // Update cart
       const updatedCart = cart.map(item =>
         item.id === productId
           ? { ...item, quantity: item.quantity + 1 }
@@ -98,6 +118,7 @@ export default function ProductPage() {
       window.dispatchEvent(new Event('cartUpdated'));
       window.forceCartUpdate && window.forceCartUpdate();
     } else {
+      // Add new product to cart
       const updatedCart = [
         ...cart,
         {
@@ -114,7 +135,9 @@ export default function ProductPage() {
       window.forceCartUpdate && window.forceCartUpdate();
     }
   }
-  if (!product) {//If no product is found with this id, show that the product was not found.
+
+  // If no product is found, display a message
+  if (!product) {
     return (
       <>
         <Header />
@@ -126,12 +149,14 @@ export default function ProductPage() {
     );
   }
 
-  return (//Otherwise, load the page
+  // Render the product page
+  return (
     <>
       <Header />
       <main className="main-content">
         <div className="products">
           <div className="item">
+            {/* Product images */}
             <div className="item-images" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <Paper
                 elevation={2}
@@ -176,6 +201,7 @@ export default function ProductPage() {
                 ))}
               </Stack>
             </div>
+            {/* Product information */}
             <div className="item-information">
               <h1 className="product-name-product-page">{product.name}</h1>
               <p className="product-description">{product.description}</p>
@@ -211,6 +237,7 @@ export default function ProductPage() {
               </div>
             </div>
           </div>
+          {/* Product description and specifications */}
           <div className="item-description">
             <div className="text-description">
               <h2>Product Description</h2>
