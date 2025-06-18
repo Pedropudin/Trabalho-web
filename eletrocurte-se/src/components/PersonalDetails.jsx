@@ -75,6 +75,22 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
                 .then(res => res.json())
                 .then(user => {
+                    let addr = {};
+                    if (Array.isArray(user.address)) {
+                        const selId = user.selectedAddress || (user.address[0]?.id || "");
+                        const selAddr = user.address.find(a => a.id === selId) || user.address[0];
+                        if (selAddr) {
+                            addr = {
+                                street: selAddr.street || "",
+                                number: selAddr.number || "",
+                                complement: selAddr.complement || "",
+                                district: selAddr.district || "",
+                                city: selAddr.city || "",
+                                state: selAddr.state || "",
+                                zipCode: selAddr.zipCode || ""
+                            };
+                        }
+                    }
                     setForm(prev => ({
                         ...prev,
                         firstName: user.firstName || "",
@@ -83,7 +99,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         phone: user.phone || "",
                         cpf: user.cpf || "",
                         birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
-                        ...addressData
+                        ...addr
                     }));
                 })
                 .catch(() => {
@@ -204,28 +220,26 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         // Updates in backend if logged in
         const userId = localStorage.getItem('userId');
         if (userId) {
-            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    firstName: form.firstName,
-                    lastName: form.lastName,
-                    email: form.email,
-                    phone: form.phone,
-                    cpf: form.cpf,
-                    birthDate: new Date(`${year}-${month}-${day}`),
-                    address: [{
-                        street: form.street,
-                        number: form.number,
-                        complement: form.complement,
-                        district: form.district,
-                        city: form.city,
-                        state: form.state,
-                        zipCode: form.zipCode,
-                        id: localStorage.getItem('selectedAddress') || `address_${Date.now()}`
-                    }]
-                })
-            });
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    const addresses = Array.isArray(user.address) ? user.address : [];
+                    const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
+                    const selectedAddressId = localStorage.getItem(selectedAddressKey);
+                    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: form.firstName,
+                            lastName: form.lastName,
+                            email: form.email,
+                            phone: form.phone,
+                            cpf: form.cpf,
+                            birthDate: new Date(`${year}-${month}-${day}`),
+                            selectedAddress: selectedAddressId || addresses[0]?.id || ""
+                        })
+                    });
+                });
         }
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();

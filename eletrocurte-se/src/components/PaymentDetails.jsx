@@ -58,10 +58,10 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId && selectedCardLast4) {
-            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/select-card`, {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ last4: selectedCardLast4 })
+                body: JSON.stringify({ selectedCard: selectedCardLast4 })
             });
         }
     }, [selectedCardLast4]);

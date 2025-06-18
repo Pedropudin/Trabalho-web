@@ -46,7 +46,13 @@ export default function Addresses({ onVoltar }) {
       fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
         .then(res => res.json())
         .then(user => {
-          const backendAddresses = Array.isArray(user.address) ? user.address : [];
+          let backendAddresses = Array.isArray(user.address) ? user.address : [];
+          backendAddresses = backendAddresses.map(addr => ({
+            ...addr,
+            text: addr.text || (
+              `${addr.street || ''}, ${addr.number || ''}${addr.complement ? ' - ' + addr.complement : ''} - ${addr.district || ''}, ${addr.city || ''}/${addr.state || ''}`.replace(/\s+/g, ' ').trim()
+            )
+          }));
           setAddresses(backendAddresses);
           localStorage.setItem(addressKey, JSON.stringify(backendAddresses));
           const selAddr = user.selectedAddress || (backendAddresses[0]?.id || '');
@@ -55,18 +61,6 @@ export default function Addresses({ onVoltar }) {
         });
     }
   }, [userId, addressKey, selectedAddressKey]);
-
-  // Syncs addresses to localStorage and backend whenever addresses change.
-  useEffect(() => {
-    localStorage.setItem(addressKey, JSON.stringify(addresses));
-    if (userId) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address: addresses })
-      });
-    }
-  }, [addresses, addressKey, userId]);
 
   // Syncs selected address to localStorage and backend whenever it changes.
   useEffect(() => {
@@ -97,40 +91,45 @@ export default function Addresses({ onVoltar }) {
 
   // Adds a new address to the list and selects it.
   const addAddress = (fullAddress) => {
-    // fullAddress should be an object with street, number, complement, district, city, state, zipCode.
+    const newId = `address${Date.now()}_${Math.floor(Math.random()*10000)}`;
     const text = `${fullAddress.street || ''}, ${fullAddress.number || ''} ${fullAddress.complement ? '- ' + fullAddress.complement : ''} - ${fullAddress.district || ''}, ${fullAddress.city || ''}/${fullAddress.state || ''}`.replace(/\s+/g, ' ').trim();
-    const newAddress = { id: `address${Date.now()}`, text, ...fullAddress };
-    setAddresses([...addresses, newAddress]);
-    setSelectedAddress(newAddress.id);
-    // Updates backend with new address array and selectedAddress
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address: [...addresses, newAddress], selectedAddress: newAddress.id })
-      });
-    }
+    const newAddress = { id: newId, text, ...fullAddress };
+
+    setAddresses(prev => {
+      const updated = [...prev, newAddress];
+
+      if (userId) {
+        fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ address: updated, selectedAddress: newId })
+        });
+      }
+      return updated;
+    });
+    setSelectedAddress(newId);
   };
 
   // Removes address by id and adjusts selection if necessary.
   const removeAddress = (id) => {
-    const filtered = addresses.filter(e => e.id !== id);
-    setAddresses(filtered);
-    if (id === selectedAddress && filtered.length > 0) {
-      setSelectedAddress(filtered[0].id);
-    } else if (filtered.length === 0) {
-      setSelectedAddress('');
-    }
-    // Updates backend with new address array and selectedAddress
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address: filtered, selectedAddress: filtered[0]?.id || '' })
-      });
-    }
+    setAddresses(prev => {
+      const filtered = prev.filter(e => e.id !== id);
+      // Atualiza backend explicitamente
+      if (userId) {
+        fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ address: filtered, selectedAddress: filtered[0]?.id || '' })
+        });
+      }
+
+      if (id === selectedAddress && filtered.length > 0) {
+        setSelectedAddress(filtered[0].id);
+      } else if (filtered.length === 0) {
+        setSelectedAddress('');
+      }
+      return filtered;
+    });
   };
 
   // Opens confirmation dialog to remove address.

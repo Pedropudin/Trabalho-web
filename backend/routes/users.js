@@ -49,11 +49,20 @@ router.patch('/:id', async (req, res) => {
 
     if ('address' in updates) {
       if (Array.isArray(updates.address)) {
-        user.address = updates.address.filter(a => !!a && typeof a === 'object');
+        user.address = updates.address
+          .filter(a => !!a && typeof a === 'object')
+          .map(a => ({
+            ...a,
+            id: a.id || `address${Date.now()}_${Math.floor(Math.random()*10000)}`
+          }));
       } else if (typeof updates.address === 'object' && updates.address !== null) {
-        const idx = user.address.findIndex(a => a.id === updates.address.id);
-        if (idx >= 0) user.address[idx] = updates.address;
-        else user.address.push(updates.address);
+        const addr = {
+          ...updates.address,
+          id: updates.address.id || `address${Date.now()}_${Math.floor(Math.random()*10000)}`
+        };
+        const idx = user.address.findIndex(a => a.id === addr.id);
+        if (idx >= 0) user.address[idx] = addr;
+        else user.address.push(addr);
       }
     }
     if ('selectedAddress' in updates) {
