@@ -25,7 +25,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         phone: "",
         cpf: "",
         birthDate: "",
-        address: "",
+        street: "",
         number: "",
         complement: "",
         district: "",
@@ -33,6 +33,39 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         state: "",
         zipCode: ""
     });
+    
+    // CPF formatting
+    function formatCPF(value) {
+        value = value.replace(/\D/g, "").slice(0, 11);
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        return value;
+    }
+    // Date formatting
+    function formatBirthDate(value) {
+        value = value.replace(/\D/g, "").slice(0, 8);
+        if (value.length > 4) {
+            value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+        } else if (value.length > 2) {
+            value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+        }
+        return value;
+    }
+    // Phone number formatting
+    function formatPhoneNumber(value) {
+        value = value.replace(/\D/g, "").slice(0, 11); 
+
+        if (value.length > 2) {
+            value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+        }
+        if (value.length > 10) {
+            value = value.replace(/(\d{5})(\d{4})$/, "$1-$2");
+        } else if (value.length > 6) {
+            value = value.replace(/(\d{4})(\d{4})$/, "$1-$2");
+        }
+        return value;
+    }
 
     // Busca endereço selecionado do perfil ao montar
     React.useEffect(() => {
@@ -44,7 +77,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         const selectedAddress = addresses.find(a => a.id === selectedAddressId);
         if (selectedAddress) {
             addressData = {
-                address: selectedAddress.street || "",
+                street: selectedAddress.street || "",
                 number: selectedAddress.number || "",
                 complement: selectedAddress.complement || "",
                 district: selectedAddress.district || "",
@@ -56,7 +89,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             // fallback: get the first address if none selected
             const a = addresses[0];
             addressData = {
-                address: a.street || "",
+                street: a.street || "",
                 number: a.number || "",
                 complement: a.complement || "",
                 district: a.district || "",
@@ -94,93 +127,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             }));
         }
         // If no address registered, alert and prevent advance
-        if (!addressData.address || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+        if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
             toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding with the purchase.");
         }
-    }, []);
-
-    // CPF formatting
-    function formatCPF(value) {
-        value = value.replace(/\D/g, "").slice(0, 11);
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-        return value;
-    }
-    // Date formatting
-    function formatBirthDate(value) {
-        value = value.replace(/\D/g, "").slice(0, 8);
-        if (value.length > 4) {
-            value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-        } else if (value.length > 2) {
-            value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-        }
-        return value;
-    }
-    // Phone number formatting
-    function formatPhoneNumber(value) {
-        value = value.replace(/\D/g, "").slice(0, 11); 
-
-        if (value.length > 2) {
-            value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
-        }
-        if (value.length > 10) {
-            value = value.replace(/(\d{5})(\d{4})$/, "$1-$2");
-        } else if (value.length > 6) {
-            value = value.replace(/(\d{4})(\d{4})$/, "$1-$2");
-        }
-        return value;
-    }
-
-export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token }) {
-    // --- State ---
-    const activeStep = 1;
-    const [form, setForm] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        cpf: "",
-        birthDate: "",
-        street: "",     
-        number: "",
-        complement: "",
-        district: "",
-        city: "",
-        state: "",
-        zipCode: ""
-    });
-    const [savedAddresses, setSavedAddresses] = useState([]);
-
-    // --- Effects ---
-    useEffect(() => {
-        // Get user id from localStorage
-        const userId = localStorage.getItem('userId');
-        if (!userId) {
-            setSavedAddresses([]);
-            return;
-        }
-        fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
-            .then(res => res.json())
-            .then(user => {
-                let addresses = [];
-                if (Array.isArray(user.address)) addresses = user.address;
-                else if (user.address) addresses = [user.address];
-                setSavedAddresses(addresses);
-                if (addresses.length > 0) {
-                    setForm(form => ({
-                        ...form,
-                        street: addresses[0].street || "",
-                        number: addresses[0].number || "",
-                        complement: addresses[0].complement || "",
-                        district: addresses[0].district || "",
-                        city: addresses[0].city || "",
-                        state: addresses[0].state || "",
-                        zipCode: addresses[0].zipCode || ""
-                    }));
-                }
-            })
-            .catch(() => setSavedAddresses([]));
     }, []);
 
     // --- Handlers ---
@@ -236,11 +185,6 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token
             toast.error("Birth year must be 2025 or less.");
             return;
         }
-        // Checa se endereço está preenchido (impede avanço se não houver)
-        if (!form.address || !form.number || !form.city || !form.state || !form.zipCode) {
-            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
-            return;
-        }
 
         localStorage.setItem("personal", JSON.stringify(form));
         // Updates in backend if logged in
@@ -257,7 +201,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token
                     cpf: form.cpf,
                     birthDate: new Date(`${year}-${month}-${day}`),
                     address: {
-                        street: form.address,
+                        street: form.street,
                         number: form.number,
                         complement: form.complement,
                         district: form.district,
@@ -420,40 +364,6 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token
                             onChange={handleChange}
                             required
                         />
-                    </div>
-                    <div className="saved-address-select">
-                        <label>Select a saved address:</label>
-                        <select
-                            onChange={e => {
-                                const idx = e.target.value;
-                                if (idx !== "" && savedAddresses[idx]) {
-                                    const selected = savedAddresses[idx];
-                                    setForm(form => ({
-                                        ...form,
-                                        street: selected.street || "",
-                                        number: selected.number || "",
-                                        complement: selected.complement || "",
-                                        district: selected.district || "",
-                                        city: selected.city || "",
-                                        state: selected.state || "",
-                                        zipCode: selected.zipCode || ""
-                                    }));
-                                }
-                            }}
-                            defaultValue=""
-                        >
-                            <option value="">Select</option>
-                            {savedAddresses.length === 0 && (
-                                <option value="" disabled>
-                                    No saved addresses
-                                </option>
-                            )}
-                            {savedAddresses.map((addr, idx) => (
-                                <option value={idx} key={idx}>
-                                    {addr.street}, {addr.number} - {addr.city}/{addr.state}
-                                </option>
-                            ))}
-                        </select>
                     </div>
                     <div className="button-row">
                         <button

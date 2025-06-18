@@ -10,24 +10,22 @@ const userSchema = new mongoose.Schema({
   cpf: { type: String, unique: true, sparse: true, required: true },
   birthDate: { type: Date, required: true }, // birth date
 
-  address: {
-    street: { type: String, required: true }, // street address
-    number: { type: String, required: true },
-    complement: { type: String },
-    district: { type: String, required: true }, // district/neighborhood
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zipCode: { type: String, required: true } // postal code
-  },
-
-  card: {
-    cardHolder: { type: String }, // card holder name
-    cardNumber: { type: String }, // card number
-    expiry: { type: String }, // expiration date
-    cvv: { type: String },
-    cpf: { type: String },
-    installments: { type: Number } // number of installments
-  },
+  card: [
+    {
+      cardHolder: { type: String, required: true }, // card holder name
+      cardNumber: { type: String, required: true }, // card number
+      expiry: { type: String, required: true }, // expiry date in MM/YY format
+      cvv: { type: String, required: true },
+      cpf: { type: String, required: true },
+      installments: { type: Number, required: true }, // number of installments
+      // Additional card details
+      last4: { type: String, required: true },
+      brand: { type: String },
+      nameOnCard: { type: String },
+      balance: { type: Number, default: 0 } // saldo em dólar
+    }
+  ],
+  selectedCard: { type: String }, // last4 of cards
 
   privacy: {
     notification: { type: Boolean, default: false },
@@ -35,7 +33,6 @@ const userSchema = new mongoose.Schema({
     termsAccepted: { type: Boolean, default: false }
   },
 
-  // User purchase history
   purchaseHistory: [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
@@ -48,29 +45,29 @@ const userSchema = new mongoose.Schema({
     }
   ],
 
-  // User messages (e.g., support, notifications)
   messages: [
     {
       text: String,
       date: Date,
-      important: Boolean,
-      read: Boolean
+      important: { type: Boolean, default: false },
+      read: { type: Boolean, default: false }
     }
   ],
 
-  // Multiple addresses (besides the main one in address)
-  addresses: [
+  // Multiple addresses (now only address array)
+  address: [
     {
-      street: String,
-      number: String,
-      complement: String,
-      district: String,
-      city: String,
-      state: String,
-      zipCode: String
+      street: { type: String, required: true },
+      number: { type: String, required: true },
+      complement: { type: String },
+      district: { type: String, required: true },
+      city: { type: String, required: true },
+      state: { type: String, required: true },
+      zipCode: { type: String, required: true },
+      id: { type: String, required: true }
     }
   ],
-  
+
   // Selected address (optional)
   selectedAddress: { type: String }
 });

@@ -5,6 +5,8 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import CartOverview from "./CartOverview";
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes';
 
 /*
   Payment details page.
@@ -14,21 +16,6 @@ import CartOverview from "./CartOverview";
   - If insufficient balance, blocks advance.
   - Cardholder CPF is auto-filled from personal data and cannot be edited here.
 */
-
-// --- Format Helpers ---
-function formatCardNumber(value) {
-    return value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
-}
-function formatExpiry(value) {
-    value = value.replace(/\D/g, "").slice(0, 4);
-    if (value.length > 2) {
-        value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-    }
-    return value;
-}
-function formatCVC(value) {
-    return value.replace(/\D/g, "").slice(0, 4);
-}
 
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     // Cards from wallet
@@ -57,9 +44,23 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         setSelectedCard(card || null);
     }, [selectedCardLast4, cards]);
 
-    // Calcula o valor total da compra
+    // Update the selected card in backend
     useEffect(() => {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const userId = localStorage.getItem('userId');
+        if (userId && selectedCardLast4) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/select-card`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ last4: selectedCardLast4 })
+            });
+        }
+    }, [selectedCardLast4]);
+
+    // Calculate the total amount of the shop
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        const cartKey = userId ? `cart_${userId}` : 'cart';
+        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
         const products = JSON.parse(localStorage.getItem("products")) || [];
         let sum = 0;
         for (const item of cart) {
@@ -79,8 +80,8 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     const [installments, setInstallments] = useState("");
     const vezesDeParcelamento = [1,2,3,4,5,6,7,8,9,10,11,12];
 
-    // Submissão do pagamento
-    function handleSubmit(e) {
+    // Payment Submission
+    async function handleSubmit(e) {
         e.preventDefault();
         setError('');
         if (!cards.length) {
@@ -99,11 +100,30 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
             return;
         }
         if ((selectedCard.balance ?? 0) < total) {
-            toast.error("Insufficient balance on the selected card.");
+            toast.error("Insufficient balance on the selected card. Please recharge your card in the Wallet.");
             setError("Insufficient balance.");
             return;
         }
-        // Atualiza saldo do cartão
+        // Subtract the amount of the selected card used for the shop
+        const userId = localStorage.getItem('userId');
+        try {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/cards/${selectedCard.last4}/debit`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: total })
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                toast.error(data.error || "Insufficient card balance. Please recharge your card in the Wallet.");
+                setError(data.error || "Insufficient card balance.");
+                return;
+            }
+        } catch {
+            toast.error("Error debiting card. Try again.");
+            setError("Error debiting card.");
+            return;
+        }
+        // Update local amount
         const updatedCards = cards.map(c =>
             c.last4 === selectedCard.last4
                 ? { ...c, balance: (c.balance ?? 0) - total }
@@ -114,17 +134,22 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         // Salva dados do pagamento
         localStorage.setItem("card", JSON.stringify({
             cardHolder: selectedCard.nameOnCard || "",
-            cardNumber: selectedCard.number || "",
+            cardNumber: selectedCard.cardNumber || selectedCard.number || "",
             cpf: cpf,
             expiry: selectedCard.expiry || "",
-            cvv: selectedCard.CVV || "",
+            cvv: selectedCard.cvv || selectedCard.CVV || "",
             installments
         }));
         if (onSubmit) onSubmit();
         if (onNext) onNext();
     }
 
-    // --- Render ---
+    const navigate = useNavigate();
+
+    const handleVoltar = () => {
+        navigate(ROUTES.PROFILE);
+    };
+
     return (
        <>
         <Toaster />
@@ -161,7 +186,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                         id="cardNumber"
                         type="text"
                         name="cardNumber"
-                        value={selectedCard?.number || ""}
+                        value={selectedCard?.cardNumber || selectedCard?.number || ""}
                         disabled
                         required
                         placeholder="Card Number"
@@ -181,7 +206,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                         id="cvv"
                         type="text"
                         name="cvv"
-                        value={selectedCard?.CVV || ""}
+                        value={selectedCard?.cvv || selectedCard?.CVV || ""}
                         disabled
                         required
                         placeholder="CVV"
@@ -206,7 +231,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                     >
                         {cards.map(card => (
                             <option key={card.last4} value={card.last4}>
-                                {card.brand} **** {card.last4} (Balance: R$ {(card.balance ?? 0).toFixed(2)})
+                                {card.brand} **** {card.last4} (Balance: ${Number(card.balance ?? 0).toFixed(2)})
                             </option>
                         ))}
                     </select>
@@ -221,13 +246,10 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                         <option value="" disabled>Choose the number of installments</option>
                         {vezesDeParcelamento.map((num) => (
                             <option key={num} value={num}>
-                                In {num}x of R$ {(total/num).toFixed(2)} without interest
+                                In {num}x of ${ (total/num).toFixed(2) } without interest
                             </option>
                         ))}
                     </select>
-                    <div style={{ margin: "10px 0", color: "#007b99" }}>
-                        <b>Total purchase:</b> R$ {total.toFixed(2)}
-                    </div>
                     {error && <div style={{ color: "#c00", marginBottom: 8 }}>{error}</div>}
                 </>
             )}

@@ -20,23 +20,28 @@ export default function Checkout() {
     const steps = ["Cart", "Personal Data", "Payment", "Review"];
     const [step, setStep] = useState(1);
 
+    // Always get the correct cart key for the current user
+    function getCartKey() {
+        const userId = localStorage.getItem('userId');
+        return userId ? `cart_${userId}` : 'cart';
+    }
+
     // Quick check when advancing steps
     function nextStep() {
         // Checks if required data exists before advancing
         if (step === 1) {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            if (!cart.length) return; // Do not advance if cart is empty
+            const cartKey = getCartKey();
+            const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            if (!cart.length) {
+                alert("Your cart is empty. Add products before proceeding.");
+                return;
+            }
         }
 
         if (step === 2) {
             // Fetch address from profile
-            const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
+            const addressArr = JSON.parse(localStorage.getItem('address') || '[]');
             const selectedAddressId = localStorage.getItem('selectedAddress');
-            const selectedAddress = addresses.find(a => a.id === selectedAddressId) || addresses[0];
-            if (!selectedAddress || !selectedAddress.street || !selectedAddress.number || !selectedAddress.city || !selectedAddress.state || !selectedAddress.zipCode) {
-                alert("No delivery address found in your profile. Please register an address in your profile before proceeding.");
-                return;
-            }
             const personal = JSON.parse(localStorage.getItem("personal")) || {};
             if (
                 !personal.firstName ||
@@ -50,12 +55,18 @@ export default function Checkout() {
                 !personal.city ||
                 !personal.state ||
                 !personal.zipCode
-            ) return;
+            ) {
+                alert("Fill in all personal and address data before proceeding.");
+                return;
+            }
         }
 
         if (step === 3) {
             const card = JSON.parse(localStorage.getItem("card")) || {};
-            if (!card.cardHolder || !card.cardNumber || !card.cvv || !card.cpf || !card.expiry || !card.installments) return;
+            if (!card.cardHolder || !card.cardNumber || !card.cvv || !card.cpf || !card.expiry || !card.installments) {
+                alert("Fill in all card data before proceeding.");
+                return;
+            }
         }
         setStep(prev => prev + 1);
     }

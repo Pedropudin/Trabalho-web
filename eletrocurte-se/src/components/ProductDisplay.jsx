@@ -6,8 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// import Button from '@mui/material/Button';
-import Button from '../components/Button';
+import Button from '@mui/material/Button'; // Substituí o botão customizado pelo Material-UI
 
 /*
   Card dos produtos
@@ -28,8 +27,8 @@ function ConfirmationWindow({ open, onClose, handleDelete }) {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} text='Cancel' style={{fontWeight: "bold"}}/>
-                <Button onClick={handleDelete} text='Delete' style={{backgroundColor: "#990000", fontWeight: "bold"}}/>
+                <Button onClick={onClose} style={{fontWeight: "bold"}}>Cancel</Button>
+                <Button onClick={handleDelete} style={{backgroundColor: "#990000", fontWeight: "bold"}}>Delete</Button>
             </DialogActions>
         </Dialog>
     );

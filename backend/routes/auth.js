@@ -32,8 +32,9 @@ router.post('/register', async (req, res) => {
   // Receives data from frontend
   const { firstName, lastName, password, phone, cpf, birthDate, address, card, privacy } = req.body;
   try {
-    // Creates user with schema fields
-    const user = new User({ firstName, lastName, email, password, phone, cpf, birthDate, address, card, privacy });
+    // Garante que address é array
+    const addressArr = Array.isArray(address) ? address : address ? [address] : [];
+    const user = new User({ firstName, lastName, email, password, phone, cpf, birthDate, address: addressArr, card, privacy });
     await user.save();
     res.status(201).json({ user: { id: user._id, firstName: user.firstName, email: user.email } });
   } catch (err) {
