@@ -5,19 +5,20 @@ import { MemoryRouter } from 'react-router-dom';
 
 const mockData = {
   product_photo: '',
-  product_name: 'Produto Teste',
+  product_name: 'Test Product',
   date: '01/01/2025',
-  question: 'Qual o prazo de entrega?',
-  person_name: 'Cliente',
+  question: 'What is the delivery time?',
+  person_name: 'Customer',
   person_photo: ''
 };
 
-it('permite abrir resposta e enviar', () => {
+it('allows opening answer and sending it', () => {
   render(
     <MemoryRouter>
       <Question data={mockData} answer="" onAnswerChange={() => {}} />
     </MemoryRouter>
   );
-  fireEvent.click(screen.getByText(/Responder/i));
-  expect(screen.getByText(/Sua resposta:/i)).toBeInTheDocument();
+  fireEvent.click(screen.getByText(/Answer/i));
+  expect(screen.getByText(/Your Answer:/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/Type your answer here/i)).toBeInTheDocument();
 });

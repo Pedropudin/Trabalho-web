@@ -1,51 +1,51 @@
-/* RESET E CONFIGURAÇÃO GLOBAL */
+/* RESET AND GLOBAL CONFIGURATION */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif; /* Fonte padrão da página */
+  font-family: Arial, sans-serif; /* Default page font */
 }
 
 body {
-  background-color: #f4f4f4; /* Cinza claro de fundo para toda a página */
-  text-align: center; /* Centraliza textos por padrão */
+  background-color: #f4f4f4; /* Light gray background for the entire page */
+  text-align: center; /* Centers text by default */
 }
 
-/* --- HEADER COM LOGO ESTILIZADA --- */
+/* --- HEADER WITH STYLIZED LOGO --- */
 header {
-  background-color: #004d66; /* Azul escuro institucional */
-  padding: 20px; /* Espaçamento interno */
+  background-color: #004d66; /* Dark institutional blue */
+  padding: 20px; /* Inner spacing */
 }
 
 #logo {
   width: 350px;
   height: 100px;
-  transform: scale(1.1); /* Aumenta e inclina a logo */
-  transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
+  transform: scale(1.1); /* Enlarges and tilts the logo */
+  transition: transform 0.3s ease-in-out; /* Smooth animation on hover */
 }
 
 #logo:hover {
-  transform: scale(1.2); /* Destaque visual ao passar o mouse */
+  transform: scale(1.2); /* Visual highlight on hover */
 }
 
-/* --- CONTAINER DE LOGOUT --- */
+/* --- LOGOUT CONTAINER --- */
 .logout-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  min-height: 60vh; /* Garante altura mínima na tela */
+  min-height: 60vh; /* Ensures minimum screen height */
 }
 
 .logout-box {
   background-color: white;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra sutil para destaque */
+  box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Subtle shadow for emphasis */
   max-width: 400px;
   width: 90%;
-  animation: fadeIn 1s ease-in; /* Animação de entrada suave */
+  animation: fadeIn 1s ease-in; /* Smooth entry animation */
 }
 
 .logout-box h2 {
@@ -68,30 +68,30 @@ header {
 }
 
 .home-button:hover {
-  background-color: #007b99; /* Azul mais claro ao passar o mouse */
+  background-color: #007b99; /* Lighter blue on hover */
 }
 
-/* --- ANIMAÇÕES --- */
+/* --- ANIMATIONS --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ----------- Responsividade ----------- */
-/* Ajustes para tablets e celulares (até 768px) */
+/* ----------- Responsiveness ----------- */
+/* Adjustments for tablets and phones (up to 768px) */
 @media (max-width: 768px) {
   .logout-container {
     width: 90%;
-    margin: 0 auto;   /* Centraliza o bloco de 90% */
+    margin: 0 auto;   /* Centers the 90% block */
     padding: 10px;
   }
 }
 
-/* Ajustes para celulares (até 480px) */
+/* Adjustments for phones (up to 480px) */
 @media (max-width: 480px) {
   .logout-container {
     width: 95%;
-    margin: 0 auto;   /* Centraliza o bloco de 95% */
+    margin: 0 auto;   /* Centers the 95% block */
     padding: 8px;
   }
 }

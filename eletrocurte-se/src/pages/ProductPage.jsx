@@ -3,15 +3,16 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom'; 
-import { Paper, Stack } from '@mui/material';
+import { Paper, Stack, Box } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 import ROUTES from "../routes.js";
+import Rating from '@mui/material/Rating';
 
 /*
   Eletrocurte-se product page.
-  - Displays the product acessed.
-  - Display the specifications and descriptions for the product. 
-  - Two buttons: 'Add to Cart', which adds a product to the cart but stays in the page, and 'Buy', which adds the product to the cart and redirects to the cart page.
+  - Displays the accessed product.
+  - Displays the specifications and descriptions for the product. 
+  - Two buttons: 'Add to Cart', which adds a product to the cart but stays on the page, and 'Buy', which adds the product to the cart and redirects to the cart page.
 */
 
 export default function ProductPage() {
@@ -22,7 +23,7 @@ export default function ProductPage() {
 
   // Reads product data directly from database
   useEffect(() => {
-        // Busca sempre do backend para garantir consistência
+        // Always fetch from backend for consistency
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
             .then(data => setProductsLocal(data))
@@ -43,10 +44,42 @@ export default function ProductPage() {
     }
   }, [product]);
 
+  const [reviews, setReviews] = useState([]);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+  const [validUsernames, setValidUsernames] = useState([]);
+
+  useEffect(() => {
+    // Fetch all users to validate names
+    fetch(process.env.REACT_APP_API_URL + '/api/users')
+      .then(res => res.json())
+      .then(users => setValidUsernames(users.map(u => u.firstName).filter(Boolean)))
+      .catch(() => setValidUsernames([]));
+  }, []);
+
+  useEffect(() => {
+    if (product && product.id) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/products/${product.id}/reviews`)
+        .then(res => res.json())
+        .then(data => setReviews(Array.isArray(data) ? data : []))
+        .catch(() => setReviews([]));
+    }
+  }, [product]);
+
+  // Show all reviews
+  const filteredReviews = reviews; // Show all reviews
+
+  const avgRating = filteredReviews.length
+    ? Math.round(filteredReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / filteredReviews.length)
+    : 0;
+  const nomeUsuario = localStorage.getItem('nomeUsuario');
+  const userReview = filteredReviews.find(r => r.username === nomeUsuario);
+  const visibleReviews = showAllReviews ? filteredReviews : filteredReviews.slice(0, 5);
 
   // When clicking "add to cart"
   function handleAdicionarCarrinho(productId) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     const existing = cart.find(item => item.id === productId);
     const stock = product.inStock;
 
@@ -60,7 +93,7 @@ export default function ProductPage() {
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
       toast.success('Product successfully added to cart!');
       window.dispatchEvent(new Event('cartUpdated'));
       window.forceCartUpdate && window.forceCartUpdate();
@@ -75,7 +108,7 @@ export default function ProductPage() {
           quantity: 1
         }
       ];
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
       toast.success('Product successfully added to cart!');
       window.dispatchEvent(new Event('cartUpdated'));
       window.forceCartUpdate && window.forceCartUpdate();
@@ -149,12 +182,12 @@ export default function ProductPage() {
               <h2 className="product-price">
                 {Number.isFinite(Number(product.price))
                   ? `R$${Number(product.price).toFixed(2).replace('.', ',')}`
-                  : "Preço indisponível"}
+                  : "Price unavailable"}
               </h2>
               <p>
                 {Number.isFinite(Number(product.price))
                   ? `Up to 10x of R$ ${(Number(product.price) / 12).toFixed(2).replace('.', ',')} without interest on credit card.`
-                  : "Parcelamento indisponível"}
+                  : "Installment unavailable"}
               </p>
               <p>
                 {product.inStock > 0 ? <span className="product-in-stock">In stock ({product.inStock})</span> : <span className="product-unavailable-product-page">Out of stock</span>}
@@ -191,6 +224,57 @@ export default function ProductPage() {
                     <li key={i}>{spec}</li>
                   ))}
               </ul>
+            </div>
+            {/* Public evaluations */}
+            <div className="product-reviews-section" style={{ marginTop: 32 }}>
+              <h2>Product Reviews</h2>
+              <Box display="flex" alignItems="center" gap={1} mb={1}>
+                <Rating value={avgRating} readOnly precision={1} />
+                <span style={{ color: "#555" }}>
+                  {avgRating > 0 ? `${avgRating}/5` : 'No ratings yet'}
+                  {filteredReviews.length > 0 && ` (${filteredReviews.length} review${filteredReviews.length > 1 ? 's' : ''})`}
+                </span>
+              </Box>
+              {userReview && (
+                <Box sx={{ background: '#fffde7', borderRadius: 2, p: 1, mb: 1 }}>
+                  <b>Your review:</b>
+                  <Rating value={Number(userReview.rating)} readOnly size="small" />
+                  <span style={{ fontStyle: 'italic' }}>“{userReview.comment}”</span>
+                </Box>
+              )}
+              {visibleReviews.length > 0 && (
+                <Box>
+                  {visibleReviews.map((r, idx) => (
+                    <Box
+                      key={r.username + idx}
+                      sx={{
+                        mb: 1.5,
+                        p: 1,
+                        borderRadius: 1,
+                        background: '#f7f7f7',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        flexWrap: 'wrap'
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 90 }}>
+                        <Rating value={Number(r.rating)} readOnly size="small" />
+                        <span style={{ color: "#888", fontWeight: 500, fontSize: 13 }}>
+                          @{r.username || 'User'}
+                        </span>
+                      </Box>
+                      <span style={{ fontStyle: 'italic', marginLeft: 8, marginTop: 4, flex: 1 }}>{r.comment}</span>
+                    </Box>
+                  ))}
+                  {reviews.length > 5 && !showAllReviews && (
+                    <button onClick={() => setShowAllReviews(true)} style={{ marginTop: 8 }}>Show all reviews</button>
+                  )}
+                  {showAllReviews && reviews.length > 5 && (
+                    <button onClick={() => setShowAllReviews(false)} style={{ marginTop: 8 }}>Show less</button>
+                  )}
+                </Box>
+              )}
             </div>
           </div>
         </div>

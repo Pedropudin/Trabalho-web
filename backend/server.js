@@ -7,12 +7,12 @@ const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
-    // Garante admin padrão
+    // Ensure default admin
     await Admin.ensureDefaultAdmin();
     app.listen(PORT, () => {
-      console.log(`Servidor backend rodando na porta ${PORT}`);
+      console.log(`Backend server running on port ${PORT}`);
     });
   })
   .catch(err => {
-    console.error('Erro ao conectar ao MongoDB:', err);
+    console.error('Error connecting to MongoDB:', err);
   });

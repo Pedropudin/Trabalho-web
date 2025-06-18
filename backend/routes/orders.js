@@ -8,8 +8,8 @@ router.get('/', async (req, res) => {
   res.json(orders);
 });
 
-// Create new order (finalizar compra)
-router.post('/finalizar', async (req, res) => {
+// Create new order (finish payment)
+router.post('/finish', async (req, res) => {
   try {
     const { itens, personal, card } = req.body;
     const order = await Order.create({
@@ -18,9 +18,44 @@ router.post('/finalizar', async (req, res) => {
       card,
       status: 'pending'
     });
+
+    // Simula atualização automática do status
+    setTimeout(async () => {
+      const o = await Order.findById(order._id);
+      if (o && o.status === 'pending') {
+        o.status = 'in transit';
+        await o.save();
+      }
+    }, 10000); // 10s depois, vai para "in transit"
+
+    setTimeout(async () => {
+      const o = await Order.findById(order._id);
+      if (o && o.status === 'in transit') {
+        o.status = 'delivered';
+        await o.save();
+      }
+    }, 20000); // 20s depois, vai para "delivered"
+
     res.status(201).json(order);
   } catch (err) {
-    res.status(400).json({ error: 'Erro ao criar pedido', details: err.message });
+    res.status(400).json({ error: 'Error creating order', details: err.message });
+  }
+});
+
+// Admin can manually update status
+router.patch('/:id/status', async (req, res) => {
+  try {
+    const { status } = req.body;
+    // Aceita qualquer status válido do enum
+    const allowed = ['pending', 'in transit', 'delivered'];
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ error: 'Invalid status value.' });
+    }
+    const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true });
+    if (!order) return res.status(404).json({ error: 'Order not found.' });
+    res.json(order);
+  } catch (err) {
+    res.status(400).json({ error: 'Error updating order status.' });
   }
 });
 

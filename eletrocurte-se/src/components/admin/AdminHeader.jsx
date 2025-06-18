@@ -5,7 +5,7 @@ import Header from "../Header";
 
 const AdminHeader = ({ categoryIndex }) => {
     const navigate = useNavigate();
-    const categories = ["Performance", "Pending", "Hardware", "Peripherals", "Computers", "Phones"];
+    const categories = ["Performance", "Hardware", "Peripherals", "Computers", "Phones"];
 
     // Protect admin routes: if not logged in as admin, redirect to home
     useEffect(() => {
@@ -19,9 +19,9 @@ const AdminHeader = ({ categoryIndex }) => {
             case categories[0]:
                 navigate(ROUTES.PERFORMANCE);
                 break;
-            case categories[1]:
+            /*case categories[1]:
                 navigate(ROUTES.PENDING);
-                break;
+                break;*/
             default:
                 navigate(ROUTES.SECTOR_PAGE.replace(":name", category.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()));
                 break;

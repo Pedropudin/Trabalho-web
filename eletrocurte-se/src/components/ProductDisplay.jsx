@@ -1,4 +1,4 @@
-import '../styles/ProductCard.css';
+import '../styles/ProductDisplay.css';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Dialog from '@mui/material/Dialog';
@@ -41,20 +41,34 @@ export default function ProductDisplay({product}) {
 
     const handleDelete = () => {
         setOpen(false);
-        // TODO: Implement actual delete logic (API/localStorage update)
-        console.log("Product deleted:", product.id);
+        // Get admin token from localStorage
+        const adminToken = localStorage.getItem('Token');
+        console.log(adminToken);
+        fetch(process.env.REACT_APP_API_URL + `/api/products/${product._id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + adminToken
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                window.location.reload();
+            } else {
+                console.error("Failed to delete product");
+            }
+        });
     };
 
     return (
         <div className={`items${product.inStock > 0 ? '' : ' unavailable'}`}>
             <img
-                className="item-image"
+                className="product-item-image"
                 src={product.image}
                 alt={"Image of " + product.name}
                 style={product.inStock > 0 ? {} : { filter: "grayscale(100%)" }}
             />
-            <p className="item-name">{product.name}</p><br />
-            <p className="item-price">
+            <p className="product-item-name">{product.name}</p><br />
+            <p className="product-item-price">
                 {product.inStock > 0 ? "R$" + Number(product.price).toFixed(2) : "Product unavailable."}
             </p>
             {localStorage.userType === "admin" && <p className="item-stock">
@@ -78,7 +92,7 @@ export default function ProductDisplay({product}) {
                 <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
                     <button
                         className="product-display-edit-button"
-                        onClick={() => navigate(`/admin/PaginaProduto/${product.id}`)} 
+                        onClick={() => navigate(`/admin/ProductPage/${product.id}`)} 
                     >
                         Edit
                     </button>

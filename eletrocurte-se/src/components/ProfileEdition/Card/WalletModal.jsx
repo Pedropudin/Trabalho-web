@@ -72,7 +72,7 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
 
   // Function to add balance to the selected card
   // Validates value, card, and updates the cards array
-  function handleAddBalance(e) {
+  async function handleAddBalance(e) {
     e.preventDefault();
     setFormError('');
 
@@ -95,14 +95,44 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
       return;
     }
 
-    // Update the balance of the selected card
-    setCartoes(prev =>
-      prev.map(c =>
+    // Atualiza saldo no backend
+    const userId = localStorage.getItem('userId');
+    let updatedCards = [];
+    if (userId) {
+      try {
+        // Busca usuário atual
+        const resUser = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`);
+        const user = await resUser.json();
+        const cardsArr = Array.isArray(user.card) ? user.card : [];
+        // Atualiza saldo do cartão selecionado
+        const newCards = cardsArr.map(c =>
+          c.last4 === selectedCard
+            ? { ...c, balance: (c.balance ?? 0) + value }
+            : c
+        );
+        // Salva no backend
+        await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ card: newCards })
+        });
+        updatedCards = newCards;
+        setCartoes(newCards);
+        localStorage.setItem('walletCards', JSON.stringify(newCards));
+      } catch {
+        setFormError('Error updating card balance. Try again.');
+        return;
+      }
+    } else {
+      // Atualiza apenas localmente
+      updatedCards = cartoes.map(c =>
         c.last4 === selectedCard
           ? { ...c, balance: (c.balance ?? 0) + value }
           : c
-      )
-    );
+      );
+      setCartoes(updatedCards);
+      localStorage.setItem('walletCards', JSON.stringify(updatedCards));
+    }
 
     // Success message and automatic modal close
     setMessage('Balance added successfully!');
@@ -170,7 +200,7 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
           {/* align="center": center text
               fontSize={18}: font size
               mb={2}: bottom margin */}
-          Available balance: <b>{selectedBalance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b>
+          Available balance: <b>${selectedBalance.toFixed(2)}</b>
         </Typography>
 
         {/* Step to add balance */}
@@ -192,7 +222,7 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
                     setAmountToAdd(v);
                   }
                 }}
-                placeholder="Amount in R$"
+                placeholder="Amount in USD"
                 fullWidth
                 error={!!formError && (!amountToAdd || parseFloat(amountToAdd) <= 0)}
               />
@@ -210,7 +240,7 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
                   {safeValidatedCards.map(c => (
                     <MenuItem key={c.last4} value={c.last4}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                        <Box>{c.brand} **** {c.last4}</Box>
+                        <Box>{c.brand} **** {c.last4} (${Number(c.balance ?? 0).toFixed(2)})</Box>
                         {/* Button to delete card (trash icon) */}
                         <IconButton
                           onClick={(e) => {
@@ -258,13 +288,22 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
         {/* New card registration step */}
         {step === 'newCard' && (
            <RegisterCard
-             onSalvar={(savedCard) => {
+             onSalvar={async (savedCard) => {
                const last4 = (savedCard.number || '').replace(/\D/g, '').slice(-4);
                if ((Array.isArray(cartoes) ? cartoes : []).some(c => c.last4 === last4)) {
                  setMessage('A card with these final digits is already registered.');
                  setTimeout(() => setMessage(''), 1800);
                  setStep('add');
                  return;
+               }
+               // Salva no backend
+               const userId = localStorage.getItem('userId');
+               if (userId) {
+                 await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/cards`, {
+                   method: 'POST',
+                   headers: { 'Content-Type': 'application/json' },
+                   body: JSON.stringify({ ...savedCard, last4 })
+                 });
                }
                setCartoes(cs => [
                  ...cs,

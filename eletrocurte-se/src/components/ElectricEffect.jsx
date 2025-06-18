@@ -26,7 +26,9 @@ export default function ElectricEffect({ trigger }) {
       // Plays the electric effect sound
       const som = new Audio('/electric_zap_001-6374.mp3');
       som.volume = 0.3;
-      som.play().catch(() => {});
+      if (typeof som.play === 'function') {
+        som.play().catch(() => {});
+      }
 
       // Creates animated particles in random positions near the trigger
       const novas = [];

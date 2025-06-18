@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ROUTES from '../routes';
@@ -13,9 +13,18 @@ import Footer from '../components/Footer';
 */
 
 export default function Profile() {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  // Search username saved in different keys for compatibility
-  const nomeUsuario = localStorage.getItem('nomeUsuario') || localStorage.getItem('userName') || "User";
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(setUser)
+        .catch(() => setUser(null));
+    }
+  }, []);
 
   // Navigates to the editing area corresponding to the clicked card
   function handleCardClick(flag) {
@@ -28,8 +37,16 @@ export default function Profile() {
       <main className="body-content">
         <br />
         {/* Personalized greeting */}
-        <h2>Hello, <span id="nome-usuario" data-testid="nome-usuario">{nomeUsuario}</span></h2>
-
+        <h2>
+          Hello, <span id="nome-usuario" data-testid="nome-usuario">
+            {/* Mostra o nome do backend se disponível, senão fallback */}
+            {user?.firstName
+              ? user.firstName
+              : localStorage.getItem('userName') ||
+                localStorage.getItem('nomeUsuario') ||
+                "User"}
+          </span>
+        </h2>
         {/* Grid of profile feature cards */}
         <div className="cards-grid">
           {/* Each card represents a profile feature */}

@@ -2,7 +2,7 @@
 // Addresses.jsx
 // User delivery address management component.
 // Allows viewing, selecting, adding, and removing addresses, with persistence
-// in localStorage. Uses Material-UI for UI and dialogs. Integrated with AdressModal
+// in localStorage. Uses Material-UI for UI and dialogs. Integrated with AddressModal
 // for registering new addresses.
 // -----------------------------------------------------------------------------
 import React, { useState, useEffect } from 'react';
@@ -25,7 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddressModal from './AddressModal';
 import Alert from '@mui/material/Alert';
 
-export default function Addresses({ onBack }) {
+export default function Addresses({ onVoltar }) {
   // List of user addresses, persisted in localStorage.
   const [addresses, setAddresses] = useState(() => {
     // Fetches saved addresses or initializes with examples.
@@ -33,52 +33,51 @@ export default function Addresses({ onBack }) {
     return stored ? JSON.parse(stored) : [
       {
         id: 'endereco1',
-        texto: 'Rua das Flores, 123 - Centro, São Paulo/SP'
+        text: 'Rua das Flores, 123 - Centro, São Paulo/SP'
       },
       {
         id: 'endereco2',
-        texto: 'Av. Brasil, 456 - Jardim, Rio de Janeiro/RJ'
+        text: 'Av. Brasil, 456 - Jardim, Rio de Janeiro/RJ'
       }
     ];
   });
 
   // ID of the currently selected delivery address.
   const [selectedAddress, setSelectedAddress] = useState(
-    localStorage.getItem('selectedAddress') || 'address1'
+    localStorage.getItem('selectedAddress') || (addresses[0]?.id || '')
   );
 
   // Controls display of the address registration modal.
   const [modalAberto, setModalAberto] = useState(false);
   // Controls the address removal confirmation dialog.
   const [dialogRemover, setDialogRemover] = useState({ open: false, id: null });
-  // State for confirmation message when changing address
+  // State for confirmation message when changing address.
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
 
   // Updates localStorage and backend whenever addresses change.
   useEffect(() => {
     localStorage.setItem('addresses', JSON.stringify(addresses));
-    // Updates backend
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ addresses })
+      body: JSON.stringify({ address: addresses }) // <-- CORRIGIDO
     });
   }, [addresses]);
 
   // Updates localStorage and backend whenever the selected address changes.
   useEffect(() => {
     localStorage.setItem('selectedAddress', selectedAddress);
-    // Updates backend
+    // Updates backend.
     const userId = localStorage.getItem('userId');
-    fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ selectedAddress })
     });
   }, [selectedAddress]);
 
-  // When changing the selected address, shows confirmation message
+  // When changing the selected address, shows confirmation message.
   const handleChangeAddress = (e) => {
     setSelectedAddress(e.target.value);
     setSnackbar({ open: true, message: 'Delivery location changed successfully!' });
@@ -86,13 +85,18 @@ export default function Addresses({ onBack }) {
 
   // Adds a new address to the list and selects it.
   const addAddress = (fullAddress) => {
-    // Formats the address if it's an object (AdressModal return).
-    const text = typeof fullAddress === 'object' && fullAddress !== null
-      ? `${fullAddress.street || ''}, ${fullAddress.number || ''} ${fullAddress.complement ? '- ' + fullAddress.complement : ''} - ${fullAddress.district || ''}, ${fullAddress.city || ''}/${fullAddress.state || ''}`.replace(/\s+/g, ' ').trim()
-      : fullAddress;
-    const newAddress = { id: `address${Date.now()}`, text };
+    // fullAddress should be an object with street, number, complement, district, city, state, zipCode.
+    const text = `${fullAddress.street || ''}, ${fullAddress.number || ''} ${fullAddress.complement ? '- ' + fullAddress.complement : ''} - ${fullAddress.district || ''}, ${fullAddress.city || ''}/${fullAddress.state || ''}`.replace(/\s+/g, ' ').trim();
+    const newAddress = { id: `address${Date.now()}`, text, ...fullAddress };
     setAddresses([...addresses, newAddress]);
     setSelectedAddress(newAddress.id);
+    // Updates backend.
+    const userId = localStorage.getItem('userId');
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address: [...addresses, newAddress], selectedAddress: newAddress.id }) // <-- CORRIGIDO
+    });
   };
 
   // Removes address by id and adjusts selection if necessary.
@@ -104,6 +108,13 @@ export default function Addresses({ onBack }) {
     } else if (filtered.length === 0) {
       setSelectedAddress('');
     }
+    // Updates backend.
+    const userId = localStorage.getItem('userId');
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address: filtered, selectedAddress: filtered[0]?.id || '' }) // <-- CORRIGIDO
+    });
   };
 
   // Opens confirmation dialog to remove address.
@@ -199,7 +210,7 @@ export default function Addresses({ onBack }) {
         <Button
           variant="contained"
           color="primary"
-          onClick={onBack}
+          onClick={onVoltar}
           sx={{ width: '100%' }}
         >
           Confirm and Back to Profile

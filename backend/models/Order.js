@@ -9,7 +9,11 @@ const orderSchema = new mongoose.Schema({
   ],
   personal: Object,
   card: Object,
-  status: { type: String, default: 'pending' }
+  status: {
+    type: String,
+    enum: ['pending', 'in transit', 'delivered'],
+    default: 'pending'
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/PersonalDetails.css"
 import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
@@ -25,7 +25,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         phone: "",
         cpf: "",
         birthDate: "",
-        address: "",
+        street: "",
         number: "",
         complement: "",
         district: "",
@@ -33,6 +33,77 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         state: "",
         zipCode: ""
     });
+
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const [, setCart] = useState([]);
+
+    // Busca endereço selecionado do perfil ao montar
+    React.useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        let addressData = {};
+        // Busca endereço selecionado do perfil
+        const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
+        const selectedAddressId = localStorage.getItem('selectedAddress');
+        const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+        if (selectedAddress) {
+            addressData = {
+                street: selectedAddress.street || "",
+                number: selectedAddress.number || "",
+                complement: selectedAddress.complement || "",
+                district: selectedAddress.district || "",
+                city: selectedAddress.city || "",
+                state: selectedAddress.state || "",
+                zipCode: selectedAddress.zipCode || ""
+            };
+        } else if (addresses.length > 0) {
+            const a = addresses[0];
+            addressData = {
+                street: a.street || "",
+                number: a.number || "",
+                complement: a.complement || "",
+                district: a.district || "",
+                city: a.city || "",
+                state: a.state || "",
+                zipCode: a.zipCode || ""
+            };
+        }
+        // Fetch user data if authenticated
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    setForm(prev => ({
+                        ...prev,
+                        firstName: user.firstName || "",
+                        lastName: user.lastName || "",
+                        email: user.email || "",
+                        phone: user.phone || "",
+                        cpf: user.cpf || "",
+                        birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
+                        ...addressData
+                    }));
+                })
+                .catch(() => {
+                    setForm(prev => ({
+                        ...prev,
+                        ...addressData
+                    }));
+                });
+        } else {
+            setForm(prev => ({
+                ...prev,
+                ...addressData
+            }));
+        }
+        if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+        }
+    }, []);
+
+    useEffect(() => {
+        setCart(JSON.parse(localStorage.getItem(cartKey)) || []);
+    }, [cartKey]);
 
     // CPF formatting
     function formatCPF(value) {
@@ -121,8 +192,39 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             toast.error("Birth year must be 2025 or less.");
             return;
         }
+        // Checa se endereço está preenchido (impede avanço se não houver)
+        if (!form.street || !form.number || !form.city || !form.state || !form.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+            return;
+        }
 
         localStorage.setItem("personal", JSON.stringify(form));
+        // Updates in backend if logged in
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    email: form.email,
+                    phone: form.phone,
+                    cpf: form.cpf,
+                    birthDate: new Date(`${year}-${month}-${day}`),
+                    address: [{
+                        street: form.street,
+                        number: form.number,
+                        complement: form.complement,
+                        district: form.district,
+                        city: form.city,
+                        state: form.state,
+                        zipCode: form.zipCode,
+                        id: localStorage.getItem('selectedAddress') || `address_${Date.now()}`
+                    }]
+                })
+            });
+        }
         if (onSubmit) onSubmit(form);
         if (onNext) onNext();
     }
@@ -210,11 +312,11 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 </div>
                 <h3>Address</h3>
                 <input
-                    id="address"
+                    id="street"
                     type="text"
-                    name="address"
-                    placeholder="Address"
-                    value={form.address}
+                    name="street"
+                    placeholder="Street"
+                    value={form.street}
                     onChange={handleChange}
                     required
                 />
