@@ -14,12 +14,13 @@ const TeamManager = () => {
     const [editValues, setEditValues] = useState({ name: "", role: "", email: "" });
 
     useEffect(() => {
-        fetch('/data/employees.json')
+        fetch(process.env.REACT_APP_API_URL + "/api/users/admins")
         .then((resp) => {
             return resp.json();
         })
         .then(emp_data => {
             setData(emp_data.employees);
+            console.log(emp_data);
         })
     }, []);
 
@@ -71,7 +72,7 @@ const TeamManager = () => {
                 <thead>
                     <tr>
                         <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Name</th>
-                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Role</th>
+                        {/*<th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Role</th>*/}
                         <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Contact</th>
                         <th></th>
                         <th></th>
@@ -81,7 +82,7 @@ const TeamManager = () => {
                     {data && data.map(emp => (
                         <tr key={emp.id}>
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.name}</td>
-                            <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.role}</td>
+                            {/*<td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.role}</td>*/}
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.email}</td>
                             <td>
                                 <IconButton onClick={() => handleEdit(emp)}>
