@@ -26,7 +26,7 @@ export default function SearchPage() {
     const [maxPrice, setMaxPrice] = useState('');
     const [productsLocal, setProductsLocal] = useState([]);
 
-    // --- Effects ---
+    // --- Fetch from database ---
     useEffect(() => {
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())

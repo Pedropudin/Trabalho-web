@@ -27,7 +27,7 @@ export default function SectorPage() {
     const [maxPrice, setMaxPrice] = useState('');
     const [productsLocal, setProductsLocal] = useState([]);
 
-    // --- Effects ---
+    // --- Fetch from database ---
     useEffect(() => {
         fetch(process.env.REACT_APP_API_URL + '/api/products')
             .then(res => res.json())
@@ -136,28 +136,27 @@ export default function SectorPage() {
                                     <option value="low-price">Lowest Price</option>
                                 </select>
                             </div>
-                            <div className="sector-product-display">
-                                {specificSectors.length === 0 ? (
-                                    <p className="sector-no-products-message">No products found.</p>
-                                ) : (
+                                {specificSectors.length > 0 ? (
                                     specificSectors.map((sector) => {
-                                        const productsSector = filteredProducts.filter(
-                                            (p) => p.specificSector === sector
-                                        );
+                                        const productsSector = filteredProducts.filter((p) => p.specificSector === sector);
                                         if (productsSector.length === 0) return null;
                                         return (
-                                            <section key={sector}>
+                                            <div key={sector} className="sector-display-all">
                                                 <h2 className="sector-name">{sector}</h2>
-                                                <div className="sector-product-display">
-                                                    {productsSector.map(product => (
-                                                        <ProductDisplay key={product.id} product={product} />
-                                                    ))}
+                                                <div className="sector-products-row">
+                                                    <div className="vertical-line"></div>
+                                                    <div className="sector-product-display">
+                                                        {productsSector.map(product => (
+                                                            <ProductDisplay key={product.id} product={product} />
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                            </section>
+                                            </div>
                                         );
-                                    })
-                                )}
-                            </div>
+                                        })
+                                    ) : (
+                                        <p className="sector-no-products-message">No products found.</p>
+                                ) }
                         </>
                     ) : (
                         <div className="sector-display">

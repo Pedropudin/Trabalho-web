@@ -66,8 +66,9 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps, token
     // --- Effects ---
     useEffect(() => {
         // Get user id from localStorage
-        const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user && user.id ? user.id : null;
+        const user = JSON.parse(localStorage.getItem('user'));
+        const userId = user?.id;
+        console.log(user + " " + userId)
         if (!userId) {
             setSavedAddresses([]);
             return;

@@ -22,7 +22,8 @@ export default function Login() {
   const navigate = useNavigate();
 
   // Regular expressions for name, password, and email validation
-  const nameRegex = /^(?=.*[\W_]).{6,}$/;
+  // nameRegex: at least 6 characters, no special char required
+  const nameRegex = /^.{6,}$/;
   const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -42,7 +43,7 @@ export default function Login() {
   // Client form validation
   async function validateClient({ name, email, password }) {
     if (!nameRegex.test(name)) {
-      showMessage("Client name must have at least 6 characters and contain at least 1 special character.", "error");
+      showMessage("Client name must have at least 6 characters.", "error");
       return false;
     }
     if (!emailRegex.test(email)) {
@@ -63,17 +64,22 @@ export default function Login() {
 
   // Admin form validation
   async function validateAdmin({ name, email, password, token }) {
-    if (!emailRegex.test(email)) {
-      showMessage("Please enter a valid email.", "error");
+    // Permite domínio institucional @eletrocurte-se e domínios comuns
+    const adminDomainRegex = /^[a-zA-Z0-9._-]+@eletrocurte-se(\.[a-zA-Z]{2,6})?$/;
+    if (!adminDomainRegex.test(email) && !emailRegex.test(email)) {
+      showMessage("Please enter a valid email. Admins can use @eletrocurte-se domain.", "error");
       return false;
     }
-    const validEmail = await validateEmailGoogle(email);
-    if (!validEmail) {
-      showMessage("The email domain does not exist or does not accept emails.", "error");
-      return false;
+    // Se for domínio institucional, não faz validação DNS
+    if (!adminDomainRegex.test(email)) {
+      const validEmail = await validateEmailGoogle(email);
+      if (!validEmail) {
+        showMessage("The email domain does not exist or does not accept emails.", "error");
+        return false;
+      }
     }
     if (!nameRegex.test(name)) {
-      showMessage("Admin name must have at least 6 characters and contain at least 1 special character.", "error");
+      showMessage("Admin name must have at least 6 characters.", "error");
       return false;
     }
     if (!strongPassword.test(password)) {
@@ -90,7 +96,7 @@ export default function Login() {
   // Registration form validation
   async function validateRegistration({ name, email, password, confirmPassword }) {
     if (!nameRegex.test(name)) {
-      showMessage("Name must have at least 6 characters and contain at least 1 special character.", "error");
+      showMessage("Name must have at least 6 characters.", "error");
       return false;
     }
     if (!emailRegex.test(email)) {
@@ -129,11 +135,32 @@ export default function Login() {
     const password = e.target.senha.value.trim();
 
     if (await validateClient({ name, email, password })) {
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userType', 'client');
-      localStorage.setItem('userName', name); // Save client name
-      showMessage("Client login successful!", "success");
-      setTimeout(() => navigate(ROUTES.HOME_PAGE), 1500);
+      try {
+        // Login via backend
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        if (!res.ok) {
+          const data = await res.json();
+          if (data.error === "Invalid credentials") {
+            showMessage("Usuário não encontrado ou senha incorreta. Deseja se cadastrar?", "error");
+            return;
+          }
+          showMessage("Invalid credentials.", "error");
+          return;
+        }
+        const data = await res.json();
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userType', 'client');
+        localStorage.setItem('userName', data.user.firstName);
+        localStorage.setItem('userId', data.user.id);
+        showMessage("Client login successful!", "success");
+        setTimeout(() => navigate(ROUTES.HOME_PAGE), 1500);
+      } catch {
+        showMessage("Login failed. Try again.", "error");
+      }
     }
   }
 
@@ -146,9 +173,10 @@ export default function Login() {
     const token = e.target.token.value.trim();
 
     if (await validateAdmin({ name, email, password, token })) {
+      // Admin login: keep local only (ou implemente rota backend se necessário)
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userType', 'admin');
-      localStorage.setItem('userName', name); // Save admin name
+      localStorage.setItem('userName', name);
       showMessage("Admin login successful!", "success");
       setTimeout(() => navigate(ROUTES.PERFORMANCE), 1500);
     }
@@ -161,9 +189,47 @@ export default function Login() {
     const email = e.target.email.value.trim();
     const password = e.target.senha.value.trim();
     const confirmPassword = e.target.confirmarSenha.value.trim();
+    const telefone = e.target.telefone.value.trim();
+    const cpf = e.target.cpf.value.trim();
+    const birthDate = e.target.dataNascimento.value.trim();
     if (await validateRegistration({ name, email, password, confirmPassword })) {
-      showMessage("Registration successful! Please log in to continue.", "success");
-      setTab('login');
+      try {
+        // Cadastro via backend
+        const [firstName, ...lastArr] = name.split(' ');
+        const lastName = lastArr.join(' ');
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+            phone: telefone,
+            cpf,
+            birthDate: birthDate ? new Date(birthDate) : undefined,
+            address: {
+              street: "-",
+              number: "-",
+              complement: "",
+              district: "-",
+              city: "-",
+              state: "-",
+              zipCode: "-"
+            },
+            card: {},
+            privacy: {}
+          })
+        });
+        if (!res.ok) {
+          showMessage("Registration failed. Try again.", "error");
+          return;
+        }
+        showMessage("Registration successful! Please log in to continue.", "success");
+        setTab('login');
+      } catch {
+        showMessage("Registration failed. Try again.", "error");
+      }
     }
   }
 
@@ -210,7 +276,7 @@ export default function Login() {
               {/* Client login form */}
               {userType === 'client' && (
                 <Box component="form" onSubmit={handleClient} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <TextField label="Name" id="nome-cliente" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
+                  <TextField label="Name" id="nome-cliente" name="nome" required fullWidth size="small" placeholder="Ex: Abcdef" />
                   <TextField label="E-mail" id="email-cliente" name="email" required fullWidth size="small" type="email" placeholder="Ex: usuario@gmail.com" />
                   <TextField label="Password" id="senha-cliente" name="senha" required fullWidth size="small" type="password" placeholder="Ex: @Eletrocurte-se-100%" />
                   <Button type="submit" variant="contained" sx={{ background: '#007b99', color: '#fff', fontWeight: 600, borderRadius: 2, mt: 1, '&:hover': { background: '#004d66' } }}>
@@ -228,7 +294,7 @@ export default function Login() {
               {/* Admin login form */}
               {userType === 'admin' && (
                 <Box component="form" onSubmit={handleAdmin} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <TextField label="Name" id="nome-admin" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
+                  <TextField label="Name" id="nome-admin" name="nome" required fullWidth size="small" placeholder="Ex: Abcdef" />
                   <TextField label="E-mail" id="email-admin" name="email" required fullWidth size="small" type="email" placeholder="Ex: admin@empresa.com" />
                   <TextField label="Password" id="senha-admin" name="senha" required fullWidth size="small" type="password" placeholder="Ex: @Eletrocurte-se-100%" />
                   <TextField
@@ -265,7 +331,7 @@ export default function Login() {
           {/* Registration form */}
           {tab === 'register' && (
             <Box component="form" onSubmit={handleRegistration} autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextField label="Full Name" id="nome-cadastro" name="nome" required fullWidth size="small" placeholder="Ex: $Abcdef" />
+              <TextField label="Full Name" id="nome-cadastro" name="nome" required fullWidth size="small" placeholder="Ex: Abcdef" />
               <TextField label="E-mail" id="email-cadastro" name="email" required fullWidth size="small" type="email" placeholder="Ex: usuario@gmail.com" />
               <TextField label="Phone" id="telefone-cadastro" name="telefone" required fullWidth size="small" placeholder="(00) 00000-0000" />
               <TextField label="CPF" id="cpf-cadastro" name="cpf" required fullWidth size="small" placeholder="000.000.000-00"
