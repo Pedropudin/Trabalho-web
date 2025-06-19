@@ -108,19 +108,6 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-// Endpoint para adicionar mensagem ao usuário (exemplo de integração futura)
-router.post('/:id/messages', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    user.messages.push(req.body);
-    await user.save();
-    res.json(user.messages);
-  } catch (err) {
-    res.status(400).json({ error: 'Error adding message.' });
-  }
-});
-
 // DELETE user
 router.delete('/:id', async (req, res) => {
   try {
@@ -257,44 +244,6 @@ router.patch('/:id/privacy', async (req, res) => {
     res.status(400).json({ error: 'Error updating privacy.' });
   }
 });
-
-// GET user messages
-router.get('/:id/messages', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    res.json(user.messages || []);
-  } catch (err) {
-    res.status(400).json({ error: 'Error fetching messages.' });
-  }
-});
-
-// PATCH message as read/important
-router.patch('/:id/messages/:msgIdx', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    const idx = Number(req.params.msgIdx);
-    if (!user.messages[idx]) return res.status(404).json({ error: 'Message not found.' });
-    user.messages[idx] = { ...user.messages[idx], ...req.body };
-    await user.save();
-    res.json(user.messages[idx]);
-  } catch (err) {
-    res.status(400).json({ error: 'Error updating message.' });
-  }
-});
-
-// GET user orders (purchase history)
-// OBSOLETO: O histórico de compras deve ser obtido da coleção Order via /api/orders/user/:userId
-// router.get('/:id/orders', async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     if (!user) return res.status(404).json({ error: 'User not found.' });
-//     res.json(user.purchaseHistory || []);
-//   } catch (err) {
-//     res.status(400).json({ error: 'Error fetching orders.' });
-//   }
-// });
 
 // POST add order to purchase history
 router.post('/:id/orders', async (req, res) => {

@@ -7,7 +7,7 @@ beforeEach(() => {
   global.fetch = jest.fn(() =>
     Promise.resolve({
       json: () => Promise.resolve([
-        { id: 1, name: 'Test Product', price: 50, inStock: 10, img: '' }
+        { id: 1, name: 'Test Product', price: 50, inStock: 10, img: '', image: '' }
       ])
     })
   );

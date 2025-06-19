@@ -17,7 +17,6 @@ exports.updateUser = async (req, res) => {
 
     if (updates.addresses) user.addresses = updates.addresses;
     if (updates.selectedAddress) user.selectedAddress = updates.selectedAddress;
-    if (updates.messages) user.messages = updates.messages;
     if (updates.purchaseHistory) user.purchaseHistory = updates.purchaseHistory;
     if (updates.privacy) user.privacy = { ...user.privacy, ...updates.privacy };
     if (updates.address) user.address = { ...user.address, ...updates.address };

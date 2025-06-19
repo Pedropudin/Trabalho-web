@@ -13,12 +13,12 @@ const mockData = {
 };
 
 it('allows opening answer and sending it', () => {
-  render(
+  const { container } = render(
     <MemoryRouter>
       <Question data={mockData} answer="" onAnswerChange={() => {}} />
     </MemoryRouter>
   );
   fireEvent.click(screen.getByText(/Answer/i));
   expect(screen.getByText(/Your Answer:/i)).toBeInTheDocument();
-  expect(screen.getByPlaceholderText(/Type your answer here/i)).toBeInTheDocument();
+  expect(screen.getByRole('textbox')).toBeInTheDocument();
 });

@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import '../styles/ProfileEdition.css';
 import Footer from '../components/Footer'; 
 import Orders from '../components/ProfileEdition/Orders';
-import Messages from '../components/ProfileEdition/Messages';
 import Wallet from '../components/ProfileEdition/Card/Wallet';
 import Security from '../components/ProfileEdition/Security';
 import Address from '../components/ProfileEdition/Address/Addresses';
@@ -28,10 +27,9 @@ export default function ProfileEdition() {
     // Allows access only to valid flags, otherwise redirects to profile
     const validFlags = [
       'orders',
-      'messages',
       'wallet',
       'security',
-      'addresses', // Corrected flag value
+      'addresses',
       'privacy',
       'history',
     ];
@@ -52,7 +50,6 @@ export default function ProfileEdition() {
         <div className="editarperfil-cards-grid">
           {/* Renders component based on selected flag */}
           {flag === 'orders' && <Orders onVoltar={handleVoltar} />}
-          {flag === 'messages' && <Messages onVoltar={handleVoltar} />}
           {flag === 'wallet' && <Wallet onBack={handleVoltar} />}
           {flag === 'security' && <Security onBack={handleVoltar} />}
           {flag === 'addresses' && <Address onVoltar={handleVoltar} />}

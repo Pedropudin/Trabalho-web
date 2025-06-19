@@ -48,15 +48,6 @@ const userSchema = new mongoose.Schema({
     }
   ],
 
-  messages: [
-    {
-      text: String,
-      date: Date,
-      important: { type: Boolean, default: false },
-      read: { type: Boolean, default: false }
-    }
-  ],
-
   // Multiple addresses (now only address array)
   address: [
     {

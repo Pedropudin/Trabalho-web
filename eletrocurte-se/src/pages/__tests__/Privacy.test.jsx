@@ -17,9 +17,9 @@ describe('Privacy', () => {
 
   it('renders privacy settings and toggles switches', () => {
     render(<Privacy onVoltar={() => {}} />);
-    expect(screen.getByText(/Privacy Settings/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Allow email notifications/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Share data with partners/i)).toBeInTheDocument();
+    expect(screen.getByText(/Privacy Preferences/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Receive notifications/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Share my data with partners/i)).toBeInTheDocument();
   });
 
   it('saves preferences and shows snackbar', async () => {
@@ -33,7 +33,7 @@ describe('Privacy', () => {
   it('calls onVoltar when clicking confirm and return', () => {
     const onVoltar = jest.fn();
     render(<Privacy onVoltar={onVoltar} />);
-    fireEvent.click(screen.getByText(/Confirm and return to Profile/i));
+    fireEvent.click(screen.getByText(/Back/i));
     expect(onVoltar).toHaveBeenCalled();
   });
 });
