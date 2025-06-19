@@ -31,7 +31,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
 
   // Always call useEffect, never conditionally
   React.useEffect(() => {
-    // Busca todos os usuários para validar nomes
+    // Fetches all users to validate names
     fetch(process.env.REACT_APP_API_URL + '/api/users')
       .then(res => res.json())
       .then(users => setValidUsernames(users.map(u => u.firstName).filter(Boolean)))
@@ -60,7 +60,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
 
   // User rating (if logged in)
   const nomeUsuario = localStorage.getItem('nomeUsuario');
-  // Mostra apenas o review do usuário logado como "Your review"
+  // Shows only the review of the logged-in user as "Your review"
   const userReview = filteredReviews.find(r => r.username === nomeUsuario);
 
   // Comments to display (max. 5, expandable)

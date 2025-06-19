@@ -114,7 +114,7 @@ export default function Addresses({ onVoltar }) {
   const removeAddress = (id) => {
     setAddresses(prev => {
       const filtered = prev.filter(e => e.id !== id);
-      // Atualiza backend explicitamente
+      // Updates backend explicitly
       if (userId) {
         fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
           method: 'PATCH',

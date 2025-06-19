@@ -62,7 +62,7 @@ export default function ProductsHistory() {
     }, {});
   }, [produtos, produtosBancoMap]);
 
-  // Mensagem se não houver produtos visualizados
+  // Message if there are no viewed products
   const hasVisualized = Object.keys(produtosPorData).length > 0;
 
   // State for details modal

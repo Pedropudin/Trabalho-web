@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // AddressModal.jsx
 // Modal component for registering a new delivery address.
-// Uses Material-UI Stepper for step-by-step navigation (CEP, Address, Confirmation).
+// Uses Material-UI Stepper for step-by-step navigation (ZIP Code, Address, Confirmation).
 // Fetches address data via ViaCEP API and validates fields.
 // -----------------------------------------------------------------------------
 import React, { useState } from 'react';

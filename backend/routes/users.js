@@ -124,24 +124,24 @@ router.post('/create-admin', auth, async (req, res) => {
   console.log('POST /create-admin - req.user:', req.user);
   try {
     if (req.user.type !== 'admin') {
-      console.log('POST /create-admin - Acesso negado para:', req.user);
+      console.log('POST /create-admin - Access denied for:', req.user);
       return res.status(403).json({ error: 'Access denied.' });
     }
     const { name, email, password, token } = req.body;
     if (!name || !email || !password || !token) {
-      console.log('POST /create-admin - Campos obrigatórios faltando:', req.body);
+      console.log('POST /create-admin - Missing required fields:', req.body);
       return res.status(400).json({ error: 'Missing required fields.' });
     }
     const exists = await Admin.findOne({ email });
     if (exists) {
-      console.log('POST /create-admin - Admin já existe:', email);
+      console.log('POST /create-admin - Admin already exists:', email);
       return res.status(409).json({ error: 'Admin with this email already exists.' });
     }
     await Admin.create({ name, email, password, token });
-    console.log('POST /create-admin - Admin criado:', email);
+    console.log('POST /create-admin - Admin created:', email);
     res.status(201).json({ message: 'Admin created successfully.' });
   } catch (err) {
-    console.log('POST /create-admin - Erro:', err.message);
+    console.log('POST /create-admin - Error:', err.message);
     res.status(400).json({ error: 'Error creating admin.', details: err.message });
   }
 });
@@ -186,7 +186,7 @@ router.post('/:id/cards', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found.' });
     const card = req.body;
     if (!card.last4) return res.status(400).json({ error: 'Missing last4.' });
-    // Garante todos os campos obrigatórios do schema
+    // Ensures all required fields from the schema
     const cardObj = {
       cardHolder: card.nameOnCard || card.cardHolder || "",
       cardNumber: card.number || card.cardNumber || "",
@@ -253,7 +253,7 @@ router.post('/:id/orders', async (req, res) => {
     const Product = require('../models/Product');
     let order = req.body;
     if (Array.isArray(order.itens)) {
-      // Para cada item, busque snapshot do produto
+      // For each item, fetch product snapshot
       order.itens = await Promise.all(order.itens.map(async (item) => {
         const prod = await Product.findOne({ id: Number(item.id) });
         return {

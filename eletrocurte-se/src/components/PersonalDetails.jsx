@@ -36,22 +36,20 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     const userId = localStorage.getItem('userId');
     const cartKey = userId ? `cart_${userId}` : 'cart';
+    const addressKey = userId ? `address_${userId}` : 'address';
+    const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
     const [, setCart] = useState([]);
 
-    // Busca endereço selecionado do perfil ao montar
+    // Fetches selected address from the profile on mount
     React.useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        const addressKey = userId ? `address_${userId}` : 'address';
-        const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
-
-        // Sempre prioriza o backend
+        // Always prioritizes the backend
         if (userId) {
             fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
                 .then(res => res.json())
                 .then(user => {
                     let addr = {};
                     if (Array.isArray(user.address)) {
-                        // Sincroniza localStorage com backend
+                        // Synchronizes localStorage with backend
                         localStorage.setItem(addressKey, JSON.stringify(user.address));
                         localStorage.setItem(selectedAddressKey, user.selectedAddress || (user.address[0]?.id || ''));
                         const selId = user.selectedAddress || (user.address[0]?.id || "");
@@ -115,6 +113,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         ...prev,
                         ...addressData
                     }));
+                    // Alerts if there is no valid address via localStorage
                     if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
                         toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
                     }
@@ -151,6 +150,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 ...prev,
                 ...addressData
             }));
+            // Alerts if there is no valid address via localStorage
             if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
                 toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
             }
@@ -248,7 +248,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             toast.error("Birth year must be 2025 or less.");
             return;
         }
-        // Checa se endereço está preenchido (impede avanço se não houver)
+        // Checks if address is filled (prevents progress if not)
         if (!form.street || !form.number || !form.city || !form.state || !form.zipCode) {
             toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
             return;

@@ -66,7 +66,7 @@ export default function PurchaseHistory() {
     }
   }, []);
 
-  // Agrupa produtos comprados por data e por id (um card por produto por data)
+  // Groups purchased products by date and by id (one card per product per date)
   const produtosPorData = useMemo(() => {
     const comprados = produtos.filter(p => p.payed && p.payedDate);
     // Agrupa por data (YYYY-MM-DD)
@@ -87,7 +87,7 @@ export default function PurchaseHistory() {
     return resultado;
   }, [produtos]);
 
-  // Lista de produtos aguardando avaliação: apenas UM por produto (por id) que o usuário ainda não avaliou
+  // List of products awaiting review: only ONE per product (by id) that the logged-in user has not yet reviewed
   const produtosAguardando = useMemo(() => {
     // Só produtos pagos, agrupados por id, e que o usuário logado ainda não avaliou
     const avaliadosIds = new Set();
@@ -105,7 +105,7 @@ export default function PurchaseHistory() {
       });
   }, [produtos, usuarioBackend]);
 
-  // Padroniza produtos aguardando avaliação
+  // Standardizes products awaiting review
   const produtosAguardandoPadronizados = produtosAguardando.map(p => ({
     ...p,
     img: p.image || p.img || p.imagem || '/logo-sem-borda.png',

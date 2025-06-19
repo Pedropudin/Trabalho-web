@@ -46,7 +46,7 @@ export default function Orders({ onVoltar }) {
     let interval;
     async function fetchOrders() {
       if (userId) {
-        // Consistência: sempre buscar da coleção Order, nunca do campo purchaseHistory do usuário
+        // Consistency: always fetch from the Order collection, never from the user's purchaseHistory field
         const res = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/user/${userId}`);
         const data = await res.json();
         setOrders(Array.isArray(data) ? data : []);

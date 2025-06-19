@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
       last4: { type: String, required: true },
       brand: { type: String },
       nameOnCard: { type: String },
-      balance: { type: Number, default: 0 } // saldo em dólar
+      balance: { type: Number, default: 0 } // balance in dollars
     }
   ],
   selectedCard: { type: String }, // last4 of cards
@@ -33,8 +33,8 @@ const userSchema = new mongoose.Schema({
     termsAccepted: { type: Boolean, default: false }
   },
 
-  // OBSOLETO: purchaseHistory não deve ser usado para exibir histórico de compras.
-  // Use sempre a coleção Order para obter o histórico real do usuário.
+  // OBSOLETE: purchaseHistory should not be used to display the user's purchase history.
+  // Always use the Order collection to get the user's real history.
   purchaseHistory: [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
