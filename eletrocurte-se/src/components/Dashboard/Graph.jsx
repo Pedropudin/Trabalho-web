@@ -32,7 +32,6 @@ const options = {
 };
 
 const Graph = () => {
-    const [data,setData] = useState(null);
     const [orders, setOrders] = useState([]);
     const [products, setProducts] = useState([]);
 

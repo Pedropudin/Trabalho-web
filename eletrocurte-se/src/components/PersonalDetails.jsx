@@ -155,7 +155,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
             }
         }
-    }, []);
+    }, [addressKey, selectedAddressKey, userId]);
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem(cartKey)) || []);

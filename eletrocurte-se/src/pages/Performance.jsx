@@ -64,7 +64,7 @@ const Performance = () => {
     const [data, setData] = useState(null);
     const [newUsers, setNewUsers] = useState(0);
     const [salesLast30Days, setSalesLast30Days] = useState(0);
-    const [salesLast60Days, setSalesLast60Days] = useState(0);
+    const [, setSalesLast60Days] = useState(0);
 
     /* Provisory local data */
     useEffect(() => {
