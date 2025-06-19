@@ -26,13 +26,28 @@ export default function PurchaseHistory() {
 
   // Refetch products after review to keep reviews in sync
   const fetchProdutos = React.useCallback(() => {
-    fetch(process.env.REACT_APP_API_URL + '/api/products')
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    if (!userId) return setProdutos([]);
+    fetch(`${process.env.REACT_APP_API_URL}/api/orders/user/${userId}`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
       .then(res => res.json())
       .then(data => {
-        let produtos = Array.isArray(data) ? data : [];
-        // Only products that were paid and have a payedDate
-        produtos = produtos.filter(p => p.payed && p.payedDate);
-        setProdutos(produtos);
+        // Cross-adaptation: flatten orders into products, each with order info
+        const produtosComprados = [];
+        (Array.isArray(data) ? data : []).forEach(order => {
+          (order.itens || []).forEach(item => {
+            produtosComprados.push({
+              ...item,
+              payed: true,
+              payedDate: order.createdAt,
+              orderStatus: order.status,
+              orderId: order._id || order.id
+            });
+          });
+        });
+        setProdutos(produtosComprados);
       });
   }, []);
 
@@ -40,14 +55,57 @@ export default function PurchaseHistory() {
     fetchProdutos();
   }, [fetchProdutos]);
 
-  // Get logged-in username
-  const nomeUsuario = localStorage.getItem('nomeUsuario');
-  // Only products paid and not yet reviewed by this user
-  const produtosAguardando = produtos.filter(p =>
-    p.payed &&
-    (!Array.isArray(p.reviews) || !p.reviews.some(r => r.username === nomeUsuario))
-  );
+  // Get logged-in user info from backend
+  const [usuarioBackend, setUsuarioBackend] = useState(null);
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(user => setUsuarioBackend(user));
+    }
+  }, []);
 
+  // Groups purchased products by date and by id (one card per product per date)
+  const produtosPorData = useMemo(() => {
+    const comprados = produtos.filter(p => p.payed && p.payedDate);
+    // Agrupa por data (YYYY-MM-DD)
+    const agrupado = {};
+    comprados.forEach(produto => {
+      const date = new Date(produto.payedDate);
+      const key = date.toLocaleDateString('en-CA'); // YYYY-MM-DD
+      if (!agrupado[key]) agrupado[key] = {};
+      // Usa produto.id como chave para garantir 1 card por produto por data
+      agrupado[key][produto.id] = agrupado[key][produto.id] || { ...produto };
+      // Se houver múltiplos, pode somar quantidade se quiser mostrar
+    });
+    // Converte para { [date]: [produtosUnicos] }
+    const resultado = {};
+    Object.entries(agrupado).forEach(([date, prodsObj]) => {
+      resultado[date] = Object.values(prodsObj);
+    });
+    return resultado;
+  }, [produtos]);
+
+  // List of products awaiting review: only ONE per product (by id) that the logged-in user has not yet reviewed
+  const produtosAguardando = useMemo(() => {
+    // Só produtos pagos, agrupados por id, e que o usuário logado ainda não avaliou
+    const avaliadosIds = new Set();
+    return produtos
+      .filter(p =>
+        p.payed &&
+        p.id &&
+        (!Array.isArray(p.reviews) ||
+          !p.reviews.some(r => r.username === (usuarioBackend?.firstName || '')))
+      )
+      .filter(p => {
+        if (avaliadosIds.has(p.id)) return false;
+        avaliadosIds.add(p.id);
+        return true;
+      });
+  }, [produtos, usuarioBackend]);
+
+  // Standardizes products awaiting review
   const produtosAguardandoPadronizados = produtosAguardando.map(p => ({
     ...p,
     img: p.image || p.img || p.imagem || '/logo-sem-borda.png',
@@ -62,35 +120,21 @@ export default function PurchaseHistory() {
 
   // Function called when reviewing a product
   const handleAvaliar = (nota, comentario, idx) => {
-    const produtoAvaliado = produtosAguardando[idx];
-    if (produtoAvaliado && nomeUsuario) {
-      // Send review to backend
+    const produtoAvaliado = produtosAguardandoPadronizados[idx];
+    if (produtoAvaliado && usuarioBackend && usuarioBackend.firstName) {
       fetch(`${process.env.REACT_APP_API_URL}/api/products/${produtoAvaliado.id}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: nomeUsuario,
+          username: usuarioBackend.firstName,
           rating: nota,
           comment: comentario
         })
       }).then(() => {
-        // Refetch products to update reviews state
         fetchProdutos();
       });
     }
   };
-
-  // Agrupy products payed in real date (payedDate)
-  const produtosPorData = useMemo(() => {
-    const comprados = produtos.filter(p => p.payed && p.payedDate);
-    return comprados.reduce((acc, produto) => {
-      const date = new Date(produto.payedDate);
-      const key = date.toLocaleDateString('en-CA'); // YYYY-MM-DD
-      if (!acc[key]) acc[key] = [];
-      acc[key].push(produto);
-      return acc;
-    }, {});
-  }, [produtos]);
 
   const hasPayed = Object.keys(produtosPorData).length > 0;
 
@@ -109,7 +153,7 @@ export default function PurchaseHistory() {
     <>
       <Header />
       {/* Review bar for products awaiting user review */}
-      {produtosAguardando.length > 0 && (
+      {produtosAguardandoPadronizados.length > 0 && (
         <div
           className="avaliacao"
           style={{
@@ -154,7 +198,6 @@ export default function PurchaseHistory() {
           <p style={{ flex: 1, fontSize: '1.1rem', textAlign: 'center', margin: 0 }}>
             {produtosAguardandoPadronizados.length} product{produtosAguardandoPadronizados.length > 1 ? 's' : ''} awaiting your review!
           </p>
-          {/* UserRating só aparece se houver produtos aguardando avaliação */}
           <UserRating
             produtosAguardando={produtosAguardandoPadronizados.length}
             produtosParaAvaliar={produtosAguardandoPadronizados}
@@ -182,7 +225,7 @@ export default function PurchaseHistory() {
               </section>
               <div className="produtos">
                 {Array.isArray(produtos) ? produtos.map((produto, idx) => (
-                  <ProductCard product={produto} onClick={handleProductClick} key={produto.name + idx} showBuyButton={false} />
+                  <ProductCard product={produto} onClick={handleProductClick} key={produto.id || produto.name || idx} showBuyButton={false} />
                 )) : null}
               </div>
             </div>

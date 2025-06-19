@@ -41,7 +41,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
 
   // Calculates integer average rating
   const avgRating = reviews.length
-    ? Math.round(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
+    ? Math.floor(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
     : 0;
 
   // Handles card click: requires login on home, otherwise calls onClick
@@ -55,12 +55,14 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
     }
     // Atualiza visualized/visualizedDate no backend ao visualizar
     if (product && product.id) {
+      const userId = localStorage.getItem('userId');
       fetch(`${process.env.REACT_APP_API_URL}/api/products/${product.id}/visualize`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           visualized: true,
-          visualizedDate: new Date().toISOString()
+          visualizedDate: new Date().toISOString(),
+          userId // <-- Adiciona userId para salvar no histórico do usuário
         })
       }).catch(() => {});
     }

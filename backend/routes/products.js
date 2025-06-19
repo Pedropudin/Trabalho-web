@@ -94,12 +94,37 @@ router.delete('/:id', auth, async (req, res) => {
 // PATCH /api/products/:id/visualize - update visualized and visualizedDate (public, for history)
 router.patch('/:id/visualize', async (req, res) => {
   try {
-    const { visualized, visualizedDate } = req.body;
+    const { visualized, visualizedDate, userId } = req.body;
     const updated = await Product.findOneAndUpdate(
       { id: Number(req.params.id) },
       { $set: { visualized: !!visualized, visualizedDate: visualizedDate || new Date() } },
       { new: true }
     );
+    // Add to user's viewedProducts history if userId provided
+    if (userId) {
+      const user = await require('../models/User').findById(userId);
+      if (user) {
+        // Remove duplicates (by productId or id)
+        user.viewedProducts = user.viewedProducts.filter(
+          vp => String(vp.id) !== String(updated.id)
+        );
+        // Add new viewed product at the start (now with price and more fields)
+        user.viewedProducts.unshift({
+          productId: updated._id,
+          id: updated.id,
+          name: updated.name,
+          image: updated.image,
+          price: updated.price,
+          brand: updated.brand,
+          category: updated.category,
+          inStock: updated.inStock,
+          visualizedDate: visualizedDate || new Date()
+        });
+        // Limit history to last 50
+        user.viewedProducts = user.viewedProducts.slice(0, 50);
+        await user.save();
+      }
+    }
     if (!updated) return res.status(404).json({ error: 'Product not found.' });
     res.json(updated);
   } catch (err) {
@@ -137,9 +162,16 @@ router.get('/:id/reviews', async (req, res) => {
 // POST /api/products/:id/reviews - add a review to a product
 router.post('/:id/reviews', async (req, res) => {
   try {
-    // Accepts both { username, rating, comment } and { usuario, nota, comentario }
-    const { username, rating, comment, usuario, nota, comentario } = req.body;
-    let userField = username || usuario;
+    // If authenticated, use the user's first name from the token
+    let userField;
+    if (req.user && req.user.firstName) {
+      userField = req.user.firstName;
+    } else {
+      // fallback for legacy compatibility
+      const { username, usuario } = req.body;
+      userField = username || usuario;
+    }
+    const { rating, comment, nota, comentario } = req.body;
     const ratingField = typeof rating === 'number' ? rating : typeof nota === 'number' ? nota : undefined;
     const commentField = comment || comentario;
     if (!userField || typeof ratingField !== 'number' || !commentField) {

@@ -55,22 +55,31 @@ router.patch('/:id', async (req, res) => {
     if (updates.password) {
       updates.password = await bcrypt.hash(updates.password, 10);
     }
-    // For addresses, selectedAddress, messages, purchaseHistory, privacy, address, card, update correctly
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found.' });
 
-    // Deep update for arrays/objects
-    if (updates.address) {
+    if ('address' in updates) {
       if (Array.isArray(updates.address)) {
-        user.address = updates.address;
-      } else if (typeof updates.address === 'object') {
-        // If it comes an object (e.g: updating a single address), add or replace by id
-        const idx = user.address.findIndex(a => a.id === updates.address.id);
-        if (idx >= 0) user.address[idx] = updates.address;
-        else user.address.push(updates.address);
+        user.address = updates.address
+          .filter(a => !!a && typeof a === 'object')
+          .map(a => ({
+            ...a,
+            id: a.id || `address${Date.now()}_${Math.floor(Math.random()*10000)}`
+          }));
+      } else if (typeof updates.address === 'object' && updates.address !== null) {
+        const addr = {
+          ...updates.address,
+          id: updates.address.id || `address${Date.now()}_${Math.floor(Math.random()*10000)}`
+        };
+        const idx = user.address.findIndex(a => a.id === addr.id);
+        if (idx >= 0) user.address[idx] = addr;
+        else user.address.push(addr);
       }
     }
-    if (updates.selectedAddress) user.selectedAddress = updates.selectedAddress;
+    if ('selectedAddress' in updates) {
+      user.selectedAddress = updates.selectedAddress;
+    }
+
     if (updates.messages) user.messages = updates.messages;
     if (updates.purchaseHistory) user.purchaseHistory = updates.purchaseHistory;
     if (updates.privacy) user.privacy = { ...user.privacy, ...updates.privacy };
@@ -78,7 +87,6 @@ router.patch('/:id', async (req, res) => {
       if (Array.isArray(updates.card)) {
         user.card = updates.card;
       } else if (typeof updates.card === 'object') {
-        // Adiciona ou atualiza cartão pelo last4
         const idx = user.card.findIndex(c => c.last4 === updates.card.last4);
         if (idx >= 0) user.card[idx] = updates.card;
         else user.card.push(updates.card);
@@ -100,19 +108,6 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-// Endpoint para adicionar mensagem ao usuário (exemplo de integração futura)
-router.post('/:id/messages', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    user.messages.push(req.body);
-    await user.save();
-    res.json(user.messages);
-  } catch (err) {
-    res.status(400).json({ error: 'Error adding message.' });
-  }
-});
-
 // DELETE user
 router.delete('/:id', async (req, res) => {
   try {
@@ -129,24 +124,24 @@ router.post('/create-admin', auth, async (req, res) => {
   console.log('POST /create-admin - req.user:', req.user);
   try {
     if (req.user.type !== 'admin') {
-      console.log('POST /create-admin - Acesso negado para:', req.user);
+      console.log('POST /create-admin - Access denied for:', req.user);
       return res.status(403).json({ error: 'Access denied.' });
     }
     const { name, email, password, token } = req.body;
     if (!name || !email || !password || !token) {
-      console.log('POST /create-admin - Campos obrigatórios faltando:', req.body);
+      console.log('POST /create-admin - Missing required fields:', req.body);
       return res.status(400).json({ error: 'Missing required fields.' });
     }
     const exists = await Admin.findOne({ email });
     if (exists) {
-      console.log('POST /create-admin - Admin já existe:', email);
+      console.log('POST /create-admin - Admin already exists:', email);
       return res.status(409).json({ error: 'Admin with this email already exists.' });
     }
     await Admin.create({ name, email, password, token });
-    console.log('POST /create-admin - Admin criado:', email);
+    console.log('POST /create-admin - Admin created:', email);
     res.status(201).json({ message: 'Admin created successfully.' });
   } catch (err) {
-    console.log('POST /create-admin - Erro:', err.message);
+    console.log('POST /create-admin - Error:', err.message);
     res.status(400).json({ error: 'Error creating admin.', details: err.message });
   }
 });
@@ -191,7 +186,7 @@ router.post('/:id/cards', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found.' });
     const card = req.body;
     if (!card.last4) return res.status(400).json({ error: 'Missing last4.' });
-    // Garante todos os campos obrigatórios do schema
+    // Ensures all required fields from the schema
     const cardObj = {
       cardHolder: card.nameOnCard || card.cardHolder || "",
       cardNumber: card.number || card.cardNumber || "",
@@ -250,53 +245,47 @@ router.patch('/:id/privacy', async (req, res) => {
   }
 });
 
-// GET user messages
-router.get('/:id/messages', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    res.json(user.messages || []);
-  } catch (err) {
-    res.status(400).json({ error: 'Error fetching messages.' });
-  }
-});
-
-// PATCH message as read/important
-router.patch('/:id/messages/:msgIdx', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    const idx = Number(req.params.msgIdx);
-    if (!user.messages[idx]) return res.status(404).json({ error: 'Message not found.' });
-    user.messages[idx] = { ...user.messages[idx], ...req.body };
-    await user.save();
-    res.json(user.messages[idx]);
-  } catch (err) {
-    res.status(400).json({ error: 'Error updating message.' });
-  }
-});
-
-// GET user orders (purchase history)
-router.get('/:id/orders', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    res.json(user.purchaseHistory || []);
-  } catch (err) {
-    res.status(400).json({ error: 'Error fetching orders.' });
-  }
-});
-
 // POST add order to purchase history
 router.post('/:id/orders', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found.' });
-    user.purchaseHistory.push(req.body);
+    const Product = require('../models/Product');
+    let order = req.body;
+    if (Array.isArray(order.itens)) {
+      // For each item, fetch product snapshot
+      order.itens = await Promise.all(order.itens.map(async (item) => {
+        const prod = await Product.findOne({ id: Number(item.id) });
+        return {
+          id: item.id,
+          quantity: item.quantity,
+          name: prod?.name || item.name,
+          price: prod?.price || item.price,
+          image: prod?.image || "",
+          brand: prod?.brand || "",
+          category: prod?.category || "",
+          payed: true,
+          payedDate: new Date(),
+        };
+      }));
+    }
+    user.purchaseHistory = user.purchaseHistory || [];
+    user.purchaseHistory.push(order);
     await user.save();
     res.json(user.purchaseHistory);
   } catch (err) {
     res.status(400).json({ error: 'Error adding order.' });
+  }
+});
+
+// GET /api/users/:id/viewed-products - get user's viewed products history
+router.get('/:id/viewed-products', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json([]);
+    res.json(user.viewedProducts || []);
+  } catch (err) {
+    res.status(500).json([]);
   }
 });
 

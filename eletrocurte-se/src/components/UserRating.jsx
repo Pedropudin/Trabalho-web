@@ -27,7 +27,7 @@ function AvaliacaoModal({ open, onClose, produtosParaAvaliar, onAvaliar, produto
   // Currently selected product
   const produto = produtosParaAvaliar[produtoAvaliacaoIdx] || {};
 
-  // Reset nota/comentario ao abrir modal para novo produto
+  // Reset nota/comentario when opening modal for new product
   React.useEffect(() => {
     if (open) {
       setNota(0);
@@ -198,5 +198,7 @@ const UserRating = ({ produtosAguardando = 1, produtosParaAvaliar = [], onAvalia
     </div>
   );
 }
+
+// The logged-in user's name is passed by the parent (PurchaseHistory) and used in the backend.
 
 export default UserRating;

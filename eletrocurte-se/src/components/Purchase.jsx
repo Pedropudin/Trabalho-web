@@ -129,9 +129,13 @@ export default function Purchase({ onBack, onNext, steps }) {
         // Create order in backend and add to user purchase history 
         try {
             // Create order in backend
+            const token = localStorage.getItem('token');
             const orderRes = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/finish`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(token ? { Authorization: `Bearer ${token}` } : {})
+                },
                 body: JSON.stringify({
                     itens: cartProducts.map(item => ({
                         id: item.id,
@@ -141,16 +145,13 @@ export default function Purchase({ onBack, onNext, steps }) {
                     })),
                     personal,
                     card,
-                    status: "pending" // <-- Adicionado: status inicial do pedido
+                    status: "pending"
                 })
             });
-            const order = await orderRes.json();
-            // Add order to user's purchase history
-            await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/orders`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(order)
-            });
+            if (!orderRes.ok) {
+                setErro('Error saving order. Try again.');
+                return;
+            }
         } catch (e) {
             setErro('Error saving order. Try again.');
             return;

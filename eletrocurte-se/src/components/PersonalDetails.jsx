@@ -36,43 +36,36 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
 
     const userId = localStorage.getItem('userId');
     const cartKey = userId ? `cart_${userId}` : 'cart';
+    const addressKey = userId ? `address_${userId}` : 'address';
+    const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
     const [, setCart] = useState([]);
 
-    // Busca endereço selecionado do perfil ao montar
+    // Fetches selected address from the profile on mount
     React.useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        let addressData = {};
-        // Busca endereço selecionado do perfil
-        const addresses = JSON.parse(localStorage.getItem('addresses') || '[]');
-        const selectedAddressId = localStorage.getItem('selectedAddress');
-        const selectedAddress = addresses.find(a => a.id === selectedAddressId);
-        if (selectedAddress) {
-            addressData = {
-                street: selectedAddress.street || "",
-                number: selectedAddress.number || "",
-                complement: selectedAddress.complement || "",
-                district: selectedAddress.district || "",
-                city: selectedAddress.city || "",
-                state: selectedAddress.state || "",
-                zipCode: selectedAddress.zipCode || ""
-            };
-        } else if (addresses.length > 0) {
-            const a = addresses[0];
-            addressData = {
-                street: a.street || "",
-                number: a.number || "",
-                complement: a.complement || "",
-                district: a.district || "",
-                city: a.city || "",
-                state: a.state || "",
-                zipCode: a.zipCode || ""
-            };
-        }
-        // Fetch user data if authenticated
+        // Always prioritizes the backend
         if (userId) {
             fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
                 .then(res => res.json())
                 .then(user => {
+                    let addr = {};
+                    if (Array.isArray(user.address)) {
+                        // Synchronizes localStorage with backend
+                        localStorage.setItem(addressKey, JSON.stringify(user.address));
+                        localStorage.setItem(selectedAddressKey, user.selectedAddress || (user.address[0]?.id || ''));
+                        const selId = user.selectedAddress || (user.address[0]?.id || "");
+                        const selAddr = user.address.find(a => a.id === selId) || user.address[0];
+                        if (selAddr) {
+                            addr = {
+                                street: selAddr.street || "",
+                                number: selAddr.number || "",
+                                complement: selAddr.complement || "",
+                                district: selAddr.district || "",
+                                city: selAddr.city || "",
+                                state: selAddr.state || "",
+                                zipCode: selAddr.zipCode || ""
+                            };
+                        }
+                    }
                     setForm(prev => ({
                         ...prev,
                         firstName: user.firstName || "",
@@ -81,23 +74,86 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                         phone: user.phone || "",
                         cpf: user.cpf || "",
                         birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
-                        ...addressData
+                        ...addr
                     }));
+                    // Alerts if there is no valid address via backend
+                    if (!addr.street || !addr.number || !addr.city || !addr.state || !addr.zipCode) {
+                        toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+                    }
                 })
                 .catch(() => {
+                    // Fallback: tries to catch from localStorage, if the backend fails
+                    const addresses = JSON.parse(localStorage.getItem(addressKey) || '[]');
+                    const selectedAddressId = localStorage.getItem(selectedAddressKey);
+                    let addressData = {};
+                    const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+                    if (selectedAddress) {
+                        addressData = {
+                            street: selectedAddress.street || "",
+                            number: selectedAddress.number || "",
+                            complement: selectedAddress.complement || "",
+                            district: selectedAddress.district || "",
+                            city: selectedAddress.city || "",
+                            state: selectedAddress.state || "",
+                            zipCode: selectedAddress.zipCode || ""
+                        };
+                    } else if (addresses.length > 0) {
+                        const a = addresses[0];
+                        addressData = {
+                            street: a.street || "",
+                            number: a.number || "",
+                            complement: a.complement || "",
+                            district: a.district || "",
+                            city: a.city || "",
+                            state: a.state || "",
+                            zipCode: a.zipCode || ""
+                        };
+                    }
                     setForm(prev => ({
                         ...prev,
                         ...addressData
                     }));
+                    // Alerts if there is no valid address via localStorage
+                    if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+                        toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+                    }
                 });
         } else {
+            // User not authenticated: only localStorage
+            const addresses = JSON.parse(localStorage.getItem(addressKey) || '[]');
+            const selectedAddressId = localStorage.getItem(selectedAddressKey);
+            let addressData = {};
+            const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+            if (selectedAddress) {
+                addressData = {
+                    street: selectedAddress.street || "",
+                    number: selectedAddress.number || "",
+                    complement: selectedAddress.complement || "",
+                    district: selectedAddress.district || "",
+                    city: selectedAddress.city || "",
+                    state: selectedAddress.state || "",
+                    zipCode: selectedAddress.zipCode || ""
+                };
+            } else if (addresses.length > 0) {
+                const a = addresses[0];
+                addressData = {
+                    street: a.street || "",
+                    number: a.number || "",
+                    complement: a.complement || "",
+                    district: a.district || "",
+                    city: a.city || "",
+                    state: a.state || "",
+                    zipCode: a.zipCode || ""
+                };
+            }
             setForm(prev => ({
                 ...prev,
                 ...addressData
             }));
-        }
-        if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
-            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+            // Alerts if there is no valid address via localStorage
+            if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+                toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+            }
         }
     }, []);
 
@@ -192,40 +248,41 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
             toast.error("Birth year must be 2025 or less.");
             return;
         }
-        // Checa se endereço está preenchido (impede avanço se não houver)
+        // Checks if address is filled (prevents progress if not)
         if (!form.street || !form.number || !form.city || !form.state || !form.zipCode) {
             toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
             return;
         }
 
-        localStorage.setItem("personal", JSON.stringify(form));
+        const addressString = `${form.street}, ${form.number}${form.complement ? ' - ' + form.complement : ''} - ${form.district}, ${form.city}/${form.state}`.replace(/\s+/g, ' ').trim();
+        const formWithAddress = { ...form, address: addressString };
+
+        localStorage.setItem("personal", JSON.stringify(formWithAddress));
         // Updates in backend if logged in
         const userId = localStorage.getItem('userId');
         if (userId) {
-            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    firstName: form.firstName,
-                    lastName: form.lastName,
-                    email: form.email,
-                    phone: form.phone,
-                    cpf: form.cpf,
-                    birthDate: new Date(`${year}-${month}-${day}`),
-                    address: [{
-                        street: form.street,
-                        number: form.number,
-                        complement: form.complement,
-                        district: form.district,
-                        city: form.city,
-                        state: form.state,
-                        zipCode: form.zipCode,
-                        id: localStorage.getItem('selectedAddress') || `address_${Date.now()}`
-                    }]
-                })
-            });
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    const addresses = Array.isArray(user.address) ? user.address : [];
+                    const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
+                    const selectedAddressId = localStorage.getItem(selectedAddressKey);
+                    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: form.firstName,
+                            lastName: form.lastName,
+                            email: form.email,
+                            phone: form.phone,
+                            cpf: form.cpf,
+                            birthDate: new Date(`${year}-${month}-${day}`),
+                            selectedAddress: selectedAddressId || addresses[0]?.id || ""
+                        })
+                    });
+                });
         }
-        if (onSubmit) onSubmit(form);
+        if (onSubmit) onSubmit(formWithAddress);
         if (onNext) onNext();
     }
 

@@ -116,9 +116,11 @@ export default function WalletModal({ cartoes, setCartoes, cartoesValidados, onC
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ card: newCards })
         });
-        updatedCards = newCards;
-        setCartoes(newCards);
-        localStorage.setItem('walletCards', JSON.stringify(newCards));
+        const resUser2 = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`);
+        const user2 = await resUser2.json();
+        updatedCards = Array.isArray(user2.card) ? user2.card : [];
+        setCartoes(updatedCards);
+        localStorage.setItem('walletCards', JSON.stringify(updatedCards));
       } catch {
         setFormError('Error updating card balance. Try again.');
         return;

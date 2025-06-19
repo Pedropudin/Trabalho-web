@@ -4,7 +4,10 @@ const orderSchema = new mongoose.Schema({
   itens: [
     {
       id: String,
-      quantity: Number
+      quantity: Number,
+      name: String,
+      price: Number,
+      image: String,
     }
   ],
   personal: Object,

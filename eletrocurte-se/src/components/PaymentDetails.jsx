@@ -5,8 +5,6 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import CartOverview from "./CartOverview";
-import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes';
 
 /*
   Payment details page.
@@ -31,10 +29,20 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
 
     // Busca cartões cadastrados e saldo
     useEffect(() => {
-        const storedCards = JSON.parse(localStorage.getItem('walletCards') || '[]');
-        setCards(storedCards);
-        if (storedCards.length > 0) {
-            setSelectedCardLast4(storedCards[0].last4);
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    const backendCards = Array.isArray(user.card) ? user.card : [];
+                    setCards(backendCards);
+                    localStorage.setItem('walletCards', JSON.stringify(backendCards));
+                    if (backendCards.length > 0) {
+                        setSelectedCardLast4(backendCards[0].last4);
+                    }
+                });
+        } else {
+            setCards([]);
         }
     }, []);
 
@@ -48,10 +56,10 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId && selectedCardLast4) {
-            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/select-card`, {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ last4: selectedCardLast4 })
+                body: JSON.stringify({ selectedCard: selectedCardLast4 })
             });
         }
     }, [selectedCardLast4]);
@@ -61,10 +69,9 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         const userId = localStorage.getItem('userId');
         const cartKey = userId ? `cart_${userId}` : 'cart';
         const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-        const products = JSON.parse(localStorage.getItem("products")) || [];
         let sum = 0;
         for (const item of cart) {
-            const prod = products.find(p => String(p.id) === String(item.id));
+            const prod = cart.find(p => String(p.id) === String(item.id));
             if (prod) sum += Number(prod.price) * item.quantity;
         }
         setTotal(sum);
@@ -143,12 +150,6 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
         if (onSubmit) onSubmit();
         if (onNext) onNext();
     }
-
-    const navigate = useNavigate();
-
-    const handleVoltar = () => {
-        navigate(ROUTES.PROFILE);
-    };
 
     return (
        <>
@@ -257,7 +258,7 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 <button
                     type="button"
                     className="back-button"
-                    onClick={handleVoltar}
+                    onClick={onBack}
                 >
                     Back
                 </button>

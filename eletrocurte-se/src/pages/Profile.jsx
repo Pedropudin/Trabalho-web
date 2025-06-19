@@ -55,11 +55,6 @@ export default function Profile() {
             <h3>Orders</h3>
             <p>Track the status of your products</p>
           </div>
-          <div className="card" onClick={() => handleCardClick('messages')} tabIndex={0} role="button">
-            <i className="fas fa-envelope fa-2x"></i>
-            <h3>Messages</h3>
-            <p>See your messages and news</p>
-          </div>
           <div className="card" onClick={() => handleCardClick('wallet')} tabIndex={0} role="button">
             <i className="fas fa-wallet fa-2x"></i>
             <h3>Wallet</h3>
@@ -80,7 +75,7 @@ export default function Profile() {
             <h3>Privacy</h3>
             <p>Security and data settings</p>
           </div>
-          <div className="card wide-card" onClick={() => handleCardClick('history')} tabIndex={0} role="button">
+          <div className="card" onClick={() => handleCardClick('history')} tabIndex={0} role="button">
             <i className="fas fa-history fa-2x"></i>
             <h3>History</h3>
             <p>View your purchases and products</p>

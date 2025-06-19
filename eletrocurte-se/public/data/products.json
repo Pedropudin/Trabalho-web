@@ -12,8 +12,8 @@
       "https://m.media-amazon.com/images/I/61rJkQYb8PL._AC_SL1500_.jpg"
     ],
     "brand": "Kingston",
-    "category": "Hardware",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "storage",
     "specifications": [
       "Capacity: 480GB",
@@ -39,8 +39,8 @@
       "https://a-static.mlcdn.com.br/800x560/teclado-mecanico-gamer-redragon-kumara-rgb-switch-outemu-blue-abnt2-preto-k552rgb-pt/redragon/100000000000115/2e6e8e2e1b2e7e3e2e2e2e2e2e2e.jpg"
     ],
     "brand": "Redragon",
-    "category": "Peripherals",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Peripherals",
     "specificSector": "keyboards",
     "specifications": [
       "Switch type: Outemu Blue Mechanical",
@@ -66,8 +66,8 @@
       "https://m.media-amazon.com/images/I/61LtuGzXeaL._AC_SL1500_.jpg"
     ],
     "brand": "Logitech",
-    "category": "Peripherals",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Peripherals",
     "specificSector": "mice",
     "specifications": [
       "Sensor: High-precision optical",
@@ -93,8 +93,8 @@
       "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "Dell",
-    "category": "Computers",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Computers",
     "specificSector": "laptops",
     "specifications": [
       "Processor: Intel i5-1135G7",
@@ -120,8 +120,8 @@
       "https://m.media-amazon.com/images/I/71qZy8P6nGL._AC_SL1500_.jpg"
     ],
     "brand": "Samsung",
-    "category": "Celulares",
-    "generalSector": "mobile",
+    "category": "mobile",
+    "generalSector": "Celulares",
     "specificSector": "smartphones",
     "specifications": [
       "Processor: Snapdragon 8 Gen 2",
@@ -148,7 +148,7 @@
       "https://m.media-amazon.com/images/I/61pJ+Q4UqGL._AC_SL1500_.jpg"
     ],
     "brand": "JBL",
-    "category": "Peripherals",
+    "category": "computers",
     "generalSector": "audio",
     "specificSector": "headphones",
     "specifications": [
@@ -175,8 +175,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "NZXT",
-    "category": "Hardware",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "cases",
     "specifications": [
       "Type: Mid Tower",
@@ -202,8 +202,8 @@
       "https://m.media-amazon.com/images/I/61pZy8P6nGL._AC_SL1500_.jpg"
     ],
     "brand": "Logitech",
-    "category": "Peripherals",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Peripherals",
     "specificSector": "webcams",
     "specifications": [
       "Resolution: 1080p Full HD",
@@ -229,8 +229,8 @@
       "https://m.media-amazon.com/images/I/61h5b6QwQwL._AC_SL1500_.jpg"
     ],
     "brand": "Motorola",
-    "category": "Celulares",
-    "generalSector": "mobile",
+    "category": "mobile",
+    "generalSector": "Celulares",
     "specificSector": "smartphones",
     "specifications": [
       "Processor: MediaTek Dimensity 8020",
@@ -257,8 +257,8 @@
       "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "Corsair",
-    "category": "Hardware",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "memory",
     "specifications": [
       "Type: DDR4",
@@ -284,8 +284,8 @@
       "https://m.media-amazon.com/images/I/51wF7YDIQkL._AC_SL1000_.jpg"
     ],
     "brand": "TP-Link",
-    "category": "Hardware",
-    "generalSector": "networking",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "routers",
     "specifications": [
       "Wi-Fi standard: 802.11ac",
@@ -311,8 +311,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "HP",
-    "category": "Peripherals",
-    "generalSector": "office",
+    "category": "computers",
+    "generalSector": "Peripherals",
     "specificSector": "printers",
     "specifications": [
       "Printing technology: HP thermal",
@@ -338,8 +338,8 @@
       "https://m.media-amazon.com/images/I/71h5b6QwQwL._AC_SL1500_.jpg"
     ],
     "brand": "Apple",
-    "category": "Celulares",
-    "generalSector": "mobile",
+    "category": "mobile",
+    "generalSector": "Celulares",
     "specificSector": "smartphones",
     "specifications": [
       "Processor: A15 Bionic",
@@ -366,8 +366,8 @@
       "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "ASUS",
-    "category": "Hardware",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "motherboards",
     "specifications": [
       "Chipset: AMD B450",
@@ -393,7 +393,7 @@
       "https://m.media-amazon.com/images/I/61pJ+Q4UqGL._AC_SL1500_.jpg"
     ],
     "brand": "JBL",
-    "category": "Peripherals",
+    "category": "computers",
     "generalSector": "audio",
     "specificSector": "speakers",
     "specifications": [
@@ -420,8 +420,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "Kingston",
-    "category": "Peripherals",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Peripherals",
     "specificSector": "storage",
     "specifications": [
       "Capacity: 64GB",
@@ -447,8 +447,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "ThunderX3",
-    "category": "Peripherals",
-    "generalSector": "furniture",
+    "category": "computers",
+    "generalSector": "Peripherals",
     "specificSector": "gaming chairs",
     "specifications": [
       "Type: Gamer",
@@ -474,8 +474,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "Corsair",
-    "category": "Hardware",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "power supplies",
     "specifications": [
       "Power: 550W",
@@ -501,8 +501,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "Cooler Master",
-    "category": "Hardware",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "coolers",
     "specifications": [
       "Type: Air cooler",
@@ -528,8 +528,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "SMS",
-    "category": "Hardware",
-    "generalSector": "computers",
+    "category": "computers",
+    "generalSector": "Hardware",
     "specificSector": "stabilizers",
     "specifications": [
       "Power: 300VA",
@@ -555,8 +555,8 @@
       "https://m.media-amazon.com/images/I/61wF7YDIQkL._AC_SL1500_.jpg"
     ],
     "brand": "Epson",
-    "category": "Peripherals",
-    "generalSector": "office",
+    "category": "computers",
+    "generalSector": "Peripherals",
     "specificSector": "printers",
     "specifications": [
       "Printing technology: Ink tank",
@@ -564,6 +564,266 @@
       "Mobile printing: Yes",
       "Copy and scan: Yes",
       "Compatibility: Windows, Mac, Linux"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 31,
+    "name": "Razer DeathAdder V2 Mouse",
+    "description": "Ergonomic gaming mouse with 20,000 DPI sensor.",
+    "fullDescription": "The Razer DeathAdder V2 is a high-performance gaming mouse featuring an ergonomic design and a Focus+ 20,000 DPI optical sensor for precise tracking. With Razer Speedflex cable and optical switches, it ensures fast response and durability for competitive gaming.",
+    "price": 399.9,
+    "inStock": 15,
+    "image": "https://m.media-amazon.com/images/I/61doJ9Qy+GL._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/61doJ9Qy+GL._AC_SL1500_.jpg"
+    ],
+    "brand": "Razer",
+    "category": "computers",
+    "generalSector": "Peripherals",
+    "specificSector": "mice",
+    "specifications": [
+      "Sensor: Focus+ 20,000 DPI",
+      "Switches: Optical",
+      "Cable: Speedflex",
+      "Buttons: 8 programmable",
+      "Lighting: Razer Chroma RGB"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 32,
+    "name": "AOC 24G2 24'' Gaming Monitor",
+    "description": "144Hz Full HD IPS gaming monitor.",
+    "fullDescription": "The AOC 24G2 is a 24-inch gaming monitor with IPS panel, 144Hz refresh rate, and 1ms response time. It offers vibrant colors, wide viewing angles, and smooth gameplay for competitive gamers.",
+    "price": 1299,
+    "inStock": 8,
+    "image": "https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_SL1500_.jpg"
+    ],
+    "brand": "AOC",
+    "category": "computers",
+    "generalSector": "Peripherals",
+    "specificSector": "monitors",
+    "specifications": [
+      "Screen size: 24 inches",
+      "Panel: IPS",
+      "Refresh rate: 144Hz",
+      "Response time: 1ms",
+      "Resolution: Full HD (1920x1080)"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 33,
+    "name": "Seagate Barracuda 2TB HDD",
+    "description": "3.5'' SATA III hard drive for desktop.",
+    "fullDescription": "The Seagate Barracuda 2TB HDD is a reliable storage solution for desktops, offering high capacity and fast data transfer rates. Ideal for storing large files, games, and backups.",
+    "price": 399.9,
+    "inStock": 20,
+    "image": "https://m.media-amazon.com/images/I/71pWzhdQkGL._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/71pWzhdQkGL._AC_SL1500_.jpg"
+    ],
+    "brand": "Seagate",
+    "category": "computers",
+    "generalSector": "Hardware",
+    "specificSector": "storage",
+    "specifications": [
+      "Capacity: 2TB",
+      "Interface: SATA III",
+      "Form factor: 3.5 inches",
+      "Speed: 7200 RPM",
+      "Cache: 256MB"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 34,
+    "name": "TP-Link TL-WN822N USB Wi-Fi Adapter",
+    "description": "300Mbps high-gain wireless USB adapter.",
+    "fullDescription": "The TP-Link TL-WN822N is a high-gain USB Wi-Fi adapter that provides stable and fast wireless connections for desktops and laptops. Its dual external antennas ensure better coverage and signal strength.",
+    "price": 89.9,
+    "inStock": 30,
+    "image": "https://m.media-amazon.com/images/I/51Qz8pQwQwL._AC_SL1000_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/51Qz8pQwQwL._AC_SL1000_.jpg"
+    ],
+    "brand": "TP-Link",
+    "category": "networking",
+    "generalSector": "Hardware",
+    "specificSector": "adapters",
+    "specifications": [
+      "Speed: 300Mbps",
+      "Interface: USB 2.0",
+      "Antennas: 2 external",
+      "Frequency: 2.4GHz",
+      "Compatibility: Windows, Mac"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 35,
+    "name": "Samsung 980 1TB NVMe SSD",
+    "description": "PCIe Gen3 x4 M.2 NVMe SSD for high-speed storage.",
+    "fullDescription": "The Samsung 980 1TB NVMe SSD delivers blazing-fast read and write speeds for gaming, content creation, and everyday computing. Its M.2 form factor makes it ideal for modern desktops and laptops.",
+    "price": 599.9,
+    "inStock": 10,
+    "image": "https://m.media-amazon.com/images/I/81rJkQYb8PL._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/81rJkQYb8PL._AC_SL1500_.jpg"
+    ],
+    "brand": "Samsung",
+    "category": "computers",
+    "generalSector": "Hardware",
+    "specificSector": "storage",
+    "specifications": [
+      "Capacity: 1TB",
+      "Interface: PCIe Gen3 x4 NVMe",
+      "Form factor: M.2 2280",
+      "Read speed: Up to 3500MB/s",
+      "Write speed: Up to 3000MB/s"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 36,
+    "name": "Microsoft Surface Pro 7",
+    "description": "2-in-1 laptop with Intel i5, 8GB RAM, 128GB SSD.",
+    "fullDescription": "The Microsoft Surface Pro 7 is a versatile 2-in-1 device that combines the power of a laptop with the portability of a tablet. Featuring a 12.3-inch touchscreen, Intel i5 processor, and long battery life.",
+    "price": 4999,
+    "inStock": 4,
+    "image": "https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_SL1500_.jpg"
+    ],
+    "brand": "Microsoft",
+    "category": "computers",
+    "generalSector": "Computers",
+    "specificSector": "laptops",
+    "specifications": [
+      "Processor: Intel i5",
+      "RAM: 8GB",
+      "Storage: 128GB SSD",
+      "Display: 12.3'' Touchscreen",
+      "Battery: Up to 10.5 hours"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 37,
+    "name": "Canon EOS Rebel T7 Camera",
+    "description": "DSLR camera with 18-55mm lens.",
+    "fullDescription": "The Canon EOS Rebel T7 is a user-friendly DSLR camera perfect for beginners and enthusiasts. It features a 24.1MP sensor, built-in Wi-Fi, and comes with an 18-55mm lens for versatile shooting.",
+    "price": 2999,
+    "inStock": 6,
+    "image": "https://m.media-amazon.com/images/I/81QKQ9mwV7L._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/81QKQ9mwV7L._AC_SL1500_.jpg"
+    ],
+    "brand": "Canon",
+    "category": "computers",
+    "generalSector": "Peripherals",
+    "specificSector": "cameras",
+    "specifications": [
+      "Sensor: 24.1MP APS-C",
+      "Lens: 18-55mm",
+      "Connectivity: Wi-Fi",
+      "Video: Full HD 1080p",
+      "Screen: 3.0'' LCD"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 38,
+    "name": "Kingston HyperX Cloud II Headset",
+    "description": "Gaming headset with 7.1 virtual surround sound.",
+    "fullDescription": "The Kingston HyperX Cloud II is a premium gaming headset featuring 53mm drivers, memory foam ear cushions, and a detachable microphone. Enjoy immersive 7.1 virtual surround sound for gaming and multimedia.",
+    "price": 499.9,
+    "inStock": 12,
+    "image": "https://m.media-amazon.com/images/I/81doJ9Qy+GL._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/81doJ9Qy+GL._AC_SL1500_.jpg"
+    ],
+    "brand": "Kingston",
+    "category": "computers",
+    "generalSector": "audio",
+    "specificSector": "headphones",
+    "specifications": [
+      "Drivers: 53mm",
+      "Sound: 7.1 virtual surround",
+      "Microphone: Detachable",
+      "Connection: USB/3.5mm",
+      "Frame: Aluminum"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 39,
+    "name": "Logitech K380 Bluetooth Keyboard",
+    "description": "Compact multi-device Bluetooth keyboard.",
+    "fullDescription": "The Logitech K380 is a compact and lightweight Bluetooth keyboard that allows you to connect and switch between up to three devices. Compatible with Windows, Mac, Android, and iOS.",
+    "price": 199.9,
+    "inStock": 18,
+    "image": "https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_SL1500_.jpg"
+    ],
+    "brand": "Logitech",
+    "category": "computers",
+    "generalSector": "Peripherals",
+    "specificSector": "keyboards",
+    "specifications": [
+      "Connection: Bluetooth",
+      "Multi-device: Up to 3",
+      "Battery life: Up to 2 years",
+      "Layout: Compact",
+      "Compatibility: Windows, Mac, Android, iOS"
+    ],
+    "visualized": false,
+    "payed": false,
+    "reviews": []
+  },
+  {
+    "id": 40,
+    "name": "LG 27UL500 27'' 4K Monitor",
+    "description": "27-inch 4K UHD IPS monitor with HDR10.",
+    "fullDescription": "The LG 27UL500 is a 27-inch 4K UHD monitor with IPS panel and HDR10 support. Ideal for productivity, content creation, and entertainment with stunning color accuracy.",
+    "price": 1999,
+    "inStock": 7,
+    "image": "https://m.media-amazon.com/images/I/81doJ9Qy+GL._AC_SL1500_.jpg",
+    "thumbs": [
+      "https://m.media-amazon.com/images/I/81doJ9Qy+GL._AC_SL1500_.jpg"
+    ],
+    "brand": "LG",
+    "category": "computers",
+    "generalSector": "Peripherals",
+    "specificSector": "monitors",
+    "specifications": [
+      "Screen size: 27 inches",
+      "Resolution: 4K UHD (3840x2160)",
+      "Panel: IPS",
+      "HDR: HDR10",
+      "Ports: HDMI, DisplayPort"
     ],
     "visualized": false,
     "payed": false,

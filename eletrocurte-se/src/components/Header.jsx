@@ -288,6 +288,8 @@ function Header({
   const handleLogoutInternal = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userType');
+    localStorage.removeItem('cart'); 
+    
     navigate(ROUTES.LOGOUT, { replace: true });
   };
 
@@ -381,7 +383,7 @@ function Header({
                 '&:hover': { background: 'rgba(0,123,153,0.15)' },
               }}
             >
-              {cartItemsCount > 0 ? (
+              {isLoggedIn && cartItemsCount > 0? (
                 <Badge
                   badgeContent={normalizeCartCount(cartItemsCount)}
                   color="secondary"

@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
       last4: { type: String, required: true },
       brand: { type: String },
       nameOnCard: { type: String },
-      balance: { type: Number, default: 0 } // saldo em dólar
+      balance: { type: Number, default: 0 } // balance in dollars
     }
   ],
   selectedCard: { type: String }, // last4 of cards
@@ -33,25 +33,18 @@ const userSchema = new mongoose.Schema({
     termsAccepted: { type: Boolean, default: false }
   },
 
+  // OBSOLETE: purchaseHistory should not be used to display the user's purchase history.
+  // Always use the Order collection to get the user's real history.
   purchaseHistory: [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-      productName: String, // <-- Adicionado: nome do produto associado
+      productName: String,
       name: String,
       price: Number,
       quantity: Number,
       date: Date,
       evaluation: Number,
       comment: String
-    }
-  ],
-
-  messages: [
-    {
-      text: String,
-      date: Date,
-      important: { type: Boolean, default: false },
-      read: { type: Boolean, default: false }
     }
   ],
 
@@ -70,8 +63,19 @@ const userSchema = new mongoose.Schema({
   ],
 
   // Selected address (optional)
-  selectedAddress: { type: String }
-}, { timestamps: true });
+  selectedAddress: { type: String },
+
+  // Viewed products history (array of objects)
+  viewedProducts: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      id: Number, // product numeric id for easy lookup
+      name: String,
+      image: String,
+      visualizedDate: Date
+    }
+  ]
+});
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {

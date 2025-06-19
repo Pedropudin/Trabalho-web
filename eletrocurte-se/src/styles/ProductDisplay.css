@@ -40,10 +40,11 @@
 
 /* --- Product image --- */
 .product-item-image {
-    max-width: 80%;
+    width: 100px;
+    height: 100px;
     height: auto;
     object-fit: contain;
-    margin-bottom: 18px;
+    margin-bottom: auto;
     border-radius: 10px;
     background: white;
 }
@@ -59,13 +60,7 @@
     font-size: 1.05rem;
     font-weight: bold;
     color: #222;
-    margin-bottom: 10px;
-    text-align: center;
-}
-.product-item-stock {
-    font-size: 1.05rem;
-    color: #222;
-    margin-bottom: 15px;
+    margin-bottom: auto;
     text-align: center;
 }
 

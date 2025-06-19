@@ -41,7 +41,7 @@ export default function Security({ onBack }) {
   const [validating, setValidating] = useState(false);
   const [snackbar, setSnackbar] = useState(false);
 
-  // Preenche os campos com dados do backend ao montar
+  // Fills the fields with backend data on mount
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     if (userId) {
@@ -53,7 +53,7 @@ export default function Security({ onBack }) {
             email: user.email || '',
             cpf: user.cpf || '',
             phone: user.phone || '',
-            password: '' // nunca preenche senha por segurança
+            password: '' // never preenche senha por segurança
           }));
         });
     }
@@ -123,7 +123,7 @@ export default function Security({ onBack }) {
 
     try {
       const userId = localStorage.getItem('userId');
-      // Só envia senha se o usuário digitou
+      // Only sends password if the user typed it
       const patchBody = {
         email: form.email,
         cpf: form.cpf,
@@ -138,7 +138,7 @@ export default function Security({ onBack }) {
       setMessage('Changes saved successfully!');
       setMessageType('success');
       setSnackbar(true);
-      setForm(prev => ({ ...prev, password: '' })); // limpa senha após salvar
+      setForm(prev => ({ ...prev, password: '' })); // clears password after saving
     } catch {
       setMessage('Failed to save changes to the server.');
       setMessageType('error');

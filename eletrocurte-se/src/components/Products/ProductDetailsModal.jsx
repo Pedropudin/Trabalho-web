@@ -27,11 +27,11 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
   const [showLoginMsg, setShowLoginMsg] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
-  const [validUsernames, setValidUsernames] = useState([]);
+  const [, setValidUsernames] = useState([]);
 
   // Always call useEffect, never conditionally
   React.useEffect(() => {
-    // Busca todos os usuários para validar nomes
+    // Fetches all users to validate names
     fetch(process.env.REACT_APP_API_URL + '/api/users')
       .then(res => res.json())
       .then(users => setValidUsernames(users.map(u => u.firstName).filter(Boolean)))
@@ -55,11 +55,12 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
   const filteredReviews = reviews; // Show all reviews
   // Calculates the average rating of the reviews
   const avgRating = filteredReviews.length
-    ? Math.round(filteredReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / filteredReviews.length)
+    ? Math.floor(filteredReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / filteredReviews.length)
     : 0;
 
   // User rating (if logged in)
   const nomeUsuario = localStorage.getItem('nomeUsuario');
+  // Shows only the review of the logged-in user as "Your review"
   const userReview = filteredReviews.find(r => r.username === nomeUsuario);
 
   // Comments to display (max. 5, expandable)
