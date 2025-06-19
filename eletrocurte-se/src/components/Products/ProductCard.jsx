@@ -41,7 +41,7 @@ const ProductCard = ({ product, onClick, isLoggedIn, pageType, showBuyButton = f
 
   // Calculates integer average rating
   const avgRating = reviews.length
-    ? Math.round(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
+    ? Math.floor(reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / reviews.length)
     : 0;
 
   // Handles card click: requires login on home, otherwise calls onClick

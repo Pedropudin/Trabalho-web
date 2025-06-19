@@ -55,7 +55,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
   const filteredReviews = reviews; // Show all reviews
   // Calculates the average rating of the reviews
   const avgRating = filteredReviews.length
-    ? Math.round(filteredReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / filteredReviews.length)
+    ? Math.floor(filteredReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0) / filteredReviews.length)
     : 0;
 
   // User rating (if logged in)

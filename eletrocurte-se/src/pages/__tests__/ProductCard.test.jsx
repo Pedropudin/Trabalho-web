@@ -19,7 +19,7 @@ const product = {
 it('renders product name and price', () => {
   render(<ProductCard product={product} />);
   expect(screen.getByText(/Test Product/i)).toBeInTheDocument();
-  expect(screen.getByText(/\$100\.00/i)).toBeInTheDocument();
+  expect(screen.getByText(/\R$100\.00/i)).toBeInTheDocument();
 });
 
 it('calls onClick when clicked', () => {

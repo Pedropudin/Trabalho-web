@@ -55,8 +55,16 @@ export default function PurchaseHistory() {
     fetchProdutos();
   }, [fetchProdutos]);
 
-  // Get logged-in username
-  const nomeUsuario = localStorage.getItem('nomeUsuario');
+  // Get logged-in user info from backend
+  const [usuarioBackend, setUsuarioBackend] = useState(null);
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+        .then(res => res.json())
+        .then(user => setUsuarioBackend(user));
+    }
+  }, []);
 
   // Agrupa produtos comprados por data e por id (um card por produto por data)
   const produtosPorData = useMemo(() => {
@@ -84,13 +92,18 @@ export default function PurchaseHistory() {
     // Só produtos pagos, agrupados por id, e que o usuário logado ainda não avaliou
     const avaliadosIds = new Set();
     return produtos
-      .filter(p => p.payed && p.id && (!Array.isArray(p.reviews) || !p.reviews.some(r => r.username === nomeUsuario)))
+      .filter(p =>
+        p.payed &&
+        p.id &&
+        (!Array.isArray(p.reviews) ||
+          !p.reviews.some(r => r.username === (usuarioBackend?.firstName || '')))
+      )
       .filter(p => {
         if (avaliadosIds.has(p.id)) return false;
         avaliadosIds.add(p.id);
         return true;
       });
-  }, [produtos, nomeUsuario]);
+  }, [produtos, usuarioBackend]);
 
   // Padroniza produtos aguardando avaliação
   const produtosAguardandoPadronizados = produtosAguardando.map(p => ({
@@ -108,18 +121,16 @@ export default function PurchaseHistory() {
   // Function called when reviewing a product
   const handleAvaliar = (nota, comentario, idx) => {
     const produtoAvaliado = produtosAguardandoPadronizados[idx];
-    if (produtoAvaliado && nomeUsuario) {
-      // Send review to backend
+    if (produtoAvaliado && usuarioBackend && usuarioBackend.firstName) {
       fetch(`${process.env.REACT_APP_API_URL}/api/products/${produtoAvaliado.id}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: nomeUsuario,
+          username: usuarioBackend.firstName,
           rating: nota,
           comment: comentario
         })
       }).then(() => {
-        // Refaz fetch para atualizar reviews
         fetchProdutos();
       });
     }

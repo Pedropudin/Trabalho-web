@@ -177,9 +177,16 @@ router.get('/:id/reviews', async (req, res) => {
 // POST /api/products/:id/reviews - add a review to a product
 router.post('/:id/reviews', async (req, res) => {
   try {
-    // Accepts both { username, rating, comment } and { usuario, nota, comentario }
-    const { username, rating, comment, usuario, nota, comentario } = req.body;
-    let userField = username || usuario;
+    // If authenticated, use the user's first name from the token
+    let userField;
+    if (req.user && req.user.firstName) {
+      userField = req.user.firstName;
+    } else {
+      // fallback for legacy compatibility
+      const { username, usuario } = req.body;
+      userField = username || usuario;
+    }
+    const { rating, comment, nota, comentario } = req.body;
     const ratingField = typeof rating === 'number' ? rating : typeof nota === 'number' ? nota : undefined;
     const commentField = comment || comentario;
     if (!userField || typeof ratingField !== 'number' || !commentField) {
