@@ -184,6 +184,7 @@ export default function Login() {
         localStorage.setItem('userType', 'admin');
         localStorage.setItem('userName', data.admin.name);
         localStorage.setItem('userId', data.admin.id);
+        localStorage.setItem('Token', data.token);
         showMessage("Admin login successful!", "success");
         setTimeout(() => navigate(ROUTES.PERFORMANCE), 1500);
       } catch {

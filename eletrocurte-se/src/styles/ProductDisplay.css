@@ -10,7 +10,7 @@
     align-items: center;
     transition: box-shadow 0.2s, transform 0.2s;
     width: 210px;
-    height: 350px;
+    height: fit-content;
     border: 1.5px solid #e0f7fa;
 }
 
