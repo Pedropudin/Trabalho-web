@@ -15,36 +15,36 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "usuario@email.com",
-  "password": "senha_do_usuario"
+  "email": "user@email.com",
+  "password": "user_password"
 }
 
 ###
 
-### CRIAR PRODUTO (ADMIN)
+### CREATE PRODUCT (ADMIN)
 POST http://localhost:5000/api/products
-Authorization: Bearer <seu_jwt_admin_token>
+Authorization: Bearer <your_jwt_admin_token>
 Content-Type: application/json
 
 {
   "id": 1001,
-  "name": "Produto Teste",
+  "name": "Test Product",
   "price": 99.99,
   "inStock": 10,
-  "brand": "Marca",
-  "category": "Categoria"
+  "brand": "Brand",
+  "category": "Category"
 }
 
 ###
 
-### LISTAR PRODUTOS
+### LIST PRODUCTS
 GET http://localhost:5000/api/products
 
 ###
 
-### ATUALIZAR PRODUTO (ADMIN)
+### UPDATE PRODUCT (ADMIN)
 PUT http://localhost:5000/api/products/1001
-Authorization: Bearer <seu_jwt_admin_token>
+Authorization: Bearer <your_jwt_admin_token>
 Content-Type: application/json
 
 {
@@ -54,22 +54,22 @@ Content-Type: application/json
 
 ###
 
-### DELETAR PRODUTO (ADMIN)
+### DELETE PRODUCT (ADMIN)
 DELETE http://localhost:5000/api/products/1001
-Authorization: Bearer <seu_jwt_admin_token>
+Authorization: Bearer <your_jwt_admin_token>
 Content-Type: application/json
 
 ###
 
-### CRIAR USUÁRIO
+### CREATE USER
 POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-  "firstName": "João",
-  "lastName": "Silva",
-  "email": "joao@email.com",
-  "password": "senha123",
+  "firstName": "John",
+  "lastName": "Smith",
+  "email": "john@email.com",
+  "password": "password123",
   "phone": "11999999999",
   "cpf": "12345678900",
   "birthDate": "2000-01-01"
@@ -77,60 +77,60 @@ Content-Type: application/json
 
 ###
 
-### LISTAR USUÁRIOS
+### LIST USERS
 GET http://localhost:5000/api/users
 
 ###
 
-### ATUALIZAR USUÁRIO
+### UPDATE USER
 PATCH http://localhost:5000/api/users/{{userId}}
 Content-Type: application/json
 
 {
-  "firstName": "João Atualizado"
+  "firstName": "John Updated"
 }
 
 ###
 
-### DELETAR USUÁRIO
+### DELETE USER
 DELETE http://localhost:5000/api/users/{{userId}}
 Content-Type: application/json
 
 ###
 
-### CRIAR ADMIN (ADMIN)
+### CREATE ADMIN (ADMIN)
 POST http://localhost:5000/api/users/create-admin
-Authorization: Bearer <seu_jwt_admin_token>
+Authorization: Bearer <your_jwt_admin_token>
 Content-Type: application/json
 
 {
-  "name": "Novo Admin",
-  "email": "novo_admin@email.com",
-  "password": "SenhaForte@2024",
+  "name": "New Admin",
+  "email": "new_admin@email.com",
+  "password": "StrongPassword@2024",
   "token": 654321
 }
 
 ###
 
-### ATUALIZAR ADMIN (ADMIN)
+### UPDATE ADMIN (ADMIN)
 PATCH http://localhost:5000/api/users/admin/{{adminId}}
-Authorization: Bearer <seu_jwt_admin_token>
+Authorization: Bearer <your_jwt_admin_token>
 Content-Type: application/json
 
 {
-  "name": "Admin Atualizado"
+  "name": "Admin Updated"
 }
 
 ###
 
-### DELETAR ADMIN (ADMIN)
+### DELETE ADMIN (ADMIN)
 DELETE http://localhost:5000/api/users/admin/{{adminId}}
-Authorization: Bearer <seu_jwt_admin_token>
+Authorization: Bearer <your_jwt_admin_token>
 Content-Type: application/json
 
 ###
 
-### CRIAR PEDIDO (ORDER)
+### CREATE ORDER
 POST http://localhost:5000/api/orders/finish
 Content-Type: application/json
 
@@ -139,8 +139,8 @@ Content-Type: application/json
     { "id": "1001", "quantity": 2 }
   ],
   "personal": {
-    "name": "João",
-    "address": "Rua Exemplo, 123"
+    "name": "John",
+    "address": "Example Street, 123"
   },
   "card": {
     "last4": "1234"
@@ -149,12 +149,12 @@ Content-Type: application/json
 
 ###
 
-### LISTAR PEDIDOS
+### LIST ORDERS
 GET http://localhost:5000/api/orders
 
 ###
 
-### ATUALIZAR STATUS DO PEDIDO (ADMIN)
+### UPDATE ORDER STATUS (ADMIN)
 PATCH http://localhost:5000/api/orders/{{orderId}}/status
 Content-Type: application/json
 
@@ -164,9 +164,8 @@ Content-Type: application/json
 
 ###
 
-# OBSOLETO: Não use mais este endpoint para histórico de compras
+# DEPRECATED: Do not use this endpoint for purchase history
 # GET http://localhost:5000/api/users/{{userId}}/orders
 
-# Use este endpoint para obter o histórico real de compras do usuário:
+# Use this endpoint to get the real user purchase history:
 GET http://localhost:5000/api/orders/user/{{userId}}
-

@@ -1,24 +1,62 @@
 # Eletrocurte-se
 
-Members:
+An online electronics store
+
+## Members
 - Davi Gabriel Domingues (15447497)
 - Giovanna Nascimento Noventa (15637210)
 - Pedro Martins Oliveira (13696213)
 
-An online electronics store
+---
+
+## Table of Contents
+
+- [Navigation Map](#navigation-map)
+- [Project Structure](#project-structure)
+- [Requirements](#requirements)
+- [Quick Start](#quick-start)
+- [Backend Setup](#backend-setup)
+- [Frontend Setup](#frontend-setup)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Contribution](#contribution)
+- [License](#license)
+- [Issues](#issues)
+- [Comments](#comments)
 
 ---
-# Navigation Map
+
+## Navigation Map
+
 ![navigation map](UX-eletrocurtese.png "Map")
 
-For a better view, access the [project on Milanote by clicking here](https://app.milanote.com/1TWIzG1gYJgXeW?p=rvOTCrnhBY9).
+For a better view, access the [project on Milanote](https://app.milanote.com/1TWIzG1gYJgXeW?p=rvOTCrnhBY9).
 
-# Page Mockups
-The page mockups can be found in the navigation map or in the [Pages-screenshots](Pages-screenshots/) folder.
+## Project Structure
 
-Also check [our Figma link](https://www.figma.com/design/8Pk9ykizcWYiU7RxIeDDsV/Design-Principal?node-id=33-2&t=8IoWAMFarDPiJcpR-1) with some mockups, although some are not up to date; the most current versions are in the map and folder mentioned above.
+```text
+Trabalho-web/
+├── backend/                # Node.js/Express backend (API, models, routes)
+│   ├── models/             # Mongoose models (User, Product, Order, Admin)
+│   ├── routes/             # Express route handlers (users, products, orders, auth)
+│   ├── middleware/         # Authentication and utility middleware
+│   ├── server.js           # Main backend entry point
+│   ├── backendManipulationRules.txt # API usage and backend rules (ENGLISH)
+│   └── insomnia_examples.http       # HTTP request examples for API (ENGLISH)
+├── eletrocurte-se/         # React frontend app
+│   ├── public/             # Static files, images, and product data (JSON)
+│   ├── src/                # React source code
+│   │   ├── components/     # Reusable React components (Cart, Product, Profile, etc.)
+│   │   ├── pages/          # Main page components (Home, Product, Checkout, etc.)
+│   │   ├── styles/         # CSS files for each component/page
+│   │   ├── routes.js       # Route definitions for React Router
+│   │   └── index.js        # React entry point
+│   └── package.json        # Frontend dependencies and scripts
+├── Old-Version/            # Legacy HTML/CSS/JS version (for reference)
+└── README.md               # Main documentation (this file)
+```
 
-# Requirements
+## Requirements
 
 ## Program Functionality
 Dividing the program into the client and store administrator parts, each must have the following functionalities:
@@ -84,53 +122,81 @@ The "--verbose" flag is used to detail the test results, making them even more t
 
 This project was initialized with [Create React App](https://github.com/facebook/create-react-app).
 
-## Cloning the repository
+## Quick Start
+
+### Clone the repository
 
 To use its dependencies, you need to clone it from GitHub:
-### `git clone https://github.com/Pedropudin/Trabalho-web.git`
+```bash
+git clone https://github.com/Pedropudin/Trabalho-web.git
+cd eletrocurte-se
+```
 
-## Available commands
+### Install dependencies
 
-First, in the terminal, run "cd eletrocurte-se". Then, in the project directory, you can run: 
+```bash
+npm install
+```
 
-### `npm install`
+### Start the frontend
 
-Installs all app dependencies to make it usable
+```bash
+npm start
+```
 
-### `npm start`
+### Start the backend
 
-Runs the application in development mode, with all libraries present and supported by React and used for this project.
-Open [http://localhost:3000](http://localhost:3000) in your browser to view it after the App compiles in the terminal.
+```bash
+cd ../backend
+npm install
+npm run dev
+```
 
-# Using the server
+## Backend Setup
 
 The project has a Node.js/Express backend server to manage authentication, users, products, and MongoDB database integration.
 
-## Server installation and execution
+### Server installation and execution
 
 In the project's root directory, go to the `backend` folder:
 
-### `cd backend`
+```bash
+cd backend
+```
 
 Install backend dependencies:
 
-### `npm install`
+```bash
+npm install
+```
 
 For development, it is recommended to use [nodemon](https://www.npmjs.com/package/nodemon) to automatically restart the server on every change:
 
-### `npm run dev`
+```bash
+npm run dev
+```
 
 Or, to run normally:
 
-### `npm start`
+```bash
+npm start
+```
 
-Or even:
+Or, in a normal aproach:
 
-### `node server.js`
+```bash
+node server.js
+```
+
+Or, evenly:
+
+```bash
+nodemon server.js
+```
 
 The server will start normally at [http://localhost:5000](http://localhost:5000) (or the port defined in `.env`).
 
-## Environment configuration
+### Environment configuration
 
 Create a `.env` file in the `backend` folder with the necessary variables, for example:
 
@@ -144,7 +210,7 @@ ADMIN_TOKEN=YOUR_ADMIN_JWT_TOKEN
 
 - `API_URL` and `ADMIN_TOKEN` are used to import products via script (see below).
 
-## Main endpoints
+### Main endpoints
 
 - `/api/auth/login` — User login
 - `/api/auth/register` — User registration
@@ -153,42 +219,130 @@ ADMIN_TOKEN=YOUR_ADMIN_JWT_TOKEN
 
 Check the files in the `backend/routes` folder for details of each route.
 
-## Backend scripts and utilities (extra)
+### Backend scripts and utilities (extra)
 
-### Batch product import
+#### Batch product import
 
 To import products from the JSON file into the MongoDB database, use the script:
 
-#### `node importProducts.js`
+```bash
+node importProducts.js
+```
 
 - The script reads the `public/data/products.json` file and makes an authenticated request to the backend import endpoint.
 - You must correctly set the `API_URL` and `ADMIN_TOKEN` variables in the backend `.env`.
 - The admin token (`ADMIN_TOKEN`) can be obtained by logging in as admin and copying the returned JWT.
 
-### Admin creation
+#### Admin creation
 
 To create a new admin via terminal, use:
 
-#### `node createAdmin.js`
+```bash
+node createAdmin.js
+```
 
 - The script will prompt for name, email, password, and numeric token for the new admin.
 - The data is saved directly to the MongoDB database.
 
+## Frontend Setup
 
-## Detailed API documentation
+The frontend is a React application that consumes the backend API.
 
-For complete details on authentication, JWT usage, request examples, protected endpoints, product import/export, and backend manipulation rules, see the file [`backend/backendManipulationRules.txt`](backend/backendManipulationRules.txt)
+### Available commands
 
-This file contains practical API usage examples, CRUD instructions, cURL examples, explanations about tokens, and all available routes.
+First, in the terminal, run "cd eletrocurte-se". Then, in the project directory, you can run: 
+
+```bash
+npm install
+```
+
+```bash
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to view it after the App compiles in the terminal.
+
+## API Documentation
+
+- [Backend API Rules](backend/backendManipulationRules.txt)
+- [HTTP Request Examples](backend/insomnia_examples.http)
 
 ---
 
-# Issues
+## Additional Documentation
 
-Although we maintained the policy of developing many files and prioritizing componentization as much as possible, as can be seen in the [project components folder](eletrocurte-se/src/components/), we ended up facing some difficulty migrating many of the original ideas present in the Figma Mockup, as well as maintaining, to some extent, the original site layout, considering the adaptations for the React model. In addition, we found it somewhat difficult to fully modularize the CSS styles used in [Milestone 1](Old-Version/), since there were many files, and the project required us to create several CSS styles for the various project dependencies ([see](eletrocurte-se/src/styles/)). Thus, the development time for the project was much higher than expected, as there was a large dependency tree between files to be developed in a shorter period compared to the first Milestone.
+- **API Usage and Rules:**  
+  See [`backend/backendManipulationRules.txt`](backend/backendManipulationRules.txt) for a complete guide to backend endpoints, authentication, JWT usage, and CRUD operations.  
+  All backend documentation is in English for consistency.
+
+- **HTTP Request Examples:**  
+  See [`backend/insomnia_examples.http`](backend/insomnia_examples.http) for ready-to-use API request examples (login, CRUD, etc.) compatible with Insomnia, Postman, or cURL.
+
+- **Frontend Componentization:**  
+  All React components are documented with comments at the top of each file, describing their purpose, props, and usage.  
+  The folder structure is organized by feature (e.g., `ProfileEdition`, `Card`, `Address`).
+
+- **Data Models:**  
+  The backend uses Mongoose models for `User`, `Product`, `Order`, and `Admin`.  
+  Each model is documented with field descriptions in the schema files.
+
+- **Product Data:**  
+  The initial product catalog is stored in [`eletrocurte-se/public/data/products.json`](eletrocurte-se/public/data/products.json) and can be imported into the database using the provided scripts.
+
+- **Testing:**  
+  Unit and integration tests are located alongside components and can be run with `npm test` (see above).
+
+- **Environment Variables:**  
+  Both frontend and backend use `.env` files for configuration.  
+  See the "Environment configuration" section above for required variables.
+
+## Testing
+
+The tests were run individually, based on the components used in the application and developed in the project. Checks were performed using the React jest extension to assess the consistency of expected functionalities as a response to the user while using the site in real time. No errors were reported during their execution, given the functions and manipulations each part performs in the overall project structure. The responses were consistent with what was developed and implemented so far.
+
+If you want to check the unit tests, you can run, considering the project is a React App, the following commands in the terminal:
+
+### `npm test`
+
+Runs the default jest library test, via the project's package.json script
+
+### `npx jest --verbose`
+
+Runs the file tests, but uses broader and more flexible flags than those in package.json (guaranteeing broader test coverage).
+
+The "--verbose" flag is used to detail the test results, making them even more transparent to the user.
+
+**Note**: tests must be run in the eletrocurte-se folder.
+
+---
+
+## Contribution
+
+If you wish to contribute or review the code, please follow these guidelines:
+
+- Use English for all code comments, commit messages, and documentation.
+- Keep the folder structure and naming conventions consistent.
+- Document any new components, endpoints, or scripts you add.
+- Run all tests before submitting changes.
+
+---
+
+## License
+
+This project is for educational purposes only and is not intended for production use.
+
+```
+MIT License
+```
+
+---
+
+## Issues (almost as the same as Milestone 2)
+
+Although we maintained the policy of developing many files and prioritizing componentization as much as possible, as can be seen in the [project components folder](eletrocurte-se/src/components/), we ended up facing some difficulty migrating many of the original ideas present in the Figma Mockup, as well as maintaining, to some extent, the original site layout, considering the adaptations for the React model. In addition, we found it somewhat difficult to fully modularize the CSS styles used in [Milestone 1](Old-Version/) and [Milestone 2](eletrocurte-se/). Thus, the development time for the project was much higher than expected, as there was a large dependency tree between files to be developed in a shorter period compared to the first Milestone.
 
 # Comments
-Milestone 3 will serve to finalize the work, aligning it with the logic embedded with the database for the site's robustness and, finally, the practical learning of the course. Furthermore, migrating certain logics to the backend may also help us see if it is possible to improve the frontend logic to enhance site performance.
+Milestone 3 served to conclude the project for the introductory web development course, requiring extensive knowledge of NoSQL databases, in addition to a solid front-end foundation built during Milestones 1 and 2. It also served as a parameter for putting into practice teamwork skills, code versioning dynamics and, most importantly, how to build a functional website from scratch. This way, we were able to get our hands dirty and practice all the principles taught in class, in addition to having a different programming experience, as it was our first in-depth contact with web development itself.
 
 <!--
 
