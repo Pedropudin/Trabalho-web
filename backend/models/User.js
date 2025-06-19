@@ -33,6 +33,8 @@ const userSchema = new mongoose.Schema({
     termsAccepted: { type: Boolean, default: false }
   },
 
+  // OBSOLETO: purchaseHistory não deve ser usado para exibir histórico de compras.
+  // Use sempre a coleção Order para obter o histórico real do usuário.
   purchaseHistory: [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },

@@ -162,3 +162,11 @@ Content-Type: application/json
   "status": "delivered"
 }
 
+###
+
+# OBSOLETO: Não use mais este endpoint para histórico de compras
+# GET http://localhost:5000/api/users/{{userId}}/orders
+
+# Use este endpoint para obter o histórico real de compras do usuário:
+GET http://localhost:5000/api/orders/user/{{userId}}
+

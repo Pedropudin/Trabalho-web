@@ -60,6 +60,7 @@ const ProductDetailsModal = ({ open, onClose, product }) => {
 
   // User rating (if logged in)
   const nomeUsuario = localStorage.getItem('nomeUsuario');
+  // Mostra apenas o review do usuário logado como "Your review"
   const userReview = filteredReviews.find(r => r.username === nomeUsuario);
 
   // Comments to display (max. 5, expandable)

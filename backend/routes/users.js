@@ -285,15 +285,16 @@ router.patch('/:id/messages/:msgIdx', async (req, res) => {
 });
 
 // GET user orders (purchase history)
-router.get('/:id/orders', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found.' });
-    res.json(user.purchaseHistory || []);
-  } catch (err) {
-    res.status(400).json({ error: 'Error fetching orders.' });
-  }
-});
+// OBSOLETO: O histórico de compras deve ser obtido da coleção Order via /api/orders/user/:userId
+// router.get('/:id/orders', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     if (!user) return res.status(404).json({ error: 'User not found.' });
+//     res.json(user.purchaseHistory || []);
+//   } catch (err) {
+//     res.status(400).json({ error: 'Error fetching orders.' });
+//   }
+// });
 
 // POST add order to purchase history
 router.post('/:id/orders', async (req, res) => {

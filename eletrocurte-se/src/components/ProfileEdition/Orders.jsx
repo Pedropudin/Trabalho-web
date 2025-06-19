@@ -46,7 +46,7 @@ export default function Orders({ onVoltar }) {
     let interval;
     async function fetchOrders() {
       if (userId) {
-        // Remove referência ao token, chamada pública
+        // Consistência: sempre buscar da coleção Order, nunca do campo purchaseHistory do usuário
         const res = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/user/${userId}`);
         const data = await res.json();
         setOrders(Array.isArray(data) ? data : []);

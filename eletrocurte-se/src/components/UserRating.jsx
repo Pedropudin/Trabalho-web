@@ -199,4 +199,6 @@ const UserRating = ({ produtosAguardando = 1, produtosParaAvaliar = [], onAvalia
   );
 }
 
+// O nome do usuário logado é passado pelo pai (PurchaseHistory) e usado no backend.
+
 export default UserRating;
