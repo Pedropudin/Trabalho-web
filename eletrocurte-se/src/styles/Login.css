@@ -1,4 +1,4 @@
-/* Reset básico e fonte padrão para todos os elementos */
+/* Basic reset and default font for all elements */
 * {
   margin: 0;
   padding: 0;
@@ -6,65 +6,65 @@
   font-family: Arial, sans-serif;
 }
 
-/* Cor de fundo geral do corpo da página */
+/* General background color for the page body */
 body {
-  background-color: #f5fafd; /* Azul claro suave para fundo */
+  background-color: #f5fafd; /* Soft light blue background */
   text-align: center;
 }
 
-/* Cabeçalho superior com fundo azul petróleo */
+/* Top header with petrol blue background */
 header {
-  padding: 20px;;
-  background-color: #004d66; /* Azul escuro institucional */
+  padding: 20px;
+  background-color: #004d66; /* Dark institutional blue */
 }
 
 #logo {
   width: 350px;
   height: 100px;
-  transform: scale(1.1); /* Aumenta e inclina a logo */
-  transition: transform 0.3s ease-in-out; /* Animação suave ao passar o mouse */
+  transform: scale(1.1); /* Enlarges and tilts the logo */
+  transition: transform 0.3s ease-in-out; /* Smooth animation on hover */
 }
 
 #logo:hover {
-  transform: scale(1.2); /* Destaque visual ao passar o mouse */
+  transform: scale(1.2); /* Visual highlight on hover */
 }
 
-/* Container central da página de login */
+/* Central container for the login page */
 .container {
-  max-width: 600px; /* Limita largura do conteúdo */
-  margin: 30px auto; /* Centraliza horizontalmente com margem vertical */
+  max-width: 600px; /* Limits content width */
+  margin: 30px auto; /* Horizontally centers with vertical margin */
   text-align: center;
   padding: 20px;
   position: relative;
 }
 
-/* Área dos botões de seleção de perfil (Cliente/Admin) */
+/* Area for profile selection buttons (Client/Admin) */
 .user-options {
-  display: flex; /* Alinha botões lado a lado */
-  gap: 20px; /* Espaço entre os botões */
-  padding-top: 10px; /* Distância adicional do topo */
-  margin-bottom: 30px; /* Espaço inferior */
-  margin-top: -20px; /* Espaço superior */
+  display: flex; /* Aligns buttons side by side */
+  gap: 20px; /* Space between buttons */
+  padding-top: 10px; /* Extra top distance */
+  margin-bottom: 30px; /* Bottom space */
+  margin-top: -20px; /* Top space */
 }
 
-/* Botões circulares para selecionar perfil */
+/* Circular buttons to select profile */
 .user-btn {
   width: 100px;
   height: 100px;
-  border-radius: 50%; /* Botão redondo */
+  border-radius: 50%; /* Round button */
   border: 2px solid black;
   background-color: white;
   font-size: 12px;
   cursor: pointer;
-  transition: 0.3s; /* Suaviza mudanças de cor e escala */
+  transition: 0.3s; /* Smooth color and scale changes */
   display: flex;
-  flex-direction: column; /* Ícone acima do texto */
+  flex-direction: column; /* Icon above the text */
   align-items: center;
   justify-content: center;
 }
 
 .user-btn:hover {
-  background-color: #ddd; /* Realce ao passar o mouse */
+  background-color: #ddd; /* Highlight on hover */
 }
 
 .user-btn svg {
@@ -73,22 +73,22 @@ header {
   margin-bottom: 5px;
 }
 
-/* Formulário de login (invisível por padrão, aparece com transição) */
+/* Login form (invisible by default, appears with transition) */
 .login-box {
-  background-color: #e2e2e2; /* Fundo da caixa de login */
+  background-color: #e2e2e2; /* Background of the login box */
   padding: 20px;
   border-radius: 12px;
   text-align: left;
-  display: none; /* Oculto inicialmente */
+  display: none; /* Initially hidden */
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .login-box.show {
-  display: block; /* Torna visível */
+  display: block; /* Makes it visible */
   opacity: 1;
-  transform: translateY(0); /* Animação de entrada */
+  transform: translateY(0); /* Entry animation */
 }
 
 .login-box label {
@@ -110,7 +110,7 @@ header {
   outline: none;
 }
 
-/* Botão de envio do formulário */
+/* Submit button for the form */
 .btn-enviar {
   background-color: #006d84;
   color: white;
@@ -126,7 +126,7 @@ header {
   background-color: #004f63;
 }
 
-/* Mensagens de feedback (sucesso, erro, info) */
+/* Feedback messages (success, error, info) */
 .mensagem {
   margin-top: 12px;
   border-radius: 8px;
@@ -151,12 +151,12 @@ header {
   color: white;
 }
 
-/* Remove estilos antigos do formulário principal (herança indesejada) */
+/* Removes old styles from the main form (unwanted inheritance) */
 .container, .login-box, .user-options, .btn-enviar {
   all: unset;
 }
 
-/* Ajustes para componentes do Material-UI em telas pequenas */
+/* Adjustments for Material-UI components on small screens */
 @media (max-width: 600px) {
   .MuiPaper-root {
     padding: 12px !important;
@@ -166,8 +166,8 @@ header {
   }
 }
 
-/* ----------- Responsividade ----------- */
-/* Ajustes para tablets e celulares (até 768px) */
+/* ----------- Responsiveness ----------- */
+/* Adjustments for tablets and phones (up to 768px) */
 @media (max-width: 768px) {
   .user-options {
     flex-direction: row;
@@ -182,7 +182,7 @@ header {
   }
 }
 
-/* Ajustes para celulares (até 480px) */
+/* Adjustments for phones (up to 480px) */
 @media (max-width: 480px) {
   .user-options {
     flex-direction: row;

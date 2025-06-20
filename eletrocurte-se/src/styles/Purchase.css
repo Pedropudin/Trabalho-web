@@ -1,8 +1,10 @@
+/* Stepper container for purchase steps */
 .purchase-stepper-container {
     width: 100%;
     margin: 32px 0;
 }
 
+/* Main purchase summary container */
 .purchase-summary-container {
     max-width: 650px;
     margin: 40px auto;
@@ -12,6 +14,7 @@
     padding: 32px;
 }
 
+/* Title for purchase summary */
 .purchase-summary-title {
     text-align: center;
     margin-bottom: 28px;
@@ -21,6 +24,7 @@
     text-shadow: 0 2px 8px #e0f7fa;
 }
 
+/* Section for each purchase detail */
 .purchase-section {
     background: #fff;
     border-radius: 14px;
@@ -30,6 +34,7 @@
     border: 1.5px solid #e0f7fa;
 }
 
+/* Section titles */
 .purchase-section-title {
     margin-bottom: 14px;
     color: #005f73;
@@ -41,12 +46,14 @@
     margin: 20px 0 8px 0;
 }
 
+/* Section content */
 .purchase-section-content {
     font-size: 1rem;
     color: #333;
     line-height: 1.7;
 }
 
+/* List of products in purchase */
 .purchase-products-list {
     list-style: none;
     padding: 0;
@@ -77,6 +84,7 @@
     font-weight: 700;
 }
 
+/* Total price section */
 .purchase-total {
     border-top: 1.5px solid #e0f7fa;
     margin-top: 16px;
@@ -87,6 +95,7 @@
     color: #007b99;
 }
 
+/* Buttons row */
 .purchase-buttons-row {
     display: flex;
     gap: 18px;

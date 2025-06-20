@@ -1,112 +1,362 @@
-# Trabalho-web
+# Eletrocurte-se
 
-Membros do Grupo:
+An online electronics store
+
+## Members
 - Davi Gabriel Domingues (15447497)
 - Giovanna Nascimento Noventa (15637210)
 - Pedro Martins Oliveira (13696213)
 
-Uma loja online de produtos eletrônicos
+---
+
+## Table of Contents
+
+- [Navigation Map](#navigation-map)
+- [Project Structure](#project-structure)
+- [Requirements](#requirements)
+- [Quick Start](#quick-start)
+- [Backend Setup](#backend-setup)
+- [Frontend Setup](#frontend-setup)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Contribution](#contribution)
+- [License](#license)
+- [Issues](#issues)
+- [Comments](#comments)
 
 ---
-# Mapa de Navegação
-![mapa de navegação](UX-eletrocurtese.png "Mapa")
 
-Para ter uma visão melhor acesse o [projeto no milanote clicando aqui](https://app.milanote.com/1TWIzG1gYJgXeW?p=rvOTCrnhBY9).
+## Navigation Map
 
-# Mockups das Páginas
-Os mockups das páginas podem ser encontrados no mapa de navegação ou na pasta [Pages-screenshots](Pages-screenshots/).
+![navigation map](UX-eletrocurtese.png "Map")
 
-Segue também [nosso link do figma](https://www.figma.com/design/8Pk9ykizcWYiU7RxIeDDsV/Design-Principal?node-id=33-2&t=8IoWAMFarDPiJcpR-1) com alguns dos mockups, contudo alguns deles não estão atualizados, as versões mais atuais estão no mapa e na pasta citados anteriormente.
+For a better view, access the [project on Milanote](https://app.milanote.com/1TWIzG1gYJgXeW?p=rvOTCrnhBY9).
 
-# Requisitos
+## Project Structure
 
-## Funcionalidade do Programa
-Dividindo o programa na parte do cliente e do administrador da loja precisamos que cada um tenha as seguintes funcionalidades:
+```text
+Trabalho-web/
+├── backend/                # Node.js/Express backend (API, models, routes)
+│   ├── models/             # Mongoose models (User, Product, Order, Admin)
+│   ├── routes/             # Express route handlers (users, products, orders, auth)
+│   ├── middleware/         # Authentication and utility middleware
+│   ├── server.js           # Main backend entry point
+│   ├── backendManipulationRules.txt # API usage and backend rules (ENGLISH)
+│   └── insomnia_examples.http       # HTTP request examples for API (ENGLISH)
+├── eletrocurte-se/         # React frontend app
+│   ├── public/             # Static files, images, and product data (JSON)
+│   ├── src/                # React source code
+│   │   ├── components/     # Reusable React components (Cart, Product, Profile, etc.)
+│   │   ├── pages/          # Main page components (Home, Product, Checkout, etc.)
+│   │   ├── styles/         # CSS files for each component/page
+│   │   ├── routes.js       # Route definitions for React Router
+│   │   └── index.js        # React entry point
+│   └── package.json        # Frontend dependencies and scripts
+├── Old-Version/            # Legacy HTML/CSS/JS version (for reference)
+└── README.md               # Main documentation (this file)
+```
 
-### Parte do Cliente
+## Requirements
 
-A [página inicial](eletrocurte-se/src/pages/PaginaInicial.jsx), onde o usuário se depara com alguns produtos e o layout de e-commerce de produtos eletrônicos, sendo necessário um login acompanhado de senha, de username e de email para entrar na sua conta ou para se cadastrar
+## Program Functionality
+Dividing the program into the client and store administrator parts, each must have the following functionalities:
 
-Após o cadastro, o usuário pode entrar na página do seu perfil, de onde ele pode alterar informações, acessar as últimas compras, ver os últimos produtos entre outras funções (exemplo, adicionar saldo na carteira, para cada cartão associado), pode acessar o modal dos produtos, contendo algumas descrições dele, comprar produtos, adicionar no carrinho de compras e executar compras.
+### Client Side
 
-Além disso, o usuário pode procurar por um produto para comprar, tendo então algumas opções para procurar esse produto, ele pode procurar pelo nome ou pelo setor específico associado, como forma de busca dinâmica.
+The [home page](eletrocurte-se/src/pages/PaginaInicial.jsx), where the user sees some products and the electronic e-commerce layout, requiring login with password, username, and email to access their account or register.
 
-Ao escolher um produto o usuário consegue acessar a [página específica desse produto](eletrocurte-se/src/pages/PaginaSetor.jsx) e pode ainda prosseguir para a compra na [página de compra](eletrocurte-se/src/pages/PaginaProduto.jsx).
+After registration, the user can access their profile page, where they can change information, access recent purchases, see recent products, among other functions (e.g., add balance to the wallet for each associated card), access the product modal with descriptions, buy products, add to the shopping cart, and make purchases.
 
-### Parte do Administrador
-Caso o usuário entre como um administrador ele será levado para a [página incial da administração](eletrocurte-se/src/pages/Desempenho.jsx), onde ele tem acesso a informações gerais sobre as vendas.
+Additionally, the user can search for a product to buy, with options to search by name or by specific associated sector, as a form of dynamic search.
 
-Na página incial o administrador também pode acessar os produtos onde ele consegue adicionar, remover e alterar os produtos anunciados.
+By choosing a product, the user can access the [specific product page](eletrocurte-se/src/pages/PaginaSetor.jsx) and proceed to purchase on the [purchase page](eletrocurte-se/src/pages/PaginaProduto.jsx).
 
-Por fim, o administrador pode entrar nas [pendências](eletrocurte-se/src/pages/Pendencias.jsx) onde ele consegue ver perguntas, reclamações, envios pendentes e outras atividades que devem ser feitas.
+### Administrator Side
+If the user logs in as an administrator, they are taken to the [admin home page](eletrocurte-se/src/pages/Desempenho.jsx), where they have access to general sales information.
 
-## Estruturação do HTML, do CSS e do JS (React imbutido)
-A estruturação das páginas foi feita com HTML5 para compor os elementos básicos. Com a estrutura feita, bastou se basear nos mockups para adicionar as regras de CSS aos elementos. Em seguida, foi adaptada a [primeira versão do projeto](Old-Version) para compor a estrutura geral componentizada do React, a partir do uso de arquivos .jsx, além da inserção das propriedades associadas (como bibliotecas React e props) para dar responsividade ao site, além de embasar a futura robustez no tratamento dos dados via banco de dados NoSQL (MongoDB), para o Milestone 3.
+On the home page, the administrator can also access products, where they can add, remove, and edit listed products.
 
-# Descrição do Projeto
-O projeto consiste de um website para a venda de produtos eletrônicos de uma loja fictícia chamada **Eletrocurte-se**.
+Finally, the administrator can access [pending issues](eletrocurte-se/src/pages/Pendencias.jsx), where they can see questions, complaints, pending shipments, and other activities that need to be addressed.
 
-Há três partes gerais ([legado do Milestone 1](Old-Version)), uma de acesso geral, uma do perfil e uma de acesso apenas para administradores da loja.
+## HTML, CSS, and JS (React embedded) Structure
+The pages were structured with HTML5 for the basic elements. With the structure done, the mockups were used as a basis to add CSS rules to the elements. Then, the [first version of the project](Old-Version) was adapted to compose the general componentized structure in React, using .jsx files, and adding associated properties (such as React libraries and props) to give the site responsiveness, as well as to support future robustness in data handling via NoSQL database (MongoDB), for Milestone 3.
 
-A página de acesso geral é onde os usuários procuram por produtos para comprar.
+# Project Description
+The project consists of a website for selling electronic products from a fictitious store called **Eletrocurte-se**.
 
-A página do perfil é onde os usuários podem verificar os históricos relacionados às interações com os produtos do site (visualização e compras), os dados pessoais, as mensagens do sistema e/ou do administrador, além de várias outras opções disponíveis.
+There are three general parts ([legacy from Milestone 1](Old-Version)): general access, profile, and admin-only access.
 
-A página dos administradores é onde os donos da loja podem não apenas controlar os produtos disponíveis para venda (adicionar, remover ou alterar) como também ver estatísticas sobre as vendas, responder perguntas e reclamações de usuários, verificar quais produtos esperam para serem enviados entre outras funcionalidades.
+The general access page is where users search for products to buy.
 
-Mesmo que a estrutura básica não seja mais a mesma necessariamente, a lógica de divisão utilizada para o desenvolvimento, assim como para a divisão do trabalho a das partes gerais é parecida. Entretanto, a partir do Milestone 2, houve a necessidade de enriquecer a aplicação com componentes e bibliotecas de framework para adequar as páginas aos critérios de desenvolvimento da disciplina de Introdução ao Desenvolvimento Web.
+The profile page is where users can check their interaction history with site products (views and purchases), personal data, system and/or admin messages, and several other available options.
 
-# Comentários do código
+The admin page is where store owners can not only control the products available for sale (add, remove, or edit) but also view sales statistics, answer questions and complaints from users, check which products are waiting to be shipped, among other features.
 
-O aplicativo web usou o ambiente do React para desenvolver os arquivos e as funcionalidades. Os comentários dos códigos se encontram neles mesmos, na [pasta do projeto](eletrocurte-se), onde ela contém os [dados "públicos" utilizados](eletrocurte-se/public), os [componentes desenvolvidos](eletrocurte-se/src/components), as [páginas de layout](eletrocurte-se/src/styles) e as [páginas em si].
+Even if the basic structure is not necessarily the same anymore, the logic of division used for development, as well as for the division of work and general parts, is similar. However, from Milestone 2 onwards, it was necessary to enrich the application with framework components and libraries to adapt the pages to the development criteria of the Web Development course.
 
-Lá, cada página terá a sua explicação das funcionalidades associadas, o seu uso, a sua estruturação e o seu funcionamento adequados para o site
+# Code Comments
 
-# Resultados de testes
+The web app used the React environment to develop the files and functionalities. Code comments are found within the files themselves, in the [project folder](eletrocurte-se), which contains the [public data used](eletrocurte-se/public), the [developed components](eletrocurte-se/src/components), the [layout pages](eletrocurte-se/src/styles), and the [pages themselves].
 
-# Usando React
+There, each page will have its explanation of associated functionalities, usage, structure, and operation appropriate for the site.
 
-Esse projeto foi inicializado com [Create React App](https://github.com/facebook/create-react-app).
+# Test Results
 
-## Clonagem de repositório
+The tests were run individually, based on the components used in the application and developed in the project. Checks were performed using the React jest extension to assess the consistency of expected functionalities as a response to the user while using the site in real time. No errors were reported during their execution, given the functions and manipulations each part performs in the overall project structure. The responses were consistent with what was developed and implemented so far.
 
-Para utilizar suas dependências, é necessário cloná-lo do GitHub:
-### `git clone https://github.com/Pedropudin/Trabalho-web.git`
+If you want to check the unit tests, you can run, considering the project is a React App, the following commands in the terminal:
 
-## Comandos disponíveis
+### `npm test`
 
-Primeiro, no terminal, execute "cd eletrocurte-se". Daí, no diretório do projeto, você pode rodar: 
+Runs the default jest library test, via the project's package.json script
 
-### `npm install`
+### `npx jest --verbose`
 
-Instala todas as dependências do aplicativo, para torná-lo utilizável
+Runs the file tests, but uses broader and more flexible flags than those in package.json (guaranteeing broader test coverage).
 
-### `npm start`
+The "--verbose" flag is used to detail the test results, making them even more transparent to the user.
 
-Roda a aplicação no modo de desenvolvimento, com todas as bibliotecas presentes e suportadas pelo React e que foram utilizadas para este trabalho.
-Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ve-la, após a compilação do App no terminal.
+**Note**: tests must be run in the eletrocurte-se folder.
 
+# Using React
 
-# Problemas
+This project was initialized with [Create React App](https://github.com/facebook/create-react-app).
 
-Apesar de termos mantido a política de desenvolvimento de muitos arquivos e de priorizar componentização ao máximo, como é possível ver na [pasta de componentes do projeto](eletrocurte-se/src/components/), acabamos por lidar com uma certa dificuldade em migrar muitas das ideias originais presentes no Mockup do Figma, assim como manter, de certa forma, o layout original do site, considerando as adaptações existentes para o modelo React. Além disso, encontramos certa dificuldade em modularizar 100% os estilos CSS utilizados no [Milestone 1](Old-Version/), já que foram bastantes arquivos, assim como o projeto nos exigiu criar diversos estilos CSS para as várias dependências do projeto ([acesso](eletrocurte-se/src/styles/)). Dessa forma, o tempo de desenvolvimento para o projeto foi bem mais elevado do que o esperado, já que se tinha uma grande árvore de dependências entre arquivos para se desenvolver em um prazo mais curto, comparado ao primeiro Milestone.
+## Quick Start
 
-# Comentários
-O Milestone 3 servirá para sacramentar o trabalho, a fim de alinhá-lo à lógica imbutida com banco de dados para a robustez do site e, por fim, do aprendizado prático da disciplina. Ademais, a migração de certas lógicas para o back-end poderá nos servir para verificar se há a possibilidade de, também, melhorar a lógica do front-end, para aprimorar o desempenho do site.
+### Clone the repository
+
+To use its dependencies, you need to clone it from GitHub:
+```bash
+git clone https://github.com/Pedropudin/Trabalho-web.git
+cd eletrocurte-se
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the frontend
+
+```bash
+npm start
+```
+
+### Start the backend
+
+```bash
+cd ../backend
+npm install
+npm run dev
+```
+
+## Backend Setup
+
+The project has a Node.js/Express backend server to manage authentication, users, products, and MongoDB database integration.
+
+### Server installation and execution
+
+In the project's root directory, go to the `backend` folder:
+
+```bash
+cd backend
+```
+
+Install backend dependencies:
+
+```bash
+npm install
+```
+
+For development, it is recommended to use [nodemon](https://www.npmjs.com/package/nodemon) to automatically restart the server on every change:
+
+```bash
+npm run dev
+```
+
+Or, to run normally:
+
+```bash
+npm start
+```
+
+Or, in a normal aproach:
+
+```bash
+node server.js
+```
+
+Or, evenly:
+
+```bash
+nodemon server.js
+```
+
+The server will start normally at [http://localhost:5000](http://localhost:5000) (or the port defined in `.env`).
+
+### Environment configuration
+
+Create a `.env` file in the `backend` folder with the necessary variables, for example:
+
+```
+MONGO_URI=mongodb://localhost:27017/eletrocurte-se
+PORT=5000
+JWT_SECRET=your_secret_key
+API_URL=http://localhost:5000/api/products/import
+ADMIN_TOKEN=YOUR_ADMIN_JWT_TOKEN
+```
+
+- `API_URL` and `ADMIN_TOKEN` are used to import products via script (see below).
+
+### Main endpoints
+
+- `/api/auth/login` — User login
+- `/api/auth/register` — User registration
+- `/api/products` — Product listing and management
+- `/api/users` — User management
+
+Check the files in the `backend/routes` folder for details of each route.
+
+### Backend scripts and utilities (extra)
+
+#### Batch product import
+
+To import products from the JSON file into the MongoDB database, use the script:
+
+```bash
+node importProducts.js
+```
+
+- The script reads the `public/data/products.json` file and makes an authenticated request to the backend import endpoint.
+- You must correctly set the `API_URL` and `ADMIN_TOKEN` variables in the backend `.env`.
+- The admin token (`ADMIN_TOKEN`) can be obtained by logging in as admin and copying the returned JWT.
+
+#### Admin creation
+
+To create a new admin via terminal, use:
+
+```bash
+node createAdmin.js
+```
+
+- The script will prompt for name, email, password, and numeric token for the new admin.
+- The data is saved directly to the MongoDB database.
+
+## Frontend Setup
+
+The frontend is a React application that consumes the backend API.
+
+### Available commands
+
+First, in the terminal, run "cd eletrocurte-se". Then, in the project directory, you can run: 
+
+```bash
+npm install
+```
+
+```bash
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to view it after the App compiles in the terminal.
+
+## API Documentation
+
+- [Backend API Rules](backend/backendManipulationRules.txt)
+- [HTTP Request Examples](backend/insomnia_examples.http)
+
+---
+
+## Additional Documentation
+
+- **API Usage and Rules:**  
+  See [`backend/backendManipulationRules.txt`](backend/backendManipulationRules.txt) for a complete guide to backend endpoints, authentication, JWT usage, and CRUD operations.  
+  All backend documentation is in English for consistency.
+
+- **HTTP Request Examples:**  
+  See [`backend/insomnia_examples.http`](backend/insomnia_examples.http) for ready-to-use API request examples (login, CRUD, etc.) compatible with Insomnia, Postman, or cURL.
+
+- **Frontend Componentization:**  
+  All React components are documented with comments at the top of each file, describing their purpose, props, and usage.  
+  The folder structure is organized by feature (e.g., `ProfileEdition`, `Card`, `Address`).
+
+- **Data Models:**  
+  The backend uses Mongoose models for `User`, `Product`, `Order`, and `Admin`.  
+  Each model is documented with field descriptions in the schema files.
+
+- **Product Data:**  
+  The initial product catalog is stored in [`eletrocurte-se/public/data/products.json`](eletrocurte-se/public/data/products.json) and can be imported into the database using the provided scripts.
+
+- **Testing:**  
+  Unit and integration tests are located alongside components and can be run with `npm test` (see above).
+
+- **Environment Variables:**  
+  Both frontend and backend use `.env` files for configuration.  
+  See the "Environment configuration" section above for required variables.
+
+## Testing
+
+The tests were run individually, based on the components used in the application and developed in the project. Checks were performed using the React jest extension to assess the consistency of expected functionalities as a response to the user while using the site in real time. No errors were reported during their execution, given the functions and manipulations each part performs in the overall project structure. The responses were consistent with what was developed and implemented so far.
+
+If you want to check the unit tests, you can run, considering the project is a React App, the following commands in the terminal:
+
+### `npm test`
+
+Runs the default jest library test, via the project's package.json script
+
+### `npx jest --verbose`
+
+Runs the file tests, but uses broader and more flexible flags than those in package.json (guaranteeing broader test coverage).
+
+The "--verbose" flag is used to detail the test results, making them even more transparent to the user.
+
+**Note**: tests must be run in the eletrocurte-se folder.
+
+---
+
+## Contribution
+
+If you wish to contribute or review the code, please follow these guidelines:
+
+- Use English for all code comments, commit messages, and documentation.
+- Keep the folder structure and naming conventions consistent.
+- Document any new components, endpoints, or scripts you add.
+- Run all tests before submitting changes.
+
+---
+
+## License
+
+This project is for educational purposes only and is not intended for production use.
+
+```
+MIT License
+```
+
+---
+
+## Issues (almost as the same as Milestone 2)
+
+Although we maintained the policy of developing many files and prioritizing componentization as much as possible, as can be seen in the [project components folder](eletrocurte-se/src/components/), we ended up facing some difficulty migrating many of the original ideas present in the Figma Mockup, as well as maintaining, to some extent, the original site layout, considering the adaptations for the React model. In addition, we found it somewhat difficult to fully modularize the CSS styles used in [Milestone 1](Old-Version/) and [Milestone 2](eletrocurte-se/). Thus, the development time for the project was much higher than expected, as there was a large dependency tree between files to be developed in a shorter period compared to the first Milestone.
+
+# Comments
+Milestone 3 served to conclude the project for the introductory web development course, requiring extensive knowledge of NoSQL databases, in addition to a solid front-end foundation built during Milestones 1 and 2. It also served as a parameter for putting into practice teamwork skills, code versioning dynamics and, most importantly, how to build a functional website from scratch. This way, we were able to get our hands dirty and practice all the principles taught in class, in addition to having a different programming experience, as it was our first in-depth contact with web development itself.
 
 <!--
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
+Launches the test runner in the interactive watch mode.  
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder.  
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
+The build is minified and the filenames include the hashes.  
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.

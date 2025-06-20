@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import ROUTES from "../../routes";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -35,7 +35,7 @@ const SidebarElement = ({ collapsed, activeIndex, elementsList, onClickList, sty
             }}>
                 {
                     elementsList.map((value,index) => {
-                        if(index == activeIndex){
+                        if(index === activeIndex){
                             return <MenuItem key={index} active>{value}</MenuItem>
                         } else {
                             return <MenuItem key={index} onClick={onClickList[index]}>{value}</MenuItem>
@@ -50,11 +50,11 @@ const SidebarElement = ({ collapsed, activeIndex, elementsList, onClickList, sty
 const AdminSidebar = ({ activeIndex=0, onClickList }) => {
     const navigate = useNavigate();
     const [showSidebar, setShowSidebar] = useState(false);
-    const elements = ["Dashboard", "Empregados", "Vendas"];
+    const elements = ["Dashboard", "Team", "Sales"];
     const elementsFunctions = [
-        () => navigate(ROUTES.DESEMPENHO),
-        () => navigate(ROUTES.TIME),
-        () => navigate(ROUTES.VENDAS),
+        () => navigate(ROUTES.PERFORMANCE),
+        () => navigate(ROUTES.TEAM),
+        () => navigate(ROUTES.SALES),
     ]
     let s;
 

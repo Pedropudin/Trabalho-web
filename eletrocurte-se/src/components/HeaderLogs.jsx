@@ -1,21 +1,22 @@
 // -----------------------------------------------------------------------------
 // HeaderLogs.jsx
-// Cabeçalho simples para páginas de Login e Logout.
-// Exibe apenas a logo centralizada, com possibilidade de customização.
+// Simple header for Login and Logout pages.
+// Displays only a centered logo, with customization options.
 // -----------------------------------------------------------------------------
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/HeaderLogs.css';
 
 /*
-  HeaderLogs: Cabeçalho simples para páginas de Login e Logout.
-  Exibe apenas a logo centralizada, com possibilidade de customizar o alt e o tamanho.
+  HeaderLogs: Simple header for Login and Logout pages.
+  Displays only a centered logo, with optional customization for alt text and size.
 */
 
 export default function HeaderLogs({ logoSrc = "/logo-com-escrita.png", alt = "Logo", style = {} }) {
   return (
     <header className="header-logs" style={{ textAlign: 'center', background: '#004d66', padding: 20, ...style }}>
-      {/* Logo centralizada, customizável via props */}
+      {/* Centered logo, customizable via props */}
       <img
         src={logoSrc}
         alt={alt}

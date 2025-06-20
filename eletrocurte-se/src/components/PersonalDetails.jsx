@@ -1,43 +1,167 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/PersonalDetails.css"
 import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import CartOverview from "./CartOverview";
 
 /*
-  Página de dados do comprador.
-  - Exibida durante processo de conclusão de compra.
-  - Recolhe os dados de um cliente, como data de nascimento, email, nome, endereço.
-  - Botões de redirecionamento para tela anterior ou para a próxima etapa da conclusão do pedido.
+  Buyer details page.
+  - Displayed during the checkout process.
+  - Collects customer data such as birth date, email, name, address.
+  - Buttons to go back or proceed to the next step of the order.
 */
 
 export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
-
-    //Verifica se existe um arquivo locar existente, ou cria um vazio. 
-    const personalDetails = JSON.parse(localStorage.getItem("personal"))|| [];
-    
-    // Progresso
+    // Progress
     const activeStep = 1;
 
-    //Formulário de informações básicas do usuário
+    // User basic information form
     const [form, setForm] = useState({
-        nome: "",
-        sobrenome: "",
+        firstName: "",
+        lastName: "",
         email: "",
-        telefone: "",
+        phone: "",
         cpf: "",
-        nascimento: "",
-        endereco: "",
-        numero: "",
-        complemento: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
-        cep: ""
+        birthDate: "",
+        street: "",
+        number: "",
+        complement: "",
+        district: "",
+        city: "",
+        state: "",
+        zipCode: ""
     });
 
-    //Formatação de CPF
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const addressKey = userId ? `address_${userId}` : 'address';
+    const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
+    const [, setCart] = useState([]);
+
+    // Fetches selected address from the profile on mount
+    React.useEffect(() => {
+        // Always prioritizes the backend
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    let addr = {};
+                    if (Array.isArray(user.address)) {
+                        // Synchronizes localStorage with backend
+                        localStorage.setItem(addressKey, JSON.stringify(user.address));
+                        localStorage.setItem(selectedAddressKey, user.selectedAddress || (user.address[0]?.id || ''));
+                        const selId = user.selectedAddress || (user.address[0]?.id || "");
+                        const selAddr = user.address.find(a => a.id === selId) || user.address[0];
+                        if (selAddr) {
+                            addr = {
+                                street: selAddr.street || "",
+                                number: selAddr.number || "",
+                                complement: selAddr.complement || "",
+                                district: selAddr.district || "",
+                                city: selAddr.city || "",
+                                state: selAddr.state || "",
+                                zipCode: selAddr.zipCode || ""
+                            };
+                        }
+                    }
+                    setForm(prev => ({
+                        ...prev,
+                        firstName: user.firstName || "",
+                        lastName: user.lastName || "",
+                        email: user.email || "",
+                        phone: user.phone || "",
+                        cpf: user.cpf || "",
+                        birthDate: user.birthDate ? new Date(user.birthDate).toLocaleDateString('pt-BR') : "",
+                        ...addr
+                    }));
+                    // Alerts if there is no valid address via backend
+                    if (!addr.street || !addr.number || !addr.city || !addr.state || !addr.zipCode) {
+                        toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+                    }
+                })
+                .catch(() => {
+                    // Fallback: tries to catch from localStorage, if the backend fails
+                    const addresses = JSON.parse(localStorage.getItem(addressKey) || '[]');
+                    const selectedAddressId = localStorage.getItem(selectedAddressKey);
+                    let addressData = {};
+                    const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+                    if (selectedAddress) {
+                        addressData = {
+                            street: selectedAddress.street || "",
+                            number: selectedAddress.number || "",
+                            complement: selectedAddress.complement || "",
+                            district: selectedAddress.district || "",
+                            city: selectedAddress.city || "",
+                            state: selectedAddress.state || "",
+                            zipCode: selectedAddress.zipCode || ""
+                        };
+                    } else if (addresses.length > 0) {
+                        const a = addresses[0];
+                        addressData = {
+                            street: a.street || "",
+                            number: a.number || "",
+                            complement: a.complement || "",
+                            district: a.district || "",
+                            city: a.city || "",
+                            state: a.state || "",
+                            zipCode: a.zipCode || ""
+                        };
+                    }
+                    setForm(prev => ({
+                        ...prev,
+                        ...addressData
+                    }));
+                    // Alerts if there is no valid address via localStorage
+                    if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+                        toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+                    }
+                });
+        } else {
+            // User not authenticated: only localStorage
+            const addresses = JSON.parse(localStorage.getItem(addressKey) || '[]');
+            const selectedAddressId = localStorage.getItem(selectedAddressKey);
+            let addressData = {};
+            const selectedAddress = addresses.find(a => a.id === selectedAddressId);
+            if (selectedAddress) {
+                addressData = {
+                    street: selectedAddress.street || "",
+                    number: selectedAddress.number || "",
+                    complement: selectedAddress.complement || "",
+                    district: selectedAddress.district || "",
+                    city: selectedAddress.city || "",
+                    state: selectedAddress.state || "",
+                    zipCode: selectedAddress.zipCode || ""
+                };
+            } else if (addresses.length > 0) {
+                const a = addresses[0];
+                addressData = {
+                    street: a.street || "",
+                    number: a.number || "",
+                    complement: a.complement || "",
+                    district: a.district || "",
+                    city: a.city || "",
+                    state: a.state || "",
+                    zipCode: a.zipCode || ""
+                };
+            }
+            setForm(prev => ({
+                ...prev,
+                ...addressData
+            }));
+            // Alerts if there is no valid address via localStorage
+            if (!addressData.street || !addressData.number || !addressData.city || !addressData.state || !addressData.zipCode) {
+                toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
+            }
+        }
+    }, [addressKey, selectedAddressKey, userId]);
+
+    useEffect(() => {
+        setCart(JSON.parse(localStorage.getItem(cartKey)) || []);
+    }, [cartKey]);
+
+    // CPF formatting
     function formatCPF(value) {
         value = value.replace(/\D/g, "").slice(0, 11);
         value = value.replace(/(\d{3})(\d)/, "$1.$2");
@@ -45,8 +169,8 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
         return value;
     }
-    //Formatação de data
-    function formatNascimento(value) {
+    // Date formatting
+    function formatBirthDate(value) {
         value = value.replace(/\D/g, "").slice(0, 8);
         if (value.length > 4) {
             value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
@@ -55,7 +179,7 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         }
         return value;
     }
-    //Formatação de número de telefone
+    // Phone number formatting
     function formatPhoneNumber(value) {
         value = value.replace(/\D/g, "").slice(0, 11); 
 
@@ -70,64 +194,98 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
         return value;
     }
 
-    //Atualização do form sempre que o formulário for preenchido
+    // Updates the form whenever a field is filled
     function handleChange(e) {
         const { name, value } = e.target;
         let newValue = value;
 
         if (name === "cpf") {
             newValue = formatCPF(newValue);
-        } else if (name === "nascimento") {
-            newValue = formatNascimento(newValue);
-        } else if (name === "numero") {
+        } else if (name === "birthDate") {
+            newValue = formatBirthDate(newValue);
+        } else if (name === "number") {
             newValue = newValue.replace(/\D/g, "").slice(0, 6);
-        } else if (name === "cep") {
+        } else if (name === "zipCode") {
             newValue = newValue.replace(/\D/g, "").slice(0, 8);
-        } else if (["nome", "sobrenome", "cidade", "estado", "bairro"].includes(name)) {
+        } else if (["firstName", "lastName", "city", "state", "district"].includes(name)) {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
-        } else if (name === "telefone") {
+        } else if (name === "phone") {
             newValue = formatPhoneNumber(newValue);
-        } else if (["endereco", "complemento"].includes(name)) {
+        } else if (["address", "complement"].includes(name)) {
             newValue = newValue.replace(/[^A-Za-zÀ-ÿ0-9\s]/g, "");
         }
         setForm({ ...form, [name]: newValue });
     }
 
-    //Envio dos dados para nosso "banco de dados"
+    // Sends the data to our "database"
     function handleSubmit(e) {
         e.preventDefault();
+        console.log("Form submitted!");
 
-        // Validação do nascimento (DD/MM/AAAA)
-        const nascimento = form.nascimento;
-        const nascimentoRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-        const match = nascimento.match(nascimentoRegex);
+        // Birth date validation (DD/MM/YYYY)
+        const birthDate = form.birthDate;
+        const birthDateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+        const match = birthDate.match(birthDateRegex);
 
         if (!match) {
-            toast.error("Data de nascimento inválida. Use o formato DD/MM/AAAA.");
+            toast.error("Invalid birth date. Use the format DD/MM/YYYY.");
             return;
         }
 
-        const dia = parseInt(match[1], 10);
-        const mes = parseInt(match[2], 10);
-        const ano = parseInt(match[3], 10);
+        const day = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10);
+        const year = parseInt(match[3], 10);
 
-        if (dia < 1 || dia > 31) {
-            toast.error("Dia de nascimento deve ser entre 01 e 31.");
+        if (day < 1 || day > 31) {
+            toast.error("Birth day must be between 01 and 31.");
             return;
         }
-        if (mes < 1 || mes > 12) {
-            toast.error("Mês de nascimento deve ser entre 01 e 12.");
+        if (month < 1 || month > 12) {
+            toast.error("Birth month must be between 01 and 12.");
             return;
         }
-        if (ano > 2025) {
-            toast.error("Ano de nascimento deve ser 2025 ou menor.");
+        if (year > 2025) {
+            toast.error("Birth year must be 2025 or less.");
+            return;
+        }
+        // Checks if address is filled (prevents progress if not)
+        if (!form.street || !form.number || !form.city || !form.state || !form.zipCode) {
+            toast.error("No delivery address found in your profile. Please register an address in your profile before proceeding.");
             return;
         }
 
-        localStorage.setItem("personal", JSON.stringify(form));
-        if (onSubmit) onSubmit(form);
+        const addressString = `${form.street}, ${form.number}${form.complement ? ' - ' + form.complement : ''} - ${form.district}, ${form.city}/${form.state}`.replace(/\s+/g, ' ').trim();
+        const formWithAddress = { ...form, address: addressString };
+
+        localStorage.setItem("personal", JSON.stringify(formWithAddress));
+        // Updates in backend if logged in
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    const addresses = Array.isArray(user.address) ? user.address : [];
+                    const selectedAddressKey = userId ? `selectedAddress_${userId}` : 'selectedAddress';
+                    const selectedAddressId = localStorage.getItem(selectedAddressKey);
+                    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: form.firstName,
+                            lastName: form.lastName,
+                            email: form.email,
+                            phone: form.phone,
+                            cpf: form.cpf,
+                            birthDate: new Date(`${year}-${month}-${day}`),
+                            selectedAddress: selectedAddressId || addresses[0]?.id || ""
+                        })
+                    });
+                });
+        }
+        if (onSubmit) onSubmit(formWithAddress);
         if (onNext) onNext();
     }
+
     return (
         <>
         <Toaster />
@@ -140,156 +298,160 @@ export default function PersonalDetails({ onSubmit, onNext, onBack, steps }) {
                 ))}
             </Stepper>
         </div>
-        <form className="personal-details-form" onSubmit={handleSubmit}>
-            <h2>Dados Pessoais</h2>
-            <div style={{display: "flex", gap: 12}}>
+        <div className="main-content">
+            <form className="personal-details-form" onSubmit={handleSubmit}>
+                <h2>Personal Data</h2>
+                <div className="form-row">
+                    <input
+                        id="firstName"
+                        type="text"
+                        name="firstName"
+                        placeholder="First Name"
+                        value={form.firstName}
+                        onChange={handleChange}
+                        required
+                        pattern="[A-Za-zÀ-ÿ\s]+"
+                        title="Only letters are allowed"
+                    />
+                    <input
+                        id="lastName"
+                        type="text"
+                        name="lastName"
+                        placeholder="Last Name"
+                        value={form.lastName}
+                        onChange={handleChange}
+                        required
+                        pattern="[A-Za-zÀ-ÿ\s]+"
+                        title="Only letters are allowed"
+                    />
+                </div>
                 <input
-                    type="text"
-                    name="nome"
-                    placeholder="Nome"
-                    value={form.nome}
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={form.email}
                     onChange={handleChange}
                     required
-                    style={{flex: 1}}
-                    pattern="[A-Za-zÀ-ÿ\s]+"
-                    title="Apenas letras são permitidas"
                 />
                 <input
-                    type="text"
-                    name="sobrenome"
-                    placeholder="Sobrenome"
-                    value={form.sobrenome}
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone"
+                    value={form.phone}
                     onChange={handleChange}
                     required
-                    style={{flex: 1}}
-                    pattern="[A-Za-zÀ-ÿ\s]+"
-                    title="Apenas letras são permitidas"
                 />
-            </div>
-            <input
-                type="email"
-                name="email"
-                placeholder="E-mail"
-                value={form.email}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 12}}
-            />
-            <input
-                type="tel"
-                name="telefone"
-                placeholder="Telefone"
-                value={form.telefone}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 12}}
-            />
-            <input
-                type="text"
-                name="cpf"
-                placeholder="CPF"
-                value={form.cpf}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 12}}
-                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-                title="Digite o CPF no formato 000.000.000-00"
-            />
-            <input
-                type="text"
-                name="nascimento"
-                placeholder="Nascimento"
-                value={form.nascimento}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 8}}
-                pattern="\d{2}/\d{2}/\d{4}"
-                title="Digite a data no formato DD/MM/AAAA"
-            />
-            <h3 style={{marginTop: 18}}>Endereço</h3>
-            <input
-                type="text"
-                name="endereco"
-                placeholder="Endereço"
-                value={form.endereco}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 8}}
-            />
-            <div style={{display: "flex", gap: 12, marginTop: 8}}>
+                <div className="cpf-nascimento-row">
+                    <input
+                        id="cpf"
+                        type="text"
+                        name="cpf"
+                        placeholder="CPF"
+                        value={form.cpf}
+                        onChange={handleChange}
+                        required
+                        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                        title="Enter CPF in the format 000.000.000-00"
+                    />
+                    <input
+                        id="birthDate"
+                        type="text"
+                        name="birthDate"
+                        placeholder="Birth date"
+                        value={form.birthDate}
+                        onChange={handleChange}
+                        required
+                        pattern="\d{2}/\d{2}/\d{4}"
+                        title="Enter the date in the format DD/MM/YYYY"
+                    />
+                </div>
+                <h3>Address</h3>
                 <input
+                    id="street"
                     type="text"
-                    name="numero"
-                    placeholder="Número"
-                    value={form.numero}
+                    name="street"
+                    placeholder="Street"
+                    value={form.street}
                     onChange={handleChange}
                     required
-                    style={{flex: 1}}
                 />
+                <div className="form-row">
+                    <input
+                        id="number"
+                        type="text"
+                        name="number"
+                        placeholder="Number"
+                        value={form.number}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        id="complement"
+                        type="text"
+                        name="complement"
+                        placeholder="Complement"
+                        value={form.complement}
+                        onChange={handleChange}
+                    />
+                </div>
                 <input
+                    id="district"
                     type="text"
-                    name="complemento"
-                    placeholder="Complemento"
-                    value={form.complemento}
+                    name="district"
+                    placeholder="Neighborhood"
+                    value={form.district}
                     onChange={handleChange}
                     required
-                    style={{flex: 2}}
                 />
-            </div>
-            <input
-                type="text"
-                name="bairro"
-                placeholder="Bairro"
-                value={form.bairro}
-                onChange={handleChange}
-                required
-                style={{width: "100%", marginTop: 8}}
-            />
-            <div style={{display: "flex", gap: 12, marginTop: 8}}>
-                <input
-                    type="text"
-                    name="cidade"
-                    placeholder="Cidade"
-                    value={form.cidade}
-                    onChange={handleChange}
-                    required
-                    style={{flex: 2}}
-                />
-                <input
-                    type="text"
-                    name="estado"
-                    placeholder="Estado"
-                    value={form.estado}
-                    onChange={handleChange}
-                    required
-                    style={{flex: 1}}
-                />
-                <input
-                    type="text"
-                    name="cep"
-                    placeholder="CEP"
-                    value={form.cep}
-                    onChange={handleChange}
-                    required
-                    style={{flex: 1}}
-                />
-            </div>
-            <div className="button-row">
-                <button
-                    type="button"
-                    className="back-button"
-                    onClick={onBack}
-                >
-                    Voltar
-                </button>
-                <button
-                    type="submit"
-                    className="submit-button"
-                >
-                    Próximo
-                </button>
-            </div>
-        </form>
+                <div className="form-row">
+                    <input
+                        id="city"
+                        type="text"
+                        name="city"
+                        placeholder="City"
+                        value={form.city}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        id="state"
+                        type="text"
+                        name="state"
+                        placeholder="State"
+                        value={form.state}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        id="zipCode"
+                        type="text"
+                        name="zipCode"
+                        placeholder="ZIP code"
+                        value={form.zipCode}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="button-row">
+                    <button
+                        type="button"
+                        className="back-button"
+                        onClick={onBack}
+                    >
+                        Back
+                    </button>
+                    <button
+                        type="submit"
+                        className="submit-button"
+                    >
+                        Next
+                    </button>
+                </div>
+            </form>
+            <CartOverview />
+        </div>
         </>
     );
 }

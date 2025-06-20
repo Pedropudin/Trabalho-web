@@ -5,27 +5,58 @@ import DateSelector from "./DateSelector";
 import MessageAlert from "../MessageAlert";
 
 const today = new Date().toJSON().slice(0,10);
-//const today = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
 
 const SellList = () => {
-    const [data, setData] = useState(null);
+    const [orders, setOrders] = useState([]);
+    const [products, setProducts] = useState([]);
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(today);
     const [showAlert, setShowAlert] = useState(false);
-    const [noProducts, setNoProducts] = useState(true);
 
+    // Fetch orders and products
     useEffect(() => {
-        fetch('/data/soldProducts.json')
-        .then((resp) => {
-            return resp.json();
-        })
-        .then(prod_data => {
-            setData(prod_data.soldProducts);
-        })
+        // Fetch delivered orders
+        fetch(process.env.REACT_APP_API_URL + '/api/orders')
+            .then(resp => resp.json())
+            .then(orderData => setOrders(orderData || []));
+        // Fetch all products
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
+            .then(resp => resp.json())
+            .then(prodData => setProducts(prodData || []));
     }, []);
 
+    // Helper to get product info by id
+    function getProductInfo(id) {
+        return products.find(p => String(p.id) === String(id));
+    }
+
+    // Flatten delivered products with sale date
+    const deliveredProducts = [];
+    orders.forEach(order => {
+        if (order.status === "delivered" && Array.isArray(order.itens)) {
+            order.itens.forEach(item => {
+                const prod = getProductInfo(item.id);
+                if (prod) {
+                    deliveredProducts.push({
+                        id: prod.id,
+                        name: prod.name,
+                        image: prod.image,
+                        price: prod.price,
+                        date: order.updatedAt ? order.updatedAt.slice(0,10) : "",
+                        quantity: item.quantity
+                    });
+                }
+            });
+        }
+    });
+
+    // Filter by date
+    const filteredProducts = deliveredProducts.filter(product =>
+        startDate <= product.date && product.date <= endDate
+    );
+
     const handleFiscalInfo = (product) => {
-        alert(`Informação fiscal: ${product.fiscal_info}`);
+        alert(`Fiscal Information: ${product.name}`);
     };
 
     const convertDate = (date) => {
@@ -43,17 +74,13 @@ const SellList = () => {
         return
     };
 
-    const filteredProducts = data
-        ? data.filter(product => startDate <= product.date && product.date <= endDate)
-        : [];
-
     return (
         <div style={{
             width: "95%",
             maxWidth: "1100px",
             margin: "32px auto",
         }}>
-            {showAlert && <MessageAlert message={"A data de fim não pode ser antes da de início"} />}
+            {showAlert && <MessageAlert message={"The end date cannot be earlier than the start date"} />}
             <DateSelector startDate={startDate} endDate={endDate} maxDate={today} onChange={(start,end) => handleDate(start,end)} />
             <Card type="card-vertical" style={{ padding: 0 }}>
                 <div style={{ overflowX: "auto" }}>
@@ -66,83 +93,74 @@ const SellList = () => {
                     }}>
                         <thead>
                             <tr>
-                                <th style={{ width: 120, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Foto</th>
-                                <th style={{ width: 320, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "left" }}>Nome</th>
-                                <th style={{ width: 180, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Preço</th>
-                                <th style={{ width: 140, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Data da Venda</th>
+                                <th style={{ width: 120, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Picture</th>
+                                <th style={{ width: 320, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "left" }}>Name</th>
+                                <th style={{ width: 180, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Price</th>
+                                <th style={{ width: 140, padding: "12px 8px", borderBottom: "2px solid #007b99", textAlign: "center" }}>Day of sale</th>
                                 <th style={{ width: 140, padding: "12px 8px", borderBottom: "2px solid #007b99" }}></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {data && filteredProducts.map(product => {
-                                if(startDate <= product.date && product.date <= endDate) {
-                                    return(
-                                        <tr key={product.id} style={{ borderRadius: 12 }}>
-                                            <td style={{ padding: "12px 8px", textAlign: "center" }}>
-                                                <img
-                                                    src={product.product_photo}
-                                                    alt={product.product_name}
-                                                    style={{
-                                                        width: 70,
-                                                        height: 70,
-                                                        objectFit: "cover",
-                                                        borderRadius: 10,
-                                                        border: "2px solid #C7F7CE",
-                                                        background: "#fff"
-                                                    }}
-                                                />
-                                            </td>
-                                            <td style={{ padding: "12px 8px", fontWeight: 600, color: "#193E52", fontSize: "1.1rem" }}>
-                                                {product.product_name}
-                                            </td>
-                                            <td style={{ padding: "12px 8px", textAlign: "center" }}>
-                                                <span style={{
-                                                    backgroundColor: "#C7F7CE",
-                                                    borderRadius: "10px",
-                                                    padding: "8px 18px",
-                                                    fontWeight: 600,
-                                                    fontSize: "1.1rem",
-                                                    color: "#1a4d2e",
-                                                    minWidth: "90px",
-                                                    display: "inline-block"
-                                                }}>
-                                                    R$ {Number(product.price).toFixed(2)}
-                                                </span>
-                                            </td>
-                                            <td style={{ padding: "12px 8px", textAlign: "center", color: "#666" }}>
-                                                {convertDate(product.date)}
-                                            </td>
-                                            <td style={{ padding: "12px 8px", textAlign: "center" }}>
-                                                <Button
-                                                    type={1}
-                                                    text="Nota Fiscal"
-                                                    onClick={() => handleFiscalInfo(product)}
-                                                    style={{
-                                                        fontWeight: 600,
-                                                        fontSize: "1rem",
-                                                        width: "110px"
-                                                    }}
-                                                />
-                                            </td>
-                                        </tr>
-                                    )
-                                }
-                            })}
+                            {filteredProducts.map(product => (
+                                <tr key={product.id + product.date} style={{ borderRadius: 12 }}>
+                                    <td style={{ padding: "12px 8px", textAlign: "center" }}>
+                                        <img
+                                            src={product.image}
+                                            alt={product.name}
+                                            style={{
+                                                width: 70,
+                                                height: 70,
+                                                objectFit: "cover",
+                                                borderRadius: 10,
+                                                border: "2px solid #C7F7CE",
+                                                background: "#fff"
+                                            }}
+                                        />
+                                    </td>
+                                    <td style={{ padding: "12px 8px", fontWeight: 600, color: "#193E52", fontSize: "1.1rem" }}>
+                                        {product.name}
+                                    </td>
+                                    <td style={{ padding: "12px 8px", textAlign: "center" }}>
+                                        <span style={{
+                                            backgroundColor: "#C7F7CE",
+                                            borderRadius: "10px",
+                                            padding: "8px 18px",
+                                            fontWeight: 600,
+                                            fontSize: "1.1rem",
+                                            color: "#1a4d2e",
+                                            minWidth: "90px",
+                                            display: "inline-block"
+                                        }}>
+                                            R$ {Number(product.price).toFixed(2)}
+                                        </span>
+                                    </td>
+                                    <td style={{ padding: "12px 8px", textAlign: "center", color: "#666" }}>
+                                        {convertDate(product.date)}
+                                    </td>
+                                    <td style={{ padding: "12px 8px", textAlign: "center" }}>
+                                        <Button
+                                            type={1}
+                                            text="Invoice"
+                                            onClick={() => handleFiscalInfo(product)}
+                                            style={{
+                                                fontWeight: 600,
+                                                fontSize: "1rem",
+                                                width: "110px"
+                                            }}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
-                    {data && filteredProducts.length === 0 && (
+                    {filteredProducts.length === 0 && (
                         <div style={{textAlign:"center", color:"#888", fontSize:"20px", margin:"40px 0px"}}>
-                            Não foi vendido nenhum produto no período escolhido.
+                            No product was sold in the specified period.
                         </div>
                     )}
-                    {!data && (
+                    {orders.length === 0 && (
                         <div style={{ textAlign: "center", color: "#888", margin: "40px 0" }}>
-                            Carregando produtos vendidos...
-                        </div>
-                    )}
-                    {data && data.length === 0 && (
-                        <div style={{ textAlign: "center", color: "#888", margin: "40px 0" }}>
-                            Nenhum produto vendido neste período.
+                            Loading sold products...
                         </div>
                     )}
                 </div>

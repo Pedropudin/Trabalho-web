@@ -14,12 +14,13 @@ const TeamManager = () => {
     const [editValues, setEditValues] = useState({ name: "", role: "", email: "" });
 
     useEffect(() => {
-        fetch('/data/employees.json')
+        fetch(process.env.REACT_APP_API_URL + "/api/users/admins")
         .then((resp) => {
             return resp.json();
         })
         .then(emp_data => {
             setData(emp_data.employees);
+            console.log(emp_data);
         })
     }, []);
 
@@ -37,8 +38,26 @@ const TeamManager = () => {
         setOpen(true);
     };
 
-    const handleRemove = (emp) => {
-        setData(data.filter(e => e.id !== emp.id));
+    const handleRemove = async (emp) => {
+        // Try to remove from backend
+        try {
+            const response = await fetch(
+                process.env.REACT_APP_API_URL + '/api/users/admin/' + emp._id,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("Token")
+                    }
+                }
+            );
+            if (response.ok) {
+                setData(data.filter(e => e._id !== emp._id));
+            } else {
+                alert("Failed to remove admin.");
+            }
+        } catch (err) {
+            alert("Error removing admin.");
+        }
     }
 
     const handleClose = () => {
@@ -50,17 +69,55 @@ const TeamManager = () => {
         setEditValues({ ...editValues, [e.target.name]: e.target.value });
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (isAdding) {
-            const newId = data && data.length > 0 ? Math.max(...data.map(emp => emp.id || 0)) + 1 : 1;
-            setData([
-                ...data,
-                { id: newId, ...editValues }
-            ]);
+            try {
+                const response = await fetch(process.env.REACT_APP_API_URL + '/api/users/create-admin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem("Token")
+                    },
+                    body: JSON.stringify(editValues)
+                });
+                if (response.ok) {
+                    const newAdmin = await response.json();
+                    setData([
+                        ...(data || []),
+                        // Use backend response if it returns the new admin, otherwise fallback to editValues
+                        newAdmin.employee || { ...editValues, id: newAdmin.id || (data && data.length > 0 ? Math.max(...data.map(emp => emp.id || 0)) + 1 : 1) }
+                    ]);
+                } else {
+                    alert("Failed to add admin.");
+                }
+            } catch (err) {
+                alert("Error adding admin.");
+            }
         } else {
-            setData(data.map(emp =>
-                emp.id === selectedEmp.id ? { ...emp, ...editValues } : emp
-            ));
+            // Update admin info in backend
+            try {
+                const response = await fetch(
+                    process.env.REACT_APP_API_URL + '/api/users/admin/' + selectedEmp._id,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem("Token")
+                        },
+                        body: JSON.stringify(editValues)
+                    }
+                );
+                if (response.ok) {
+                    const updatedAdmin = await response.json();
+                    setData(data.map(emp =>
+                        emp._id === selectedEmp._id ? updatedAdmin : emp
+                    ));
+                } else {
+                    alert("Failed to update admin.");
+                }
+            } catch (err) {
+                alert("Error updating admin.");
+            }
         }
         handleClose();
     };
@@ -70,9 +127,9 @@ const TeamManager = () => {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                     <tr>
-                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Nome</th>
-                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Cargo</th>
-                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Contato</th>
+                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Name</th>
+                        {/*<th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Role</th>*/}
+                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Contact</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -81,7 +138,7 @@ const TeamManager = () => {
                     {data && data.map(emp => (
                         <tr key={emp.id}>
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.name}</td>
-                            <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.role}</td>
+                            {/*<td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.role}</td>*/}
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.email}</td>
                             <td>
                                 <IconButton onClick={() => handleEdit(emp)}>
@@ -110,27 +167,27 @@ const TeamManager = () => {
                 }}
             >
                 <GroupAddIcon style={{color:"#fff"}}/>
-                Adicionar empregado
+                Add employee
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Editar Funcionário</DialogTitle>
+                <DialogTitle>Edit employee</DialogTitle>
                 <DialogContent>
                     <TextField
                         margin="dense"
-                        label="Nome"
+                        label="Name"
                         name="name"
                         value={editValues.name}
                         onChange={handleChange}
                         fullWidth
                     />
-                    <TextField
+                    {/*<TextField
                         margin="dense"
-                        label="Cargo"
+                        label="Role"
                         name="role"
                         value={editValues.role}
                         onChange={handleChange}
                         fullWidth
-                    />
+                    />*/}
                     <TextField
                         margin="dense"
                         label="Email"
@@ -139,10 +196,26 @@ const TeamManager = () => {
                         onChange={handleChange}
                         fullWidth
                     />
+                    <TextField
+                        margin="dense"
+                        label="Password"
+                        name="password"
+                        value={editValues.password}
+                        onChange={handleChange}
+                        fullWidth
+                    />
+                    <TextField
+                        margin="dense"
+                        label="Token"
+                        name="token"
+                        value={editValues.token}
+                        onChange={handleChange}
+                        fullWidth
+                    />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancelar</Button>
-                    <Button onClick={handleSave} variant="contained" color="primary">Salvar</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleSave} variant="contained" color="primary">Save</Button>
                 </DialogActions>
             </Dialog>
         </Card>

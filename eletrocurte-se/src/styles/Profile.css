@@ -1,0 +1,126 @@
+/* === RESET AND GENERAL STYLES === */
+* {
+  margin: 0; /* Removes default browser margin */
+  padding: 0; /* Removes default padding */
+  box-sizing: border-box; /* Makes width/height include padding and border */
+  font-family: Arial, sans-serif; /* Sets a clean, readable sans-serif font */
+}
+
+body {
+  background-color: #f4f4f4; /* Light, neutral, and pleasant background color */
+}
+
+
+/* === HEADER === */
+header {
+  background-color: #004d66; /* Dark institutional blue for visual emphasis */
+  color: white; /* Contrast with dark background */
+  padding: 10px; /* Inner spacing to avoid sticking to edges */
+}
+
+
+/* === MAIN NAVIGATION === */
+nav {
+  display: flex; /* Enables horizontal flex layout */
+  justify-content: space-between; /* Spaces logo, search, and buttons */
+  align-items: center; /* Vertically aligns items */
+  padding: 10px; /* Uniform inner spacing */
+  flex-wrap: wrap; /* Wraps to the next line on small screens */
+  gap: 10px; /* Space between child elements */
+}
+
+/* === MAIN PAGE TITLE === */
+.body-content h2 {
+  text-align: center; /* Centers the title */
+}
+
+/* === SEARCH BAR === */
+.search-bar {
+  background-color: white;
+  border-radius: 8px; /* Rounded corners */
+  display: flex; /* Places input and icon side by side */
+  align-items: center;
+  padding: 10px;
+  width: 260px; /* Default width */
+}
+
+.search-bar input {
+  border: none; /* Removes default border */
+  font-size: 16px;
+  flex: 1; /* Takes up the remaining space */
+  outline: none; /* Removes blue outline on focus */
+}
+
+/* === CARD GRID === */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid */
+  gap: 20px;
+  max-width: 1200px; /* Maximum width */
+  margin: 20px auto; /* Centers horizontally */
+  padding: 0 20px;
+}
+
+/* On larger screens, forces 3 fixed columns */
+@media (min-width: 900px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* === INDIVIDUAL CARD STYLE === */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card i {
+  color: #007b99; /* Highlight color for icons */
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.3;
+}
+
+.card:hover {
+  transform: translateY(-4px); /* Slight lift on hover */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Stronger shadow on hover */
+}
+
+/* === WIDE CARD (occupies specific column) === */
+.wide-card {
+  grid-column: 2; /* Occupies the center column */
+}
+
+@media (max-width: 900px) {
+  .wide-card {
+    grid-column: span 1; /* On small screens, spans the full width */
+  }
+}
+
+/* === RESPONSIVENESS: ADJUSTMENTS FOR SMALL SCREENS (up to 768px) === */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column; /* Stacks logo, search, and buttons vertically */
+  }
+
+  .search-bar {
+    width: 90%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}

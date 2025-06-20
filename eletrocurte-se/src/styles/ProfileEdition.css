@@ -1,0 +1,335 @@
+/*
+  ProfileEdition.css
+  - CSS for Eletrocurte-se profile editing and wallet screens.
+  - Reset and base: removes default margins/paddings and sets global font.
+  - Main layout: centers and limits profile content width.
+  - Forms: fields, buttons, and messages with clean, accessible, responsive look.
+  - Wallet/Address Modal: dark overlay, centering, responsiveness, and visual highlight.
+  - Responsiveness: media queries for small screens (mobile).
+  - Animations: fade-in for modals.
+  - Inputs: highlighted focus for better usability.
+*/
+
+/* RESET AND BASE: ensures consistent look across browsers */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f4; /* neutral background for the whole area */
+}
+
+/* MAIN CONTENT: centers and limits profile content width */
+.editarperfil-body-content {
+  max-width: 600px; /* limits content width */
+  margin: 40px auto 0 auto; /* centers on screen */
+  padding: 0 16px 40px 16px;
+}
+
+.editarperfil-cards-grid {
+  display: flex;
+  justify-content: center;
+}
+
+/* FORM CARD: clean look, shadow, and spacing */
+.editarperfil-card-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 32px 28px 24px 28px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.editarperfil-card-form label {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.editarperfil-card-form input {
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  background: #f9f9f9;
+  transition: border 0.2s;
+}
+
+.editarperfil-card-form input:focus {
+  border: 1.5px solid #007b99;
+  outline: none;
+  background: #fff;
+}
+
+.editarperfil-card-form h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.editarperfil-card-form ul {
+  background: #f5f6fa;
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin: 0 0 12px 0;
+  list-style: disc inside;
+  color: #333;
+  font-size: 1.08rem;
+  box-shadow: 0 1px 4px #0001;
+}
+
+.editarperfil-card-form ul li {
+  margin-bottom: 8px;
+  padding-left: 2px;
+  line-height: 1.5;
+}
+
+.editarperfil-card-form p {
+  margin: 0 0 8px 0;
+  color: #444;
+  font-size: 1.08rem;
+}
+
+.editarperfil-card-form b {
+  color: #3949ab;
+}
+
+/* BUTTONS: styles for save and back, with hover and accessibility */
+.editarperfil-btn-salvar,
+.editarperfil-btn-voltar {
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.editarperfil-btn-salvar {
+  background: #007b99;
+  color: #fff;
+  font-weight: bold;
+}
+
+.editarperfil-btn-salvar:hover {
+  background: #005f73;
+}
+
+.editarperfil-btn-voltar {
+  background: #e0e0e0;
+  color: #333;
+  margin-top: 0;
+}
+
+.editarperfil-btn-voltar:hover {
+  background: #ccc;
+}
+
+/* FEEDBACK MESSAGE */
+.editarperfil-mensagem-editar {
+  margin: 10px 0 0 0;
+  padding: 8px 0;
+  color: #fff;
+  background: #007b99;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* WALLET MODAL: dark overlay and centered modal */
+.modal-carteira-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 34, 60, 0.55); /* darkens background */
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInModal 0.2s;
+  pointer-events: all;
+}
+
+body.modal-carteira-open {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-carteira {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px #0003, 0 1.5px 4px #0002;
+  padding: 24px 16px 18px 16px;
+  min-width: 220px;
+  max-width: 340px;
+  width: 96vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  transition: max-width 0.2s, min-width 0.2s, padding 0.2s;
+}
+
+.modal-carteira-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.18s;
+}
+.modal-carteira-close:hover {
+  color: #1a237e;
+}
+
+.modal-carteira h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.modal-carteira label {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.modal-carteira input, .modal-carteira select {
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  background: #f9f9f9;
+  transition: border 0.2s;
+}
+
+.modal-carteira input:focus, .modal-carteira select:focus {
+  border: 1.5px solid #007b99;
+  outline: none;
+  background: #fff;
+}
+
+/* ADDRESS MODAL: follows wallet modal visual pattern */
+.modal-endereco-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 34, 60, 0.55);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInModal 0.2s;
+  pointer-events: all;
+}
+
+body.modal-endereco-open {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+.modal-endereco {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px #0003, 0 1.5px 4px #0002;
+  padding: 24px 16px 18px 16px;
+  min-width: 320px;
+  max-width: 540px;
+  width: 96vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  transition: max-width 0.2s, min-width 0.2s, padding 0.2s;
+  overflow: visible;
+}
+
+.modal-endereco .MuiStepper-root {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.modal-endereco .MuiStepLabel-label {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .modal-endereco {
+    padding: 12px 2vw;
+    max-width: 98vw;
+  }
+
+  .modal-endereco .MuiStepLabel-label {
+    font-size: 0.8rem;
+  }
+} 
+
+.modal-endereco .MuiStepper-root .MuiStepConnector-line {
+  min-height: 2px;
+  border-top-width: 2px;
+  border-radius: 1px;
+}
+
+/* RESPONSIVENESS: adjustments for small screens */
+@media (max-width: 600px) {
+  .editarperfil-body-content {
+    max-width: 100%;
+    padding: 0 4vw 40px 4vw;
+  }
+  
+  .editarperfil-card-form {
+    padding: 18px 8px 18px 8px;
+    max-width: 100%;
+  }
+  .modal-carteira {
+    padding: 12px 2vw 12px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  .modal-carteira h2 {
+    font-size: 1.2rem;
+  }
+  .modal-endereco {
+    padding: 12px 2vw 12px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  .modal-endereco h2 {
+    font-size: 1.2rem;
+  }
+}
+
+.modal-endereco .MuiStepper-root .MuiStepConnector-line {
+  min-height: 2px;
+  border-top-width: 2px;
+  border-radius: 1px;
+}

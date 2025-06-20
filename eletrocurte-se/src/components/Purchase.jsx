@@ -5,60 +5,166 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
 /*
-  Tela de confirmação da compra
-  - Exibida como útlima etapa do processo de compra.
-  - Contém o botão para que o pagamento seja feito e outro para que retorne a tela anterior
-  - Quanto às informações, faz um resumo geral do produto: Total do pedido (qntidade de itens e preço), Endereço, Cartão e Dados pessoais -- todos inseridos nas etapas anteriores  
+  Purchase confirmation screen
+  - Displayed as the last step of the purchase process.
+  - Contains the button to make the payment and another to return to the previous screen
+  - As for the information, it gives a general summary of the product: Order total (quantity of items and price), Address, Card and Personal data -- all entered in previous steps  
 */
 
-
 export default function Purchase({ onBack, onNext, steps }) {
-
-    // Recupera todos os dados que nós temos, então: carrinho, dados pessoais e dados de pagamento (que podem diferir)
-    const [produtosLocais, setProdutosLocais] = React.useState([]); 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // Retrieves all the data we have: cart, personal data and payment data (which may differ)
+    const userId = localStorage.getItem('userId');
+    const cartKey = userId ? `cart_${userId}` : 'cart';
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     const personal = JSON.parse(localStorage.getItem("personal")) || {};
     const card = JSON.parse(localStorage.getItem("card")) || {};
 
-    //Lê dados dos produtos diretamento do JSON
+    // Fix: define produtosLocal and setProductsLocal
+    const [produtosLocal, setProductsLocal] = useState([]);
+
+    // Fetch products from database when the component mounts
     useEffect(() => {
-        const localProducts = localStorage.getItem("products");
-        if (localProducts) {
-            setProdutosLocais(JSON.parse(localProducts));
-        } else {
-            fetch('/data/Produtos.json')
-                .then(res => res.json())
-                .then(data => setProdutosLocais(data))
-                .catch(() => setProdutosLocais([]));
-        }
+        // Always fetch from backend for consistency
+        fetch(process.env.REACT_APP_API_URL + '/api/products')
+            .then(res => res.json())
+            .then(data => setProductsLocal(data))
+            .catch(() => setProductsLocal([]));
     }, []);
 
-    //Calcula o valor total do pedido, se baseando naquilo que está no carrinho
-    const total = cart.reduce((sum, item) => {
-        const prod = produtosLocais.find(p => p.id === item.id);
-        return sum + (prod ? prod.price * item.quantity : 0);
-    }, 0);
+    // Calculates the total order value, based on what is in the cart
+    const cartProducts = cart
+        .map(item => {
+            const prod = produtosLocal.find(p => String(p.id) === String(item.id));
+            if (!prod) return null;
+            return {
+                ...item,
+                name: prod.name,
+                price: prod.price,
+                image: prod.image,
+                inStock: prod.inStock
+            };
+        })
+        .filter(Boolean);
 
-    //Assim que o botão de finalizar compra é apertado, os itens que estvam no carrinho são retirados do estoque e o carrinho é esvaziado
-    function handlePurchase() {
-        const updatedProducts = produtosLocais.map(prod => {
-            const cartItem = cart.find(p => p.id === prod.id);
-            if (cartItem) {
-                return {
-                    ...prod,
-                    inStock: prod.inStock - cartItem.quantity,
+    const total = cartProducts.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
+
+    const [, setErro] = useState('');
+
+    // Mandatory data check
+    function dadosValidos() {
+        if (!cart.length) return "The cart is empty.";
+        if (
+            !personal.firstName ||
+            !personal.lastName ||
+            !personal.email ||
+            !personal.cpf ||
+            !personal.phone
+        ) return "Fill in all personal data.";
+        if (
+            !personal.address ||
+            !personal.number ||
+            !personal.district ||
+            !personal.city ||
+            !personal.state ||
+            !personal.zipCode
+        ) return "Fill in all address fields.";
+        if (
+            !card.cardHolder ||
+            !card.cardNumber ||
+            !card.cvv ||
+            !card.cpf ||
+            !card.expiry
+        ) return "Fill in all card data.";
+        // Stock check
+        for (const item of cart) {
+            const prod = produtosLocal.find(p => p.id === item.id);
+            if (!prod || prod.inStock < item.quantity) return `Insufficient stock for product: ${item.name}`;
+        }
+        return "";
+    }
+
+    // As soon as the finish purchase button is pressed, the items in the cart are removed from stock and the cart is emptied
+    async function handlePurchase() {
+        console.log("handlePurchase called");
+        const erroMsg = dadosValidos();
+        if (erroMsg) {
+            setErro(erroMsg);
+            return;
+        }
+        // API call to update stock
+        try {
+            // Update stock of bought products
+            for (const item of cart) {
+                const prod = produtosLocal.find(p => p.id === item.id);
+                if (prod) {
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${prod.id}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ inStock: prod.inStock - item.quantity })
+                    });
+                    await response.json();
                 }
             }
-            return prod;
-        });
-        //Grava mudanças no JSON local
-        localStorage.setItem("products", JSON.stringify(updatedProducts));//Atualiza estoque após a finalização da compra
-        localStorage.setItem("cart", JSON.stringify([]));//Limpa cart após a finalização da compra
+        } catch (e) {
+            setErro('Error finishing purchase. Try again.');
+            return;
+        }
+        // Mark products as paid in the backend
+        try {
+            for (const item of cart) {
+                await fetch(`${process.env.REACT_APP_API_URL}/api/products/${item.id}/pay`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        payed: true,
+                        payedDate: new Date().toISOString()
+                    })
+                });
+            }
+        } catch (e) {
+            setErro('Error updating payment status. Try again.');
+            return;
+        }
+
+        // Create order in backend and add to user purchase history 
+        try {
+            // Create order in backend
+            const token = localStorage.getItem('token');
+            const orderRes = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/finish`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(token ? { Authorization: `Bearer ${token}` } : {})
+                },
+                body: JSON.stringify({
+                    itens: cartProducts.map(item => ({
+                        id: item.id,
+                        quantity: item.quantity,
+                        name: item.name,
+                        price: item.price
+                    })),
+                    personal,
+                    card,
+                    status: "pending"
+                })
+            });
+            if (!orderRes.ok) {
+                setErro('Error saving order. Try again.');
+                return;
+            }
+        } catch (e) {
+            setErro('Error saving order. Try again.');
+            return;
+        }
+
+        // Clear cart after success
+        localStorage.setItem(cartKey, JSON.stringify([]));
+        setErro('');
 
         if (onNext) onNext();
     }
 
-    // Etapas do checkout
+    // Checkout steps
     const activeStep = 3;
 
     return (
@@ -74,41 +180,41 @@ export default function Purchase({ onBack, onNext, steps }) {
         </div>
         <div className="purchase-summary-container">
             <h2 className="purchase-summary-title">
-                Resumo do Pedido
+                Order Summary
             </h2>
             <section className="purchase-section">
-                <h3 className="purchase-section-title">Dados Pessoais</h3>
+                <h3 className="purchase-section-title">Personal Data</h3>
                 <div className="purchase-section-content">
-                    <div><b>Nome:</b> {personal.nome} {personal.sobrenome}</div>
-                    <div><b>E-mail:</b> {personal.email}</div>
-                    <div><b>Telefone:</b> {personal.telefone}</div>
+                    <div><b>Name:</b> {personal.firstName} {personal.lastName}</div>
+                    <div><b>Email:</b> {personal.email}</div>
+                    <div><b>Phone:</b> {personal.phone}</div>
                     <div><b>CPF:</b> {personal.cpf}</div>
-                    <div><b>Data de nascimento:</b> {personal.nascimento}</div>
+                    <div><b>Birth date:</b> {personal.birthDate}</div>
                 </div>
-                <h3 className="purchase-section-title">Dados Cobrança</h3>
+                <h3 className="purchase-section-title">Billing Data</h3>
                 <div className="purchase-section-content">
-                    <div><b>Nome:</b> {card.nome_cartao}</div>
-                    <div><b>Numero do Cartão:</b> {card.numero_cartao}</div>
+                    <div><b>Name:</b> {card.cardHolder}</div>
+                    <div><b>Card Number:</b> {card.cardNumber}</div>
                     <div><b>CVV:</b> {card.cvv}</div>
                     <div><b>CPF:</b> {card.cpf}</div>
-                    <div><b>Data de Validade:</b> {card.validade}</div>
-                    <div><b>Parcelamento:</b> Em {card.parcelamento}x vezes de R${(total/card.parcelamento).toFixed(2).replace('.',',')}</div>
+                    <div><b>Expiry Date:</b> {card.expiry}</div>
+                    <div><b>Installments:</b> In {card.installments}x of ${ (total/card.installments).toFixed(2) }</div>
                 </div>
-                <h3 className="purchase-section-title address">Endereço</h3>
+                <h3 className="purchase-section-title address">Address</h3>
                 <div className="purchase-section-content">
                     <div>
-                        {personal.endereco}, {personal.numero} {personal.complemento && <span>- {personal.complemento}</span>}
+                        {personal.address}, {personal.number} {personal.complement && <span>- {personal.complement}</span>}
                     </div>
                     <div>
-                        {personal.bairro} - {personal.cidade}/{personal.estado} - <b>CEP:</b> {personal.cep}
+                        {personal.district} - {personal.city}/{personal.state} - <b>ZIP:</b> {personal.zipCode}
                     </div>
                 </div>
             </section>
             <section className="purchase-section">
-                <h3 className="purchase-section-title">Produtos</h3>
+                <h3 className="purchase-section-title">Products</h3>
                 <ul className="purchase-products-list">
                     {cart.map(item => {
-                        const prod = produtosLocais.find(p => p.id === item.id);
+                        const prod = produtosLocal.find(p => p.id === item.id);
                         if (!prod) return null;
                         return (
                             <li key={item.id} className="purchase-product-item">
@@ -117,14 +223,14 @@ export default function Purchase({ onBack, onNext, steps }) {
                                     <span className="purchase-product-qty">x{item.quantity}</span>
                                 </span>
                                 <span className="purchase-product-price">
-                                    {(prod.price * item.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                                    ${ (prod.price * item.quantity).toFixed(2) }
                                 </span>
                             </li>
                         );
                     })}
                 </ul>
                 <div className="purchase-total">
-                    Total: {total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                    Total: ${total.toFixed(2)}
                 </div>
             </section>
             <div className="purchase-buttons-row">
@@ -133,14 +239,14 @@ export default function Purchase({ onBack, onNext, steps }) {
                     className="purchase-btn-back"
                     onClick={onBack}
                 >
-                    Voltar
+                    Back
                 </button>
                 <button
                     type="button"
                     className="purchase-btn-finish"
                     onClick={handlePurchase}
                 >
-                    Finalizar compra
+                    Finish Purchase
                 </button>
             </div>
         </div>

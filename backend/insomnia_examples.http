@@ -1,0 +1,171 @@
+### LOGIN ADMIN
+POST http://localhost:5000/api/auth/admin-login
+Content-Type: application/json
+
+{
+  "email": "admin@eletrocurte-se.com",
+  "password": "Admin@1234",
+  "token": 123456
+}
+
+###
+
+### LOGIN USER
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "password": "user_password"
+}
+
+###
+
+### CREATE PRODUCT (ADMIN)
+POST http://localhost:5000/api/products
+Authorization: Bearer <your_jwt_admin_token>
+Content-Type: application/json
+
+{
+  "id": 1001,
+  "name": "Test Product",
+  "price": 99.99,
+  "inStock": 10,
+  "brand": "Brand",
+  "category": "Category"
+}
+
+###
+
+### LIST PRODUCTS
+GET http://localhost:5000/api/products
+
+###
+
+### UPDATE PRODUCT (ADMIN)
+PUT http://localhost:5000/api/products/1001
+Authorization: Bearer <your_jwt_admin_token>
+Content-Type: application/json
+
+{
+  "price": 89.99,
+  "inStock": 20
+}
+
+###
+
+### DELETE PRODUCT (ADMIN)
+DELETE http://localhost:5000/api/products/1001
+Authorization: Bearer <your_jwt_admin_token>
+Content-Type: application/json
+
+###
+
+### CREATE USER
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "email": "john@email.com",
+  "password": "password123",
+  "phone": "11999999999",
+  "cpf": "12345678900",
+  "birthDate": "2000-01-01"
+}
+
+###
+
+### LIST USERS
+GET http://localhost:5000/api/users
+
+###
+
+### UPDATE USER
+PATCH http://localhost:5000/api/users/{{userId}}
+Content-Type: application/json
+
+{
+  "firstName": "John Updated"
+}
+
+###
+
+### DELETE USER
+DELETE http://localhost:5000/api/users/{{userId}}
+Content-Type: application/json
+
+###
+
+### CREATE ADMIN (ADMIN)
+POST http://localhost:5000/api/users/create-admin
+Authorization: Bearer <your_jwt_admin_token>
+Content-Type: application/json
+
+{
+  "name": "New Admin",
+  "email": "new_admin@email.com",
+  "password": "StrongPassword@2024",
+  "token": 654321
+}
+
+###
+
+### UPDATE ADMIN (ADMIN)
+PATCH http://localhost:5000/api/users/admin/{{adminId}}
+Authorization: Bearer <your_jwt_admin_token>
+Content-Type: application/json
+
+{
+  "name": "Admin Updated"
+}
+
+###
+
+### DELETE ADMIN (ADMIN)
+DELETE http://localhost:5000/api/users/admin/{{adminId}}
+Authorization: Bearer <your_jwt_admin_token>
+Content-Type: application/json
+
+###
+
+### CREATE ORDER
+POST http://localhost:5000/api/orders/finish
+Content-Type: application/json
+
+{
+  "itens": [
+    { "id": "1001", "quantity": 2 }
+  ],
+  "personal": {
+    "name": "John",
+    "address": "Example Street, 123"
+  },
+  "card": {
+    "last4": "1234"
+  }
+}
+
+###
+
+### LIST ORDERS
+GET http://localhost:5000/api/orders
+
+###
+
+### UPDATE ORDER STATUS (ADMIN)
+PATCH http://localhost:5000/api/orders/{{orderId}}/status
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+###
+
+# DEPRECATED: Do not use this endpoint for purchase history
+# GET http://localhost:5000/api/users/{{userId}}/orders
+
+# Use this endpoint to get the real user purchase history:
+GET http://localhost:5000/api/orders/user/{{userId}}

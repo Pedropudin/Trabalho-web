@@ -1,16 +1,16 @@
-/* CARTÃO DE AVALIAÇÃO (clientes, estrelas, etc) */
+/* RATING CARD (customers, stars, etc) */
 .avaliacao {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #007b99; /* Fundo azul institucional */
+    background: #007b99; /* Institutional blue background */
     color: white;
     padding: 15px;
     margin: 20px;
     border-radius: 10px;
 }
 
-/* IMAGEM DENTRO DA AVALIAÇÃO */
+/* IMAGE INSIDE RATING */
 .avaliacao img {
     width: 40px;
     height: 40px;
@@ -20,14 +20,14 @@
     padding: 3px;
 }
 
-/* TEXTO DA AVALIAÇÃO */
+/* RATING TEXT */
 .avaliacao p {
     flex: 1;
     text-align: center;
     font-size: 1.1rem;
 }
 
-/* BOTÃO NA AVALIAÇÃO */
+/* BUTTON IN RATING */
 .avaliacao button {
     padding: 8px 15px;
     background: #005d73;
@@ -36,21 +36,21 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
-    display: flex; /* Flexbox para alinhar o ícone e o texto */
+    display: flex; /* Flexbox to align icon and text */
     align-items: center;
-    gap: 10px; /* Espaçamento entre ícone e texto */
+    gap: 10px; /* Space between icon and text */
 }
 
 .avaliacao button:hover {
     background: #003d52;
 }
 
-/* Estilo do ícone dentro do botão */
+/* Icon style inside button */
 .avaliacao button i {
-    font-size: 1.2rem; /* Tamanho do ícone */
+    font-size: 1.2rem; /* Icon size */
 }
 
-/* Botão de avaliação destacado (UserRating) */
+/* Highlighted rating button (UserRating) */
 .avaliacao-btn {
   background: #fff;
   color: #856404;
@@ -85,7 +85,7 @@
   color: #a67c00;
 }
 
-/* Responsividade para tablets */
+/* Responsiveness for tablets */
 @media (max-width: 768px) {
     .avaliacao {
         flex-direction: column;
@@ -99,18 +99,18 @@
         margin-bottom: 10px;
     }
     .avaliacao button {
-        width: 90%; /* Aumenta a largura do botão */
-        max-width: 250px; /* Limita o tamanho máximo */
+        width: 90%; /* Increases button width */
+        max-width: 250px; /* Limits max size */
     }
 }
 
-/* Responsividade para celulares */
+/* Responsiveness for phones */
 @media (max-width: 480px) {
     .avaliacao {
         padding: 15px;
     }
     .avaliacao button {
-        width: 80%; /* Ajusta o tamanho do botão */
+        width: 80%; /* Adjusts button size */
         max-width: 200px;
     }
 }

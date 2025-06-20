@@ -1,114 +1,153 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/PaymentDetails.css"
 import toast, { Toaster } from 'react-hot-toast';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import CartOverview from "./CartOverview";
 
 /*
-  Página de dados de pagamento.
-  - Exibida durante processo de conclusão de compra.
-  - Recolhe os dados de um cartão de crédito, como número, nome, cvv.
-  - Botões de redirecionamento para tela anterior ou para a próxima etapa da conclusão do pedido.
+  Payment details page.
+  - User must select a registered card from wallet.
+  - Shows card balance and checks if it's enough for the purchase.
+  - If no card, instructs user to register one in the wallet.
+  - If insufficient balance, blocks advance.
+  - Cardholder CPF is auto-filled from personal data and cannot be edited here.
 */
 
 export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
-    const [form, setForm] = useState({
-        numero_cartao: "",
-        nome_cartao: "",
-        validade: "",
-        cvv: "",
-        cpf: "",
-        parcelamento: "", 
-    });
+    // Cards from wallet
+    const [cards, setCards] = useState([]);
+    const [selectedCardLast4, setSelectedCardLast4] = useState('');
+    const [selectedCard, setSelectedCard] = useState(null);
+    const [error, setError] = useState('');
+    const [total, setTotal] = useState(0);
+    const [cpf, setCpf] = useState('');
 
-    //Vezes de parcelamento
-    const vezesDeParcelamento = [
-        1,2,3,4,5,6,7,8,9,10,11,12
-    ];
-
-    // Progresso
+    // Progress
     const activeStep = 2;
 
-    //Formatação de CPF
-    function formatCPF(value) {
-        value = value.replace(/\D/g, "").slice(0, 11);
-        // Aplica a máscara
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d)/, "$1.$2");
-        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-        return value;
-    }
-    //Formatação de data de validade
-    function formatValidade(value) {
-        value = value.replace(/\D/g, "").slice(0, 4);
-        if (value.length > 2) {
-            value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    // Busca cartões cadastrados e saldo
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    const backendCards = Array.isArray(user.card) ? user.card : [];
+                    setCards(backendCards);
+                    localStorage.setItem('walletCards', JSON.stringify(backendCards));
+                    if (backendCards.length > 0) {
+                        setSelectedCardLast4(backendCards[0].last4);
+                    }
+                });
+        } else {
+            setCards([]);
         }
-        return value;
-    }
-    //Formatação de cartão
-    function formatCartao(value) {
-        value = value.replace(/\D/g, "").slice(0, 16);
-        value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
-        return value.trim();
-    }
-    
-    //Atualização do form sempre que o formulário for preenchido
-    function handleChange(e) {
-        const { name, value } = e.target;
-        let newValue = value;
+    }, []);
 
-        //Formatação de dados
-        if (name === "cpf") {
-            newValue = formatCPF(newValue);
-        }else if (name === "validade") {
-            newValue = formatValidade(newValue);
-        } else if (name === "cvv") {
-            newValue = newValue.replace(/\D/g, "").slice(0, 3);
-        } else if (name === "numero_cartao") {
-            newValue = formatCartao(newValue);
-        } else if (name === "nome_cartao") {
-            newValue = newValue.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
+    // Atualiza cartão selecionado
+    useEffect(() => {
+        const card = cards.find(c => c.last4 === selectedCardLast4);
+        setSelectedCard(card || null);
+    }, [selectedCardLast4, cards]);
+
+    // Update the selected card in backend
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId && selectedCardLast4) {
+            fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ selectedCard: selectedCardLast4 })
+            });
         }
+    }, [selectedCardLast4]);
 
-        setForm({ ...form, [name]: newValue });
-    }
-    
-    //Envio do formulário
-    function handleSubmit(e) {
-        e.preventDefault();//Grante controle do envio do formulário
+    // Calculate the total amount of the shop
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        const cartKey = userId ? `cart_${userId}` : 'cart';
+        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+        let sum = 0;
+        for (const item of cart) {
+            const prod = cart.find(p => String(p.id) === String(item.id));
+            if (prod) sum += Number(prod.price) * item.quantity;
+        }
+        setTotal(sum);
+    }, []);
 
-        // Validação da validade (MM/AA)
-        const validade = form.validade;
-        const validadeRegex = /^(\d{2})\/(\d{2})$/;
-        const match = validade.match(validadeRegex);
+    // Busca CPF do usuário (personal data)
+    useEffect(() => {
+        const personal = JSON.parse(localStorage.getItem("personal") || "{}");
+        setCpf(personal.cpf || "");
+    }, []);
 
-        if (!match) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Validade inválida. Use o formato MM/AA.");
+    // Formulário para parcelas
+    const [installments, setInstallments] = useState("");
+    const vezesDeParcelamento = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+    // Payment Submission
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setError('');
+        if (!cards.length) {
+            toast.error("No card registered. Please register a card in your Wallet before proceeding.");
+            setError("No card registered.");
             return;
         }
-
-        //Separa mês e ano, a fim de garantir que cumprem regras básicas do calendário
-        const mes = parseInt(match[1], 10);
-        const ano = 2000 + parseInt(match[2], 10);
-
-        if (mes < 1 || mes > 12) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Mês da validade deve ser entre 01 e 12.");
+        if (!selectedCard) {
+            toast.error("Select a card to proceed.");
+            setError("Select a card.");
             return;
         }
-        if (ano < 2025) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Ano da validade deve ser 2025 ou maior.");
+        if (!installments) {
+            toast.error("Choose the number of installments.");
+            setError("Choose installments.");
             return;
         }
-
-        if (!form.parcelamento) {//Aviso caso condição não tenha sido cumprida
-            toast.error("Escolha o número de parcelas.");
+        if ((selectedCard.balance ?? 0) < total) {
+            toast.error("Insufficient balance on the selected card. Please recharge your card in the Wallet.");
+            setError("Insufficient balance.");
             return;
         }
-        //Salvamento no json local e envio
-        localStorage.setItem("card", JSON.stringify(form));
-        if (onSubmit) onSubmit(form);
+        // Subtract the amount of the selected card used for the shop
+        const userId = localStorage.getItem('userId');
+        try {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}/cards/${selectedCard.last4}/debit`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: total })
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                toast.error(data.error || "Insufficient card balance. Please recharge your card in the Wallet.");
+                setError(data.error || "Insufficient card balance.");
+                return;
+            }
+        } catch {
+            toast.error("Error debiting card. Try again.");
+            setError("Error debiting card.");
+            return;
+        }
+        // Update local amount
+        const updatedCards = cards.map(c =>
+            c.last4 === selectedCard.last4
+                ? { ...c, balance: (c.balance ?? 0) - total }
+                : c
+        );
+        setCards(updatedCards);
+        localStorage.setItem('walletCards', JSON.stringify(updatedCards));
+        // Salva dados do pagamento
+        localStorage.setItem("card", JSON.stringify({
+            cardHolder: selectedCard.nameOnCard || "",
+            cardNumber: selectedCard.cardNumber || selectedCard.number || "",
+            cpf: cpf,
+            expiry: selectedCard.expiry || "",
+            cvv: selectedCard.cvv || selectedCard.CVV || "",
+            installments
+        }));
+        if (onSubmit) onSubmit();
         if (onNext) onNext();
     }
 
@@ -124,100 +163,116 @@ export default function PaymentDetails({ onSubmit, onNext, onBack, steps }) {
                 ))}
             </Stepper>
         </div>
+        <div className="main-content">
         <form className="payment-details-form" onSubmit={handleSubmit}>
-            <h2>Dados de Pagamento</h2>
-            <label htmlFor="numero_cartao"></label>
-            <input
-                id="numero_cartao"
-                type="text"
-                name="numero_cartao"
-                placeholder="Número do cartão"
-                value={form.numero_cartao}
-                onChange={handleChange}
-                required
-                maxLength={19}
-                inputMode="numeric"
-                pattern="\d{4} \d{4} \d{4} \d{4}"
-                title="Digite 16 números do cartão (formato: 0000 0000 0000 0000)"
-            />
-            <label htmlFor="nome_cartao"></label>
-            <input
-                id="nome_cartao"
-                type="text"
-                name="nome_cartao"
-                placeholder="Nome impresso no cartão"
-                value={form.nome_cartao}
-                onChange={handleChange}
-                required
-            />
-            <div className="input-row">
-                <div>
-                    <label htmlFor="validade"></label>
-                    <input
-                        id="validade"
-                        type="text"
-                        name="validade"
-                        placeholder="MM/AA"
-                        value={form.validade}
-                        onChange={handleChange}
-                        required
-                        maxLength={5}
-                    />
+            <h2>Payment Details</h2>
+            {cards.length === 0 ? (
+                <div style={{ color: "#c00", marginBottom: 24 }}>
+                    No card registered. Please register a card in your <b>Wallet</b> before proceeding.
                 </div>
-                <div>
-                    <label htmlFor="cvv"></label>
+            ) : (
+                <>
+                    <label htmlFor="cardHolder">Cardholder Name</label>
+                    <input
+                        id="cardHolder"
+                        type="text"
+                        name="cardHolder"
+                        value={selectedCard?.nameOnCard || ""}
+                        disabled
+                        required
+                        placeholder="Cardholder Name"
+                    />
+                    <label htmlFor="cardNumber">Card Number</label>
+                    <input
+                        id="cardNumber"
+                        type="text"
+                        name="cardNumber"
+                        value={selectedCard?.cardNumber || selectedCard?.number || ""}
+                        disabled
+                        required
+                        placeholder="Card Number"
+                    />
+                    <label htmlFor="expiry">Expiry</label>
+                    <input
+                        id="expiry"
+                        type="text"
+                        name="expiry"
+                        value={selectedCard?.expiry || ""}
+                        disabled
+                        required
+                        placeholder="MM/YY"
+                    />
+                    <label htmlFor="cvv">CVV</label>
                     <input
                         id="cvv"
                         type="text"
                         name="cvv"
-                        placeholder="CVV"
-                        value={form.cvv}
-                        onChange={handleChange}
+                        value={selectedCard?.cvv || selectedCard?.CVV || ""}
+                        disabled
                         required
-                        maxLength={4}
+                        placeholder="CVV"
                     />
-                </div>
-            </div>
-            <label htmlFor="cpf"></label>
-            <input
-                id="cpf"
-                type="text"
-                name="cpf"
-                placeholder="CPF do titular"
-                value={form.cpf}
-                onChange={handleChange}
-                required
-            />
-            <label htmlFor="parcelamento"></label>
-            <select
-                id="parcelamento"
-                name="parcelamento"
-                value={form.parcelamento || ""}
-                onChange={handleChange}
-            >
-                <option value="" disabled>Escolha o número de parcelas</option>
-                {vezesDeParcelamento.map((num) => (
-                    <option key={num} value={num}>
-                        Em {num}x sem juros
-                    </option>
-                ))}
-            </select>
+                    <label htmlFor="cpf">Cardholder CPF</label>
+                    <input
+                        id="cpf"
+                        type="text"
+                        name="cpf"
+                        value={cpf}
+                        disabled
+                        required
+                        placeholder="Cardholder CPF"
+                    />
+                    <label htmlFor="cardSelect">Select a card</label>
+                    <select
+                        id="cardSelect"
+                        name="cardSelect"
+                        value={selectedCardLast4}
+                        onChange={e => setSelectedCardLast4(e.target.value)}
+                        required
+                    >
+                        {cards.map(card => (
+                            <option key={card.last4} value={card.last4}>
+                                {card.brand} **** {card.last4} (Balance: ${Number(card.balance ?? 0).toFixed(2)})
+                            </option>
+                        ))}
+                    </select>
+                    <label htmlFor="installments">Installments</label>
+                    <select
+                        id="installments"
+                        name="installments"
+                        value={installments || ""}
+                        onChange={e => setInstallments(e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>Choose the number of installments</option>
+                        {vezesDeParcelamento.map((num) => (
+                            <option key={num} value={num}>
+                                In {num}x of ${ (total/num).toFixed(2) } without interest
+                            </option>
+                        ))}
+                    </select>
+                    {error && <div style={{ color: "#c00", marginBottom: 8 }}>{error}</div>}
+                </>
+            )}
             <div className="button-row">
                 <button
                     type="button"
                     className="back-button"
                     onClick={onBack}
                 >
-                    Voltar
+                    Back
                 </button>
                 <button
                     type="submit"
                     className="submit-button"
+                    disabled={cards.length === 0}
                 >
-                    Próximo
+                    Next
                 </button>
             </div>
         </form>
+        <CartOverview/>
+        </div>
     </>
     );
 }

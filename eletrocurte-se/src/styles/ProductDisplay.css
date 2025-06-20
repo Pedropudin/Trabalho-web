@@ -1,0 +1,126 @@
+/* ProductDisplay styles */
+
+/* --- Product card container --- */
+.items {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,123,153,0.10);
+    padding: 22px 18px 18px 18px;
+    margin: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+    width: 210px;
+    height: fit-content;
+    border: 1.5px solid #e0f7fa;
+}
+
+/* --- Hover effect for product card --- */
+.items:hover {
+    box-shadow: 0 8px 32px rgba(0,123,153,0.16);
+    transform: translateY(-4px) scale(1.03);
+    border-color: #009fcf;
+}
+
+/* --- Unavailable product style --- */
+.items.unavailable {
+    filter: grayscale(0.92);
+    opacity: 0.72;
+    border-color: #ccc;
+}
+.items.unavailable .item-price {
+    color: #888;
+    background: #f1f1f1;
+}
+.items.unavailable .product-display-purchase-button {
+    background: #bbb;
+    color: #fff;
+    box-shadow: none;
+    border: none;
+}
+
+/* --- Product image --- */
+.product-item-image {
+    width: 100px;
+    height: 100px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: auto;
+    border-radius: 10px;
+    background: white;
+}
+
+/* --- Product name, price, and stock --- */
+.product-item-name {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #007b99;
+    text-align: center;
+}
+.product-item-price {
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: auto;
+    text-align: center;
+}
+
+/* --- Purchase button --- */
+.product-display-purchase-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.10);
+    transition: background 0.2s, transform 0.2s;
+    margin-top: auto;
+    width: 100%;
+}
+.product-display-purchase-button:hover {
+    background: linear-gradient(90deg, #009fcf 0%, #007b99 100%);
+    transform: scale(1.04);
+}
+
+/* --- Edit button for admin --- */
+.product-display-edit-button {
+    background: linear-gradient(90deg, #007b99 0%, #005f73 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.10);
+    transition: background 0.2s, transform 0.2s;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* --- Delete button for admin --- */
+.product-display-delete-button {
+    background: linear-gradient(90deg, #990000 0%, #730000 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,123,153,0.10);
+    transition: background 0.2s, transform 0.2s;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* --- Confirmation window overlay --- */
+.confirm-windown {
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    z-index: 1000;
+}

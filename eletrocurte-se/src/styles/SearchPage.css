@@ -1,0 +1,119 @@
+/* --- Reset and main layout --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+}
+
+/* --- Main content container --- */
+.search-main-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 50px;
+    margin: 40px auto;
+    padding: 12px;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 500px;
+    height: auto;
+}
+
+/* --- Results and filters area --- */
+.search-results {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    width: 100%;
+}
+
+/* --- Header row for results and sorting --- */
+.search-results-header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.search-results-header-row h4 {
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Sorting select --- */
+.search-order-criterion {
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* --- Product grid display --- */
+.search-product-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    margin: 20px auto;
+    padding-left: 60px;
+    width: 100%;
+    border-left: 2px solid #ccc;
+}
+
+/* --- No products found message --- */
+.search-no-products-message {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+}
+
+/* --- Responsive styles for mobile --- */
+@media (max-width: 768px) {
+    .search-main-content {
+        flex-direction: column;
+        gap: 20px;
+        margin: 16px auto;
+        padding: 8px;
+        width: 100%;
+        min-height: unset;
+    }
+
+    .search-results {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .search-results-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .search-product-display {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        justify-items: center;
+        margin: 10px 0;
+        padding: 0;
+        width: 100%;
+        border-left: 0;
+    }
+
+    .search-sidebar {
+        justify-items: center;
+        margin-bottom: 16px;
+    }
+}
