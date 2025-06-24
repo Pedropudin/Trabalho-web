@@ -44,9 +44,9 @@ export default function ProfileEdition() {
   };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      <main className="editarperfil-body-content">
+      <main className="editarperfil-body-content" style={{ flex: 1 }}>
         <div className="editarperfil-cards-grid">
           {/* Renders component based on selected flag */}
           {flag === 'orders' && <Orders onVoltar={handleVoltar} />}
@@ -58,6 +58,6 @@ export default function ProfileEdition() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

@@ -150,7 +150,7 @@ export default function PurchaseHistory() {
   };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       {/* Review bar for products awaiting user review */}
       {produtosAguardandoPadronizados.length > 0 && (
@@ -213,7 +213,7 @@ export default function PurchaseHistory() {
           Complete a purchase and see your history here!
         </div>
       )}
-      <section className="produtos">
+      <section className="produtos" style={{ flex: 1 }}>
         {Object.entries(produtosPorData)
           .sort((a, b) => new Date(b[0]) - new Date(a[0]))
           .map(([date, produtos]) => (
@@ -235,6 +235,6 @@ export default function PurchaseHistory() {
       <ProductDetailsModal open={modalOpen} onClose={handleModalClose} product={selectedProduct} />
       <ScrollToTop />
       <Footer />
-    </>
+    </div>
   );
 }

@@ -32,9 +32,9 @@ export default function Profile() {
   }
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      <main className="body-content">
+      <main className="body-content" style={{ flex: 1 }}>
         <br />
         {/* Personalized greeting */}
         <h2>
@@ -84,6 +84,6 @@ export default function Profile() {
       </main>
       {/* Standard footer */}
       <Footer />
-    </>
+    </div>
   );
 }
