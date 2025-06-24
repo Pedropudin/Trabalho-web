@@ -19,7 +19,14 @@ router.get('/', async (req, res) => {
 router.post('/', auth, async (req, res) => {
   try {
     if (req.user.type !== 'admin') return res.status(403).json({ error: 'Access denied.' });
-    const newProduct = new Product(req.body);
+
+    // Generate unique id
+    const maxProduct = await Product.findOne().sort({ id: -1 }).select('id');
+    const nextId = maxProduct && typeof maxProduct.id === 'number' ? maxProduct.id + 1 : 1;
+
+    const productData = { ...req.body, id: nextId };
+    const newProduct = new Product(productData);
+    console.log(newProduct);
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {

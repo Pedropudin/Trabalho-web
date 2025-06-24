@@ -89,7 +89,11 @@ const Performance = () => {
         });
 
         // Fetch orders and count sales in last 30 days
-        fetch(process.env.REACT_APP_API_URL + '/api/orders')
+        fetch(process.env.REACT_APP_API_URL + '/api/orders',{
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem("Token")
+            }
+        })
         .then(resp => resp.json())
         .then(orderData => {
             if (Array.isArray(orderData)) {

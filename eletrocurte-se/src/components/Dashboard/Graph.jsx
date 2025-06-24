@@ -37,7 +37,11 @@ const Graph = () => {
 
     useEffect(() => {
         // Fetch delivered orders
-        fetch(process.env.REACT_APP_API_URL + '/api/orders')
+        fetch(process.env.REACT_APP_API_URL + '/api/orders', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem("Token")
+            }
+        })
             .then(resp => resp.json())
             .then(orderData => setOrders(orderData || []));
         // Fetch all products

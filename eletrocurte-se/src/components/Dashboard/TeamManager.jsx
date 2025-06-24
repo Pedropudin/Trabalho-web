@@ -20,7 +20,6 @@ const TeamManager = () => {
         })
         .then(emp_data => {
             setData(emp_data.employees);
-            console.log(emp_data);
         })
     }, []);
 
@@ -136,7 +135,7 @@ const TeamManager = () => {
                 </thead>
                 <tbody>
                     {data && data.map(emp => (
-                        <tr key={emp.id}>
+                        <tr key={emp._id}>
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.name}</td>
                             {/*<td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.role}</td>*/}
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.email}</td>
