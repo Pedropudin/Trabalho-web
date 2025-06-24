@@ -22,8 +22,8 @@ export default function Login() {
   const navigate = useNavigate();
 
   // Regular expressions for name, password, and email validation
-  // nameRegex: at least 6 characters, no special char required
-  const nameRegex = /^.{6,}$/;
+  // nameRegex: at least 3 characters, no special char required
+  const nameRegex = /^.{3,}$/;
   const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -75,7 +75,7 @@ export default function Login() {
       }
     }
     if (!nameRegex.test(name)) {
-      showMessage("Admin name must have at least 6 characters.", "error");
+      showMessage("Admin name must have at least 3 characters.", "error");
       return false;
     }
     if (!strongPassword.test(password)) {
@@ -92,7 +92,7 @@ export default function Login() {
   // Registration form validation
   async function validateRegistration({ name, email, password, confirmPassword }) {
     if (!nameRegex.test(name)) {
-      showMessage("Name must have at least 6 characters.", "error");
+      showMessage("Name must have at least 3 characters.", "error");
       return false;
     }
     if (!emailRegex.test(email)) {

@@ -68,7 +68,62 @@ const TeamManager = () => {
         setEditValues({ ...editValues, [e.target.name]: e.target.value });
     };
 
+    // Validation regexes (copied from Login.jsx)
+    const nameRegex = /^.{3,}$/;
+    const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const adminDomainRegex = /^[a-zA-Z0-9._-]+@eletrocurte-se(\.[a-zA-Z]{2,6})?$/;
+
+    // DNS validation for email domain (async)
+    async function validateEmailGoogle(email) {
+        const domain = email.split('@')[1];
+        if (!domain) return false;
+        try {
+            const res = await fetch(`https://dns.google/resolve?name=${domain}&type=MX`);
+            const data = await res.json();
+            return Array.isArray(data.Answer) && data.Answer.length > 0;
+        } catch {
+            return false;
+        }
+    }
+
+    // Validation function for admin fields
+    async function validateAdminFields({ name, email, password, token }) {
+        if (!adminDomainRegex.test(email) && !emailRegex.test(email)) {
+            alert("Please enter a valid email. Admins can use @eletrocurte-se domain.");
+            return false;
+        }
+        if (!adminDomainRegex.test(email)) {
+            const validEmail = await validateEmailGoogle(email);
+            if (!validEmail) {
+                alert("The email domain does not exist or does not accept emails.");
+                return false;
+            }
+        }
+        if (!nameRegex.test(name)) {
+            alert("Admin name must have at least 3 characters.");
+            return false;
+        }
+        if (password !== undefined && password !== "") {
+            if (!strongPassword.test(password)) {
+                alert("Password must be at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.");
+                return false;
+            }
+        }
+        if (token !== undefined && token !== "") {
+            if (!/^\d{6}$/.test(token)) {
+                alert("Token must contain exactly 6 numeric digits.");
+                return false;
+            }
+        }
+        return true;
+    }
+
     const handleSave = async () => {
+        // Validate fields before saving
+        const valid = await validateAdminFields(editValues);
+        if (!valid) return;
+
         if (isAdding) {
             try {
                 const response = await fetch(process.env.REACT_APP_API_URL + '/api/users/create-admin', {
@@ -87,7 +142,8 @@ const TeamManager = () => {
                         newAdmin.employee || { ...editValues, id: newAdmin.id || (data && data.length > 0 ? Math.max(...data.map(emp => emp.id || 0)) + 1 : 1) }
                     ]);
                 } else {
-                    alert("Failed to add admin.");
+                    alert("Failed to add admin. Try using a diferent token");
+                    return;
                 }
             } catch (err) {
                 alert("Error adding admin.");
@@ -113,6 +169,7 @@ const TeamManager = () => {
                     ));
                 } else {
                     alert("Failed to update admin.");
+                    return;
                 }
             } catch (err) {
                 alert("Error updating admin.");
@@ -127,8 +184,8 @@ const TeamManager = () => {
                 <thead>
                     <tr>
                         <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Name</th>
-                        {/*<th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Role</th>*/}
                         <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Contact</th>
+                        <th style={{ borderBottom: "2px solid #007b99", padding: "8px" }}>Token</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -137,17 +194,17 @@ const TeamManager = () => {
                     {data && data.map(emp => (
                         <tr key={emp._id}>
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.name}</td>
-                            {/*<td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.role}</td>*/}
                             <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.email}</td>
+                            <td style={{ borderBottom: "1px solid #eee", padding: "8px" }}>{emp.token}</td>
                             <td>
                                 <IconButton onClick={() => handleEdit(emp)}>
                                     <EditSquareIcon style={{color:"#193E52"}}/>
                                 </IconButton>
                             </td>
                             <td>
-                                <IconButton onClick={() => handleRemove(emp)}>
+                                {emp.name !== "admin01" && <IconButton onClick={() => handleRemove(emp)}>
                                     <DisabledByDefaultIcon style={{color:"red"}}/>
-                                </IconButton>
+                                </IconButton>}
                             </td>
                         </tr>
                     ))}
@@ -179,14 +236,6 @@ const TeamManager = () => {
                         onChange={handleChange}
                         fullWidth
                     />
-                    {/*<TextField
-                        margin="dense"
-                        label="Role"
-                        name="role"
-                        value={editValues.role}
-                        onChange={handleChange}
-                        fullWidth
-                    />*/}
                     <TextField
                         margin="dense"
                         label="Email"
