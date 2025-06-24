@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../styles/SectorPage.css";
+import { Button } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 
 // Components
 import AdminHeader from "../components/admin/AdminHeader";
@@ -26,6 +28,7 @@ export default function SectorPage() {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [productsLocal, setProductsLocal] = useState([]);
+    const navigate = useNavigate();
 
     // --- Fetch from database ---
     useEffect(() => {
@@ -97,6 +100,39 @@ export default function SectorPage() {
         setOrder(e.target.value);
     }
 
+    async function handleAddProduct() {
+        try {
+            const res = await fetch(process.env.REACT_APP_API_URL + '/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem("Token"),
+                },
+                body: JSON.stringify({
+                    id: 102,
+                    name: "Example Product",
+                    description: ".",
+                    fullDescription: "",
+                    price: 10,
+                    inStock: 0,
+                    image: "",
+                    thumbs: [""],
+                    brand: "",
+                    category: "",
+                    generalSector: name,
+                    specificSector: "",
+                    specifications: [""]
+                })
+            });
+            if (!res.ok) throw new Error('Failed to create product');
+            const newProduct = await res.json();
+            if (newProduct && newProduct.id) {
+                navigate(`/admin/ProductPage/${newProduct.id}`);
+            }
+        } catch (err) {
+            alert('Error creating product.');
+        }
+    }
     // --- Render ---
     return (
         <>
@@ -118,6 +154,20 @@ export default function SectorPage() {
                     />
                 </div>
                 <div className="sector-results">
+                    {localStorage.getItem("userType") === "admin" && <Button onClick={handleAddProduct} style={{
+                        margin: "0 0 10px auto",
+                        backgroundColor: "#004d66",
+                        border: "none",
+                        color: "white",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        textAlign: "center",
+                        fontSize: "14px",
+                        gap: "5px"
+                    }}>
+                        Add Product
+                        <AddIcon />
+                    </Button>}
                     {filteredProducts.length > 0 ? (
                         <>
                             <div className="sector-results-header-row">
