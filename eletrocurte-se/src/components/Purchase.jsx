@@ -98,7 +98,7 @@ export default function Purchase({ onBack, onNext, steps }) {
                 const prod = produtosLocal.find(p => p.id === item.id);
                 if (prod) {
                     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${prod.id}`, {
-                        method: "PUT",
+                        method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ inStock: prod.inStock - item.quantity })
                     });
