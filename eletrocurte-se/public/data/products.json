@@ -114,7 +114,7 @@
     "thumbs": [],
     "brand": "Samsung",
     "category": "phones",
-    "generalSector": "Celulares",
+    "generalSector": "Phones",
     "specificSector": "smartphones",
     "specifications": [
       "Processor: Snapdragon 8 Gen 2",
@@ -218,7 +218,7 @@
     "thumbs": [],
     "brand": "Motorola",
     "category": "phones",
-    "generalSector": "Celulares",
+    "generalSector": "Phones",
     "specificSector": "smartphones",
     "specifications": [
       "Processor: MediaTek Dimensity 8020",
@@ -321,7 +321,7 @@
     "thumbs": [],
     "brand": "Apple",
     "category": "phones",
-    "generalSector": "Celulares",
+    "generalSector": "Phones",
     "specificSector": "smartphones",
     "specifications": [
       "Processor: A15 Bionic",
