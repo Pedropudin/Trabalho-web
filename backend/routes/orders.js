@@ -29,19 +29,19 @@ router.post('/finish', async (req, res) => {
         image: prod?.image || item.image || "",
         brand: prod?.brand || "",
         category: prod?.category || "",
+        objectId: prod?._id
       };
     }));
 
-    const userId = personal?.userId || "";
-    const personalWithUserId = { ...personal, userId };
-
     const order = await Order.create({
       itens: itensWithDetails,
-      personal: personalWithUserId,
+      personal: personal,
       card,
       status: 'pending'
     });
-
+    
+    const userId = personal?.userId;
+    
     // Adds the order to the user's purchase history
     if (userId) {
       const User = require('../models/User');
@@ -50,7 +50,7 @@ router.post('/finish', async (req, res) => {
         user.purchaseHistory = user.purchaseHistory || [];
         itensWithDetails.forEach(item => {
           user.purchaseHistory.push({
-            productId: item.id,
+            productId: item.objectId,
             name: item.name,
             image: item.image,
             price: item.price,
